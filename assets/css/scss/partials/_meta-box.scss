@@ -1,0 +1,16 @@
+.wpba {
+	width: 100%;
+	height: 100%;
+	li {
+		cursor: pointer;
+		margin-right: 5px;
+		.wpba-unattach {
+			position: absolute;
+			margin: 10px 0 0 15px;
+			display: none;
+		}
+		&:hover > .wpba-unattach {
+			display: inline-block;
+		}
+	}
+}

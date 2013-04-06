@@ -12,9 +12,8 @@ Version: 1.0.0
 Author URI: http://danholloran.com/
 */
 
-if ( !defined( 'WPBA_VERSION' ) ) {
-	define( 'WPBA_VERSION', '1.0.0' );
-}
+define( 'WPBA_VERSION', '1.0.0' );
+define( 'WPBA_LANG', 'wpba' );
 
 function wp_test(){
 	global $post;
@@ -35,10 +34,14 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 * Required Classes
 */
 require_once "classes/class.wp-better-attachments.php";
+
 // var_dump($wpbg->attach_image( array(
-// 	'media'     =>  82,
+// 	'media'     =>  87,
 // 	'parent_id' =>  1
 // ) ) );
+// var_dump( $wpbg->unattach_image( array( 'attachment_id' => 87 ) ) );
+
 /**
 * Required Libs
 */
+// require_once "libs/wpba-meta-box.php";
