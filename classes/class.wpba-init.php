@@ -1,9 +1,9 @@
 <?php
-if ( ! class_exists('WPGRC_Init' ) ) :
+if ( ! class_exists('WPBA_Init' ) ) :
 /**
  * This class triggers functions that run during activation/deactivation & uninstallation
  */
-class WPGRC_Init
+class WPBA_Init
 {
     // Set this to true to get the state of origin, so you don't need to always uninstall during development.
     const STATE_OF_ORIGIN = false;
@@ -41,7 +41,7 @@ class WPGRC_Init
      */
     function on_activate()
     {
-        new WPGRC_Init( 'activate' );
+        new WPBA_Init( 'activate' );
     }
 
     /**
@@ -55,7 +55,7 @@ class WPGRC_Init
         if ( STATE_OF_ORIGIN )
             $case = 'uninstall';
 
-        new WPGRC_Init( $case );
+        new WPBA_Init( $case );
     }
 
     /**
@@ -69,7 +69,7 @@ class WPGRC_Init
         if ( __FILE__ != WP_UNINSTALL_PLUGIN )
             return;
 
-        new WPGRC_Init( 'uninstall' );
+        new WPBA_Init( 'uninstall' );
     }
 
     function activate_cb()
