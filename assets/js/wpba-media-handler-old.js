@@ -1,1 +1,1 @@
-// @codekit-prepend "wpba-attachment-sorting.js"
+// @codekit-prepend "wpba-attachment.js"
