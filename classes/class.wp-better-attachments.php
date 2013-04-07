@@ -32,9 +32,14 @@ class WP_Better_Attachments
 	{
 		add_action('wp_ajax_wpba_update_sort_order', array( &$this, 'wpba_update_sort_order_callback' ) );
 		add_action('wp_ajax_wpba_unattach_image', array( &$this, 'wpba_unattach_image_callback' ) );
+		add_action('wp_ajax_wpba_add_attachment', array( &$this, 'wpba_add_attachment_callback' ) );
+		add_action('wp_ajax_wpba_delete_attachment', array( &$this, 'wpba_delete_attachment_callback' ) );
 	} // ajax_hooks()
 
 
+	/**
+	* Enqueue Administrator Scripts and Styles
+	*/
 	public function enqueue_admin_scripts()
 	{
 		wp_enqueue_style( 'wpba-admin-css', plugins_url( 'assets/css/wpba-admin.css' , dirname(__FILE__) ), null, WPBA_VERSION);
@@ -73,28 +78,112 @@ class WP_Better_Attachments
 	*/
 	public function wpba_update_sort_order_callback() {
 		extract( $_POST );
-		// Takes an array of attachment ids
-		for ( $i=0; $i < count( $attids ); $i++ ) {
-			$att_id = $attids[$i];
-			$attachment = array();
-			$attachment['ID'] = $att_id;
-			$attachment['menu_order'] = $i;
-			wp_update_post($attachment);
+
+		// Check for empty values
+		foreach( $attids as $key => $value ) {
+			if( is_array( $value ) ) {
+					foreach( $value as $key2 => $value2 ) {
+							if( empty( $value2 ) )
+									unset( $attids[ $key ][ $key2 ] );
+					}
+			}
+			if( empty( $attids[ $key ] ) )
+					unset( $attids[ $key ] );
 		}
 
-		echo json_encode( $attids );
-		die(); // this is required to return a proper result
+		// Takes an array of attachment ids
+		$index = 1;
+		foreach( $attids as $att_id ) {
+			$attachment = array();
+			$attachment['ID'] = $att_id;
+			$attachment['menu_order'] = $index;
+			wp_update_post((array) $attachment);
+			$index = $index + 1;
+		} //foreach()
+
+		echo json_encode( true );
+		die();
 	} // wpba_update_sort_order_callback()
+
 
 	/**
 	* AJAX Update Sort Order
 	*/
 	public function wpba_unattach_image_callback() {
 		extract( $_POST );
-		$unattach = $this->unattach_image( array( 'attachment_id' => $attachmentid ) );
+
+		if ( !isset( $attachmentid ) ) {
+			echo json_encode( false );
+			die();
+		} // if()
+
+		$unattach = $this->unattach( array( 'attachment_id' => $attachmentid ) );
 		echo json_encode( $unattach );
-		die(); // this is required to return a proper result
+		die();
 	} // wpba_unattach_image_callback()
+
+
+	/**
+	* AJAX Update Sort Order
+	*/
+	public function wpba_add_attachment_callback() {
+		extract( $_POST );
+		$args = array(
+			'post'	=> get_post( $parentid )
+		);
+		$current_attachments = $this->get_post_attachments( $args );
+
+		// Make sure we have something to work with
+		if ( !isset( $attachments ) AND !isset( $parentid ) ) {
+			echo json_encode( false );
+			die();
+		} // if()
+
+
+		// Make sure the attachment doesn't already exist
+		// TODO: Find a better way to do this????
+		foreach ( $attachments as $attachment_key => $attachment ) {
+			foreach ($current_attachments as $current_attachment) {
+				if ( $attachment['id'] == $current_attachment->ID AND $attachment['menuOrder'] != 0 ) {
+					unset( $attachments[$attachment_key] );
+				} // if()
+			} // foreach()
+		} // foreach()
+
+		// Add new attachments
+		foreach ( $attachments as $attachment ) {
+			$this->attach( array(
+				'media' 		=> $attachment['id'],
+				'parent_id'	=>	$parentid
+			) );
+		} // foreach
+
+		$html = $this->build_attachment_li( $attachments, array( 'a_array' => true ) );
+
+		echo json_encode( $html );
+		die();
+	} // wpba_add_attachment_callback()
+
+
+	/**
+	* AJAX Update Sort Order
+	*/
+	public function wpba_delete_attachment_callback() {
+		extract( $_POST );
+		// Make sure we have something to work with
+		if ( !isset( $attachmentid ) ) {
+			echo json_encode( 'noid' );
+			die();
+		} // if()
+
+		$deleted = wp_delete_attachment( $attachmentid, true );
+		if ( false === $deleted ) {
+			echo json_encode( false );
+		} else {
+			echo json_encode( true );
+		} // if/else()
+		die();
+	} // wpba_delete_attachment_callback()
 
 
 	/**
@@ -118,26 +207,31 @@ class WP_Better_Attachments
 	 */
 	public function render_meta_box_content()
 	{
-		global $post;
-		echo '<div id="wpba-post-'.$post->ID.'" class="clearfix wpba">';
-		echo '<a class="button" href="#">Add Post Attachments</a>';
-		echo $this->output_post_attachments();
-		echo '<div class="clear"></div>';
-		echo '</div>';
+		global $post; ?>
+		<div id="wpba-post-<?php echo $post->ID; ?>" data-postid="<?php echo $post->ID; ?>" class="clearfix wpba">
+			<div class="uploader">
+				<a class="button wpba-attachments-button" id="wpba_attachments_button" href="#">Add Attachments</a>
+			</div>
+			<?php echo $this->output_post_attachments(); ?>
+			<div class="clear"></div>
+		</div>
+		<?php
 	} // render_meta_box_content()
 
 
 	/**
-	* Output Post Attachments
+	* Get Post Attachments
 	*/
-	protected function output_post_attachments( $args = array() )
+	protected function get_post_attachments( $args = array() )
 	{
 		extract( $args );
-		global $post;
+		if ( !isset( $post ) )
+			global $post;
 
-		$html = '';
-		$nl = "\n";
 		$show_thumbnail = ( isset( $show_thumbnail) ) ? $show_thumbnail : true;
+		// Should we exclude the thumb?
+		if ( !$show_thumbnail )
+			$get_posts_args['exclude'] = get_post_thumbnail_id();
 
 		$get_posts_args = array(
 			'post_type' 				=> 'attachment',
@@ -147,33 +241,67 @@ class WP_Better_Attachments
 			'orderby'						=>	'menu_order'
 		);
 
-		// Should we exclude the thumb?
-		if ( !$show_thumbnail )
-			$get_posts_args['exclude'] = get_post_thumbnail_id();
-
 		// Get the attachments
 		$attachments = get_posts( $get_posts_args );
+		$image_attachments = array();
+		foreach ( $attachments as $attachment ) {
+			if ( $this->is_image( $attachment->post_mime_type ) ) {
+				$image_attachments[] = $attachment;
+			} // if(is_image())
+		} // foreach();
 
+
+		return $image_attachments;
+	} // get_post_attachments()
+
+
+	/**
+	* Output Post Attachments
+	*/
+	protected function output_post_attachments( $args = array() )
+	{
+		extract( $args );
+
+		$html = '';
+		$nl = "\n";
+		$attachments = $this->get_post_attachments();
 		// Build Attachments Output
 		if ( !empty( $attachments ) ) {
 			$html .= '<ul id="wpba_sortable" class="unstyled wpba-attchments">';
-			$index = 0;
-			foreach ( $attachments as $attachment ) {
-				if ( $this->is_image( $attachment->post_mime_type ) ) {
-					$attachment_src = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
-					$html .= '<li class="pull-left ui-state-default" data-id="'.$attachment->ID.'">';
-					$html .= '<a href="#" class="wpba-unattach">Unattach</a>';
-					$html .= '<img src="'.$attachment_src[0].'" width="'.$attachment_src[1].'" height="'.$attachment_src[2].'" class="img-polaroid" >';
-					$html .= '</li>';
-					$index = $index + 1;
-				} // if(is_image())
-			} // foreach();
+			$html .= $this->build_attachment_li( $attachments);
 			$html .= '</ul>';
 		} // if (!empty($attachments))
 
 
 		return $html;
 	} // output_post_attachments()
+
+
+	/**
+	* Build Attachment List
+	*/
+	protected function build_attachment_li( $attachments, $args = array() )
+	{
+		extract( $args );
+		$html = '';
+		$nl = "\n";
+
+		foreach ( $attachments as $attachment ) {
+			$attachment_id = ( isset( $a_array ) AND $a_array ) ? $attachment['id'] : $attachment->ID;
+			$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+			$attachment_edit_link = admin_url( "post.php?post={$attachment_id}&action=edit" );
+			$html .= '<li class="pull-left ui-state-default" data-id="'.$attachment_id.'">';
+			$html .= '<ul class="unstyled wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">';
+			$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Unattach | </a></li>';
+			$html .= '<li class="pull-left"><a href="'.$attachment_edit_link.'" class="wpba-edit">Edit | </a></li>';
+			$html .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>';
+			$html .= '</ul>';
+			$html .= '<img src="'.$attachment_src[0].'" width="'.$attachment_src[1].'" height="'.$attachment_src[2].'" class="img-polaroid" >';
+			$html .= '</li>';
+		} // foreach();
+
+		return $html;
+	} // build_attachment_li()
 
 
 	/**
@@ -189,9 +317,9 @@ class WP_Better_Attachments
 
 
 	/**
-	* Attach Image
+	* Attach
 	*/
-	public function attach_image( $args = array() )
+	public function attach( $args = array() )
 	{
 		extract( $args );
 		global $wpdb;
@@ -221,13 +349,13 @@ class WP_Better_Attachments
 		}
 
 		return false;
-	} //attach_image()
+	} //attach()
 
 
 	/**
-	* Unattach Image
+	* Unattach
 	*/
-	public function unattach_image( $args = array() )
+	public function unattach( $args = array() )
 	{
 		extract( $args );
 
@@ -237,11 +365,10 @@ class WP_Better_Attachments
 
 		global $wpdb;
 		$wpdb->update($wpdb->posts, array('post_parent'=>0),
-		  array('id' => (int)$attachment_id, 'post_type' => 'attachment'));
+			array('id' => (int)$attachment_id, 'post_type' => 'attachment'));
 
 		return true;
-	} // unattach_image()
-
+	} // unattach()
 
 	/**
 	* Insert Attachment
@@ -252,21 +379,21 @@ class WP_Better_Attachments
 		$filename = str_replace( $wp_upload_dir['url'] . '/', '', $url );
 		$wp_filetype = wp_check_filetype(basename($filename), null );
 
-	  $attachment = array(
-	     'guid' => $url,
-	     'post_mime_type' => $wp_filetype['type'],
-	     'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
-	     'post_content' => '',
-	     'post_status' => 'inherit'
-	  );
-	  $attach_id = wp_insert_attachment( $attachment, $url );
-	  // you must first include the image.php file
-	  // for the function wp_generate_attachment_metadata() to work
-	  require_once( ABSPATH . 'wp-admin/includes/image.php' );
-	  $attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
-	  wp_update_attachment_metadata( $attach_id, $attach_data );
+		$attachment = array(
+			 'guid' => $url,
+			 'post_mime_type' => $wp_filetype['type'],
+			 'post_title' => preg_replace('/\.[^.]+$/', '', basename($filename)),
+			 'post_content' => '',
+			 'post_status' => 'inherit'
+		);
+		$attach_id = wp_insert_attachment( $attachment, $url );
+		// you must first include the image.php file
+		// for the function wp_generate_attachment_metadata() to work
+		require_once( ABSPATH . 'wp-admin/includes/image.php' );
+		$attach_data = wp_generate_attachment_metadata( $attach_id, $filename );
+		wp_update_attachment_metadata( $attach_id, $attach_data );
 
-	  return $attach_id;
+		return $attach_id;
 	} // insert_attachemt()
 
 } // END Class WP_Better_Attachments
@@ -282,4 +409,4 @@ function call_WP_Better_Attachments()
 	return new WP_Better_Attachments();
 } // call_WP_Better_Attachments()
 if ( is_admin() )
-    add_action( 'load-post.php', 'call_WP_Better_Attachments' );
+		add_action( 'load-post.php', 'call_WP_Better_Attachments' );

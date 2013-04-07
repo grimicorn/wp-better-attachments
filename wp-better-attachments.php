@@ -35,13 +35,6 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 */
 require_once "classes/class.wp-better-attachments.php";
 
-// var_dump($wpbg->attach_image( array(
-// 	'media'     =>  87,
-// 	'parent_id' =>  1
-// ) ) );
-// var_dump( $wpbg->unattach_image( array( 'attachment_id' => 87 ) ) );
-
 /**
 * Required Libs
 */
-// require_once "libs/wpba-meta-box.php";

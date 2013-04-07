@@ -4,13 +4,17 @@
 	li {
 		cursor: pointer;
 		margin-right: 5px;
-		.wpba-unattach {
+		.wpba-edit-attachment {
 			position: absolute;
 			margin: 10px 0 0 15px;
 			display: none;
 		}
-		&:hover > .wpba-unattach {
+		&:hover > .wpba-edit-attachment {
 			display: inline-block;
 		}
+
 	}
-}
+	.wpba-edit-attachment {
+		a { text-decoration: none; }
+	}
+} // .wpba
