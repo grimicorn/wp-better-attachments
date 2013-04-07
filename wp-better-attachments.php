@@ -5,7 +5,7 @@
  */
 /*
 Plugin Name: WP Better Attachments
-Plugin URI:
+Plugin URI: http://dholloran.github.io/wp-better-attachments
 Description: Better Wordpress Attachments
 Author: Dan Holloran
 Version: 1.0.0
