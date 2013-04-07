@@ -12,7 +12,13 @@
 		&:hover > .wpba-edit-attachment {
 			display: inline-block;
 		}
-
+	}
+	.wpba-saving {
+		height: 24px;
+		line-height: 24px;
+		margin-left: 10px;
+		span { height: 100%; display: inline-block; }
+		img { margin-bottom: -3px; }
 	}
 	.wpba-edit-attachment {
 		a { text-decoration: none; }
