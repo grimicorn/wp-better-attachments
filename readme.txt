@@ -8,12 +8,14 @@ Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.
+Allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.
 
 == Description ==
 Allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.
 
 Note: As of now WPBA only works with images I hope to add at least attach and un-attach functionality to all other types in the coming weeks.
+
+View more information on GitHub [here](https://github.com/DHolloran/wp-better-attachments/)
 
 == Installation ==
 1. Upload `wp-github-recent-commit` to the `/wp-content/plugins/` directory
@@ -28,6 +30,7 @@ Note: As of now WPBA only works with images I hope to add at least attach and un
 None so far... If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [support@danholloran.com](mailto:support@danholloran.com).
 
 == Screenshots ==
+1. Image of post editor button2. Image of the attachment editor3. Image of the added un-attach link in the media library
 
 
 == Changelog ==
