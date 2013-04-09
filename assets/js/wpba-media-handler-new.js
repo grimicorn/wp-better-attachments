@@ -39,8 +39,8 @@ jQuery(function($){
 				$.post(ajaxurl, ajaxData, function(data) {
 					resp = $.parseJSON(data);
 					if ( resp ) {
-						$( "#wpba_sortable" ).append( resp );
-						updateSortOrder($( "#wpba_sortable" ));
+						$( "#wpba_image_sortable" ).append( resp.image );
+						updateSortOrder($( "#wpba_image_sortable" ));
 						// Apply unattach click handlers to new elements
 						$('.wpba-unattach').on('click', function(e){
 							unattachAttachment($(this));

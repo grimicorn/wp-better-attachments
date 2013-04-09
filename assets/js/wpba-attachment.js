@@ -1,79 +1,7 @@
-/**
-* Updates Sort Order
-*/
-function updateSortOrder(elem) {
-	var $ = jQuery,
-			sortLi = elem.find('li'),
-			sortOrder = [],
-			ajaxData = { 'action' : 'wpba_update_sort_order'},
-			saveElem = $('.wpba-saving')
-	;
-	sortLi.each(function() {
-		var that = $(this);
-		sortOrder.push(that.data('id'));
-	});
-
-	ajaxData.attids = sortOrder;
-	saveElem.removeClass('hide');
-	$.post(ajaxurl, ajaxData, function(data) {
-		saveElem.addClass('hide');
-		return false;
-	});
-}
-
-/**
-* Unattachs an attachment
-*/
-function unattachAttachment(that) {
-	var $ = jQuery,
-			sortableElem = $( "#wpba_sortable" ),
-			linkParent = that.parent('li').parent('ul'),
-			attachmentId = linkParent.data('id'),
-			ajaxData = {
-				'action' : 'wpba_unattach_image',
-				'attachmentid' : attachmentId
-			},
-			saveElem = $('.wpba-saving')
-	;
-	saveElem.removeClass('hide');
-	$.post(ajaxurl, ajaxData, function(data) {
-		var resp = $.parseJSON(data);
-		if (resp) {
-			linkParent.parent('li').remove();
-			updateSortOrder( sortableElem );
-		}
-	});
-}
-
-/**
-* Deletes and attachment
-*/
-function deleteAttachment(that) {
-	var $ = jQuery,
-			makeSure = confirm("Are you sure you want to permanently delete this attachment? This will permanently remove the attachment from the media gallery!!"),
-			saveElem = $('.wpba-saving')
-	;
-	if ( makeSure ) {
-		var linkParent = that.parent('li').parent('ul'),
-				attachmentId = linkParent.data('id'),
-				ajaxData = {
-					'action' : 'wpba_delete_attachment',
-					'attachmentid' : attachmentId
-				};
-		saveElem.removeClass('hide');
-		$.post(ajaxurl, ajaxData, function(data) {
-			var resp = $.parseJSON(data);
-			if (resp) {
-				linkParent.parent('li').remove();
-				updateSortOrder( sortableElem );
-			}
-		});
-	}
-}
-
+//@codekit-prepend wpba-functions.js
 jQuery(function($){
 	$(window).load(function(){
-		var sortableElem = $( "#wpba_sortable" ),
+		var sortableImageElem = $( "#wpba_image_sortable" ),
 				unattachElem = $('.wpba-unattach'),
 				deleteElem = $('.wpba-delete'),
 				saveElem = $('.wpba-saving')
@@ -82,13 +10,13 @@ jQuery(function($){
 		/**
 		* Image Sorting
 		*/
-		sortableElem.sortable();
-		sortableElem.disableSelection();
-		sortableElem.on( "sortupdate", function( e, ui ) {
-			updateSortOrder( sortableElem );
+		sortableImageElem.sortable();
+		sortableImageElem.disableSelection();
+		sortableImageElem.on( "sortupdate", function( e, ui ) {
+			updateSortOrder( sortableImageElem );
 		});
 		// Update the sort order when the page loads
-		// updateSortOrder( sortableElem );
+		// updateSortOrder( sortableImageElem );
 
 
 		/**
@@ -108,7 +36,7 @@ jQuery(function($){
 			var that = $(this),
 					attachmentId = that.data('id'),
 					ajaxData = {
-						'action' : 'wpba_unattach_image',
+						'action' : 'wpba_unattach_',
 						'attachmentid' : attachmentId
 					};
 			$.post(ajaxurl, ajaxData, function(data) {

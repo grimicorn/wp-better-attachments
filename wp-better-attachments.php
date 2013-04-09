@@ -16,8 +16,6 @@ define( 'WPBA_VERSION', '1.0.0' );
 define( 'WPBA_LANG', 'wpba' );
 
 function wp_test(){
-	global $post;
-// pp($post);
 }
 add_action('admin_enqueue_scripts', 'wp_test');
 
@@ -34,6 +32,7 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 * Required Classes
 */
 require_once "classes/class.wp-better-attachments.php";
+require_once "classes/class.wpba-meta-box.php";
 require_once "classes/class.wpba-ajax.php";
 
 /**

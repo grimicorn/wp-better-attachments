@@ -2,7 +2,8 @@
 /**
  * WP Better Attachments
  */
-class WP_Better_Attachments {
+class WP_Better_Attachments
+{
 
 	/**
 	 * Constructor
@@ -16,7 +17,6 @@ class WP_Better_Attachments {
 	 * Initialization Hooks
 	 */
 	public function init_hooks() {
-		add_action( 'add_meta_boxes', array( &$this, 'add_meta_box' ) );
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
 		add_filter( 'media_row_actions',  array( &$this, 'unattach_media_row_action' ), 10, 2 );
 	} // init_hooks()
@@ -29,7 +29,7 @@ class WP_Better_Attachments {
 	function unattach_media_row_action( $actions, $post ) {
 
 		if ( $post->post_parent ) {
-			$actions['unattach'] = '<a href="#" title="' . __( "Unattach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Unattach' ) . '</a>';
+			$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
 		} // if()
 
 		return $actions;
@@ -95,54 +95,6 @@ class WP_Better_Attachments {
 
 
 	/**
-	 * Adds the meta box container
-	 */
-	public function add_meta_box() {
-		$post_types = get_post_types();
-		unset( $post_types["attachment"] );
-		unset( $post_types["revision"] );
-		unset( $post_types["nav_menu_item"] );
-
-		foreach ( $post_types as $post_type ) {
-			add_meta_box(
-				'wpba_meta_box',
-				__( 'WP Better Attachments', WPBA_LANG ),
-				array( &$this, 'render_meta_box_content' ),
-				$post_type,
-				'advanced',
-				'high'
-			);
-		} // foreach()
-	} // add_meta_box()
-
-
-	/**
-	 * Render Meta Box content
-	 */
-	public function render_meta_box_content() {
-		global $post; ?>
-		<div id="wpba-post-<?php echo $post->ID; ?>" data-postid="<?php echo $post->ID; ?>" class="clearfix wpba">
-			<div class="uploader pull-left">
-			<?php global $wp_version;
-			if ( floatval( $wp_version ) >= 3.5 ) { ?>
-				<a class="button wpba-attachments-button" id="wpba_attachments_button" href="#">Add Attachments</a>
-			<?php } else {?>
-				<a class="button wpba-attachments-button" id="wpba_attachments_button" href="#">Add Attachment</a>
-			<?php } //if() ?>
-			</div>
-			<div class="pull-left wpba-saving hide">
-				<span>Saving Attachments </span>
-				<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>">
-			</div>
-			<div class="clear"></div>
-			<?php echo $this->output_post_attachments(); ?>
-			<div class="clear"></div>
-		</div>
-		<?php
-	} // render_meta_box_content()
-
-
-	/**
 	 * Get Post Attachments
 	 */
 	protected function get_post_attachments( $args = array() ) {
@@ -184,29 +136,9 @@ class WP_Better_Attachments {
 
 
 	/**
-	 * Output Post Attachments
-	 */
-	protected function output_post_attachments( $args = array() ) {
-		extract( $args );
-
-		$html = '';
-		$nl = "\n";
-		$attachments = $this->get_post_attachments();
-		$html .= '<ul id="wpba_sortable" class="unstyled wpba-attchments">';
-		// Build Attachments Output
-		if ( !empty( $attachments ) ) {
-			$html .= $this->build_attachment_li( $attachments );
-		} // if (!empty($attachments))
-		$html .= '</ul>';
-
-		return $html;
-	} // output_post_attachments()
-
-
-	/**
 	 * Build Attachment List
 	 */
-	protected function build_attachment_li( $attachments, $args = array() ) {
+	protected function build_image_attachment_li( $attachments, $args = array() ) {
 		extract( $args );
 		$html = '';
 		$nl = "\n";
@@ -217,7 +149,7 @@ class WP_Better_Attachments {
 			$attachment_edit_link = admin_url( "post.php?post={$attachment_id}&action=edit" );
 			$html .= '<li class="pull-left ui-state-default" data-id="'.$attachment_id.'">';
 			$html .= '<ul class="unstyled wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">';
-			$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Unattach | </a></li>';
+			$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach | </a></li>';
 			$html .= '<li class="pull-left"><a href="'.$attachment_edit_link.'" class="wpba-edit">Edit</a></li>';
 			// $html .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>';
 			$html .= '</ul>';
@@ -226,18 +158,80 @@ class WP_Better_Attachments {
 		} // foreach();
 
 		return $html;
-	} // build_attachment_li()
+	} // build_image_attachment_li()
 
 
 	/**
 	 * Attachment is an image
 	 */
 	protected function is_image( $mime_type ) {
-		if ( $mime_type == 'image/jpeg' or $mime_type == 'image/png' or $mime_type == 'image/gif' )
+		$image_mime_types = array(
+			'image/jpeg',
+			'image/gif',
+			'image/png'
+		);
+		if ( in_array( $mime_type, $image_mime_types ) )
 			return true;
 
 		return false;
 	} // is_image()
+
+
+		/**
+	 * Attachment is a document
+	 */
+	protected function is_document( $mime_type ) {
+		$document_mime_types = array(
+			'application/pdf',
+			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+			'application/msword',
+			'application/vnd.ms-powerpoint',
+			'application/vnd.ms-powerpoint',
+			'application/vnd.oasis.opendocument.text',
+			'application/vnd.ms-excel',
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+		);
+		if ( in_array( $mime_type, $document_mime_types ) )
+			return true;
+
+		return false;
+	} // is_document()
+
+
+		/**
+	 * Attachment is a audio
+	 */
+	protected function is_audio( $mime_type ) {
+		$audio_mime_types = array(
+			'audio/mpeg',
+			'audio/mpeg',
+			'audio/ogg',
+			'audio/wav'
+		);
+		if ( in_array( $mime_type, $audio_mime_types ) )
+			return true;
+
+		return false;
+	} // is_audio()
+
+
+	/**
+	 * Attachment is a video
+	 */
+	protected function is_video( $mime_type ) {
+		$video_mime_types = array(
+			'video/mp4',
+			'video/mp4',
+			'video/quicktime',
+			'video/asf.avi',
+			'video/mpeg',
+			'video/ogg'
+		);
+		if ( in_array( $mime_type, $video_mime_types ) )
+			return true;
+
+		return false;
+	} // is_video()
 
 
 	/**
@@ -276,7 +270,7 @@ class WP_Better_Attachments {
 
 
 	/**
-	 * Unattach
+	 * Un-attach
 	 */
 	public function unattach( $args = array() ) {
 		extract( $args );
@@ -291,6 +285,7 @@ class WP_Better_Attachments {
 
 		return true;
 	} // unattach()
+
 
 	/**
 	 * Insert Attachment

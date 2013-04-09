@@ -19,7 +19,7 @@ jQuery(function($){
 					// let's try this
 					imgurl = jQuery(html).attr('href');
 				}
-				var sortableElem = $('#wpba_sortable'),
+				var sortableImageElem = $('#wpba_image_sortable'),
 						saveElem = $('.wpba-saving'),
 						ajaxData = {
 							attachmenturl: imgurl,
@@ -31,8 +31,8 @@ jQuery(function($){
 				$.post(ajaxurl, ajaxData, function(data) {
 					resp = $.parseJSON(data);
 					if ( resp ) {
-						sortableElem.append( resp );
-						updateSortOrder(sortableElem);
+						sortableImageElem.append( resp.image );
+						updateSortOrder(sortableImageElem);
 						// Apply unattach click handlers to new elements
 						$('.wpba-unattach').on('click', function(e){
 							unattachAttachment($(this));
