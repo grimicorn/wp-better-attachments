@@ -25,11 +25,9 @@ To get started with WP Better Attachments you can download it directly [here](ht
 1. Search for WP Better Attachments in Plugins > Add New
 2. Install &amp; Activate WP Better Attachments
 3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments, WordPress<3.5 does not have multi select capabilities. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post. 
-**Note:** As of now WPBA only works with images I hope to add at least attach and un-attach functionality to all other types in the coming weeks.
 
 ###Manual Install Instructions
 1. Unzip your download and place in wp-content/plugins/
 2. Activate WP Better Attachments in the Wordpress Admin area
 3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments, WordPress<3.5 does not have multi select capabilities. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post. 
-**Note:** As of now WPBA only works with images I hope to add at least attach and un-attach functionality to all other types in the coming weeks.
 

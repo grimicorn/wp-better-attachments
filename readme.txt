@@ -13,7 +13,6 @@ Allows you to add/edit/attach/un-attach/sort the files attached to your WordPres
 == Description ==
 Allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.
 
-Note: As of now WPBA only works with images I hope to add at least attach and un-attach functionality to all other types in the coming weeks.
 
 View more information on GitHub [here](https://github.com/DHolloran/wp-better-attachments/)
 
