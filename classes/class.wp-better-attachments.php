@@ -123,15 +123,15 @@ class WP_Better_Attachments
 
 		// Get the attachments
 		$attachments = get_posts( $get_posts_args );
-		$image_attachments = array();
-		foreach ( $attachments as $attachment ) {
-			if ( $this->is_image( $attachment->post_mime_type ) ) {
-				$image_attachments[] = $attachment;
-			} // if(is_image())
-		} // foreach();
+		// $image_attachments = array();
+		// foreach ( $attachments as $attachment ) {
+		// 	if ( $this->is_image( $attachment->post_mime_type ) ) {
+		// 		$image_attachments[] = $attachment;
+		// 	} // if(is_image())
+		// } // foreach();
 
 
-		return $image_attachments;
+		return $attachments;
 	} // get_post_attachments()
 
 
@@ -145,21 +145,49 @@ class WP_Better_Attachments
 
 		foreach ( $attachments as $attachment ) {
 			$attachment_id = ( isset( $a_array ) and $a_array ) ? $attachment['id'] : $attachment->ID;
-			$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+			$mime_type = get_post_mime_type( $attachment_id );
+
+			$placeholder_img = '';
+			if ( $this->is_image( $mime_type ) ) {
+				$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+				if ( !empty( $attachment_src ) )
+					$placeholder_img .= '<img src="'.$attachment_src[0].'" width="'.$attachment_src[1].'" height="'.$attachment_src[2].'">';
+			} else {
+				$placeholder_img_file = $this->placeholder_image( $mime_type );
+				$placeholder_img .= '<div class="icon-wrap"><img src="'.site_url().'/wp-includes/images/crystal/'.$placeholder_img_file.'" class="icon" draggable="false"></div>';
+			} // if/else()
+
+
 			$attachment_edit_link = admin_url( "post.php?post={$attachment_id}&action=edit" );
-			$html .= '<li class="pull-left ui-state-default" data-id="'.$attachment_id.'">';
+			$html .= '<li class="wpba-preview pull-left ui-state-default" data-id="'.$attachment_id.'">';
 			$html .= '<ul class="unstyled wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">';
 			$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach | </a></li>';
 			$html .= '<li class="pull-left"><a href="'.$attachment_edit_link.'" class="wpba-edit">Edit</a></li>';
 			// $html .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>';
 			$html .= '</ul>';
-			$html .= '<img src="'.$attachment_src[0].'" width="'.$attachment_src[1].'" height="'.$attachment_src[2].'" class="img-polaroid" >';
+			$html .= $placeholder_img;
 			$html .= '</li>';
 		} // foreach();
 
 		return $html;
 	} // build_image_attachment_li()
 
+
+	/**
+	* Attachment placeholder image name
+	*/
+	protected function placeholder_image( $mime_type )
+	{
+		if ( $this->is_document( $mime_type ) ) {
+			return 'document.png';
+		} elseif ( $this->is_audio( $mime_type ) ) {
+			return 'audio.png';
+		} elseif ( $this->is_video( $mime_type ) ) {
+			return 'video.png';
+		} //if/elseif
+
+		return '';
+	} // placeholder_image()
 
 	/**
 	 * Attachment is an image

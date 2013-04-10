@@ -3,11 +3,14 @@
 	height: 100%;
 	li {
 		cursor: pointer;
-		margin-right: 5px;
+		margin: 0 20px 20px 0;
 		.wpba-edit-attachment {
 			position: absolute;
 			margin: 10px 0 0 15px;
 			display: none;
+			li {
+				margin : 0 5px 0 0;
+			}
 		}
 		&:hover > .wpba-edit-attachment {
 			display: inline-block;
@@ -22,5 +25,16 @@
 	}
 	.wpba-edit-attachment {
 		a { text-decoration: none; }
+	}
+	.wpba-preview {
+		width: 150px;
+		height: 150px;
+		-webkit-box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
+		box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
+		background: #eee;
+		border: 1px solid #ccc;
+		.icon-wrap  { text-align: center; width: 100%; }
+		.icon { margin: 46px auto;}
+
 	}
 } // .wpba
