@@ -6,7 +6,7 @@
 		margin: 0 20px 20px 0;
 		.wpba-edit-attachment {
 			position: absolute;
-			margin: 10px 0 0 15px;
+			margin: 7px 0 0 7px;
 			display: none;
 			li {
 				margin : 0 5px 0 0;
@@ -34,7 +34,21 @@
 		background: #eee;
 		border: 1px solid #ccc;
 		.icon-wrap  { text-align: center; width: 100%; }
-		.icon { margin: 46px auto;}
-
+		.icon { margin: 35px auto; }
+	}
+	.wpba-attachment-name {
+		width: 150px;
+		text-align: center;
+		height: 30px;
+		line-height: 30px;
+		font-weight: bold;
+		margin-top: -28px;
+		position: absolute;
+		margin: 119px 0 0 0;
+		border-top: 1px solid #ccc;
+		overflow: hidden;
+		background: white;
+		background: rgba(255,255,255,0.8);
+		box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
 	}
 } // .wpba

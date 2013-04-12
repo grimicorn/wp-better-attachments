@@ -51,7 +51,8 @@ function unattachAttachment(that) {
 function deleteAttachment(that) {
 	var $ = jQuery,
 			makeSure = confirm("Are you sure you want to permanently delete this attachment? This will permanently remove the attachment from the media gallery!!"),
-			saveElem = $('.wpba-saving')
+			saveElem = $('.wpba-saving'),
+			sortableImageElem = $( "#wpba_image_sortable" )
 	;
 	if ( makeSure ) {
 		var linkParent = that.parent('li').parent('ul'),
