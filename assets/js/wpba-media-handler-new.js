@@ -41,12 +41,7 @@ jQuery(function($){
 					if ( resp ) {
 						$( "#wpba_image_sortable" ).append( resp.image );
 						updateSortOrder($( "#wpba_image_sortable" ));
-						// Apply unattach click handlers to new elements
-						$('.wpba-unattach').on('click', function(e){
-							unattachAttachment($(this));
-							e.preventDefault();
-							return false;
-						});
+						resetClickHandlers();
 					}
 
 				});

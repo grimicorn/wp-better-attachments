@@ -1,7 +1,7 @@
 // @codekit-prepend wpba-attachment.js
 jQuery(function($){
 	$(window).load(function(){
-		$('#wpba_attachments_button').click(function() {
+		$('#wpba_attachments_button').on('click', function() {
 			tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
 
 			// store send_to_event so at end of function normal editor works
@@ -33,14 +33,8 @@ jQuery(function($){
 					if ( resp ) {
 						sortableImageElem.append( resp.image );
 						updateSortOrder(sortableImageElem);
-						// Apply unattach click handlers to new elements
-						$('.wpba-unattach').on('click', function(e){
-							unattachAttachment($(this));
-							e.preventDefault();
-							return false;
-						});
+						resetClickHandlers();
 					}
-
 				});
 
 				tb_remove();

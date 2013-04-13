@@ -27,7 +27,8 @@ function updateSortOrder(elem) {
 */
 function updateSortOrderClickHandler() {
 	var $ = jQuery,
-			sortableImageElem = $( "#wpba_image_sortable" );
+			sortableImageElem = $( "#wpba_image_sortable" )
+	;
 	sortableImageElem.sortable();
 	sortableImageElem.disableSelection();
 	sortableImageElem.on( "sortupdate", function( e, ui ) {
@@ -83,7 +84,7 @@ function unattachAttachmentLibraryClickHandler() {
 		var that = $(this),
 				attachmentId = that.data('id'),
 				ajaxData = {
-					'action' : 'wpba_unattach_',
+					'action' : 'wpba_unattach_attachment',
 					'attachmentid' : attachmentId
 				};
 		$.post(ajaxurl, ajaxData, function(data) {
@@ -155,12 +156,10 @@ function refreshAttachments(id) {
 	;
 	$.getJSON(ajaxurl, ajaxData, function(resp){
 		sortableImageElem.empty().append(resp);
-		$('.wpba-unattach').on('click', function(e){
-			unattachAttachment($(this));
-			e.preventDefault();
-			return false;
-		});
+		resetClickHandlers();
 	});
+
+	return false;
 }
 
 
@@ -170,41 +169,10 @@ function refreshAttachments(id) {
 function editModalClickHandler() {
 	$ = jQuery;
 	if($('#wpba_edit_screen').length > 0 ) {
-		var editElem = $('.wpba-edit'),
-		editScreen = $('#wpba_edit_screen'),
-		editScreenIframe = editScreen.find('iframe'),
-		attid;
 		// Edit Modal Open
-		editElem.on('click',function(e){
+		$('.wpba-edit').on('click',function(e){
 			var that = $(this);
-			// Add the correct edit link to the iframe
-			editScreenIframe.attr('src', that.attr('href'));
-
-			// Once the iframe loads add the required css, add click handler, and show editor
-			editScreenIframe.load(function() {
-				css = '#adminmenuwrap,' +
-							'#adminmenuback,' +
-							'#wpadminbar,' +
-							'#screen-meta-links,' +
-							'#wpfooter,' +
-							'.add-new-h2 { display: none; }' +
-							'#wpcontent { width: 96%; margin: 0 2%; }';
-				editScreenIframe.contents().find("head").append($("<style type='text/css'>"+css+"</style>"));
-				attid = editScreenIframe.contents().find("#post_ID").val();
-
-				// This will help with the fouc when updating an attachment
-				editScreenIframe.contents().find('#publish').on('click', function(){
-					editScreenIframe.hide();
-					editScreenIframe.load(function() {
-						editScreenIframe.contents().find("head").append($("<style type='text/css'>"+css+"</style>"));
-						editScreenIframe.show();
-					});
-				});
-
-				// Show Screen
-				editScreen.show();
-			});
-
+			attid = showEditScreenModal(that);
 			e.preventDefault();
 			return false;
 		});
@@ -213,8 +181,7 @@ function editModalClickHandler() {
 		$('#wpba_edit_screen_close').on('click', function(e){
 			var that = $(this);
 			refreshAttachments(attid);
-			resetClickHandlers();
-			editScreen.hide();
+			$('#wpba_edit_screen').hide();
 			e.preventDefault();
 			return false;
 		});
@@ -222,6 +189,45 @@ function editModalClickHandler() {
 	} // editmodal
 }
 
+
+/**
+* Show Edit Screen Modal
+*/
+function showEditScreenModal(that) {
+	var editScreen = $('#wpba_edit_screen'),
+		editScreenIframe = editScreen.find('iframe'),
+		attid
+	;
+	// Add the correct edit link to the iframe
+	editScreenIframe.attr('src', that.attr('href'));
+
+	// Once the iframe loads add the required css, add click handler, and show editor
+	editScreenIframe.load(function() {
+		css = '#adminmenuwrap,' +
+					'#adminmenuback,' +
+					'#wpadminbar,' +
+					'#screen-meta-links,' +
+					'#wpfooter,' +
+					'.add-new-h2 { display: none; }' +
+					'#wpcontent { width: 96%; margin: 0 2%; }';
+		editScreenIframe.contents().find("head").append($("<style type='text/css'>"+css+"</style>"));
+		attid = editScreenIframe.contents().find("#post_ID").val();
+
+		// This will help with the fouc when updating an attachment
+		editScreenIframe.contents().find('#publish').on('click', function(){
+			editScreenIframe.hide();
+			editScreenIframe.load(function() {
+				editScreenIframe.contents().find("head").append($("<style type='text/css'>"+css+"</style>"));
+				editScreenIframe.show();
+			});
+		});
+
+		// Show Screen
+		editScreen.show();
+
+		return attid;
+	});
+}
 
 /**
 * Reset Click Handlers
