@@ -42,7 +42,8 @@ jQuery(function($){
 			$.post(ajaxurl, ajaxData, function(data) {
 				var resp = $.parseJSON(data);
 				if (resp) {
-					that.remove();
+					$('#post-'+attachmentId+' .reattach').remove();
+					$('#post-'+attachmentId+' .unattach').remove();
 					$('#post-'+attachmentId+' .view').empty().append('<a href="http://localhost/~mothership/plugin-dev/?attachment_id='+attachmentId+'" title="View “Hello world!”" rel="permalink">View</a>');
 					$('#post-'+attachmentId+' .column-parent').empty().append('(Unattached)<br><a class="hide-if-no-js" onclick="findPosts.open' + "( 'media[]','"+attachmentId+"'"+' ); return false;" href="#the-list">Attach</a>');
 				}
