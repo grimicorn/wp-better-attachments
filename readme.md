@@ -11,11 +11,14 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 
 ##Screenshots
 ###WPBA Post Editor Button
-![wpba-editor-btn.png](wpba-editor-btn.png)
+![WPBA Post Editor Button](screenshot-1.png)
 ###WPBA Meta Box
-![wpba-meta-box.png](wpba-meta-box.png)
+![WPBA Meta Box](screenshot-2.png)
 ###WPBA Unattach Media Library Link
-![wpba-unattach-media-lib.png](wpba-unattach-media-lib.png)
+![WPBA Unattach Media Library Link](screenshot-3.png)
+###WPBA Attachment Editor
+![WPBA Attachment Editor](screenshot-4.png)
+
 
 ##Getting Started
 To get started with WP Better Attachments you can download it directly [here](https://github.com/DHolloran/wp-better-attachments/archive/master.zip), search for WP Github Recent Commit in your administrator section's Plugins > Add New, or you can download it from the [Wordpress plugins directory](http://wordpress.org/extend/plugins/wp-github-recent-commit/)
