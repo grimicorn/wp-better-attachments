@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
 Requires at least: 3.2
 Tested up to: 3.5.1
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,8 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Added file names for no image attachments
 * Miscellaneous cleanup
 
+= 1.2.0 =
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -59,3 +61,5 @@ Added support for other file types
 
 = 1.1.0 =
 Added attachment editor pop-up window to access attachment editor from posts page, Added file names for no image attachments, and more.
+
+= 1.2.0 =
