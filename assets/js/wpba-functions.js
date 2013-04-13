@@ -117,7 +117,9 @@ function deleteAttachment(that) {
 				ajaxData = {
 					'action' : 'wpba_delete_attachment',
 					'attachmentid' : attachmentId
-				};
+				}
+		;
+
 		saveElem.removeClass('hide');
 		$.post(ajaxurl, ajaxData, function(data) {
 			var resp = $.parseJSON(data);
@@ -125,6 +127,7 @@ function deleteAttachment(that) {
 				linkParent.parent('li').remove();
 				updateSortOrder( sortableImageElem );
 			}
+			saveElem.addClass('hide');
 		});
 	}
 }
