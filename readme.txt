@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
 Requires at least: 3.2
 Tested up to: 3.5.1
-Stable tag: 1.0.2
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,7 +42,7 @@ Initial Release
 = 1.0.1 =
 Added support for other file types
 
-= 1.0.2 =
+= 1.1.0 =
 
 == Upgrade Notice ==
 
@@ -52,4 +52,4 @@ Initial Release
 = 1.0.1 =
 Added support for other file types
 
-= 1.0.2 =
+= 1.1.0 =
