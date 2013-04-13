@@ -30,7 +30,7 @@ class WP_Better_Attachments
 
 		if ( $post->post_parent ) {
 			$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
-			$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">Re-attach</a>';
+			$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
 		} // if()
 
 		return $actions;
