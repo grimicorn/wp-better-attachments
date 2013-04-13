@@ -74,12 +74,12 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	/**
 	 * Output Post Attachments
 	 */
-	protected function output_post_attachments( $args = array() ) {
+	public function output_post_attachments( $args = array() ) {
 		extract( $args );
 
 		$html = '';
 		$nl = "\n";
-		$attachments = $this->get_post_attachments();
+		$attachments = $this->get_post_attachments( $args );
 		$html .= '<ul id="wpba_image_sortable" class="unstyled wpba-image-attachments">';
 		// Build Attachments Output
 		if ( !empty( $attachments ) ) {
