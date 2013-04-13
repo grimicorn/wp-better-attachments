@@ -51,6 +51,64 @@ jQuery(function($){
 			return false;
 		});
 
+
+		/**
+		* Edit Modal
+		*/
+		if($('#wpba_edit_screen').length > 0 ) {
+			var editElem = $('.wpba-edit'),
+			editScreen = $('#wpba_edit_screen'),
+			editScreenIframe = editScreen.find('iframe'),
+			attid;
+			// Edit Modal Open
+			editElem.on('click',function(e){
+				var that = $(this);
+				// Add the correct edit link to the iframe
+				editScreenIframe.attr('src', that.attr('href'));
+
+				// Once the iframe loads add the required css, add click handler, and show editor
+				editScreenIframe.load(function() {
+					css = '#adminmenuwrap,' +
+								'#adminmenuback,' +
+								'#wpadminbar,' +
+								'#screen-meta-links,' +
+								'#wpfooter,' +
+								'.add-new-h2 { display: none; }' +
+								'#wpcontent { width: 96%; margin: 0 2%; }';
+					editScreenIframe.contents().find("head").append($("<style type='text/css'>"+css+"</style>"));
+					attid = editScreenIframe.contents().find("#post_ID").val();
+
+					// This will help with the fouc when updating an attachment
+					editScreenIframe.contents().find('#publish').on('click', function(){
+						editScreenIframe.hide();
+						editScreenIframe.load(function() {
+							editScreenIframe.contents().find("head").append($("<style type='text/css'>"+css+"</style>"));
+							editScreenIframe.show();
+						});
+					});
+
+					// Show Screen
+					editScreen.show();
+				});
+
+				e.preventDefault();
+				return false;
+			});
+
+			// Edit Modal Close
+			$('#wpba_edit_screen_close').on('click', function(e){
+				var that = $(this),
+						bustCache = '?v=' + Math.round( Math.random()*10000000000000000 );
+
+				editScreen.hide();
+
+				e.preventDefault();
+				return false;
+			});
+
+		} // editmodal
+
+
 		/**
 		* Delete Attachment
 		*/

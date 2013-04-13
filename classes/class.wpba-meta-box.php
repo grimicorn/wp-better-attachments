@@ -67,6 +67,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			<div class="clear"></div>
 		</div>
 		<?php
+		echo $this->edit_modal();
 	} // render_meta_box_content()
 
 
@@ -88,6 +89,32 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 		return $html;
 	} // output_post_attachments()
+
+
+	/**
+	* Edit Modal
+	*/
+	protected function edit_modal()
+	{
+		// Modal does not exist pre 3.5
+		global $wp_version;
+		if ( floatval( $wp_version ) <= 3.4 )
+			return '';
+
+		$html = '';
+		$nl = "\n";
+		$html .= '<div tabindex="0" id="wpba_edit_screen" class="supports-drag-drop" style="display: none;">' . $nl;
+		$html .= '<div class="media-modal wp-core-ui">' . $nl;
+		$html .= '<a id="wpba_edit_screen_close" class="media-modal-close" href="#" title="Close"><span class="media-modal-icon"></span></a>' . $nl;
+		$html .= '<div class="media-modal-content">' . $nl;
+		$html .= '<iframe seamless="seamless" src=""></iframe>' . $nl;
+		$html .= '</div>' . $nl;
+		$html .= '</div>' . $nl;
+		$html .= '<div class="media-modal-backdrop"></div>' . $nl;
+		$html .= '</div>' . $nl;
+
+		return $html;
+	} // edit_modal()
 
 } // END Class WP_Better_Attachments
 

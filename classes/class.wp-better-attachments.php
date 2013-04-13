@@ -153,10 +153,15 @@ class WP_Better_Attachments
 			if ( $this->is_image( $mime_type ) ) {
 				$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
 				if ( !empty( $attachment_src ) )
-					$placeholder_img .= '<img src="'.$attachment_src[0].'" width="'.$attachment_src[1].'" height="'.$attachment_src[2].'">';
+					$src = $attachment_src[0];
+					$width = $attachment_src[1];
+					$height = $attachment_src[2];
+					$id = $attachment->ID;
+					$placeholder_img .= '<img src="'.$src.'" width="'.$width.'" height="'.$height.'" class="attid-'.$id.'" data-url="'.$src.'">';
 			} else {
 				$placeholder_img_file = $this->placeholder_image( $mime_type );
-				$placeholder_img .= '<div class="icon-wrap"><img src="'.site_url().'/wp-includes/images/crystal/'.$placeholder_img_file.'" class="icon" draggable="false"></div>';
+				$img_src = site_url().'/wp-includes/images/crystal/'.$placeholder_img_file;
+				$placeholder_img .= '<div class="icon-wrap"><img src="'.$img_src.'" class="icon" draggable="false"></div>';
 			} // if/else()
 
 			$html .= '<li class="wpba-preview pull-left ui-state-default" data-id="'.$attachment_id.'">';
