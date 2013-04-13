@@ -37,12 +37,17 @@ None so far... If you have any issues please submit an [issue](https://github.co
 == Changelog ==
 
 = 1.0.0 =
-Initial Release
+* Initial Release
 
 = 1.0.1 =
-Added support for other file types
+* Added support for other file types
 
 = 1.1.0 =
+* Added attachment editor pop-up window to access attachment editor from posts page
+* Added Re-attach link to media library
+* Added delete link to each attachment in the post editor
+* Added file names for no image attachments
+* Miscellaneous cleanup
 
 == Upgrade Notice ==
 
@@ -53,3 +58,4 @@ Initial Release
 Added support for other file types
 
 = 1.1.0 =
+Added attachment editor pop-up window to access attachment editor from posts page, Added file names for no image attachments, and more.
