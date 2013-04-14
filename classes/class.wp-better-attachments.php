@@ -19,12 +19,12 @@ class WP_Better_Attachments
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
 		add_filter( 'media_row_actions',  array( &$this, 'unattach_media_row_action' ), 10, 2 );
+		add_action('admin_menu', array( &$this, 'settings_page_menu' ) );
 	} // init_hooks()
 
 
 	/**
 	 * Add unattach link in media editor
-	 * TODO: Added reattach link as well
 	 */
 	function unattach_media_row_action( $actions, $post ) {
 
@@ -203,6 +203,7 @@ class WP_Better_Attachments
 		return '';
 	} // placeholder_image()
 
+
 	/**
 	 * Attachment is an image
 	 */
@@ -354,6 +355,28 @@ class WP_Better_Attachments
 		return $attach_id;
 	} // insert_attachemt()
 
+
+	/**
+	* Settings Page Menu
+	*/
+	function settings_page_menu() {
+		add_options_page(
+			'WP Better Attachments Options',
+			'WPBA Settings',
+			'manage_options',
+			'wp-better-attachments.php',
+			array( &$this, 'settings_page' )
+		);
+	} // settings_page_menu()
+
+
+	/**
+	* Settings Page
+	*/
+	function settings_page()
+	{
+
+	} // settings_page()
 
 } // END Class WP_Better_Attachments
 
