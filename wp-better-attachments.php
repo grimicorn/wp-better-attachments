@@ -22,7 +22,7 @@ add_action('admin_enqueue_scripts', 'wp_test');
 /**
 * Handles Activation/Deactivation/Install
 */
-require_once "classes/class.wpba-init.php";
+require_once "classes/class-wpba-init.php";
 register_activation_hook( __FILE__, array( 'WPBA_Init', 'on_activate' ) );
 register_deactivation_hook( __FILE__, array( 'WPBA_Init', 'on_deactivate' ) );
 register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
@@ -31,9 +31,10 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 /**
 * Required Classes
 */
-require_once "classes/class.wp-better-attachments.php";
-require_once "classes/class.wpba-meta-box.php";
-require_once "classes/class.wpba-ajax.php";
+require_once "classes/class-wp-better-attachments.php";
+require_once "classes/class-wpba-meta-box.php";
+require_once "classes/class-wpba-ajax.php";
+require_once "classes/class-wpba-settings.php";
 
 /**
 * Required Libs
