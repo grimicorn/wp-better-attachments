@@ -26,7 +26,6 @@ class WP_Better_Attachments
 	 * Add unattach link in media editor
 	 */
 	function unattach_media_row_action( $actions, $post ) {
-
 		if ( $post->post_parent ) {
 			$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
 			$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
@@ -41,7 +40,8 @@ class WP_Better_Attachments
 	 */
 	public function enqueue_admin_scripts() {
 		$current_screen = get_current_screen();
-		if ( $current_screen->base == 'edit' or $current_screen->base == 'upload' or $current_screen->base == 'post' ) {
+		$base = $current_screen->base;
+		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base = 'settings_page_wpba-settings' ) {
 			wp_enqueue_style( 'wpba-admin-css', plugins_url( 'assets/css/wpba-admin.css' , dirname( __FILE__ ) ), null, WPBA_VERSION );
 
 			global $wp_version;

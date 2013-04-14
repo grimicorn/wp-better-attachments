@@ -14,6 +14,7 @@ Author URI: http://danholloran.com/
 
 define( 'WPBA_VERSION', '1.2.0' );
 define( 'WPBA_LANG', 'wpba' );
+define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 
 function wp_test(){
 }
@@ -32,13 +33,11 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 * Required Classes
 */
 require_once "classes/class-wp-better-attachments.php";
+require_once 'libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php';
 require_once "classes/class-wpba-meta-box.php";
 require_once "classes/class-wpba-ajax.php";
 require_once "classes/class-wpba-settings.php";
 
-/**
-* Required Libs
-*/
 
 /**
 * Add Attachments button above post editor

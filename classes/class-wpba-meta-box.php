@@ -30,16 +30,21 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		unset( $post_types["attachment"] );
 		unset( $post_types["revision"] );
 		unset( $post_types["nav_menu_item"] );
+		unset( $post_types["deprecated_log"] );
+		global $wpba_wp_settings_api;
+		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-multicheck', 'wpba_settings', '');
 
 		foreach ( $post_types as $post_type ) {
-			add_meta_box(
-				'wpba_meta_box',
-				__( 'WP Better Attachments', WPBA_LANG ),
-				array( &$this, 'render_meta_box_content' ),
-				$post_type,
-				'advanced',
-				'high'
-			);
+			if ( !in_array( $post_type, $disabled_post_types ) ) {
+				add_meta_box(
+					'wpba_meta_box',
+					__( 'WP Better Attachments', WPBA_LANG ),
+					array( &$this, 'render_meta_box_content' ),
+					$post_type,
+					'advanced',
+					'high'
+				);
+			} // if()
 		} // foreach()
 	} // add_meta_box()
 

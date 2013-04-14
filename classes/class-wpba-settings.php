@@ -3,57 +3,136 @@
  * WP Better Attachments Settings
  * http://kovshenin.com/2012/the-wordpress-settings-api/
  */
-class WPBA_Settings extends WP_Better_Attachments
-{
+if ( !class_exists( 'WPBA_Settings' ) ) :
+	class WPBA_Settings extends WP_Better_Attachments {
 
-	/**
-	 * Constructor
-	 */
-	public function __construct( $config = array() ) {
-		$this->init_hooks();
-	} // __construct
+			/**
+			 * @var WP_Settings_API_Bootstrap
+			 */
+			private $wp_settings_api;
+
+			/**
+			 * Constructor
+			 */
+			function __construct() {
+				parent::__construct();
+				$this->wp_settings_api = new WP_Settings_API_Bootstrap();
+
+				add_action( 'admin_init', array( $this, 'admin_init') );
+				add_action( 'admin_menu', array( $this, 'admin_menu') );
+			} // __construct()
+
+			/**
+			 * Initialize the settings on admin_init hook
+			 */
+			function admin_init() {
+
+				//set the settings
+				$this->wp_settings_api->set_sections( $this->get_settings_sections() );
+				$this->wp_settings_api->set_fields( $this->get_settings_fields() );
+
+				//initialize settings
+				$this->wp_settings_api->admin_init();
+			} // admin_init()
+
+			/**
+			 * Add the menu on admin_menu hook
+			 */
+			function admin_menu() {
+				add_options_page(
+					'WP Better Attachments Settings',
+					'WPBA Settings',
+					'delete_posts',
+					'wpba-settings',
+					array($this, 'plugin_page')
+				);
+			} // admin_menu(
 
 
-	/**
-	 * Initialization Hooks
-	 */
-	public function init_hooks() {
-		add_action('admin_menu', array( &$this, 'settings_page_menu' ) );
-	} // init_hooks()
+			/**
+			 * Set up all of the Main settings sections
+			 *
+			 * @return array
+			 */
+			function get_settings_sections() {
+				$sections = array(
+					array(
+						'id' => 'wpba_settings',
+						'title' => __( 'Settings', 'wpba' )
+					)
+				);
+				return $sections;
+			}
 
 
-	/**
-	* Settings Page Menu
-	*/
-	function settings_page_menu() {
-		add_options_page(
-			'WP Better Attachments Options',
-			'WPBA Settings',
-			'manage_options',
-			'wp-better-attachments.php',
-			array( &$this, 'settings_page' )
-		);
-	} // settings_page_menu()
+			/**
+			 * Returns all the settings fields
+			 *
+			 * @return array settings fields
+			 */
+			function get_settings_fields() {
+				// Get Post Types
+				$post_types = get_post_types();
+				unset( $post_types["attachment"] );
+				unset( $post_types["revision"] );
+				unset( $post_types["nav_menu_item"] );
+				unset( $post_types["deprecated_log"] );
 
+				// Cleanup post types
+				foreach ( $post_types as $key => $post_type ) {
+					$post_type_obj = get_post_type_object( $post_type );
+					$post_types[$key] = $post_type_obj->labels->name;
+				} // foreach()
 
-	/**
-	* Settings Page
-	*/
-	function settings_page()
-	{
+				// Settings
+				$settings_fields = array(
+					'wpba_settings' => array(
+						array(
+							'name'      => 'wpba-multicheck',
+							'label'     => __( 'Disable Post Types', 'wpba' ),
+							'desc'      => __( '', 'wpba' ),
+							'type'      => 'multicheck',
+							'options'   => $post_types
+						)
+					)
+				);
 
-	} // settings_page()
+				return $settings_fields;
+			} // get_settings_fields()
 
-} // END Class WPBA_Settings
+			/**
+			 * Display the admin page
+			 */
+			function plugin_page() {
+				echo '<div class="wrap">';
+				echo '<div id="icon-options-general" class="icon32"></div>';
+				echo '<h2>WP Better Attachments Settings</h2>';
+				settings_errors( 'wpba-multicheck', false, true );
 
-/**
- * Instantiate class and create return method for easier use later
- */
-global $wpba;
-$wpba = new WPBA_Settings();
+				$this->wp_settings_api->show_navigation();
+				$this->wp_settings_api->show_forms();
 
-function call_WPBA_Settings() {
-	return new WPBA_Settings();
-} // call_WPBA_Settings()
-if ( is_admin() )
-	add_action( 'load-post.php', 'call_WPBA_Settings' );
+				echo '</div>';
+			} // plugin_page()
+
+			/**
+			 * Get all the pages
+			 *
+			 * @return array page names with key value pairs
+			 */
+			function get_pages() {
+				$pages = get_pages();
+				$pages_options = array();
+				if ( $pages ) {
+						foreach ($pages as $page) {
+								$pages_options[$page->ID] = $page->post_title;
+						}
+				}
+
+				return $pages_options;
+			} // get_pages()
+	} // class
+endif; // if class_exists
+
+// initiate the class
+$settings = new WPBA_Settings();
