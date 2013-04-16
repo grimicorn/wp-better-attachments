@@ -147,9 +147,9 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 		{
 			// Post Type Options
 			$post_type_options = array(
-				'option1' => 'Option 1',
-				'option2' => 'Option 2',
-				'option3' => 'Option 3'
+				'title' 	=> 'Title Editor',
+				'caption'	=> 'Caption Editor',
+				'wysiwg' 	=> 'WYSWIG Editor'
 			);
 
 			// Settings Array

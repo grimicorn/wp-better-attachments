@@ -394,7 +394,7 @@ if ( ! class_exists( 'WP_Settings_API_Bootstrap' ) ):
         function show_forms() {
             ?>
         <div class="metabox-holder">
-            <div class="postbox">
+            <div>
                 <?php foreach ( $this->settings_sections as $form ) { ?>
                 <div id="<?php echo $form['id']; ?>" class="group">
                     <form method="post" action="options.php">
