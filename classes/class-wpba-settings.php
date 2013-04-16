@@ -85,7 +85,7 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 				$post_type_obj = get_post_type_object( $post_type );
 				$post_types[$key] = $post_type_obj->labels->name;
 				// Setup Post Type Options
-				// $post_type_options[] = $this->build_post_type_array( $post_type_obj );
+				$post_type_options[] = $this->build_post_type_array( $post_type_obj );
 			} // foreach()
 
 			$post_type_disable = array(
@@ -147,9 +147,9 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 		{
 			// Post Type Options
 			$post_type_options = array(
-				'option1' => 'Option 1',
-				'option2' => 'Option 2',
-				'option3' => 'Option 3'
+				'title' 	=> 'Title Editor',
+				'caption'	=> 'Caption Editor',
+				'wysiwg' 	=> 'WYSWIG Editor'
 			);
 
 			// Settings Array
