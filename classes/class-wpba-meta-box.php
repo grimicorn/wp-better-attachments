@@ -55,6 +55,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	public function render_meta_box_content() {
 		global $post; ?>
 		<div id="wpba-post-<?php echo $post->ID; ?>" data-postid="<?php echo $post->ID; ?>" class="clearfix wpba">
+			<input type="hidden" name="wpba_nonce" id="wpba_nonce" value="<?php echo wp_create_nonce(basename(__FILE__)) ;?>" />
 			<div class="uploader pull-left">
 			<?php global $wp_version;
 			if ( floatval( $wp_version ) >= 3.5 ) { ?>

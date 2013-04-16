@@ -217,18 +217,39 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	* AJAX Update Post Meta
+	* Save Custom Meta
 	*/
-	public function wpba_update_post_meta_callback()
+	public function wpba_update_post_meta_callback($args = array())
 	{
-		extract( $_POST );
-		$resp = false;
-		if ( !empty( $post_id ) AND !empty( $meta_key ) AND !empty( $meta_value ) ) {
-			$resp = '';
-			// update_post_meta($post_id, $meta_key, $meta_value, $prev_value);
+		 extract( $_POST );
+		$post_id = isset($post_id) ? $post_id : '';
+		$custom_meta_fields = isset($custom_meta_fields) ? $custom_meta_fields : '';
+
+		// verify nonce
+		$mb_nonce = isset($wpba_nonce) ? $wpba_nonce : '';
+		if (!wp_verify_nonce($mb_nonce, basename(__FILE__))) {
+			echo json_encode( false );
+			die();
 		}
 
-		echo json_encode( $resp );
+		// check autosave
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			echo json_encode( false );
+			die();
+		}
+
+		// loop through fields and save the data
+		foreach ($custom_meta_fields as $field) {
+			$old = get_post_meta($post_id, esc_attr( $field['id'] ), true);
+			$new = isset($_POST[esc_attr( $field['id'] )]) ? $_POST[esc_attr( $field['id'] )] : '';
+			if ($new && $new != $old) {
+				update_post_meta($post_id, esc_attr( $field['id'] ), $new);
+			} elseif ('' == $new && $old) {
+				delete_post_meta($post_id, esc_attr( $field['id'] ), $old);
+			}
+		} // end foreach
+
+		echo json_encode( true );
 		die();
 	} // wpba_update_post_meta_callback()
 

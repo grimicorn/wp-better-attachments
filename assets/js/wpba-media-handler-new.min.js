@@ -242,12 +242,14 @@ function wpbaUpdatePostMeta(id, key, value, prev)
 			prev = ( prev != undefined) ? prev : false;
 			ajaxData = {
 				action: 'wpba_update_post_meta',
-				post_id:	id,
+				//  'custom_meta_fields': $meta_fields_array
+				//  wpba_nonce : '',
 				meta_key:	key,
 				meta_value:	value,
 				prev_value:	prev
 			}
 	;
+
 	$.post(ajaxurl, ajaxData, function(resp){
 		console.log(resp);
 	});
