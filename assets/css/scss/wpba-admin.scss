@@ -3,3 +3,8 @@
 
 /* Settings */
 .nav-tab-wrapper { display: none; }
+#wpba_settings {
+	.form-table {
+		tr { display: none; }
+	}
+}
