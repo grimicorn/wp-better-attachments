@@ -40,8 +40,8 @@ jQuery(function($){
 					resp = $.parseJSON(data);
 					if ( resp ) {
 						$( "#wpba_image_sortable" ).append( resp.image );
-						updateSortOrder($( "#wpba_image_sortable" ));
-						resetClickHandlers();
+						wpbaUpdateSortOrder($( "#wpba_image_sortable" ));
+						wpbaResetClickHandlers();
 					}
 
 				});
