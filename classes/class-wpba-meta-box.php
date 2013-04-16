@@ -32,7 +32,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		unset( $post_types["nav_menu_item"] );
 		unset( $post_types["deprecated_log"] );
 		global $wpba_wp_settings_api;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-multicheck', 'wpba_settings', '');
+		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', '');
 
 		foreach ( $post_types as $post_type ) {
 			if ( !in_array( $post_type, $disabled_post_types ) ) {
