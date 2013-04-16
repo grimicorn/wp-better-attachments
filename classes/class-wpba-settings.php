@@ -85,7 +85,7 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 				$post_type_obj = get_post_type_object( $post_type );
 				$post_types[$key] = $post_type_obj->labels->name;
 				// Setup Post Type Options
-				$post_type_options[] = $this->build_post_type_array( $post_type_obj );
+				// $post_type_options[] = $this->build_post_type_array( $post_type_obj );
 			} // foreach()
 
 			$post_type_disable = array(
