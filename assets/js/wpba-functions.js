@@ -43,7 +43,7 @@ function wpbawpbaUpdateSortOrderClickHandler() {
 function wpbaUnattachAttachment(that) {
 	var $ = jQuery,
 			sortableImageElem = $( "#wpba_image_sortable" ),
-			linkParent = that.parent('li').parent('ul'),
+			linkParent = that.parent('li').parent('ul').parent('div'),
 			attachmentId = linkParent.data('id'),
 			ajaxData = {
 				'action' : 'wpba_unattach_attachment',
@@ -51,6 +51,7 @@ function wpbaUnattachAttachment(that) {
 			},
 			saveElem = $('.wpba-saving')
 	;
+	console.log(linkParent);
 	saveElem.removeClass('hide');
 	$.post(ajaxurl, ajaxData, function(data) {
 		var resp = $.parseJSON(data);
@@ -112,7 +113,7 @@ function wpbaDeleteAttachment(that) {
 			sortableImageElem = $( "#wpba_image_sortable" )
 	;
 	if ( makeSure ) {
-		var linkParent = that.parent('li').parent('ul'),
+		var linkParent = that.parent('li').parent('ul').parent('div'),
 				attachmentId = linkParent.data('id'),
 				ajaxData = {
 					'action' : 'wpba_delete_attachment',

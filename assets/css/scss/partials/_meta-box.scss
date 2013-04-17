@@ -4,17 +4,10 @@
 	li {
 		cursor: pointer;
 		margin: 0 20px 20px 0;
-		.wpba-edit-attachment {
-			position: absolute;
-			margin: 7px 0 0 7px;
-			display: none;
-			li {
-				margin : 0 5px 0 0;
-			}
-		}
-		&:hover > .wpba-edit-attachment {
-			display: inline-block;
-		}
+		padding-bottom: 20px;
+		border-bottom: 1px solid #dfdfdf;
+		clear: both;
+		min-height: 150px;
 	}
 	.wpba-saving {
 		height: 24px;
@@ -33,8 +26,23 @@
 		box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
 		background: #eee;
 		border: 1px solid #ccc;
+		margin-right: 20px;
 		.icon-wrap  { text-align: center; width: 100%; }
 		.icon { margin: 35px auto; }
+		&:hover > .wpba-edit-attachment {
+			display: inline-block;
+		}
+		.wpba-edit-attachment {
+			position: absolute;
+			margin: 7px 0 0 7px;
+			display: none;
+			li {
+				margin : 0 5px 0 0;
+				clear: none;
+				min-height: 0;
+				border-bottom: none;
+			}
+		}
 	}
 	.wpba-attachment-name {
 		width: 150px;

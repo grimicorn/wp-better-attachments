@@ -137,56 +137,6 @@ class WP_Better_Attachments
 
 
 	/**
-	 * Build Attachment List
-	 */
-	protected function build_image_attachment_li( $attachments, $args = array() ) {
-		extract( $args );
-		$html = '';
-		$nl = "\n";
-
-		foreach ( $attachments as $attachment ) {
-			$attachment_id = ( isset( $a_array ) and $a_array ) ? $attachment['id'] : $attachment->ID;
-			$attachment = get_post( $attachment_id );
-			$mime_type = get_post_mime_type( $attachment_id );
-			$attachment_edit_link = admin_url( "post.php?post={$attachment_id}&action=edit" );
-			$placeholder_img = '';
-
-			if ( $this->is_image( $mime_type ) ) {
-				$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-				if ( !empty( $attachment_src ) )
-					$src = $attachment_src[0];
-					$width = $attachment_src[1];
-					$height = $attachment_src[2];
-					$id = $attachment->ID;
-					$placeholder_img .= '<img src="'.$src.'" width="'.$width.'" height="'.$height.'" class="attid-'.$id.'" data-url="'.$src.'">';
-			} else {
-				$placeholder_img_file = $this->placeholder_image( $mime_type );
-				$img_src = site_url().'/wp-includes/images/crystal/'.$placeholder_img_file;
-				$placeholder_img .= '<div class="icon-wrap"><img src="'.$img_src.'" class="icon" draggable="false"></div>';
-			} // if/else()
-
-			$html .= '<li class="wpba-preview pull-left ui-state-default" data-id="'.$attachment_id.'">';
-			$html .= '<ul class="unstyled wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">';
-			$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a> | </li>';
-			$html .= '<li class="pull-left"><a href="'.$attachment_edit_link.'" class="wpba-edit">Edit</a> | </li>';
-			$html .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>';
-			$html .= '</ul>';
-			if ( !$this->is_image( $mime_type ) ) {
-				$attachment_url = wp_get_attachment_url( $attachment->ID );
-				$file_name = pathinfo( $attachment_url, PATHINFO_FILENAME );
-				$file_type = pathinfo( $attachment_url, PATHINFO_EXTENSION );
-				$attachment_title = "{$file_name}.{$file_type}";
-				$html .= '<span class="wpba-attachment-name">'.$attachment_title.'</span>';
-			} // if()
-			$html .= $placeholder_img;
-			$html .= '</li>';
-		} // foreach();
-
-		return $html;
-	} // build_image_attachment_li()
-
-
-	/**
 	* Attachment placeholder image name
 	*/
 	protected function placeholder_image( $mime_type )

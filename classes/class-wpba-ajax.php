@@ -121,7 +121,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 				) );
 		} // foreach
 
-		$image_html = $this->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
+		global $wpbamb;
+		$image_html = $wpbamb->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
 
 		echo json_encode( array(
 			'image' => $image_html
@@ -167,7 +168,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 				) );
 		} // foreach
 
-		$html = $this->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
+		global $wpbamb;
+		$html = $wpbamb->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
 
 		echo json_encode( $html );
 		die();
@@ -208,7 +210,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 		$attachments = $this->get_post_attachments( array( 'post' => get_post( $postid ) ) );
 		// Build Attachments Output
 		if ( !empty( $attachments ) ) {
-			$html .= $this->build_image_attachment_li( $attachments );
+			global $wpbamb;
+			$html .= $wpbamb->build_image_attachment_li( $attachments );
 		} // if (!empty($attachments))
 
 		echo json_encode( $html );

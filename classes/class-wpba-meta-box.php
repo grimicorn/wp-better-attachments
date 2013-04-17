@@ -78,6 +78,56 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 
 	/**
+	* Output Title Form Input
+	*/
+	public function output_title_input( $args = array() )
+	{
+		extract( $args );
+		$html = '';
+		$nl = "\n";
+		$html .= '<input ' . $nl;
+		$html .= 'class="pull-left wpba-attachment-title" ' . $nl;
+		$html .= 'id="attachment_'.$attachment->ID.'_title" ' . $nl;
+		$html .= 'name="attachment_'.$attachment->ID.'_title" ' . $nl;
+		$html .= 'placeholder="Title">' . $nl;
+		return $html;
+	} // output_title_input()
+
+
+	/**
+	* Output Caption Form Input
+	*/
+	public function output_caption_input( $args = array() )
+	{
+		extract( $args );
+		$html = '';
+		$nl = "\n";
+		$html .= '<textarea ' . $nl;
+		$html .= 'class="pull-left clear wpba-attachment-caption" ' . $nl;
+		$html .= 'id="attachment_'.$attachment->ID.'_caption" ' . $nl;
+		$html .= 'name="attachment_'.$attachment->ID.'_caption" ' . $nl;
+		$html .= 'placeholder="Caption" ></textarea>' . $nl;
+		return $html;
+	} // output_caption_input()
+
+
+	/**
+	* Output WYSWIG Form Input
+	*/
+	public function output_wyswig_input( $args = array() )
+	{
+		// Not Available before 3.3
+		global $wp_version;
+		if ( floatval($wp_version) >= 3.3 )
+			return false;
+
+		extract( $args );
+		$html = '';
+		$nl = "\n";
+		return $html;
+	} // output_wyswig_input()
+
+	/**
 	 * Output Post Attachments
 	 */
 	public function output_post_attachments( $args = array() ) {
@@ -95,6 +145,63 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 		return $html;
 	} // output_post_attachments()
+
+
+	/**
+	* Build Attachment List
+	*/
+	public function build_image_attachment_li( $attachments, $args = array() ) {
+		extract( $args );
+		$html = '';
+		$nl = "\n";
+
+		foreach ( $attachments as $attachment ) {
+			$attachment_id = ( isset( $a_array ) and $a_array ) ? $attachment['id'] : $attachment->ID;
+			$attachment = get_post( $attachment_id );
+			$mime_type = get_post_mime_type( $attachment_id );
+			$attachment_edit_link = admin_url( "post.php?post={$attachment_id}&action=edit" );
+			$placeholder_img = '';
+
+			if ( $this->is_image( $mime_type ) ) {
+				$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
+				if ( !empty( $attachment_src ) )
+					$src = $attachment_src[0];
+					$width = $attachment_src[1];
+					$height = $attachment_src[2];
+					$id = $attachment->ID;
+					$placeholder_img .= '<img src="'.$src.'" width="'.$width.'" height="'.$height.'" class="attid-'.$id.'" data-url="'.$src.'">';
+			} else {
+				$placeholder_img_file = $this->placeholder_image( $mime_type );
+				$img_src = site_url().'/wp-includes/images/crystal/'.$placeholder_img_file;
+				$placeholder_img .= '<div class="icon-wrap"><img src="'.$img_src.'" class="icon" draggable="false"></div>';
+			} // if/else()
+
+			$html .= '<li class="wpba-attachment-item ui-state-default" data-id="'.$attachment_id.'">' . $nl;
+				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
+					$html .= '<ul class="unstyled pull-left wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">' . $nl;
+						$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a> | </li>' . $nl;
+						$html .= '<li class="pull-left"><a href="'.$attachment_edit_link.'" class="wpba-edit">Edit</a> | </li>' . $nl;
+						$html .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>' . $nl;
+					$html .= '</ul>' . $nl;
+					if ( !$this->is_image( $mime_type ) ) {
+						$attachment_url = wp_get_attachment_url( $attachment->ID );
+						$file_name = pathinfo( $attachment_url, PATHINFO_FILENAME );
+						$file_type = pathinfo( $attachment_url, PATHINFO_EXTENSION );
+						$attachment_title = "{$file_name}.{$file_type}";
+						$html .= '<span class="wpba-attachment-name">'.$attachment_title.'</span>';
+					} // if()
+					$html .= $placeholder_img;
+				$html .= '</div>' . $nl;
+				$html .= '<div class="wpba-form-wrap pull-left">' . $nl;
+					$html .= $this->output_title_input( array( 'attachment' => $attachment) ) . $nl;
+					$html .= $this->output_caption_input( array( 'attachment' => $attachment) ) . $nl;
+					// $html .= $this->output_wyswig_input( array( 'attachment' => $attachment) ) . $nl;
+				$html .= '</div>' . $nl;
+			$html .= '</li>'  . $nl;
+		} // foreach();
+
+		return $html;
+	} // build_image_attachment_li()
 
 
 	/**
