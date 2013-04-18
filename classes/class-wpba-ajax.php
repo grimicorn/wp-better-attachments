@@ -26,21 +26,21 @@ class WPBA_Ajax extends WP_Better_Attachments
 	 * AJAX Hooks
 	 */
 	public function ajax_hooks() {
-		add_action( 'wp_ajax_wpba_update_sort_order', array( &$this, 'wpba_update_sort_order_callback' ) );
-		add_action( 'wp_ajax_wpba_unattach_attachment', array( &$this, 'wpba_unattach_attachment_callback' ) );
-		add_action( 'wp_ajax_wpba_add_attachment', array( &$this, 'wpba_add_attachment_callback' ) );
-		add_action( 'wp_ajax_wpba_add_attachment_old', array( &$this, 'wpba_add_attachment_old_callback' ) );
-		add_action( 'wp_ajax_wpba_delete_attachment', array( &$this, 'wpba_delete_attachment_callback' ) );
-		add_action( 'wp_ajax_wpba_refresh_attachments', array( &$this, 'wpba_refresh_attachments_callback' ) );
-		add_action( 'wp_ajax_wpba_update_post_meta', array( &$this, 'wpba_update_post_meta_callback' ) );
-		add_action( 'wp_ajax_wpba_update_post', array( &$this, 'wpba_update_post_callback' ) );
+		add_action( 'wp_ajax_wpba_update_sort_order', array( &$this, 'update_sort_order_callback' ) );
+		add_action( 'wp_ajax_wpba_unattach_attachment', array( &$this, 'unattach_attachment_callback' ) );
+		add_action( 'wp_ajax_wpba_add_attachment', array( &$this, 'add_attachment_callback' ) );
+		add_action( 'wp_ajax_wpba_add_attachment_old', array( &$this, 'add_attachment_old_callback' ) );
+		add_action( 'wp_ajax_wpba_delete_attachment', array( &$this, 'delete_attachment_callback' ) );
+		add_action( 'wp_ajax_wpba_refresh_attachments', array( &$this, 'refresh_attachments_callback' ) );
+		add_action( 'wp_ajax_wpba_update_post_meta', array( &$this, 'update_post_meta_callback' ) );
+		add_action( 'wp_ajax_wpba_update_post', array( &$this, 'update_post_callback' ) );
 	} // ajax_hooks()
 
 
 	/**
 	 * AJAX Update Sort Order
 	 */
-	public function wpba_update_sort_order_callback() {
+	public function update_sort_order_callback() {
 		extract( $_POST );
 
 		// Check for empty values
@@ -67,13 +67,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 		echo json_encode( true );
 		die();
-	} // wpba_update_sort_order_callback()
+	} // update_sort_order_callback()
 
 
 	/**
 	 * AJAX Unattach Image
 	 */
-	public function wpba_unattach_attachment_callback() {
+	public function unattach_attachment_callback() {
 		extract( $_POST );
 
 		if ( !isset( $attachmentid ) ) {
@@ -84,13 +84,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 		$unattach = $this->unattach( array( 'attachment_id' => $attachmentid ) );
 		echo json_encode( $unattach );
 		die();
-	} // wpba_unattach_attachment_callback()
+	} // unattach_attachment_callback()
 
 
 	/**
 	 * AJAX Add Attachment
 	 */
-	public function wpba_add_attachment_callback() {
+	public function add_attachment_callback() {
 		extract( $_POST );
 		$args = array(
 			'post' => get_post( $parentid )
@@ -129,13 +129,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 			'image' => $image_html
 		));
 		die();
-	} // wpba_add_attachment_callback()
+	} // add_attachment_callback()
 
 
 	/**
 	 * AJAX Add Attachment - Old Media Uploader
 	 */
-	public function wpba_add_attachment_old_callback() {
+	public function add_attachment_old_callback() {
 		extract( $_POST );
 		$args = array(
 			'post' => get_post( $parentid )
@@ -174,13 +174,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 		echo json_encode( $html );
 		die();
-	} // wpba_add_attachment_old_callback()
+	} // add_attachment_old_callback()
 
 
 	/**
 	 * AJAX Update Sort Order
 	 */
-	public function wpba_delete_attachment_callback() {
+	public function delete_attachment_callback() {
 		extract( $_POST );
 		// Make sure we have something to work with
 		if ( !isset( $attachmentid ) ) {
@@ -195,13 +195,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 			echo json_encode( true );
 		} // if/else()
 		die();
-	} // wpba_delete_attachment_callback()
+	} // delete_attachment_callback()
 
 
 	/**
 	* AJAX Refresh Attachments
 	*/
-	public function wpba_refresh_attachments_callback()
+	public function refresh_attachments_callback()
 	{
 		global $wpbamb;
 		extract( $_GET );
@@ -217,13 +217,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 		echo json_encode( $html );
 		die();
-	} // wpba_refresh_attachments_callback()
+	} // refresh_attachments_callback()
 
 
 	/**
 	* Save Custom Meta
 	*/
-	public function wpba_update_post_meta_callback($args = array())
+	public function update_post_meta_callback($args = array())
 	{
 		 extract( $_POST );
 		$post_id = isset($post_id) ? $post_id : '';
@@ -255,13 +255,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 		echo json_encode( true );
 		die();
-	} // wpba_update_post_meta_callback()
+	} // update_post_meta_callback()
 
 
 	/**
 	* Update Post
 	*/
-	public function wpba_update_post_callback()
+	public function update_post_callback()
 	{
 		extract( $_POST );
 		$my_post = array();
@@ -271,7 +271,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 		// Update the post into the database
 		echo json_encode( wp_update_post( $my_post ) );
 		die();
-	} //wpba_update_post_callback()
+	} //update_post_callback()
 
 } // END Class WPBA_Ajax
 
