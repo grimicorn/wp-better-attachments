@@ -86,9 +86,10 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$html = '';
 		$nl = "\n";
 		$html .= '<input ' . $nl;
-		$html .= 'class="pull-left wpba-attachment-title" ' . $nl;
+		$html .= 'class="pull-left wpba-attachment-title widefat" ' . $nl;
 		$html .= 'id="attachment_'.$attachment->ID.'_title" ' . $nl;
 		$html .= 'name="attachment_'.$attachment->ID.'_title" ' . $nl;
+		$html .= 'value="'.$attachment->post_title.'" ' . $nl;
 		$html .= 'placeholder="Title">' . $nl;
 		return $html;
 	} // output_title_input()
@@ -103,10 +104,10 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$html = '';
 		$nl = "\n";
 		$html .= '<textarea ' . $nl;
-		$html .= 'class="pull-left clear wpba-attachment-caption" ' . $nl;
+		$html .= 'class="pull-left clear wpba-attachment-caption widefat" ' . $nl;
 		$html .= 'id="attachment_'.$attachment->ID.'_caption" ' . $nl;
 		$html .= 'name="attachment_'.$attachment->ID.'_caption" ' . $nl;
-		$html .= 'placeholder="Caption" ></textarea>' . $nl;
+		$html .= 'placeholder="Caption" >'.$attachment->post_excerpt.'</textarea>' . $nl;
 		return $html;
 	} // output_caption_input()
 
@@ -176,7 +177,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 				$placeholder_img .= '<div class="icon-wrap"><img src="'.$img_src.'" class="icon" draggable="false"></div>';
 			} // if/else()
 
-			$html .= '<li class="wpba-attachment-item ui-state-default" data-id="'.$attachment_id.'">' . $nl;
+			$html .= '<li class="wpba-attachment-item ui-state-default" id="attachment_'.$attachment_id.'" data-id="'.$attachment_id.'">' . $nl;
 				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= '<ul class="unstyled pull-left wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">' . $nl;
 						$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a> | </li>' . $nl;
@@ -187,12 +188,12 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 						$attachment_url = wp_get_attachment_url( $attachment->ID );
 						$file_name = pathinfo( $attachment_url, PATHINFO_FILENAME );
 						$file_type = pathinfo( $attachment_url, PATHINFO_EXTENSION );
-						$attachment_title = "{$file_name}.{$file_type}";
+						$attachment_title = "<span class='wpba-filename'>{$file_name}</span>.{$file_type}";
 						$html .= '<span class="wpba-attachment-name">'.$attachment_title.'</span>';
 					} // if()
 					$html .= $placeholder_img;
 				$html .= '</div>' . $nl;
-				$html .= '<div class="wpba-form-wrap pull-left">' . $nl;
+				$html .= '<div class="wpba-form-wrap pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= $this->output_title_input( array( 'attachment' => $attachment) ) . $nl;
 					$html .= $this->output_caption_input( array( 'attachment' => $attachment) ) . $nl;
 					// $html .= $this->output_wyswig_input( array( 'attachment' => $attachment) ) . $nl;
