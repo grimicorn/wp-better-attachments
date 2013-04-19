@@ -147,8 +147,8 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 		{
 			// Post Type Options
 			$post_type_options = array(
-				'title' 	=> 'Title Editor',
-				'caption'	=> 'Caption Editor'
+				'title' 	=> 'Disable Title Editor',
+				'caption'	=> 'Disable Caption Editor'
 			);
 			// Not Available before 3.3
 			// global $wp_version;
