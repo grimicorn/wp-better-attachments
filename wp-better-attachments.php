@@ -40,6 +40,16 @@ require_once "classes/class-wpba-settings.php";
 
 
 /**
+* Easy Attachment Function
+*/
+function wpba_get_attachments( $post_id )
+{
+	global $wpba;
+	$post = get_post( $post_id );
+	return $wpba->get_post_attachments( $args = array( 'post' => $post ) );
+}
+
+/**
 * Add Attachments button above post editor
 */
 global $wp_version;
