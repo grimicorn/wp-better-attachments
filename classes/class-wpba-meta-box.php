@@ -83,8 +83,19 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	public function output_title_input( $args = array() )
 	{
 		extract( $args );
+		$post = get_post( $attachment->post_parent );
+		$post_type_obj = get_post_type_object( $post->post_type );
+		global $wpba_wp_settings_api;
+		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', '');
+
+		// Make sure user has not disabled title editing
+		if ( isset( $disabled_post_types['title'] ) )
+			return '';
+
+		// Build title form
 		$html = '';
 		$nl = "\n";
+		$html .= '<label class="wpba-label" for="attachment_'.$attachment->ID.'_title">Title</label>';
 		$html .= '<input ' . $nl;
 		$html .= 'class="pull-left wpba-attachment-title widefat" ' . $nl;
 		$html .= 'id="attachment_'.$attachment->ID.'_title" ' . $nl;
@@ -101,8 +112,19 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	public function output_caption_input( $args = array() )
 	{
 		extract( $args );
+		$post = get_post( $attachment->post_parent );
+		$post_type_obj = get_post_type_object( $post->post_type );
+		global $wpba_wp_settings_api;
+		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', '');
+
+		// Make sure user has not disabled caption editing
+		if ( isset( $disabled_post_types['caption'] ) )
+			return '';
+
+		// Build caption form
 		$html = '';
 		$nl = "\n";
+		$html .= '<label class="wpba-label" for="attachment_'.$attachment->ID.'_caption">Caption</label>';
 		$html .= '<textarea ' . $nl;
 		$html .= 'class="pull-left clear wpba-attachment-caption widefat" ' . $nl;
 		$html .= 'id="attachment_'.$attachment->ID.'_caption" ' . $nl;
@@ -178,6 +200,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			} // if/else()
 
 			$html .= '<li class="wpba-attachment-item ui-state-default" id="attachment_'.$attachment_id.'" data-id="'.$attachment_id.'">' . $nl;
+				$html .= '<div class="wpba-drag-handle"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>' . $nl;
 				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= '<ul class="unstyled pull-left wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">' . $nl;
 						$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a> | </li>' . $nl;
@@ -194,10 +217,11 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 					$html .= $placeholder_img;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="wpba-form-wrap pull-left" data-id="'.$attachment_id.'">' . $nl;
-					$html .= $this->output_title_input( array( 'attachment' => $attachment) ) . $nl;
-					$html .= $this->output_caption_input( array( 'attachment' => $attachment) ) . $nl;
-					// $html .= $this->output_wyswig_input( array( 'attachment' => $attachment) ) . $nl;
+					$html .= '<div>' . $this->output_title_input( array( 'attachment' => $attachment) )  . '</div>' . $nl;
+					$html .= '<div>' . $this->output_caption_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
+					// $html .= '<div>' . $this->output_wyswig_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
 				$html .= '</div>' . $nl;
+				$html .= '<div class="clear"></div>' . $nl;
 			$html .= '</li>'  . $nl;
 		} // foreach();
 
