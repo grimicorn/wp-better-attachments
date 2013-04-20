@@ -1,4 +1,6 @@
 // @codekit-prepend wpba-attachment.js
+// @codekit-prepend vendor/jquery.imgareaselect.pack.js
+// @codekit-prepend wpba-crop-3.5.js
 jQuery(function($){
 	$(window).load(function(){
 		var file_frame,
