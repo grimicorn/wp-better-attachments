@@ -200,6 +200,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			} // if/else()
 
 			$html .= '<li class="wpba-attachment-item ui-state-default" id="attachment_'.$attachment_id.'" data-id="'.$attachment_id.'">' . $nl;
+				$html .= '<div class="inner">' . $nl;
 				$html .= '<div class="wpba-drag-handle"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>' . $nl;
 				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= '<ul class="unstyled pull-left wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">' . $nl;
@@ -217,11 +218,13 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 					$html .= $placeholder_img;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="wpba-form-wrap pull-left" data-id="'.$attachment_id.'">' . $nl;
+					$html .= '<div class="wpba-attachment-id-output">Attachment ID: '.$attachment->ID.'</div>'  . $nl;
 					$html .= '<div>' . $this->output_title_input( array( 'attachment' => $attachment) )  . '</div>' . $nl;
 					$html .= '<div>' . $this->output_caption_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
 					// $html .= '<div>' . $this->output_wyswig_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="clear"></div>' . $nl;
+				$html .= '</div>' . $nl;
 			$html .= '</li>'  . $nl;
 		} // foreach();
 
