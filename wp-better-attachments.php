@@ -35,6 +35,7 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 require_once "classes/class-wp-better-attachments.php";
 require_once 'libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php';
 require_once "classes/class-wpba-meta-box.php";
+require_once "classes/class-wpba-crop-resize.php";
 require_once "classes/class-wpba-ajax.php";
 require_once "classes/class-wpba-settings.php";
 
