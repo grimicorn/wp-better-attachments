@@ -8,7 +8,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	 * Constructor
 	 */
-	public function __construct( $config = array() ) {
+	public function __construct( $config = array() )
+	{
 		parent::__construct();
 		$this->ajax_hooks();
 		$this->init_hooks();
@@ -18,29 +19,32 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	 * Initialization Hooks
 	 */
-	public function init_hooks() {
+	public function init_hooks()
+	{
 	} // init_hooks()
 
 
 	/**
 	 * AJAX Hooks
 	 */
-	public function ajax_hooks() {
+	public function ajax_hooks()
+	{
 		add_action( 'wp_ajax_wpba_update_sort_order', array( &$this, 'update_sort_order_callback' ) );
 		add_action( 'wp_ajax_wpba_unattach_attachment', array( &$this, 'unattach_attachment_callback' ) );
 		add_action( 'wp_ajax_wpba_add_attachment', array( &$this, 'add_attachment_callback' ) );
 		add_action( 'wp_ajax_wpba_add_attachment_old', array( &$this, 'add_attachment_old_callback' ) );
 		add_action( 'wp_ajax_wpba_delete_attachment', array( &$this, 'delete_attachment_callback' ) );
 		add_action( 'wp_ajax_wpba_refresh_attachments', array( &$this, 'refresh_attachments_callback' ) );
-		add_action( 'wp_ajax_wpba_update_post_meta', array( &$this, 'update_post_meta_callback' ) );
 		add_action( 'wp_ajax_wpba_update_post', array( &$this, 'update_post_callback' ) );
+		add_action('wp_ajax_wpba_image_area_select', array( &$this, 'image_area_select_callback' ) );
 	} // ajax_hooks()
 
 
 	/**
 	 * AJAX Update Sort Order
 	 */
-	public function update_sort_order_callback() {
+	public function update_sort_order_callback()
+	{
 		extract( $_POST );
 
 		// Check for empty values
@@ -73,7 +77,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	 * AJAX Unattach Image
 	 */
-	public function unattach_attachment_callback() {
+	public function unattach_attachment_callback()
+	{
 		extract( $_POST );
 
 		if ( !isset( $attachmentid ) ) {
@@ -90,7 +95,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	 * AJAX Add Attachment
 	 */
-	public function add_attachment_callback() {
+	public function add_attachment_callback()
+	{
 		extract( $_POST );
 		$args = array(
 			'post' => get_post( $parentid )
@@ -135,7 +141,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	 * AJAX Add Attachment - Old Media Uploader
 	 */
-	public function add_attachment_old_callback() {
+	public function add_attachment_old_callback()
+	{
 		extract( $_POST );
 		$args = array(
 			'post' => get_post( $parentid )
@@ -180,7 +187,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	 * AJAX Update Sort Order
 	 */
-	public function delete_attachment_callback() {
+	public function delete_attachment_callback()
+	{
 		extract( $_POST );
 		// Make sure we have something to work with
 		if ( !isset( $attachmentid ) ) {
@@ -221,44 +229,6 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	* Save Custom Meta
-	*/
-	public function update_post_meta_callback($args = array())
-	{
-		 extract( $_POST );
-		$post_id = isset($post_id) ? $post_id : '';
-		$custom_meta_fields = isset($custom_meta_fields) ? $custom_meta_fields : '';
-
-		// verify nonce
-		$mb_nonce = isset($wpba_nonce) ? $wpba_nonce : '';
-		if (!wp_verify_nonce($mb_nonce, basename(__FILE__))) {
-			echo json_encode( false );
-			die();
-		}
-
-		// check autosave
-		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-			echo json_encode( false );
-			die();
-		}
-
-		// loop through fields and save the data
-		foreach ($custom_meta_fields as $field) {
-			$old = get_post_meta($post_id, esc_attr( $field['id'] ), true);
-			$new = isset($_POST[esc_attr( $field['id'] )]) ? $_POST[esc_attr( $field['id'] )] : '';
-			if ($new && $new != $old) {
-				update_post_meta($post_id, esc_attr( $field['id'] ), $new);
-			} elseif ('' == $new && $old) {
-				delete_post_meta($post_id, esc_attr( $field['id'] ), $old);
-			}
-		} // end foreach
-
-		echo json_encode( true );
-		die();
-	} // update_post_meta_callback()
-
-
-	/**
 	* Update Post
 	*/
 	public function update_post_callback()
@@ -272,6 +242,32 @@ class WPBA_Ajax extends WP_Better_Attachments
 		echo json_encode( wp_update_post( $my_post ) );
 		die();
 	} //update_post_callback()
+
+
+	/**
+	* Image Area Select
+	*/
+	public function image_area_select_callback()
+	{
+		extract( $_POST );
+		$resize_crop_selection = resize_crop_selection();
+		// Save data we need for displaying new crop through JS
+		if ( $resize_crop_selection ) {
+			$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
+			$crop_points = ( $attachment_meta ) ? $attachment_meta : array();
+			$crop_key = "{$final_w}x{$final_h}";
+			$crop_points[$crop_key] = array(
+				'x1'	=>	$src_x,
+				'x2' 	=>	$src_x + $final_w,
+				'y1'	=>	$src_y,
+				'y2'	=>	$src_h
+			);
+			update_post_meta( $id, 'wpba_crop_points', $crop_points );
+		} // if()
+		echo json_encode( $resize_crop_selection );
+		die();
+	} // image_area_select_callback()
+
 
 } // END Class WPBA_Ajax
 
