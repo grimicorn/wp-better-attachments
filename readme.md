@@ -5,7 +5,13 @@
 **Plugin Home Page:** [http://wordpress.org/extend/plugins/wp-better-attachments/](http://wordpress.org/extend/plugins/wp-better-attachments/)
 
 
-**Thanks to:** If your project is included and I do not have you added please let me know, thank you.
+####Thanks to:  
+
+- [WP Settings API Bootstrap](https://github.com/DerekMarcinyshyn/wp-settings-api-bootstrap)  
+
+
+*If your project is included and I do not have you added please let me know, thank you.*
+
 
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
