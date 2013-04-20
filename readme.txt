@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
 Requires at least: 3.2
 Tested up to: 3.5.2
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,9 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Added ability to disable post types through settings
 * Added ability to disable parts of the meta box through settings
 
+= 1.2.1 =
+* Fixed issue with settings not being an array
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -72,3 +75,6 @@ Added attachment editor pop-up window to access attachment editor from posts pag
 
 = 1.2.0 =
 Added settings, retrieve attachments function, attachment title edit, and attachment caption edit
+
+= 1.2.1 =
+Fixed issue with settings not being an array when not settings are set
