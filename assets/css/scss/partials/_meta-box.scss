@@ -24,8 +24,8 @@
 	.wpba-drag-handle {
 		position: absolute;
 		right: 32px;
-		width: 30px;
-		height: 26px;
+		width: 40px;
+		height: 28px;
 		background-image: url("../img/handle-icon.png");
 	}
 	.wpba-preview {
@@ -57,7 +57,7 @@
 		position: absolute;
 		overflow: hidden;
 		margin: 119px 0 0 0;
-		margin-top: -28px;
+		margin-top: 120px;
 		width: 150px;
 		height: 30px;
 		border-top: 1px solid #ccc;
@@ -69,13 +69,17 @@
 		line-height: 30px;
 	}
 	.wpba-form-wrap {
-		width: 50%;
+		width: 400px;
 		input {
 			max-width: 98%;
 			width: 100%;
 		}
 		.wpba-attachment-title { margin-bottom: 10px; }
 		.wpba-attachment-caption { height: 40px; resize:vertical; }
+	}
+	.wpba-attachment-id-output {
+		margin-bottom: 10px;
+		font-size: 14px;
 	}
 } // .wpba
 
