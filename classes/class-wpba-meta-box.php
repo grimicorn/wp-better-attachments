@@ -153,7 +153,8 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	/**
 	 * Output Post Attachments
 	 */
-	public function output_post_attachments( $args = array() ) {
+	public function output_post_attachments( $args = array() )
+	{
 		extract( $args );
 
 		$html = '';

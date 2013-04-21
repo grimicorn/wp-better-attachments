@@ -100,19 +100,9 @@ class WP_Better_Attachments
 	public function get_post_attachments( $args = array() ) {
 		extract( $args );
 
+		// Make sure we have a post to work with
 		if ( !isset( $post ) )
 			global $post;
-
-		// $show_thumbnail = ( isset( $show_thumbnail ) ) ? $show_thumbnail : true;
-		// // Should we exclude the thumb?
-		// if ( !$show_thumbnail ) {
-		// 	$get_posts_args['meta_query'] = array(
-		// 		array(
-		// 			'key' => '_thumbnail_id',
-		// 			'compare' => 'NOT EXISTS'
-		// 		)
-		// 	);
-		// }
 
 		$get_posts_args = array(
 			'post_type'     => 'attachment',
@@ -122,15 +112,20 @@ class WP_Better_Attachments
 			'orderby'      => 'menu_order'
 		);
 
+		// Should we exclude the thumb?
+		$show_thumbnail = ( isset( $show_thumbnail ) ) ? $show_thumbnail : true;
+		if ( !$show_thumbnail ) {
+			$get_posts_args['exclude'] = get_post_thumbnail_id($post->ID);
+			$get_posts_args['meta_query'] = array(
+				array(
+					'key' => '_thumbnail_id',
+					'compare' => 'NOT EXISTS'
+				)
+			);
+		} // if()
+
 		// Get the attachments
 		$attachments = get_posts( $get_posts_args );
-		// $image_attachments = array();
-		// foreach ( $attachments as $attachment ) {
-		// 	if ( $this->is_image( $attachment->post_mime_type ) ) {
-		// 		$image_attachments[] = $attachment;
-		// 	} // if(is_image())
-		// } // foreach();
-
 
 		return $attachments;
 	} // get_post_attachments()
