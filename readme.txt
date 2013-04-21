@@ -2,7 +2,7 @@
 Contributors: dholloran
 Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
-Requires at least: 3.2
+Requires at least: 3.5
 Tested up to: 3.5.2
 Stable tag: 1.2.1
 License: GPLv2 or later
