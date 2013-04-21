@@ -57,7 +57,6 @@ wpba.unattachAttachment = function(that) {
 			},
 			saveElem = $('.wpba-saving')
 	;
-	console.log(linkParent);
 	saveElem.removeClass('hide');
 	$.post(ajaxurl, ajaxData, function(data) {
 		var resp = $.parseJSON(data);
@@ -260,7 +259,6 @@ wpba.updatePost = function(id, key, value) {
 			$(titleSelector).text(ajaxData.value);
 			// wpba-post-124
 		}
-		console.log(resp);
 	});
 }
 
