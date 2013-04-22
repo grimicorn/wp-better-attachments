@@ -98,11 +98,14 @@ class WP_Better_Attachments
 	 * Get Post Attachments
 	 */
 	public function get_post_attachments( $args = array() ) {
-		extract( $args );
-
+		global  $wpba_wp_settings_api;
 		// Make sure we have a post to work with
 		if ( !isset( $post ) )
 			global $post;
+
+		$post_type_obj = get_post_type_object( $post->post_type );
+		$settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', false);
+		extract( $args );
 
 		$get_posts_args = array(
 			'post_type'     => 'attachment',
@@ -113,8 +116,7 @@ class WP_Better_Attachments
 		);
 
 		// Should we exclude the thumb?
-		$show_thumbnail = ( isset( $show_thumbnail ) ) ? $show_thumbnail : true;
-		if ( !$show_thumbnail ) {
+		if ( isset( $settings['thumbnail'] ) ) {
 			$get_posts_args['exclude'] = get_post_thumbnail_id($post->ID);
 			$get_posts_args['meta_query'] = array(
 				array(

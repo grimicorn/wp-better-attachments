@@ -147,14 +147,10 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 		{
 			// Post Type Options
 			$post_type_options = array(
-				'title' 	=> 'Disable Title Editor',
-				'caption'	=> 'Disable Caption Editor'
+				'title' 		=>	'Disable Title Editor',
+				'caption'		=>	'Disable Caption Editor',
+				'thumbnail'	=>	'Do Not Include Thumbnail'
 			);
-			// Not Available before 3.3
-			// global $wp_version;
-			// if ( floatval($wp_version) >= 3.3 ) {
-			// 	$post_type_options['wysiwg'] 	= 'WYSWIG Editor';
-			// }
 
 			// Settings Array
 			return array(
