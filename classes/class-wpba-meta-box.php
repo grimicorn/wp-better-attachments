@@ -32,7 +32,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		unset( $post_types["nav_menu_item"] );
 		unset( $post_types["deprecated_log"] );
 		global $wpba_wp_settings_api;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
+		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array() );
 
 		foreach ( $post_types as $post_type ) {
 			if ( !in_array( $post_type, $disabled_post_types ) ) {
@@ -84,7 +84,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$post = get_post( $attachment->post_parent );
 		$post_type_obj = get_post_type_object( $post->post_type );
 		global $wpba_wp_settings_api;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', '');
+		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', array() );
 
 		// Make sure user has not disabled title editing
 		if ( isset( $disabled_post_types['title'] ) )
@@ -113,7 +113,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$post = get_post( $attachment->post_parent );
 		$post_type_obj = get_post_type_object( $post->post_type );
 		global $wpba_wp_settings_api;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', '');
+		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', array() );
 
 		// Make sure user has not disabled caption editing
 		if ( isset( $disabled_post_types['caption'] ) )

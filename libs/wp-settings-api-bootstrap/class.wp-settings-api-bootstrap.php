@@ -148,18 +148,18 @@ if ( ! class_exists( 'WP_Settings_API_Bootstrap' ) ):
             wp_enqueue_style( 'farbtastic' );
 
             // import media uploader javascript
-            wp_register_script(
-                'settings-api-upload',
-                WP_PLUGIN_URL . '/' . dirname( plugin_basename( __FILE__ ) ) . '/settings-api-upload.js',
-                array( 'jquery', 'media-upload', 'thickbox' ),
-                time(),
-                true
-            );
+            // wp_register_script(
+            //     'settings-api-upload',
+            //     WP_PLUGIN_URL . '/' . dirname( plugin_basename( __FILE__ ) ) . '/settings-api-upload.js',
+            //     array( 'jquery', 'media-upload', 'thickbox' ),
+            //     time(),
+            //     true
+            // );
 
-            wp_enqueue_script( 'thickbox' );
-            wp_enqueue_style( 'thickbox' );
-            wp_enqueue_script( 'media-upload' );
-            wp_enqueue_script( 'settings-api-upload' );
+            // wp_enqueue_script( 'thickbox' );
+            // wp_enqueue_style( 'thickbox' );
+            // wp_enqueue_script( 'media-upload' );
+            // wp_enqueue_script( 'settings-api-upload' );
         }
 
         /**

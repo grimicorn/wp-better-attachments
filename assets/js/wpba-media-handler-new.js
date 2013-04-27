@@ -11,7 +11,6 @@ jQuery(function($){
 		*/
 		// Uploading files
 		$('#wpba_attachments_button, #wpba_form_attachments_button').on('click', function( event ){
-
 			event.preventDefault();
 			var that = $(this);
 			// If the media frame already exists, reopen it.
@@ -28,8 +27,7 @@ jQuery(function($){
 				},
 				multiple: true
 			});
-			// file_frame.addClass('wpba-media');
-			console.log(file_frame);
+
 			file_frame.on( 'select', function() {
 				var attachments = file_frame.state().get('selection').toJSON(),
 						ajaxData = {
@@ -48,7 +46,6 @@ jQuery(function($){
 					}
 
 				});
-
 			});
 
 			// Finally, open the modal

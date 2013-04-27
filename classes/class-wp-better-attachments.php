@@ -39,6 +39,16 @@ class WP_Better_Attachments
 	 * Enqueue Administrator Scripts and Styles
 	 */
 	public function enqueue_admin_scripts() {
+
+		// Make sure the user has not disabled this post type
+		global $wpba_wp_settings_api;
+		global $post;
+		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
+
+		if ( isset( $post ) AND !empty( $disabled_post_types[$post->post_type] ) )
+			return false;
+
+
 		$current_screen = get_current_screen();
 		$base = $current_screen->base;
 		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base = 'settings_page_wpba-settings' ) {

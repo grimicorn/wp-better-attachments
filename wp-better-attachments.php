@@ -16,10 +16,6 @@ define( 'WPBA_VERSION', '1.2.1' );
 define( 'WPBA_LANG', 'wpba' );
 define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 
-function wp_test(){
-}
-add_action('admin_enqueue_scripts', 'wp_test');
-
 /**
 * Handles Activation/Deactivation/Install
 */
