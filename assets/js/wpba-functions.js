@@ -44,7 +44,7 @@ wpba.updateSortOrderClickHandler =  function() {
 
 
 /**
-* Unattachs an attachment
+* Un-attachs an attachment
 */
 wpba.unattachAttachment = function(that) {
 	var $ = jQuery,
@@ -61,7 +61,7 @@ wpba.unattachAttachment = function(that) {
 	$.post(ajaxurl, ajaxData, function(data) {
 		var resp = $.parseJSON(data);
 		if (resp) {
-			linkParent.parent('li').remove();
+			$('#attachment_' + attachmentId).remove();
 			wpba.updateSortOrder( sortableImageElem );
 		}
 	});
@@ -130,7 +130,7 @@ wpba.deleteAttachment = function(that) {
 		$.post(ajaxurl, ajaxData, function(data) {
 			var resp = $.parseJSON(data);
 			if (resp) {
-				linkParent.parent('li').remove();
+				$('#attachment_' + attachmentId).remove();
 				wpba.updateSortOrder( sortableImageElem );
 			}
 			saveElem.addClass('hide');
@@ -257,7 +257,6 @@ wpba.updatePost = function(id, key, value) {
 		if(ajaxData.key === 'post_title') {
 			var titleSelector = '#attachment_'+resp+' .wpba-attachment-name .wpba-filename';
 			$(titleSelector).text(ajaxData.value);
-			// wpba-post-124
 		}
 	});
 }
@@ -269,8 +268,10 @@ wpba.updatePost = function(id, key, value) {
 wpba.titleKeyUpHandler = function() {
 	var $ = jQuery;
 	$('.wpba-attachment-title').on('keyup',function(){
-		var that = $(this);
-		wpba.updatePost(that.parent().data('id'), 'post_title', that.val());
+		var that = $(this),
+				id = that.parent('div').parent('div').data('id')
+		;
+		wpba.updatePost(id, 'post_title', that.val());
 	});
 }
 
@@ -280,9 +281,12 @@ wpba.titleKeyUpHandler = function() {
 */
 wpba.captionKeyUpHandler = function() {
 	var $ = jQuery;
+
 	$('.wpba-attachment-caption').on('keyup',function(){
-		var that = $(this);
-		wpba.updatePost(that.parent().data('id'), 'post_excerpt', that.val());
+		var that = $(this),
+				id = that.parent('div').parent('div').data('id')
+		;
+		wpba.updatePost(id, 'post_excerpt', that.val());
 	});
 }
 

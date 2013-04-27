@@ -28,7 +28,8 @@ jQuery(function($){
 				},
 				multiple: true
 			});
-
+			// file_frame.addClass('wpba-media');
+			console.log(file_frame);
 			file_frame.on( 'select', function() {
 				var attachments = file_frame.state().get('selection').toJSON(),
 						ajaxData = {
