@@ -5,9 +5,9 @@
 **Plugin Home Page:** [http://wordpress.org/extend/plugins/wp-better-attachments/](http://wordpress.org/extend/plugins/wp-better-attachments/)
 
 
-####Thanks to:  
+####Thanks to:
 
-- [WP Settings API Bootstrap](https://github.com/DerekMarcinyshyn/wp-settings-api-bootstrap)  
+- [WP Settings API Bootstrap](https://github.com/DerekMarcinyshyn/wp-settings-api-bootstrap)
 
 
 *If your project is included and I do not have you added please let me know, thank you.*
@@ -33,10 +33,10 @@ To get started with WP Better Attachments you can download it directly [here](ht
 ###Wordpress Plugin Directory Instructions
 1. Search for WP Better Attachments in Plugins > Add New
 2. Install &amp; Activate WP Better Attachments
-3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments, WordPress<3.5 does not have multi select capabilities. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post. 
+3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post.
 
 ###Manual Install Instructions
 1. Unzip your download and place in wp-content/plugins/
 2. Activate WP Better Attachments in the Wordpress Admin area
-3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments, WordPress<3.5 does not have multi select capabilities. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post. 
+3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post.
 

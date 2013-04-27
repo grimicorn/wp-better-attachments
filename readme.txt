@@ -23,7 +23,7 @@ Whats new in 1.2.0 Added attachment title edit, Added attachment caption edit, A
 1. Upload `wp-github-recent-commit` to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Go to any page/post/custom post type and start editing your attachments with ease.
-4. Use the add attachments button to add new attachments, WordPress<3.5 does not have multi select capabilities.
+4. Use the add attachments button to add new attachments.
 5. You can Drag and drop your attachments to arrange their menu order.
 6. Click the Un-attach link to un-attach the file from your post.
 

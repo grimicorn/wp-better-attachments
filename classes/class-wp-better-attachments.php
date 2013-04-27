@@ -44,7 +44,7 @@ class WP_Better_Attachments
 		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base = 'settings_page_wpba-settings' ) {
 			wp_enqueue_style( 'wpba-admin-css', plugins_url( 'assets/css/wpba-admin.css' , dirname( __FILE__ ) ), null, WPBA_VERSION );
 
-			global $wp_version;
+			// global $wp_version;
 			$deps = array(
 				'jquery',
 				'jquery-ui-core',
@@ -52,7 +52,7 @@ class WP_Better_Attachments
 				'jquery-ui-mouse',
 				'jquery-ui-sortable'
 			);
-			if ( floatval($wp_version) >= 3.5 ) {
+			// if ( floatval($wp_version) >= 3.5 ) {
 				// Make sure to enqueue media
 				if ( ! did_action( 'wp_enqueue_media' ) )
 			    wp_enqueue_media();
@@ -64,19 +64,19 @@ class WP_Better_Attachments
 					WPBA_VERSION,
 					true
 				);
-			} else {
-				wp_enqueue_script( 'media-upload' );
-	   		add_thickbox();
-				$deps[] = 'media-upload';
-				$deps[] = 'thickbox';
-				wp_register_script(
-					'wpba-media-handler',
-					plugins_url( 'assets/js/wpba-media-handler-old.min.js' , dirname( __FILE__ ) ),
-					$deps,
-					WPBA_VERSION,
-					true
-				);
-			} // if/else()
+			// } else {
+			// 	wp_enqueue_script( 'media-upload' );
+	  //  		add_thickbox();
+			// 	$deps[] = 'media-upload';
+			// 	$deps[] = 'thickbox';
+			// 	wp_register_script(
+			// 		'wpba-media-handler',
+			// 		plugins_url( 'assets/js/wpba-media-handler-old.min.js' , dirname( __FILE__ ) ),
+			// 		$deps,
+			// 		WPBA_VERSION,
+			// 		true
+			// 	);
+			// } // if/else()
 
 			wp_enqueue_script( 'wpba-media-handler' );
 		} // if()
@@ -99,6 +99,7 @@ class WP_Better_Attachments
 	 */
 	public function get_post_attachments( $args = array() ) {
 		global  $wpba_wp_settings_api;
+		extract( $args );
 		// Make sure we have a post to work with
 		if ( !isset( $post ) )
 			global $post;
