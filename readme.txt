@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -17,7 +17,7 @@ You can use `wpba_get_attachments( $post->ID )` to retrieve attachments from a c
 
 View more information on GitHub [here](https://github.com/DHolloran/wp-better-attachments/)
 
-Whats new in 1.2.0 Added attachment title edit, Added attachment caption edit, Added ability to disable post types through settings, Added ability to disable parts of the meta box through settings, Added convenience function to get all attachments as an array
+Whats new in 1.2 Added attachment title edit, Added attachment caption edit, Added ability to disable post types through settings, Added ability to disable parts of the meta box through settings, Added convenience function to get all attachments as an array
 
 == Installation ==
 1. Upload `wp-github-recent-commit` to the `/wp-content/plugins/` directory
@@ -62,6 +62,14 @@ None so far... If you have any issues please submit an [issue](https://github.co
 = 1.2.1 =
 * Fixed issue with settings not being an array
 
+= 1.2.1 =
+* Fixed Un-attach/Delete links not updating attachment list
+* Fixed issue with adding files to a post from the media uploader
+* Removed support WordPress version < 3.5
+* Fixed updating of title and caption edit
+* Added setting to disable thumbnails in attachments list
+* General code cleanup
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -78,3 +86,6 @@ Added settings, retrieve attachments function, attachment title edit, and attach
 
 = 1.2.1 =
 Fixed issue with settings not being an array when not settings are set
+
+= 1.2.1 =
+Fixes regressions that I know of as well as the issues/requests on the forum.
