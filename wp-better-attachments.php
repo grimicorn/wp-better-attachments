@@ -49,13 +49,3 @@ function wpba_get_attachments( $post_id = 0 )
 	} // if/else()
 	return $wpba->get_post_attachments( $args = array( 'post' => $post ) );
 }
-
-
-/**
-* Add Attachments button above post editor
-*/
-add_action('media_buttons_context', 'add_form_button');
-function add_form_button($context){
-	$out = '<a class="button wpba-attachments-button wpba-form-attachments-button" id="wpba_form_attachments_button" href="#">Add Attachments</a>';
-	return $context . $out;
-}

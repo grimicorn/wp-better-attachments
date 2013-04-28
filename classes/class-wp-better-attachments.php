@@ -18,8 +18,33 @@ class WP_Better_Attachments
 	 */
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
-		add_filter( 'media_row_actions',  array( &$this, 'unattach_media_row_action' ), 10, 2 );
+		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
+		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
 	} // init_hooks()
+
+
+	/**
+	* Add Attachments button above post editor
+	*/
+	function add_form_button($context){
+		// Make sure the user has not disabled this post type
+		global $wpba_wp_settings_api;
+		global $post;
+		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
+		if ( isset( $post ) AND !empty( $disabled_post_types[$post->post_type] ) ) {
+			return $context;
+		} // if()
+
+		// Check if the button has been added
+		$button_added = ( strpos( $context, 'wpba_form_attachments_button' ) === false ) ? false : true;
+		if ( $button_added ) {
+			return $context;
+		} // if()
+
+		// Add the button
+		$out = '<a class="button insert-media add_media wpba-attachments-button wpba-form-attachments-button" id="wpba_form_attachments_button" href="#"><span class="wp-media-buttons-icon"></span> Add Attachments</a>';
+		return $context . $out;
+	} // add_form_button()
 
 
 	/**
