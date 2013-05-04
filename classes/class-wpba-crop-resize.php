@@ -19,7 +19,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	 * Initialization Hooks
 	 */
 	public function init_hooks() {
-		// add_filter( 'attachment_fields_to_edit', array( &$this, 'output_attachments' ), 11, 2 );
+		add_filter( 'attachment_fields_to_edit', array( &$this, 'output_attachments' ), 11, 2 );
 	} // init_hooks()
 
 
@@ -91,23 +91,18 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		$img_sizes = get_intermediate_image_sizes();
 		$attachments = array();
 		foreach ( $img_sizes as $img_size ) {
-			// This will get the set sizes for each media size
-			if ( isset( $_wp_additional_image_sizes[$img_size] ) ) {
-				$width = intval( $_wp_additional_image_sizes[$img_size]['width'] );
-				$height = intval( $_wp_additional_image_sizes[$img_size]['height'] );
-			} else {
-				$width = get_option( $img_size.'_size_w' );
-				$height = get_option( $img_size.'_size_h' );
-			} // if/else()
+			// Todo: there has to be a bettwr way!!!
+			$att_src = wp_get_attachment_image_src( $id, $img_size );
 
 			// Since we are getting the full size we have to replace the width/height with the correct sizes
 			$attachment_src = wp_get_attachment_image_src( $id, 'full' );
-			$attachment_src[1] = $width;
-			$attachment_src[2] = $height;
+			$attachment_src[1] = $att_src[1]; // width
+			$attachment_src[2] = $att_src[2]; // height
 			$attachment_src[3] = $id;
-			$attachments[] = $attachment_src;
+			$attachments[$att_src[1].$att_src[2]] = $attachment_src;
 		} // foreach()
 
+		ksort( $attachments, SORT_NUMERIC );
 		return $attachments;
 	} // get_attachment_sizes()
 
@@ -121,6 +116,9 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	$html = '';
 	$nl = "\n";
 
+	$html .= '<div class="wpba-attachment-editor>"' . $nl;
+	$html .= '<a href="#" class="button">Show Thumbnails</a>' . $nl;
+	$html .= '<ul class="wpba-attachment-editor-list hide unstyled pull-left">' . $nl;
 	foreach ( $attachments as $attachment ) {
 		$image_src = $attachment[0];
 		$image_width = $attachment[1];
@@ -133,23 +131,32 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		$crop_src_height = $crop_src[2];
 
 		// Get the crop points
-		if ( $attachment_meta AND isset( $attachment_meta["{$image_width}x{$image_height}"] ) ) {
-			$crop_points = implode( ',', $attachment_meta["{$image_width}x{$image_height}"] );
-		} // if()
+		// if ( $attachment_meta AND isset( $attachment_meta["{$image_width}x{$image_height}"] ) ) {
+		// 	$crop_points = implode( ',', $attachment_meta["{$image_width}x{$image_height}"] );
+		// } else {
+			$crop_points = "0,{$image_width},0,{$image_height}";
+		// } // if()
 
-		if( $image_width AND $image_width < $crop_src_width AND $image_height < $crop_src_height ) {
+		if( $image_width  AND $image_width < $crop_src_width AND $image_height < $crop_src_height ) {
+			$image_style = "width:auto;height:{$image_height}px";
+			$html .= '<li class="pull-left">' . $nl;
+			$html .= "<h3>{$image_width}px x {$image_height}px</h3>" . $nl;
+			$html .= '<div class="clear"></div>' . $nl;
 			$html .= "<img src='{$image_src}' " . $nl;
 			$html .= "class='wpba-img-size-select' " . $nl;
-			$html .= "style='height:{$image_height}px;width:auto;' " . $nl;
+			$html .= "style='{$image_style}' " . $nl;
 			$html .= "data-srcwidth='{$crop_src_width}' " . $nl;
 			$html .= "data-srcheight='{$crop_src_height}' " . $nl;
 			$html .= "data-width='{$image_width}' " . $nl;
 			$html .= "data-height='{$image_height}' " . $nl;
 			$html .= "data-croppoints='{$crop_points}' " . $nl;
-			$html .= "data-id='{$id}'>" . $nl;
-			$html .= "<br><br><br>" . $nl;
+			$html .= "data-id='{$id}' />" . $nl;
+			$html .= '<div class="clear"></div>' . $nl;
+			$html .= '</li>' . $nl;
 		} // if()
 	} // foreach
+	$html .= '</div>' . $nl;
+	$html .= '</ul>' . $nl;
 
 	$form_fields['wpba_thumbnails'] = array(
 			'label' => 'Thumbnail Images',
