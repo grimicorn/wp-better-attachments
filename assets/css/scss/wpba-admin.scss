@@ -6,7 +6,21 @@
 .nav-tab-wrapper { display: none; }
 #wpba_settings {
 	h3 { display: none; }
-	.form-table {
-		tr { display: none; }
-	}
-}
+	.form-table tr { display: none; }
+} // #wpba_settings
+
+/* Attachment Editor */
+// .imgareaselect-border1,
+// .imgareaselect-border2,
+// .imgareaselect-border3,
+// .imgareaselect-border4,
+// .imgareaselect-selection,
+// .imgareaselect-outer {
+// 	display: none!important;
+// 	&.show { display: block!important; }
+// }
+.wpba-attachment-editor {
+	.unstyled { list-style: none; margin-left: 0; }
+	// .hide { display: none; }
+	// .show { display: block; }
+} // .wpba-attachment-editor

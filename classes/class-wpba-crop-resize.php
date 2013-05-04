@@ -8,7 +8,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	/**
 	* Constructor
 	*/
-	function __construct( $config = array() )
+	public function __construct( $config = array() )
 	{
 		parent::__construct();
 		$this->init_hooks();
@@ -26,7 +26,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	/**
 	* Resize/Crop Selection
 	*/
-	function resize_crop_selection( $args = array() )
+	public function resize_crop_selection( $args = array() )
 	{
 		extract( $_POST );
 		extract( $args );
@@ -81,7 +81,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	/**
 	* Get Attachment Sizes
 	*/
-	function get_attachment_sizes( $id='', $args = array() ) {
+	public function get_attachment_sizes( $id='', $args = array() ) {
 		extract( $args );
 		if ( $id == '' ) {
 			global $post;
@@ -108,63 +108,77 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 
 	/**
+	* Check Equal Aspect Ratio
+	*/
+	public function is_equal_aspect_ratio( $orig_w, $orig_h, $crop_w, $crop_h )
+	{
+		if ( $orig_w/$orig_h <= $crop_w/$crop_h ) {
+			return false;
+		} // if()
+
+		return true;
+	} // is_equal_aspect_ratio()
+
+	/**
 	* Output Attachments
 	*/
-	function output_attachments( $form_fields, $post = null ) {
-	$id = $post->ID;
-	$attachments = $this->get_attachment_sizes( $id );
-	$html = '';
-	$nl = "\n";
+	public function output_attachments( $form_fields, $post = null ) {
+		$id = $post->ID;
+		$attachments = $this->get_attachment_sizes( $id );
+		$html = '';
+		$nl = "\n";
+		$html .= '<div class="wpba-attachment-editor">' . $nl;
+		// $html .= '<a href="#" class="button">Show Thumbnails</a>' . $nl;
+		$html .= '<ul class="wpba-attachment-editor-list hide unstyled pull-left">' . $nl;
+		$html .= '<li>Below are all the available attachment sizes that are not tha same aspect ratio as the original.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.</li>' . $nl;
+		foreach ( $attachments as $attachment ) {
+			$image_src = $attachment[0];
+			$image_width = $attachment[1];
+			$image_height = $attachment[2];
+			$id = $attachment[3];
+			$crop_points = 0;
+			$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
+			$crop_src = wp_get_attachment_image_src( $id, 'full');
+			$crop_src_width = $crop_src[1];
+			$crop_src_height = $crop_src[2];
 
-	$html .= '<div class="wpba-attachment-editor>"' . $nl;
-	$html .= '<a href="#" class="button">Show Thumbnails</a>' . $nl;
-	$html .= '<ul class="wpba-attachment-editor-list hide unstyled pull-left">' . $nl;
-	foreach ( $attachments as $attachment ) {
-		$image_src = $attachment[0];
-		$image_width = $attachment[1];
-		$image_height = $attachment[2];
-		$id = $attachment[3];
-		$crop_points = 0;
-		$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
-		$crop_src = wp_get_attachment_image_src( $id, 'full');
-		$crop_src_width = $crop_src[1];
-		$crop_src_height = $crop_src[2];
+			// Get the crop points
+			if ( $attachment_meta AND isset( $attachment_meta["{$image_width}x{$image_height}"] ) ) {
+				$crop_points = implode( ',', $attachment_meta["{$image_width}x{$image_height}"] );
+			} else {
+				$crop_points = "0,{$image_width},0,{$image_height}";
+			} // if()
 
-		// Get the crop points
-		// if ( $attachment_meta AND isset( $attachment_meta["{$image_width}x{$image_height}"] ) ) {
-		// 	$crop_points = implode( ',', $attachment_meta["{$image_width}x{$image_height}"] );
-		// } else {
-			$crop_points = "0,{$image_width},0,{$image_height}";
-		// } // if()
+			$equal_aspect_ratio = !$this->is_equal_aspect_ratio( $crop_src_width, $crop_src_height, $image_width, $image_height);
+			$image_larger_size = ( $image_width < $crop_src_width AND $image_height < $crop_src_height );
+			if( $image_width  AND $image_larger_size AND !$equal_aspect_ratio ) {
+				$image_style = "width:auto;height:{$image_height}px";
+				$html .= '<li>' . $nl;
+				$html .= "<h3>{$image_width}px x {$image_height}px</h3>" . $nl;
+				$html .= "<div class='clear'>" . $nl;
+				$html .= "<img src='{$image_src}' " . $nl;
+				$html .= "class='wpba-img-size-select' " . $nl;
+				$html .= "style='{$image_style}' " . $nl;
+				$html .= "data-srcwidth='{$crop_src_width}' " . $nl;
+				$html .= "data-srcheight='{$crop_src_height}' " . $nl;
+				$html .= "data-width='{$image_width}' " . $nl;
+				$html .= "data-height='{$image_height}' " . $nl;
+				$html .= "data-croppoints='{$crop_points}' " . $nl;
+				$html .= "data-id='{$id}' />" . $nl;
+				$html .= '<div class="clear">' . $nl;
+				$html .= '</li>' . $nl;
+			} // if()
+		} // foreach
+		$html .= '</div>' . $nl;
+		$html .= '</ul>' . $nl;
 
-		if( $image_width  AND $image_width < $crop_src_width AND $image_height < $crop_src_height ) {
-			$image_style = "width:auto;height:{$image_height}px";
-			$html .= '<li class="pull-left">' . $nl;
-			$html .= "<h3>{$image_width}px x {$image_height}px</h3>" . $nl;
-			$html .= '<div class="clear"></div>' . $nl;
-			$html .= "<img src='{$image_src}' " . $nl;
-			$html .= "class='wpba-img-size-select' " . $nl;
-			$html .= "style='{$image_style}' " . $nl;
-			$html .= "data-srcwidth='{$crop_src_width}' " . $nl;
-			$html .= "data-srcheight='{$crop_src_height}' " . $nl;
-			$html .= "data-width='{$image_width}' " . $nl;
-			$html .= "data-height='{$image_height}' " . $nl;
-			$html .= "data-croppoints='{$crop_points}' " . $nl;
-			$html .= "data-id='{$id}' />" . $nl;
-			$html .= '<div class="clear"></div>' . $nl;
-			$html .= '</li>' . $nl;
-		} // if()
-	} // foreach
-	$html .= '</div>' . $nl;
-	$html .= '</ul>' . $nl;
+		$form_fields['wpba_thumbnails'] = array(
+				'label' => 'Thumbnail Images',
+				'input' => 'html',
+				'html'  => $html,
+			);
 
-	$form_fields['wpba_thumbnails'] = array(
-			'label' => 'Thumbnail Images',
-			'input' => 'html',
-			'html'  => $html,
-		);
-
-	return $form_fields;
+		return $form_fields;
 	} // output_attachments()
 
 
