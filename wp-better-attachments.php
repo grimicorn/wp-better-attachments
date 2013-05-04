@@ -16,6 +16,21 @@ define( 'WPBA_VERSION', '1.2.2' );
 define( 'WPBA_LANG', 'wpba' );
 define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 
+/*
+* Pretty Print Debug Function
+*/
+function pp( $value )
+{
+	if( $_SERVER['HTTP_HOST'] != 'localhost' ) return;
+	echo "<pre>";
+	if ( $value ) {
+		print_r( $value );
+	} else {
+		var_dump( $value );
+	}
+	echo "</pre>";
+}
+
 /**
 * Handles Activation/Deactivation/Install
 */
