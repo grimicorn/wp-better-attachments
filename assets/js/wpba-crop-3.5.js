@@ -39,8 +39,7 @@ jQuery(function ($) {
 							id: id,
 							src: src,
 							action: 'wpba_image_area_select'
-						},
-						ajaxurl = 'http://localhost/~mothership/plugin-dev/wp-admin/admin-ajax.php'
+						}
 				;
 
 				$.post(ajaxurl, ajaxData, function(data){
