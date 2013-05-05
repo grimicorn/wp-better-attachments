@@ -159,7 +159,6 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 			$equal_aspect_ratio = !$this->is_equal_aspect_ratio( $crop_src_width, $crop_src_height, $image_width, $image_height);
 			$image_larger_size = ( $image_width < $crop_src_width AND $image_height < $crop_src_height );
-			pp( $equal_aspect_ratio );
 			if( $image_width  AND $image_larger_size AND !$equal_aspect_ratio ) {
 				$image_style = "width:auto;height:{$image_height}px";
 				$html .= '<li>' . $nl;

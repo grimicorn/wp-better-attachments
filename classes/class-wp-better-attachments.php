@@ -42,7 +42,7 @@ class WP_Better_Attachments
 		} // if()
 
 		// Add the button
-		$out = '<a class="button insert-media add_media wpba-attachments-button wpba-form-attachments-button" id="wpba_form_attachments_button" href="#"><span class="wp-media-buttons-icon"></span> Add Attachments</a>';
+		$out = '<a class="button wpba-attachments-button wpba-form-attachments-button" id="wpba_form_attachments_button" href="#"><span class="wpba-media-buttons-icon"></span> Add Attachments</a>';
 		return $context . $out;
 	} // add_form_button()
 

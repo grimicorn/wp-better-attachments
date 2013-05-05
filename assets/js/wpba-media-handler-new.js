@@ -23,7 +23,7 @@ jQuery(function($){
 			file_frame = wp.media.frames.file_frame = wp.media({
 				title: $( this ).data( 'uploader_title' ),
 				button: {
-					text: $( this ).data( 'uploader_button_text' )
+					text: 'Add Attachments'//$( this ).data( 'uploader_button_text' )
 				},
 				multiple: true
 			});
