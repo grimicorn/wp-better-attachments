@@ -1,6 +1,6 @@
 #WP Better Attachments
 
-**Description:** WordPress plugin that allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.
+**Description:** WordPress plugin that allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types. You can now also have full control over cropping of the different attachment image sizes through the media editor.
 
 **Plugin Home Page:** [http://wordpress.org/extend/plugins/wp-better-attachments/](http://wordpress.org/extend/plugins/wp-better-attachments/)
 
@@ -24,7 +24,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 ![WPBA Unattach Media Library Link](screenshot-3.png)
 ###WPBA Attachment Editor
 ![WPBA Attachment Editor](screenshot-4.png)
-
+###WPBA Crop Editor
+![WPBA Crop Editor](screenshot-5.png)
 
 ##Getting Started
 To get started with WP Better Attachments you can download it directly [here](https://github.com/DHolloran/wp-better-attachments/archive/master.zip), search for WP Github Recent Commit in your administrator section's Plugins > Add New, or you can download it from the [Wordpress plugins directory](http://wordpress.org/extend/plugins/wp-github-recent-commit/)

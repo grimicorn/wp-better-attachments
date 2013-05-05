@@ -59,7 +59,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			<div class="uploader pull-left">
 			<?php global $wp_version;
 			if ( floatval( $wp_version ) >= 3.5 ) { ?>
-				<a class="button wpba-attachments-button" id="wpba_attachments_button" href="#">Add Attachments</a>
+				<a class="button wpba-attachments-button" id="wpba_attachments_button" href="#"><span class="wpba-media-buttons-icon"></span> Add Attachments</a>
 			<?php } ?>
 			</div>
 			<div class="pull-left wpba-saving hide">
