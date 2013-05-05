@@ -11,7 +11,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	public function __construct( $config = array() )
 	{
 		parent::__construct();
-		$this->init_hooks();
+		add_action( 'admin_head', array( &$this, 'init_hooks' ) );
 	} // __construct()
 
 
@@ -19,7 +19,10 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	 * Initialization Hooks
 	 */
 	public function init_hooks() {
-		add_filter( 'attachment_fields_to_edit', array( &$this, 'output_attachments' ), 11, 2 );
+		global $post;
+		if ( !is_null( $post ) AND wp_attachment_is_image( $post->ID ) ) {
+			add_filter( 'attachment_fields_to_edit', array( &$this, 'output_attachments' ), 11, 2 );
+		} // if()
 	} // init_hooks()
 
 
@@ -128,9 +131,11 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		$html = '';
 		$nl = "\n";
 		$html .= '<div class="wpba-attachment-editor">' . $nl;
+		$html .= "<h2>WPBA Image Crop Editor</h2>" . $nl;
 		// $html .= '<a href="#" class="button">Show Thumbnails</a>' . $nl;
 		$html .= '<ul class="wpba-attachment-editor-list hide unstyled pull-left">' . $nl;
-		$html .= '<li>Below are all the available attachment sizes that are not tha same aspect ratio as the original.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.</li>' . $nl;
+		$html .= '<li class="description">Below are all the available attachment sizes that will be cropped from the original image the other sizes will be scaled to fit.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.</li>' . $nl;
+
 		foreach ( $attachments as $attachment ) {
 			$image_src = $attachment[0];
 			$image_width = $attachment[1];
@@ -146,15 +151,20 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 			if ( $attachment_meta AND isset( $attachment_meta["{$image_width}x{$image_height}"] ) ) {
 				$crop_points = implode( ',', $attachment_meta["{$image_width}x{$image_height}"] );
 			} else {
-				$crop_points = "0,{$image_width},0,{$image_height}";
-			} // if()
+				$aspect_ratio = $crop_src_width/$crop_src_height;
+				$start_width = (($aspect_ratio * $image_width) - $image_width)/2;
+				$end_width = $start_width + $image_width;
+				$crop_points = "{$start_width},{$end_width},0,{$image_height}";
+			} // if/else()
 
 			$equal_aspect_ratio = !$this->is_equal_aspect_ratio( $crop_src_width, $crop_src_height, $image_width, $image_height);
 			$image_larger_size = ( $image_width < $crop_src_width AND $image_height < $crop_src_height );
+			pp( $equal_aspect_ratio );
 			if( $image_width  AND $image_larger_size AND !$equal_aspect_ratio ) {
 				$image_style = "width:auto;height:{$image_height}px";
 				$html .= '<li>' . $nl;
-				$html .= "<h3>{$image_width}px x {$image_height}px</h3>" . $nl;
+				$html .= "<h3 class='pull-left'>{$image_width}px x {$image_height}px</h3>" . $nl;
+				// $html .= '<a href="#" class="reset-thumbnails pull-left">Reset Original Thumbnail</a>' . $nl;
 				$html .= "<div class='clear'>" . $nl;
 				$html .= "<img src='{$image_src}' " . $nl;
 				$html .= "class='wpba-img-size-select' " . $nl;
@@ -173,7 +183,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		$html .= '</ul>' . $nl;
 
 		$form_fields['wpba_thumbnails'] = array(
-				'label' => 'Thumbnail Images',
+				'label' => '',
 				'input' => 'html',
 				'html'  => $html,
 			);
