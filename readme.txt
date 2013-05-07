@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,9 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Added crop editor to media editor
 * Misc. cleanup and bug fixes
 
+= 1.3.1 =
+* Fixed over generic selector for settings navigation
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -98,3 +101,6 @@ Fixes regressions that I know of as well as the issues/requests on the forum.
 
 = 1.3.0 =
 Added crop editor to media editor
+
+= 1.3.1 =
+Fixed over generic selector for settings navigation
