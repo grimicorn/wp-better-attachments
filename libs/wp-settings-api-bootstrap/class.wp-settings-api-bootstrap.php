@@ -375,7 +375,7 @@ if ( ! class_exists( 'WP_Settings_API_Bootstrap' ) ):
          * Shows all the settings section labels as tab
          */
         function show_navigation() {
-            $html = '<h2 class="nav-tab-wrapper">';
+            $html = '<h2 class="wpba-nav-tab-wrapper nav-tab-wrapper">';
 
             foreach ( $this->settings_sections as $tab ) {
                 $html .= sprintf( '<a href="#%1$s" class="nav-tab" id="%1$s-tab">%2$s</a>', $tab['id'], $tab['title'] );
