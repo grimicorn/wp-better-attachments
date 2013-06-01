@@ -10,7 +10,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	/**
 	* Constructor
 	*/
-	function __construct( $config = array() )
+	public function __construct( $config = array() )
 	{
 
 	} // constructor()
@@ -21,11 +21,21 @@ class WPBA_Frontend extends WP_Better_Attachments
 	*
 	* @since 1.3.1
 	*/
-	function build_attachment_list( $args = array() )
+	public function build_attachment_list( $args = array() )
 	{
 		$list = "";
 		$nl = "\n";
 		$plugin_url = plugins_url('wp-better-attachments');
+		$args_to_be_cleaned = array(
+			'post_id'								=>	'int',
+			'show_icon'							=>	'boolean',
+			'file_type_categories'	=>	'array',
+			'file_extensions'				=>	'array',
+			'icon_size'							=>	'array',
+			'use_attachment_page'		=>	'boolean',
+			'open_new_window'				=>	'boolean',
+			'show_post_thumbnail'		=>	'boolean'
+		);
 		$defaults = array(
 			'post_id'								=>	NULL,
 			'show_icon'							=>	true,
@@ -40,18 +50,27 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'file_icon'							=>	"{$plugin_url}/assets/img/icons/file-icon.png",
 			'audio_icon'						=>	"{$plugin_url}/assets/img/icons/audio-icon.png",
 			'video_icon'						=>	"{$plugin_url}/assets/img/icons/video-icon.png",
-			'icon_size'							=>	array( 16, 20 )
+			'icon_size'							=>	array( 16, 20 ),
+			'use_attachment_page'		=>	false,
+			'open_new_window'				=>	false,
+			'show_post_thumbnail'		=>	false
 		);
-		$atts = extract( shortcode_atts( $defaults, $args ) );
+		$atts = shortcode_atts( $defaults, $args );
+		$atts = $this->clean_shortcode_atts( $atts, $args_to_be_cleaned );
+		extract( $atts );
 
-
-		// Get the attachments
+		// Set the post variable
 		if ( !is_null( $post_id ) ) {
-			$attachments = wpba_get_attachments( $post_id );
+			$post = get_post( $post_id );
 		} else {
 			global $post;
-			$attachments = wpba_get_attachments( $post->ID );
 		} // if/else()
+
+		// Get the attachments
+		$attachments = $this->get_post_attachments(array(
+			'post' => $post,
+			'show_post_thumbnail' => $show_post_thumbnail
+		));
 
 		// Make sure we have attachments
 		if ( is_null( $attachments ) ) {
@@ -62,15 +81,16 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$attachments = $this->check_allowed_file_type_categories( $attachments, $file_type_categories );
 		$attachments = $this->check_allowed_file_extensions( $attachments, $file_extensions );
 
+		// Build the list
 		$list .= '<div class="wpba">' . $nl;
 		$list .= '<ul class="wpba-attachment-list unstyled">';
 		foreach ( $attachments as $attachment ) {
-
 			$title = $attachment->post_title;
-			$link = wp_get_attachment_url( $attachment->ID );
+			$link = ( $use_attachment_page ) ? get_attachment_link( $attachment->ID ) : wp_get_attachment_url( $attachment->ID );
+			$target = ( $open_new_window ) ? 'target="_blank"' : 'target="_self"';
 			$list .= "<li>";
 			if ( $show_icon ) $list .= $this->icon( $attachment, shortcode_atts( $defaults, $args ) );
-			$list .= "<a href='{$link}' title='{$title}' class='pull-left'>{$title}</a>";
+			$list .= "<a href='{$link}' title='{$title}' class='pull-left' {$target}>{$title}</a>";
 			$list .= "<li>" . $nl;
 		} // foreach()
 		$list .= "</ul>";
@@ -79,10 +99,13 @@ class WPBA_Frontend extends WP_Better_Attachments
 		return $list;
 	} // wpba_build_attachment_list()
 
-		/**
+
+	/**
 	* Attachment placeholder image name
+	*
+	* @since 1.3.1
 	*/
-	protected function icon( $attachment, $args )
+	public function icon( $attachment, $args )
 	{
 		$img_src = '';
 		$plugin_url = WPBA_PATH;
@@ -100,6 +123,38 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$img = "<img src='{$img_src}' width='{$icon_size[0]}' height='{$icon_size[1]}' class='pull-left'>";
 		return $img;
 	} // placeholder_image()
+
+	/**
+	* Cleanup Shortcode Attributes
+	* @since 1.3.1
+	*/
+	public function clean_shortcode_atts( $atts, $att_keys )
+	{
+		foreach ( $att_keys as $key => $type ) {
+			if ( gettype( $atts[$key] ) == 'string' ) {
+				switch ( $type ) {
+					case 'int':
+						$atts[$key] = intval( $atts[$key] );
+						break;
+
+					case 'boolean':
+						$atts[$key] = ( $atts[$key] === 'true' );
+						break;
+
+					case 'array':
+						$no_spaces = str_replace( ' ', '', $atts[$key] );
+						$atts[$key] = explode( ',', $atts[$key] );
+						break;
+
+					default:
+						$atts[$key] = $atts[$key];
+						break;
+				} // switch()
+			} // if()
+		} // foreach()
+
+		return $atts;
+	}
 } // class()
 
 

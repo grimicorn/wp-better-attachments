@@ -93,7 +93,7 @@ class WP_Better_Attachments
 			// if ( floatval($wp_version) >= 3.5 ) {
 				// Make sure to enqueue media
 				if ( ! did_action( 'wp_enqueue_media' ) )
-			    wp_enqueue_media();
+					wp_enqueue_media();
 
 				wp_register_script(
 					'wpba-media-handler',
@@ -104,7 +104,7 @@ class WP_Better_Attachments
 				);
 			// } else {
 			// 	wp_enqueue_script( 'media-upload' );
-	  //  		add_thickbox();
+		//  		add_thickbox();
 			// 	$deps[] = 'media-upload';
 			// 	$deps[] = 'thickbox';
 			// 	wp_register_script(
@@ -154,6 +154,7 @@ class WP_Better_Attachments
 	{
 		global  $wpba_wp_settings_api;
 		extract( $args );
+
 		// Make sure we have a post to work with
 		if ( !isset( $post ) )
 			global $post;
@@ -162,16 +163,16 @@ class WP_Better_Attachments
 		$settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', false);
 		extract( $args );
 
+		$show_post_thumbnail = ( isset( $show_post_thumbnail ) ) ? $show_post_thumbnail : false;
 		$get_posts_args = array(
-			'post_type'     => 'attachment',
-			'posts_per_page'  =>  -1,
-			'post_parent'    => $post->ID,
-			'order'       => 'ASC',
-			'orderby'      => 'menu_order'
+			'post_type'				=>	'attachment',
+			'posts_per_page'	=>	-1,
+			'post_parent'			=>	$post->ID,
+			'order'						=>	'ASC',
+			'orderby'					=>	'menu_order'
 		);
-
 		// Should we exclude the thumb?
-		if ( isset( $settings['thumbnail'] ) ) {
+		if ( isset( $settings['thumbnail'] ) OR !$show_post_thumbnail ) {
 			$get_posts_args['exclude'] = get_post_thumbnail_id($post->ID);
 			$get_posts_args['meta_query'] = array(
 				array(
