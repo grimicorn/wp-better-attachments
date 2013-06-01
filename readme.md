@@ -15,6 +15,41 @@
 
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
+---
+
+###WPBA Attachment List Shortcode
+`[wpba-attachment-list]`
+
+####Default Parameters
+- post_id="186"
+- show_icon="false"
+- file_type_categories="image,file,audio,video"
+- file_extensions="png,pdf" **Array of file extensions, defaults to WordPress allowed attachment types (get_allowed_mime_types())**
+- image_icon="path/to/directory/image-icon.png"
+- file_icon="path/to/directory/file-icon.png"
+- audio_icon="path/to/directory/audio-icon.png"
+- video_icon="path/to/directory/video-icon.png"
+- icon_size="16,20" **width, height**
+- use_attachment_page="true"
+- open_new_window="true"
+- show_post_thumbnail="false"
+
+###WPBA Attachment List Shortcode/Function
+`wpba_attachment_list( array() );`
+####Default Parameters
+- post_id				=>	current post id // Takes a string or number
+- show_icon 			=>	false
+- file_type_categories	=>	array( 'image','file','audio','video' )
+- file_extensions 		=>	array( 'png', 'pdf', ... ) // Array of file extensions, defaults to WordPress allowed attachment types (get_allowed_mime_types())
+- image_icon			=>	"path/to/directory/image-icon.png"
+- file_icon				=>	"path/to/directory/file-icon.png"
+- audio_icon			=>	"path/to/directory/audio-icon.png"
+- video_icon			=>	"path/to/directory/video-icon.png"
+- icon_size				=>	array( 16,20 ); // string or number (width, height)
+- use_attachment_page	=>	true
+- open_new_window		=>	true
+- show_post_thumbnail	=>	false
+
 ##Screenshots
 ###WPBA Post Editor Button
 ![WPBA Post Editor Button](screenshot-1.png)
@@ -26,6 +61,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 ![WPBA Attachment Editor](screenshot-4.png)
 ###WPBA Crop Editor
 ![WPBA Crop Editor](screenshot-5.png)
+###WPBA Attachment List
+![WPBA Crop Editor](screenshot-6.png)
 
 ##Getting Started
 To get started with WP Better Attachments you can download it directly [here](https://github.com/DHolloran/wp-better-attachments/archive/master.zip), search for WP Github Recent Commit in your administrator section's Plugins > Add New, or you can download it from the [Wordpress plugins directory](http://wordpress.org/extend/plugins/wp-github-recent-commit/)
