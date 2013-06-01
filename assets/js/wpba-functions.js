@@ -253,12 +253,7 @@ wpba.updatePost = function(id, key, value) {
 			}
 	;
 
-	$.post(ajaxurl, ajaxData, function(resp){
-		if(ajaxData.key === 'post_title') {
-			var titleSelector = '#attachment_'+resp+' .wpba-attachment-name .wpba-filename';
-			$(titleSelector).text(ajaxData.value);
-		}
-	});
+	$.post(ajaxurl, ajaxData, function(resp){});
 }
 
 
