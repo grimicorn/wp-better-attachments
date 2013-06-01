@@ -1,1 +1,28 @@
-.wpba ol.unstyled,.wpba ul.unstyled{margin-left:0;list-style:none}.wpba .pull-left{float:left}.wpba .pull-right{float:right}.wpba .hide{display:none}.wpba .clearfix{*zoom:1}.wpba .clearfix:before,.wpba .clearfix:after{display:table;line-height:0;content:""}.wpba .clearfix:after{clear:both}.wpba .img-polaroid{padding:4px;background-color:#fafafa;border:1px solid #ccc;border:1px solid rgba(0,0,0,0.2);-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.1);-moz-box-shadow:0 1px 3px rgba(0,0,0,0.1);box-shadow:0 1px 3px rgba(0,0,0,0.1)}.wpba .clear{clear:both}
+.wpba ol.unstyled,
+.wpba ul.unstyled {
+  margin-left: 0;
+  list-style: none; }
+.wpba .pull-left {
+  float: left; }
+.wpba .pull-right {
+  float: right; }
+.wpba .hide {
+  display: none; }
+.wpba .clearfix {
+  *zoom: 1; }
+.wpba .clearfix:before, .wpba .clearfix:after {
+  display: table;
+  content: "";
+  line-height: 0; }
+.wpba .clearfix:after {
+  clear: both; }
+.wpba .img-polaroid {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: #fafafa;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+.wpba .clear {
+  clear: both; }

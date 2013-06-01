@@ -18,6 +18,8 @@ define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 
 /*
 * Pretty Print Debug Function
+*
+* Only on localhost
 */
 if ( !function_exists( 'pp' ) ) {
 	function pp( $value )
@@ -33,6 +35,8 @@ if ( !function_exists( 'pp' ) ) {
 	} // pp()
 } // if()
 
+
+
 /**
 * Handles Activation/Deactivation/Install
 */
@@ -46,23 +50,16 @@ register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
 * Required Classes
 */
 require_once "classes/class-wp-better-attachments.php";
-require_once 'libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php';
+require_once "libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php";
 require_once "classes/class-wpba-meta-box.php";
 require_once "classes/class-wpba-crop-resize.php";
 require_once "classes/class-wpba-ajax.php";
 require_once "classes/class-wpba-settings.php";
+require_once "classes/class-wpba-frontend.php";
 
 
 /**
-* Easy Attachment Function
+* Includes
 */
-function wpba_get_attachments( $post_id = 0 )
-{
-	global $wpba;
-	if ( $post_id != 0 ) {
-		$post = get_post( $post_id );
-	} else {
-		global $post;
-	} // if/else()
-	return $wpba->get_post_attachments( $args = array( 'post' => $post ) );
-}
+require_once "inc/shortcodes.inc.php";
+
