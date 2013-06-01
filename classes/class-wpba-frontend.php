@@ -62,17 +62,19 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$attachments = $this->check_allowed_file_type_categories( $attachments, $file_type_categories );
 		$attachments = $this->check_allowed_file_extensions( $attachments, $file_extensions );
 
-		$list .= "<ul>";
+		$list .= '<div class="wpba">' . $nl;
+		$list .= '<ul class="wpba-attachment-list unstyled">';
 		foreach ( $attachments as $attachment ) {
 
 			$title = $attachment->post_title;
 			$link = wp_get_attachment_url( $attachment->ID );
 			$list .= "<li>";
 			if ( $show_icon ) $list .= $this->icon( $attachment, shortcode_atts( $defaults, $args ) );
-			$list .= "<a href='{$link}' title='{$title}'>{$title}</a>";
+			$list .= "<a href='{$link}' title='{$title}' class='pull-left'>{$title}</a>";
 			$list .= "<li>" . $nl;
 		} // foreach()
 		$list .= "</ul>";
+		$list .= '</div>' . $nl;
 
 		return $list;
 	} // wpba_build_attachment_list()
@@ -95,7 +97,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			$img_src = $image_icon;
 		}//if/elseif
 
-		$img = "<img src='{$img_src}' width='{$icon_size[0]}' height='{$icon_size[1]}'>";
+		$img = "<img src='{$img_src}' width='{$icon_size[0]}' height='{$icon_size[1]}' class='pull-left'>";
 		return $img;
 	} // placeholder_image()
 } // class()

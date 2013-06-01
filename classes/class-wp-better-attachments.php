@@ -18,6 +18,7 @@ class WP_Better_Attachments
 	*/
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
 		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
 		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
 	} // init_hooks()
@@ -50,7 +51,8 @@ class WP_Better_Attachments
 	/**
 	* Add unattach link in media editor
 	*/
-	function unattach_media_row_action( $actions, $post ) {
+	function unattach_media_row_action( $actions, $post )
+	{
 		if ( $post->post_parent ) {
 			$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
 			$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
@@ -63,7 +65,8 @@ class WP_Better_Attachments
 	/**
 	* Enqueue Administrator Scripts and Styles
 	*/
-	public function enqueue_admin_scripts() {
+	public function enqueue_admin_scripts()
+	{
 
 		// Make sure the user has not disabled this post type
 		global $wpba_wp_settings_api;
@@ -119,9 +122,24 @@ class WP_Better_Attachments
 
 
 	/**
+	* Enqueue Frontend Scripts and Styles
+	*
+	* @since 1.3.1
+	*/
+	function enqueue_scripts()
+	{
+		global $post;
+		$src = plugins_url( 'assets/css/wpba-frontend.css' , dirname( __FILE__ ) );
+		wp_register_style( 'wpba_front_end_styles', $src, array(), WPBA_VERSION );
+		wp_enqueue_style( 'wpba_front_end_styles' );
+	} // enqueue_scripts()
+
+
+	/**
 	* Get attachment ID from src url
 	*/
-	public function get_attachment_id_from_src( $image_src ) {
+	public function get_attachment_id_from_src( $image_src )
+	{
 		global $wpdb;
 		$query = "SELECT ID FROM {$wpdb->posts} WHERE guid='$image_src'";
 		$id = $wpdb->get_var( $query );
@@ -132,7 +150,8 @@ class WP_Better_Attachments
 	/**
 	* Get Post Attachments
 	*/
-	public function get_post_attachments( $args = array() ) {
+	public function get_post_attachments( $args = array() )
+	{
 		global  $wpba_wp_settings_api;
 		extract( $args );
 		// Make sure we have a post to work with
@@ -189,7 +208,8 @@ class WP_Better_Attachments
 	/**
 	* Attachment is an image
 	*/
-	protected function is_image( $mime_type ) {
+	protected function is_image( $mime_type )
+	{
 		$image_mime_types = array(
 			'image/jpeg',
 			'image/gif',
@@ -205,7 +225,8 @@ class WP_Better_Attachments
 	/**
 	* Attachment is a document
 	*/
-	protected function is_document( $mime_type ) {
+	protected function is_document( $mime_type )
+	{
 		$document_mime_types = array(
 			'application/pdf',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -226,7 +247,8 @@ class WP_Better_Attachments
 	/**
 	* Attachment is a audio
 	*/
-	protected function is_audio( $mime_type ) {
+	protected function is_audio( $mime_type )
+	{
 		$audio_mime_types = array(
 			'audio/mpeg',
 			'audio/mpeg',
@@ -243,7 +265,8 @@ class WP_Better_Attachments
 	/**
 	* Attachment is a video
 	*/
-	protected function is_video( $mime_type ) {
+	protected function is_video( $mime_type )
+	{
 		$video_mime_types = array(
 			'video/mp4',
 			'video/mp4',
@@ -353,7 +376,8 @@ class WP_Better_Attachments
 	/**
 	* Attach
 	*/
-	public function attach( $args = array() ) {
+	public function attach( $args = array() )
+	{
 		extract( $args );
 		global $wpdb;
 
@@ -388,7 +412,8 @@ class WP_Better_Attachments
 	/**
 	* Un-attach
 	*/
-	public function unattach( $args = array() ) {
+	public function unattach( $args = array() )
+	{
 		extract( $args );
 
 		// Can not do anything with out the attachment id
@@ -406,7 +431,8 @@ class WP_Better_Attachments
 	/**
 	* Insert Attachment
 	*/
-	public function insert_attachment( $url ) {
+	public function insert_attachment( $url )
+	{
 		$wp_upload_dir = wp_upload_dir();
 		$filename = str_replace( $wp_upload_dir['url'] . '/', '', $url );
 		$wp_filetype = wp_check_filetype( basename( $filename ), null );
