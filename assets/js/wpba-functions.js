@@ -265,9 +265,23 @@ wpba.updatePost = function(id, key, value) {
 /**
 * Title Key Up Handler
 */
-wpba.titleKeyUpHandler = function() {
+// wpba.titleKeyUpHandler = function() {
+// 	var $ = jQuery;
+// 	$('.wpba-attachment-title').on('keyup',function(){
+// 		var that = $(this),
+// 				id = that.parent('div').parent('div').data('id')
+// 		;
+// 		wpba.updatePost(id, 'post_title', that.val());
+// 	});
+// }
+
+
+/**
+* Title Key Up Handler
+*/
+wpba.titleBlurHandler = function() {
 	var $ = jQuery;
-	$('.wpba-attachment-title').on('keyup',function(){
+	$('.wpba-attachment-title').on('blur',function(){
 		var that = $(this),
 				id = that.parent('div').parent('div').data('id')
 		;
@@ -279,10 +293,25 @@ wpba.titleKeyUpHandler = function() {
 /**
 * Caption Key Up Handler
 */
-wpba.captionKeyUpHandler = function() {
+// wpba.captionKeyUpHandler = function() {
+// 	var $ = jQuery;
+
+// 	$('.wpba-attachment-caption').on('keyup',function(){
+// 		var that = $(this),
+// 				id = that.parent('div').parent('div').data('id')
+// 		;
+// 		wpba.updatePost(id, 'post_excerpt', that.val());
+// 	});
+// }
+
+
+/**
+* Caption Key Up Handler
+*/
+wpba.captionBlurHandler = function() {
 	var $ = jQuery;
 
-	$('.wpba-attachment-caption').on('keyup',function(){
+	$('.wpba-attachment-caption').on('blur',function(){
 		var that = $(this),
 				id = that.parent('div').parent('div').data('id')
 		;
@@ -301,6 +330,8 @@ wpba.resetClickHandlers = function() {
 	wpba.unattachLibraryAttachmentClickHandler();
 	wpba.deleteAttachmentClickHandler();
 	wpba.editModalClickHandler();
-	wpba.titleKeyUpHandler();
-	wpba.captionKeyUpHandler();
+	// wpba.titleKeyUpHandler();
+	// wpba.captionKeyUpHandler();
+	wpba.titleBlurHandler();
+	wpba.captionBlurHandler();
 }
