@@ -129,9 +129,13 @@ class WP_Better_Attachments
 	function enqueue_scripts()
 	{
 		global $post;
-		$src = plugins_url( 'assets/css/wpba-frontend.css' , dirname( __FILE__ ) );
-		wp_register_style( 'wpba_front_end_styles', $src, array(), WPBA_VERSION );
+		$style_src = plugins_url( 'assets/css/wpba-frontend.css' , dirname( __FILE__ ) );
+		wp_register_style( 'wpba_front_end_styles', $style_src, array(), WPBA_VERSION );
 		wp_enqueue_style( 'wpba_front_end_styles' );
+
+		$script_src = $style_src = plugins_url( 'assets/js/wpba-frontend.min.js' , dirname( __FILE__ ) );;
+		wp_register_script( 'wpba_front_end_styles', $script_src, array( 'jquery' ), WPBA_VERSION, true );
+		wp_enqueue_script( 'wpba_front_end_styles' );
 	} // enqueue_scripts()
 
 

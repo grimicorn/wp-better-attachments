@@ -26,7 +26,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$list = "";
 		$nl = "\n";
 		$plugin_url = plugins_url('wp-better-attachments');
-		$args_to_be_cleaned = array(
+		$atts_to_be_cleaned = array(
 			'post_id'								=>	'int',
 			'show_icon'							=>	'boolean',
 			'file_type_categories'	=>	'array',
@@ -56,7 +56,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'show_post_thumbnail'		=>	false
 		);
 		$atts = shortcode_atts( $defaults, $args );
-		$atts = $this->clean_shortcode_atts( $atts, $args_to_be_cleaned );
+		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
 		extract( $atts );
 
 		// Set the post variable
@@ -98,6 +98,67 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 		return $list;
 	} // wpba_build_attachment_list()
+
+
+	/**
+	* Frontend Build FlexSlider
+	*
+	* @since 1.3.1
+	*/
+	public function build_flexslider( $args = array() )
+	{
+		$defaults = array(
+			'post_id'							=>	NULL,
+			'show_post_thumbnail'	=>	false,
+			'width'								=>	'600px',
+			'height'							=>	'auto',
+			'control_nav'					=>	true,
+			'direction_nav'				=>	true
+		);
+		$atts = shortcode_atts( $defaults, $args );
+
+		$atts_to_be_cleaned = array(
+			'post_id'								=>	'int',
+			'show_post_thumbnail'		=>	'boolean',
+			'control_nav'						=>	'boolean',
+			'direction_nav'					=>	'boolean'
+		);
+		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
+		extract( $atts );
+		pp($show_post_thumbnail);
+		// Set the post variable
+		if ( !is_null( $post_id ) ) {
+			$post = get_post( $post_id );
+		} else {
+			global $post;
+		} // if/else()
+
+		// Get the attachments
+		$attachments = $this->get_post_attachments(array(
+			'post' => $post,
+			'show_post_thumbnail' => $show_post_thumbnail
+		));
+		$slider_properties = json_encode(array(
+			'controlNav'		=>	$control_nav,
+			'directionNav'	=>	$direction_nav
+		));
+		$slider = '';
+		$slider .= "<div class='wpba-flexslider flexslider' style='width:{$width};height:{$height};' data-sliderproperties='{$slider_properties}'>";
+		$slider .= '<ul class="slides">';
+		foreach ( $attachments as $attachment ) {
+			if ( $this->is_image( $attachment->post_mime_type ) ) {
+				$attachment_src = wp_get_attachment_image_src( $attachment->ID, 'full' );
+				$src = $attachment_src[0];
+				$width = $attachment_src[1];
+				$height = $attachment_src[2];
+				$slider .= "<li><img src='{$src}' width='{$width}' height='{$height}'/></li>";
+			} // if()
+		} // foreach()
+		$slider .= '</ul>';
+		$slider .= '</div>';
+
+		return $slider;
+	} // build_flexslider()
 
 
 	/**
