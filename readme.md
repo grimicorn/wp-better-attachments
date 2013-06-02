@@ -5,9 +5,11 @@
 **Plugin Home Page:** [http://wordpress.org/extend/plugins/wp-better-attachments/](http://wordpress.org/extend/plugins/wp-better-attachments/)
 
 
-####Thanks to:
+####Thanks to these projects:
 
 - [WP Settings API Bootstrap](https://github.com/DerekMarcinyshyn/wp-settings-api-bootstrap)
+- [FlexSlider 2](http://www.woothemes.com/flexslider/2/)
+- [Img Area Select](http://odyniec.net/projects/imgareaselect/)
 
 
 *If your project is included and I do not have you added please let me know, thank you.*
