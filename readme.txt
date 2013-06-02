@@ -4,22 +4,26 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.
 
 == Description ==
-Allows you to add/edit/attach/un-attach/delete/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.
+Allows you to add/edit/attach/un-attach/delete/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type, full control over cropping of the different attachment image sizes crop editor and no configuration needed to add WP Better Attachments to custom post types.
 
-You can use `wpba_get_attachments( $post->ID )` to retrieve attachments from a certain post or `wpba_get_attachments()` to get the attachments for the current post.
+= Shortcodes =
+* Information on the settings available [here](http://dholloran.github.io/wp-better-attachments)
+* `[wpba-attachment-list]` Outputs a list of attachments
 
-You can now full control over cropping of the different attachment image sizes through the WPBA crop editor in the media editor, this is a Beta feature.
+= Functions =
+* Information on the settings available [here](http://dholloran.github.io/wp-better-attachments)
+* `wpba_get_attachments()` Retrieves an array of attachments
+* `wpba_attachment_list()` Outputs a list of attachments
+
 
 View more information on GitHub [here](https://github.com/DHolloran/wp-better-attachments/)
-
-Whats new in 1.3 Added the ability to control how WordPress crops tour thumbnails for different image sizes.
 
 == Installation ==
 1. Upload `wp-github-recent-commit` to the `/wp-content/plugins/` directory
@@ -34,10 +38,12 @@ Whats new in 1.3 Added the ability to control how WordPress crops tour thumbnail
 None so far... If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [support@danholloran.com](mailto:support@danholloran.com).
 
 == Screenshots ==
-1. Image of post editor button
-2. Image of the attachment editor
-3. Image of the added un-attach link in the media library
-4. Image of the attachment edit modal
+1. Post editor button
+2. The meta box
+3. The added un-attach link in the media library
+4. The attachment edit modal
+5. The attachment editor
+6. The `[wpba-attachment-list]` shortcode
 
 
 == Changelog ==
@@ -79,6 +85,12 @@ None so far... If you have any issues please submit an [issue](https://github.co
 = 1.3.1 =
 * Fixed over generic selector for settings navigation
 
+= 1.3.2 =
+Attachment list shortcode/function
+Improved inline title caption editor saving
+Misc. style cleanup
+Misc. cleanup
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -104,3 +116,6 @@ Added crop editor to media editor
 
 = 1.3.1 =
 Fixed over generic selector for settings navigation
+
+= 1.3.2 =
+Added a new list shortcode/function, improved inline title caption editor saving, and misc. style/cleanup

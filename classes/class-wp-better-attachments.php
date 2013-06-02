@@ -124,7 +124,7 @@ class WP_Better_Attachments
 	/**
 	* Enqueue Frontend Scripts and Styles
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	function enqueue_scripts()
 	{
@@ -290,7 +290,7 @@ class WP_Better_Attachments
 		/**
 	* Check Allowed Files
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	function check_allowed_file_extensions( $attachments, $allowed_extensions )
 	{
@@ -313,7 +313,7 @@ class WP_Better_Attachments
 	/**
 	* Check Allowed File Type Categories
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	function check_allowed_file_type_categories( $attachments, $allowed_categories )
 	{
@@ -362,7 +362,7 @@ class WP_Better_Attachments
 	/**
 	* Get Extensions From WP Allowed Mime Types
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	function get_allowed_extensions()
 	{

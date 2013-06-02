@@ -2,7 +2,7 @@
 /**
 * WPBA Front End
 *
-* @since 1.3.1
+* @since 1.3.2
 */
 class WPBA_Frontend extends WP_Better_Attachments
 {
@@ -19,7 +19,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	/**
 	* Frontend Build Attachments List
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	public function build_attachment_list( $args = array() )
 	{
@@ -103,7 +103,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	/**
 	* Frontend Build FlexSlider
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	public function build_flexslider( $args = array() )
 	{
@@ -164,7 +164,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	/**
 	* Attachment placeholder image name
 	*
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	public function icon( $attachment, $args )
 	{
@@ -187,7 +187,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 	/**
 	* Cleanup Shortcode Attributes
-	* @since 1.3.1
+	* @since 1.3.2
 	*/
 	public function clean_shortcode_atts( $atts, $att_keys )
 	{

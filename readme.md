@@ -18,6 +18,14 @@
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
 ---
+###WPBA Get Attachments
+
+`wpba_get_attachments()`
+
+####Default Parameters
+- post_id => current post id **Will retrieve attachments from the passed ID if available**
+
+---
 
 ###WPBA Attachment List Shortcode
 `[wpba-attachment-list]`
