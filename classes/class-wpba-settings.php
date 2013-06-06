@@ -90,16 +90,30 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 
 			// Post Type Disable Settings
 			$post_type_disable = array(
-				array(
-					'name'      => 'wpba-disable-post-types',
-					'label'     => __( 'Disable Post Types', 'wpba' ),
-					'desc'      => __( '', 'wpba' ),
-					'type'      => 'multicheck',
-					'options'   => $post_types
-				)
+				'name'			=> 'wpba-disable-post-types',
+				'label'			=> __( 'Disable Post Types', 'wpba' ),
+				'desc'			=> __( '', 'wpba' ),
+				'type'			=> 'multicheck',
+				'options'		=> $post_types
 			);
 
-			$wpba_settings = array_merge( $post_type_disable, $post_type_options );
+			// Global Settings
+			$global_checkbox_settings = array(
+				'name'			=>	'wpba-global-settings',
+				'label'			=>	__( 'Global Settings', 'wpba' ),
+				'desc'			=>	__( '', 'wpba' ),
+				'type'			=>	'multicheck',
+				'options'		=>	array(
+													'thumbnail'	=>	'Do not include thumbnail'
+												)
+			);
+
+			// $wpba_settings = array_merge( $post_type_disable, $post_type_options );
+			$wpba_settings = array();
+			$wpba_settings = $post_type_options;
+			$wpba_settings[] = $post_type_disable;
+			$wpba_settings[] = $global_checkbox_settings;
+
 			// Settings
 			$settings_fields = array(
 				'wpba_settings' => $wpba_settings

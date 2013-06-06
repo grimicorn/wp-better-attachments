@@ -164,7 +164,9 @@ class WP_Better_Attachments
 			global $post;
 
 		$post_type_obj = get_post_type_object( $post->post_type );
-		$settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', false);
+		$post_settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', false);
+		$global_settings = $wpba_wp_settings_api->get_option( 'wpba-global-settings', 'wpba_settings', array());
+		pp($global_settings);
 		extract( $args );
 
 		$show_post_thumbnail = ( isset( $show_post_thumbnail ) ) ? $show_post_thumbnail : false;
@@ -175,8 +177,9 @@ class WP_Better_Attachments
 			'order'						=>	'ASC',
 			'orderby'					=>	'menu_order'
 		);
+
 		// Should we exclude the thumb?
-		if ( isset( $settings['thumbnail'] ) OR !$show_post_thumbnail ) {
+		if ( isset( $post_settings['thumbnail'] ) OR isset( $global_settings['thumbnail'] ) OR $show_post_thumbnail ) {
 			$get_posts_args['exclude'] = get_post_thumbnail_id($post->ID);
 			$get_posts_args['meta_query'] = array(
 				array(
