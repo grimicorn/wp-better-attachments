@@ -166,7 +166,6 @@ class WP_Better_Attachments
 		$post_type_obj = get_post_type_object( $post->post_type );
 		$post_settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', false);
 		$global_settings = $wpba_wp_settings_api->get_option( 'wpba-global-settings', 'wpba_settings', array());
-		pp($global_settings);
 		extract( $args );
 
 		$show_post_thumbnail = ( isset( $show_post_thumbnail ) ) ? $show_post_thumbnail : false;
