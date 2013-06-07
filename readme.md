@@ -20,10 +20,11 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 ---
 ###WPBA Get Attachments
 
-`wpba_get_attachments()`
+`wpba_get_attachments( array )`
 
 ####Default Parameters
 - post_id => current post id **Will retrieve attachments from the passed ID if available**
+- show_post_thumbnail => true
 
 ---
 
