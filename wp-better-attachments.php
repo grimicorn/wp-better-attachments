@@ -36,16 +36,6 @@ if ( !function_exists( 'pp' ) ) {
 } // if()
 
 
-
-/**
-* Handles Activation/Deactivation/Install
-*/
-require_once "classes/class-wpba-init.php";
-register_activation_hook( __FILE__, array( 'WPBA_Init', 'on_activate' ) );
-register_deactivation_hook( __FILE__, array( 'WPBA_Init', 'on_deactivate' ) );
-register_uninstall_hook( __FILE__, array( 'WPBA_Init', 'on_uninstall' ) );
-
-
 /**
 * Required Classes
 */
