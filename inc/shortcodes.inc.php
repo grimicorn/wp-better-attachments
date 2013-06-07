@@ -1,6 +1,7 @@
 <?php
 /**
 * Easy Attachment Function Convenience Function
+*
 * @since 1.2.0
 */
 function wpba_get_attachments( $args = array() )
@@ -28,6 +29,21 @@ function wpba_get_attachments( $args = array() )
 	$args['post'] = $post;
 	return $wpba->get_post_attachments( $args );
 } // wpba_get_attachments()
+
+
+/**
+* Check if post has attachment
+*
+* @since 1.3.3
+*/
+function wpba_attachments_exist( $args = array() )
+{
+	if ( count( wpba_get_attachments( $args ) ) > 0 ) {
+		return true;
+	} //if()
+
+	return false;
+}
 
 
 /**
