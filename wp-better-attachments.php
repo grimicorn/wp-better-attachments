@@ -1,18 +1,18 @@
 <?php
 /**
  * @package WP_Better_Attachments
- * @version 1.3.2
+ * @version 1.3.3
  */
 /*
 Plugin Name: WP Better Attachments
 Plugin URI: http://dholloran.github.io/wp-better-attachments
 Description: Better Wordpress Attachments
 Author: Dan Holloran
-Version: 1.3.2
+Version: 1.3.3
 Author URI: http://danholloran.com/
 */
 
-define( 'WPBA_VERSION', '1.3.2' );
+define( 'WPBA_VERSION', '1.3.3' );
 define( 'WPBA_LANG', 'wpba' );
 define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 
