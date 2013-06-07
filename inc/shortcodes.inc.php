@@ -3,15 +3,30 @@
 * Easy Attachment Function Convenience Function
 * @since 1.2.0
 */
-function wpba_get_attachments( $post_id = 0 )
+function wpba_get_attachments( $args = array() )
 {
 	global $wpba;
-	if ( $post_id != 0 ) {
+
+	if ( gettype( $args ) == 'array' ) {
+		extract( $args );
+	} else {
+		// Deprecated $post_id parameter 1.3.3
+		// Fallback since the original parameter
+		// was a post id and now it should be included
+		// in the $args object
+		$post_id = $args;
+		$args = array();
+	}	// if/else()
+
+
+	if ( isset( $post_id ) ) {
 		$post = get_post( $post_id );
 	} else {
 		global $post;
 	} // if/else()
-	return $wpba->get_post_attachments( $args = array( 'post' => $post ) );
+
+	$args['post'] = $post;
+	return $wpba->get_post_attachments( $args );
 } // wpba_get_attachments()
 
 

@@ -42,7 +42,7 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - icon_size="16,20" **width, height**
 - use_attachment_page="true"
 - open_new_window="true"
-- show_post_thumbnail="false"
+- show_post_thumbnail="true"
 
 ###WPBA Attachment List Shortcode/Function
 `wpba_attachment_list( array() );`
@@ -58,7 +58,7 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - icon_size				=>	array( 16,20 ); // string or number (width, height)
 - use_attachment_page	=>	true
 - open_new_window		=>	true
-- show_post_thumbnail	=>	false
+- show_post_thumbnail	=>	true
 
 ##Screenshots
 ###WPBA Post Editor Button
