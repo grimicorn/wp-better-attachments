@@ -39,6 +39,7 @@ if ( !function_exists( 'pp' ) ) {
 /**
 * Required Classes
 */
+require_once "libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php";
 require_once "classes/class-wp-better-attachments.php";
 require_once "libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php";
 require_once "classes/class-wpba-meta-box.php";

@@ -42,7 +42,7 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 			add_options_page(
 				'WP Better Attachments Settings',
 				'WPBA Settings',
-				'delete_posts',
+				'activate_plugins',
 				'wpba-settings',
 				array($this, 'plugin_page')
 			);
@@ -104,7 +104,8 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 				'desc'			=>	__( '', 'wpba' ),
 				'type'			=>	'multicheck',
 				'options'		=>	array(
-													'thumbnail'	=>	'Do not include thumbnail'
+													'thumbnail'			=>	'Do Not Include Thumbnail',
+													'no_shortcodes'	=>	'Disable Shortcodes'
 												)
 			);
 
