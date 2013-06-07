@@ -173,6 +173,10 @@ class WP_Better_Attachments
 		if ( !isset( $post ) )
 			global $post;
 
+		// Make sure that post is not null
+		if ( is_null( $post ) )
+			return array();
+
 		// Specific Post settings
 		global $wpba_wp_settings_api;
 		$post_settings = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-settings", 'wpba_settings', false);
