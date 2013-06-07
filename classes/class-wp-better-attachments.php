@@ -84,7 +84,7 @@ class WP_Better_Attachments
 		// Make sure we neeed to load WPBA files
 		$current_screen = get_current_screen();
 		$base = $current_screen->base;
-		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base = 'settings_page_wpba-settings' ) {
+		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base == 'settings_page_wpba-settings' ) {
 			// WPBA Main Style File
 			wp_enqueue_style(
 				'wpba-admin-css',
