@@ -41,7 +41,7 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 		function admin_menu() {
 			add_options_page(
 				'WP Better Attachments Settings',
-				'WPBA Settings',
+				'WP Better Attachments',
 				'activate_plugins',
 				'wpba-settings',
 				array($this, 'plugin_page')
@@ -104,8 +104,9 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 				'desc'			=>	__( '', 'wpba' ),
 				'type'			=>	'multicheck',
 				'options'		=>	array(
-													'thumbnail'			=>	'Do Not Include Thumbnail',
-													'no_shortcodes'	=>	'Disable Shortcodes'
+													'thumbnail'				=>	'Do Not Include Thumbnail',
+													'no_shortcodes'		=>	'Disable Shortcodes',
+													'no_crop_editor'	=>	'WPBA Image Crop Editor'
 												)
 			);
 

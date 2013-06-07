@@ -11,7 +11,9 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	public function __construct( $config = array() )
 	{
 		parent::__construct();
-		add_action( 'admin_head', array( &$this, 'init_hooks' ) );
+		if ( !isset( $this->global_settings['no_crop_editor'] ) ) {
+			add_action( 'admin_head', array( &$this, 'init_hooks' ) );
+		}
 	} // __construct()
 
 
