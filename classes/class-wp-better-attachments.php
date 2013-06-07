@@ -186,16 +186,27 @@ class WP_Better_Attachments
 		);
 
 		// Should we exclude the thumb?
-		$show_post_thumbnail = ( isset( $show_post_thumbnail ) ) ? $show_post_thumbnail : false;
 		$post_settings_thumb = isset( $post_settings['thumbnail'] );
 		$global_settings_thumb = isset( $this->global_settings['thumbnail'] );
-		if ( $post_settings_thumb OR $global_settings_thumb OR $show_post_thumbnail ) {
+		$no_thumbs = false;
+		if ( isset( $show_post_thumbnail ) ) {
+			if ( !$show_post_thumbnail ) {
+				$no_thumbs = true;
+			} // if()
+		} elseif( $post_settings_thumb OR $global_settings_thumb ) {
+			$no_thumbs = true;
+		}
+
+
+		if ( $no_thumbs ) {
+			// Need to more han likely check againts show_post_thumbnnail isset
 			$get_posts_args['exclude'] = get_post_thumbnail_id( $post->ID );
 			$get_posts_args['meta_query'] = array(array(
 				'key' => '_thumbnail_id',
 				'compare' => 'NOT EXISTS'
 			));
 		} // if()
+
 
 		// Get the attachments
 		$attachments = get_posts( $get_posts_args );

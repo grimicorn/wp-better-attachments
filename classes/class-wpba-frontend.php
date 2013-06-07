@@ -53,7 +53,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'icon_size'							=>	array( 16, 20 ),
 			'use_attachment_page'		=>	false,
 			'open_new_window'				=>	false,
-			'show_post_thumbnail'		=>	false
+			'show_post_thumbnail'		=>	true
 		);
 		$atts = shortcode_atts( $defaults, $args );
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
