@@ -53,7 +53,8 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'icon_size'							=>	array( 16, 20 ),
 			'use_attachment_page'		=>	false,
 			'open_new_window'				=>	false,
-			'show_post_thumbnail'		=>	true
+			'show_post_thumbnail'		=>	true,
+			'no_attachments_msg'		=>	'Sorry, no attachments exist.'
 		);
 		$atts = shortcode_atts( $defaults, $args );
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
@@ -73,8 +74,8 @@ class WPBA_Frontend extends WP_Better_Attachments
 		));
 
 		// Make sure we have attachments
-		if ( is_null( $attachments ) ) {
-			return '';
+		if ( is_null( $attachments ) OR count( $attachments ) == 0 ) {
+			return $no_attachments_msg;
 		} // if()
 
 		// Go through the restrictions
