@@ -106,27 +106,43 @@ class WPBA_Frontend extends WP_Better_Attachments
 	*
 	* @since 1.3.2
 	*/
-	public function build_flexslider( $args = array() )
+	public function setup_build_flexslider( $args = array() )
 	{
 		$defaults = array(
 			'post_id'							=>	NULL,
 			'show_post_thumbnail'	=>	false,
 			'width'								=>	'600px',
 			'height'							=>	'auto',
-			'control_nav'					=>	true,
-			'direction_nav'				=>	true
+			'slider_properties'		=>	array( 'animation'	=>	'slide' ) // https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
 		);
+
+		if ( !empty( $args['slider_properties'] ) ) {
+			$clean_properties = $this->clean_shortcode_atts( $args, array( 'slider_properties' => 'assoc_array' ) );
+			$args['slider_properties'] = array_merge( $defaults['slider_properties'], $clean_properties['slider_properties'] );
+		}
+
 		$atts = shortcode_atts( $defaults, $args );
 
 		$atts_to_be_cleaned = array(
 			'post_id'								=>	'int',
-			'show_post_thumbnail'		=>	'boolean',
-			'control_nav'						=>	'boolean',
-			'direction_nav'					=>	'boolean'
+			'show_post_thumbnail'		=>	'boolean'
 		);
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
-		extract( $atts );
-		pp($show_post_thumbnail);
+
+		return $atts;
+	} // setup_build_flexslider()
+
+
+	/**
+	* Frontend Build FlexSlider
+	*
+	* @since 1.3.2
+	*/
+	public function build_flexslider( $args = array() )
+	{
+		$setup = $this->setup_build_flexslider( $args );
+		extract( $setup );
+
 		// Set the post variable
 		if ( !is_null( $post_id ) ) {
 			$post = get_post( $post_id );
@@ -139,10 +155,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'post' => $post,
 			'show_post_thumbnail' => $show_post_thumbnail
 		));
-		$slider_properties = json_encode(array(
-			'controlNav'		=>	$control_nav,
-			'directionNav'	=>	$direction_nav
-		));
+		$slider_properties = json_encode( $slider_properties );
 		$slider = '';
 		$slider .= "<div class='wpba-flexslider flexslider' style='width:{$width};height:{$height};' data-sliderproperties='{$slider_properties}'>";
 		$slider .= '<ul class="slides">';
@@ -205,8 +218,23 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 					case 'array':
 						$no_spaces = str_replace( ' ', '', $atts[$key] );
-						$atts[$key] = explode( ',', $atts[$key] );
+						$atts[$key] = explode( ',', $no_spaces );
 						break;
+
+					case 'assoc_array':
+						$no_spaces = str_replace( ' ', '', $atts[$key] );
+						$exploded_array = explode( ',', $no_spaces );
+						$cleaned_array = array();
+						foreach ( $exploded_array as $exploded ) {
+							list($new_key, $value) = explode("=", $exploded);
+							// Clean up values for other types
+							$value = ( is_numeric( $value ) ) ? intval( $value ) : $value;
+							$value = ( $value == 'true' ) ? true : $value;
+							$value = ( $value == 'false' ) ? false : $value;
+							$cleaned_array[$new_key] = $value;
+						} // foreach()
+						$atts[$key] = $cleaned_array;
+					break;
 
 					default:
 						$atts[$key] = $atts[$key];

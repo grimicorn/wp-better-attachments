@@ -10,7 +10,7 @@
  */
 
 ;(function ($) {
-
+	if ( $('.wpba-flexslider').length > 0 ) {
 	//FlexSlider: Object Instance
 	$.flexslider = function(el, options) {
 		var slider = $(el),
@@ -900,5 +900,5 @@
 			}
 		}
 	}
-
+}
 })(jQuery);

@@ -7,7 +7,7 @@ jQuery(function($){
 			var	sliderElem = $('.wpba-flexslider'),
 					sliderProperties = sliderElem.data( 'sliderproperties' )
 			;
-			sliderProperties.animation = "slide"
+
 			sliderElem.flexslider( sliderProperties );
 		}
 	});
