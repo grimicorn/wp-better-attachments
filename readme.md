@@ -18,6 +18,16 @@
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
 ---
+###WPBA Attachments Exist
+`wpba_attachments_exist( array )`  
+
+####Default Parameters
+- post_id => current post id **Will retrieve attachments from the passed ID if available**
+- show_post_thumbnail => true
+
+`returns boolean`
+
+---
 ###WPBA Get Attachments
 
 `wpba_get_attachments( array )`
@@ -25,6 +35,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 ####Default Parameters
 - post_id => current post id **Will retrieve attachments from the passed ID if available**
 - show_post_thumbnail => true
+
+`returns object`
 
 ---
 
