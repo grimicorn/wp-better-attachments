@@ -1,10 +1,10 @@
 === Plugin Name ===
 Contributors: dholloran
 Donate link: http://danholloran.com/
-Tags: attachment,file,image,post,page,custom post type
+Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,11 +19,14 @@ Allows you to add/edit/attach/un-attach/delete/sort the files attached to your W
 
 = Functions =
 * Information on the settings available [here](http://dholloran.github.io/wp-better-attachments)
+* `wpba_attachments_exist()` Checks for post attachments
 * `wpba_get_attachments()` Retrieves an array of attachments
 * `wpba_attachment_list()` Outputs a list of attachments
 
 
 View more information on GitHub [here](https://github.com/DHolloran/wp-better-attachments/)
+
+If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new).
 
 == Installation ==
 1. Upload `wp-github-recent-commit` to the `/wp-content/plugins/` directory
@@ -32,7 +35,6 @@ View more information on GitHub [here](https://github.com/DHolloran/wp-better-at
 4. Use the add attachments button to add new attachments.
 5. You can Drag and drop your attachments to arrange their menu order.
 6. Click the Un-attach link to un-attach the file from your post.
-
 
 == Frequently Asked Questions ==
 None so far... If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [support@danholloran.com](mailto:support@danholloran.com).
@@ -86,10 +88,18 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Fixed over generic selector for settings navigation
 
 = 1.3.2 =
-Attachment list shortcode/function
-Improved inline title caption editor saving
-Misc. style cleanup
-Misc. cleanup
+* Attachment list shortcode/function
+* Improved inline title caption editor saving
+* Misc. style cleanup
+* Misc. cleanup
+
+== 1.3.3 ==
+* Added `wpba_attachments_exist()` to check if a post has attachments.
+* Added no attachments message for attachment list.
+* Fixed wpba_get_attachments() not retrieving post thumbnail images correctly.
+* Added settings to disable front end files, post thumbnails globally, and crop editor.
+* Fixed compatibility issue with Wysija Newsletter Plugin.
+* Fixed other miscellaneous issues and general clean up.
 
 == Upgrade Notice ==
 
@@ -119,3 +129,6 @@ Fixed over generic selector for settings navigation
 
 = 1.3.2 =
 Added a new list shortcode/function, improved inline title caption editor saving, and misc. style/cleanup
+
+== 1.3.3 ==
+Should resolve issues from last update and adds more settings control

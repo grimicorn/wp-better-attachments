@@ -4,11 +4,18 @@
  */
 class WP_Better_Attachments
 {
+	protected $global_settings;
+	protected $disabled_post_types;
 
 	/**
 	* Constructor
 	*/
 	public function __construct( $config = array() ) {
+		// Settings
+		global $wpba_wp_settings_api;
+		$this->global_settings = $wpba_wp_settings_api->get_option( 'wpba-global-settings', 'wpba_settings', array());
+		$this->disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
+
 		$this->init_hooks();
 	} // __construct
 
@@ -18,7 +25,9 @@ class WP_Better_Attachments
 	*/
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+		if ( !isset($this->global_settings['no_shortcodes']) ) {
+			add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
+		} // if()
 		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
 		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
 	} // init_hooks()
@@ -29,18 +38,18 @@ class WP_Better_Attachments
 	*/
 	function add_form_button($context){
 		// Make sure the user has not disabled this post type
-		global $wpba_wp_settings_api;
 		global $post;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
-		if ( isset( $post ) AND !empty( $disabled_post_types[$post->post_type] ) ) {
+		if ( isset( $post ) AND !empty( $this->disabled_post_types[$post->post_type] ) ) {
 			return $context;
 		} // if()
+
 
 		// Check if the button has been added
 		$button_added = ( strpos( $context, 'wpba_form_attachments_button' ) === false ) ? false : true;
 		if ( $button_added ) {
 			return $context;
 		} // if()
+
 
 		// Add the button
 		$out = '<a class="button wpba-attachments-button wpba-form-attachments-button" id="wpba_form_attachments_button" href="#"><span class="wpba-media-buttons-icon"></span> Add Attachments</a>';
@@ -67,22 +76,25 @@ class WP_Better_Attachments
 	*/
 	public function enqueue_admin_scripts()
 	{
-
 		// Make sure the user has not disabled this post type
-		global $wpba_wp_settings_api;
 		global $post;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
-
-		if ( isset( $post ) AND !empty( $disabled_post_types[$post->post_type] ) )
+		if ( isset( $post ) AND !empty( $this->disabled_post_types[$post->post_type] ) )
 			return false;
 
-
+		// Make sure we neeed to load WPBA files
 		$current_screen = get_current_screen();
 		$base = $current_screen->base;
-		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base = 'settings_page_wpba-settings' ) {
-			wp_enqueue_style( 'wpba-admin-css', plugins_url( 'assets/css/wpba-admin.css' , dirname( __FILE__ ) ), null, WPBA_VERSION );
+		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base == 'settings_page_wpba-settings' ) {
+			// WPBA Main Style File
+			wp_enqueue_style(
+				'wpba-admin-css',
+				plugins_url( 'assets/css/wpba-admin.css' , dirname( __FILE__ ) ),
+				null,
+				WPBA_VERSION,
+				'all'
+			);
 
-			// global $wp_version;
+			// JS Dependencies
 			$deps = array(
 				'jquery',
 				'jquery-ui-core',
@@ -90,31 +102,19 @@ class WP_Better_Attachments
 				'jquery-ui-mouse',
 				'jquery-ui-sortable'
 			);
-			// if ( floatval($wp_version) >= 3.5 ) {
-				// Make sure to enqueue media
-				if ( ! did_action( 'wp_enqueue_media' ) )
-					wp_enqueue_media();
 
-				wp_register_script(
-					'wpba-media-handler',
-					plugins_url( 'assets/js/wpba-media-handler-new.min.js' , dirname( __FILE__ ) ),
-					$deps,
-					WPBA_VERSION,
-					true
-				);
-			// } else {
-			// 	wp_enqueue_script( 'media-upload' );
-		//  		add_thickbox();
-			// 	$deps[] = 'media-upload';
-			// 	$deps[] = 'thickbox';
-			// 	wp_register_script(
-			// 		'wpba-media-handler',
-			// 		plugins_url( 'assets/js/wpba-media-handler-old.min.js' , dirname( __FILE__ ) ),
-			// 		$deps,
-			// 		WPBA_VERSION,
-			// 		true
-			// 	);
-			// } // if/else()
+			// Media Scripts
+			if ( !did_action( 'wp_enqueue_media' ) )
+				wp_enqueue_media();
+
+			// WPBA Main Script File
+			wp_register_script(
+				'wpba-media-handler',
+				plugins_url( 'assets/js/wpba-media-handler-new.min.js' , dirname( __FILE__ ) ),
+				$deps,
+				WPBA_VERSION,
+				true
+			);
 
 			wp_enqueue_script( 'wpba-media-handler' );
 		} // if()
@@ -128,14 +128,25 @@ class WP_Better_Attachments
 	*/
 	function enqueue_scripts()
 	{
-		global $post;
-		$style_src = plugins_url( 'assets/css/wpba-frontend.css' , dirname( __FILE__ ) );
-		wp_register_style( 'wpba_front_end_styles', $style_src, array(), WPBA_VERSION );
+		// WPBA FrontEnd Styles
+		wp_register_style(
+			'wpba_front_end_styles',
+			plugins_url( 'assets/css/wpba-frontend.css' , dirname( __FILE__ ) ),
+			array(),
+			WPBA_VERSION,
+			'all'
+		);
 		wp_enqueue_style( 'wpba_front_end_styles' );
 
-		$script_src = $style_src = plugins_url( 'assets/js/wpba-frontend.min.js' , dirname( __FILE__ ) );;
-		wp_register_script( 'wpba_front_end_styles', $script_src, array( 'jquery' ), WPBA_VERSION, true );
-		wp_enqueue_script( 'wpba_front_end_styles' );
+		// WPBA FrontEnd Scripts
+		wp_register_script(
+			'wpba_front_end_styles',
+			plugins_url( 'assets/js/wpba-frontend.min.js' , dirname( __FILE__ ) ),
+			array( 'jquery' ),
+			WPBA_VERSION,
+			true
+		);
+		// wp_enqueue_script( 'wpba_front_end_styles' );
 	} // enqueue_scripts()
 
 
@@ -156,18 +167,20 @@ class WP_Better_Attachments
 	*/
 	public function get_post_attachments( $args = array() )
 	{
-		global  $wpba_wp_settings_api;
 		extract( $args );
 
 		// Make sure we have a post to work with
 		if ( !isset( $post ) )
 			global $post;
 
-		$post_type_obj = get_post_type_object( $post->post_type );
-		$settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', false);
-		extract( $args );
+		// Make sure that post is not null
+		if ( is_null( $post ) )
+			return array();
 
-		$show_post_thumbnail = ( isset( $show_post_thumbnail ) ) ? $show_post_thumbnail : false;
+		// Specific Post settings
+		global $wpba_wp_settings_api;
+		$post_settings = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-settings", 'wpba_settings', false);
+
 		$get_posts_args = array(
 			'post_type'				=>	'attachment',
 			'posts_per_page'	=>	-1,
@@ -175,16 +188,29 @@ class WP_Better_Attachments
 			'order'						=>	'ASC',
 			'orderby'					=>	'menu_order'
 		);
+
 		// Should we exclude the thumb?
-		if ( isset( $settings['thumbnail'] ) OR !$show_post_thumbnail ) {
-			$get_posts_args['exclude'] = get_post_thumbnail_id($post->ID);
-			$get_posts_args['meta_query'] = array(
-				array(
-					'key' => '_thumbnail_id',
-					'compare' => 'NOT EXISTS'
-				)
-			);
+		$post_settings_thumb = isset( $post_settings['thumbnail'] );
+		$global_settings_thumb = isset( $this->global_settings['thumbnail'] );
+		$no_thumbs = false;
+		if ( isset( $show_post_thumbnail ) ) {
+			if ( !$show_post_thumbnail ) {
+				$no_thumbs = true;
+			} // if()
+		} elseif( $post_settings_thumb OR $global_settings_thumb ) {
+			$no_thumbs = true;
+		}
+
+
+		if ( $no_thumbs ) {
+			// Need to more han likely check againts show_post_thumbnnail isset
+			$get_posts_args['exclude'] = get_post_thumbnail_id( $post->ID );
+			$get_posts_args['meta_query'] = array(array(
+				'key' => '_thumbnail_id',
+				'compare' => 'NOT EXISTS'
+			));
 		} // if()
+
 
 		// Get the attachments
 		$attachments = get_posts( $get_posts_args );
@@ -288,6 +314,9 @@ class WP_Better_Attachments
 
 
 		/**
+
+
+	/**
 	* Check Allowed Files
 	*
 	* @since 1.3.2
@@ -463,8 +492,8 @@ class WP_Better_Attachments
 } // END Class WP_Better_Attachments
 
 /**
- * Instantiate class and create return method for easier use later
- */
+* Instantiate class and create return method for easier use later
+*/
 global $wpba;
 $wpba = new WP_Better_Attachments();
 

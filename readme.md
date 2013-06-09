@@ -18,12 +18,25 @@
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
 ---
-###WPBA Get Attachments
-
-`wpba_get_attachments()`
+###WPBA Attachments Exist
+`wpba_attachments_exist( array )`  
 
 ####Default Parameters
 - post_id => current post id **Will retrieve attachments from the passed ID if available**
+- show_post_thumbnail => true
+
+`returns boolean`
+
+---
+###WPBA Get Attachments
+
+`wpba_get_attachments( array )`
+
+####Default Parameters
+- post_id => current post id **Will retrieve attachments from the passed ID if available**
+- show_post_thumbnail => true
+
+`returns object`
 
 ---
 
@@ -42,7 +55,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - icon_size="16,20" **width, height**
 - use_attachment_page="true"
 - open_new_window="true"
-- show_post_thumbnail="false"
+- show_post_thumbnail="true"
+- no_attachments_msg="Sorry, no attachments exist."
 
 ###WPBA Attachment List Shortcode/Function
 `wpba_attachment_list( array() );`
@@ -58,7 +72,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - icon_size				=>	array( 16,20 ); // string or number (width, height)
 - use_attachment_page	=>	true
 - open_new_window		=>	true
-- show_post_thumbnail	=>	false
+- show_post_thumbnail	=>	true
+- no_attachments_msg	=>	"Sorry, no attachments exist."
 
 ##Screenshots
 ###WPBA Post Editor Button
