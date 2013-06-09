@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: dholloran
 Donate link: http://danholloran.com/
-Tags: attachment,file,image,post,page,custom post type
+Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
 Tested up to: 3.5.2
 Stable tag: 1.3.3
@@ -19,6 +19,7 @@ Allows you to add/edit/attach/un-attach/delete/sort the files attached to your W
 
 = Functions =
 * Information on the settings available [here](http://dholloran.github.io/wp-better-attachments)
+* `wpba_attachments_exist()` Checks for post attachments
 * `wpba_get_attachments()` Retrieves an array of attachments
 * `wpba_attachment_list()` Outputs a list of attachments
 
@@ -93,6 +94,12 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Misc. cleanup
 
 == 1.3.3 ==
+* Added `wpba_attachments_exist()` to check if a post has attachments.
+* Added no attachments message for attachment list.
+* Fixed wpba_get_attachments() not retrieving post thumbnail images correctly.
+* Added settings to disable front end files, post thumbnails globally, and crop editor.
+* Fixed compatibility issue with Wysija Newsletter Plugin.
+* Fixed other miscellaneous issues and general clean up.
 
 == Upgrade Notice ==
 
@@ -124,4 +131,4 @@ Fixed over generic selector for settings navigation
 Added a new list shortcode/function, improved inline title caption editor saving, and misc. style/cleanup
 
 == 1.3.3 ==
-Should resolve issues from last update, adds more settings control, amoung other things.
+Should resolve issues from last update and adds more settings control
