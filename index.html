@@ -50,9 +50,9 @@
 <p>If you have any issues please submit an <a href="https://github.com/DHolloran/wp-better-attachments/issues/new">issue</a> or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at <a href="mailto:dan@danholloran.com">Dan@danholloran.com</a>.</p>
 
 <hr><h3>
-<a name="wpba-get-attachments" class="anchor" href="#wpba-get-attachments"><span class="octicon octicon-link"></span></a>WPBA Get Attachments</h3>
+<a name="wpba-attachments-exist" class="anchor" href="#wpba-attachments-exist"><span class="octicon octicon-link"></span></a>WPBA Attachments Exist</h3>
 
-<p><code>wpba_get_attachments()</code></p>
+<p><code>wpba_attachments_exist( array )</code>  </p>
 
 <h4>
 <a name="default-parameters" class="anchor" href="#default-parameters"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
@@ -60,13 +60,30 @@
 <ul>
 <li>post_id =&gt; current post id <strong>Will retrieve attachments from the passed ID if available</strong>
 </li>
-</ul><hr><h3>
+<li>show_post_thumbnail =&gt; true</li>
+</ul><p><code>returns boolean</code></p>
+
+<hr><h3>
+<a name="wpba-get-attachments" class="anchor" href="#wpba-get-attachments"><span class="octicon octicon-link"></span></a>WPBA Get Attachments</h3>
+
+<p><code>wpba_get_attachments( array )</code></p>
+
+<h4>
+<a name="default-parameters-1" class="anchor" href="#default-parameters-1"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
+
+<ul>
+<li>post_id =&gt; current post id <strong>Will retrieve attachments from the passed ID if available</strong>
+</li>
+<li>show_post_thumbnail =&gt; true</li>
+</ul><p><code>returns object</code></p>
+
+<hr><h3>
 <a name="wpba-attachment-list-shortcode" class="anchor" href="#wpba-attachment-list-shortcode"><span class="octicon octicon-link"></span></a>WPBA Attachment List Shortcode</h3>
 
 <p><code>[wpba-attachment-list]</code></p>
 
 <h4>
-<a name="default-parameters-1" class="anchor" href="#default-parameters-1"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
+<a name="default-parameters-2" class="anchor" href="#default-parameters-2"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
 
 <ul>
 <li>post_id="186"</li>
@@ -82,14 +99,15 @@
 </li>
 <li>use_attachment_page="true"</li>
 <li>open_new_window="true"</li>
-<li>show_post_thumbnail="false"</li>
+<li>show_post_thumbnail="true"</li>
+<li>no_attachments_msg="Sorry, no attachments exist."</li>
 </ul><h3>
 <a name="wpba-attachment-list-shortcodefunction" class="anchor" href="#wpba-attachment-list-shortcodefunction"><span class="octicon octicon-link"></span></a>WPBA Attachment List Shortcode/Function</h3>
 
 <p><code>wpba_attachment_list( array() );</code></p>
 
 <h4>
-<a name="default-parameters-2" class="anchor" href="#default-parameters-2"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
+<a name="default-parameters-3" class="anchor" href="#default-parameters-3"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
 
 <ul>
 <li>post_id               =&gt;  current post id // Takes a string or number</li>
@@ -103,7 +121,8 @@
 <li>icon_size             =&gt;  array( 16,20 ); // string or number (width, height)</li>
 <li>use_attachment_page   =&gt;  true</li>
 <li>open_new_window       =&gt;  true</li>
-<li>show_post_thumbnail   =&gt;  false</li>
+<li>show_post_thumbnail   =&gt;  true</li>
+<li>no_attachments_msg    =&gt;  "Sorry, no attachments exist."</li>
 </ul><h2>
 <a name="screenshots" class="anchor" href="#screenshots"><span class="octicon octicon-link"></span></a>Screenshots</h2>
 
