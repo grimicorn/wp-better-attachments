@@ -146,7 +146,7 @@ class WP_Better_Attachments
 			WPBA_VERSION,
 			true
 		);
-		wp_enqueue_script( 'wpba_front_end_styles' );
+		// wp_enqueue_script( 'wpba_front_end_styles' );
 	} // enqueue_scripts()
 
 
@@ -314,6 +314,9 @@ class WP_Better_Attachments
 
 
 		/**
+
+
+	/**
 	* Check Allowed Files
 	*
 	* @since 1.3.2
@@ -489,8 +492,8 @@ class WP_Better_Attachments
 } // END Class WP_Better_Attachments
 
 /**
- * Instantiate class and create return method for easier use later
- */
+* Instantiate class and create return method for easier use later
+*/
 global $wpba;
 $wpba = new WP_Better_Attachments();
 
