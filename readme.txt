@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,9 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Fixed compatibility issue with Wysija Newsletter Plugin.
 * Fixed other miscellaneous issues and general clean up.
 
+== 1.3.4 ==
+* Fixed activation error
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -132,3 +135,6 @@ Added a new list shortcode/function, improved inline title caption editor saving
 
 == 1.3.3 ==
 Should resolve issues from last update and adds more settings control
+
+== 1.3.4 ==
+Fixed activation error

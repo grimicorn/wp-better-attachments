@@ -1,14 +1,14 @@
 <?php
 /**
  * @package WP_Better_Attachments
- * @version 1.3.3
+ * @version 1.3.4
  */
 /*
 Plugin Name: WP Better Attachments
 Plugin URI: http://dholloran.github.io/wp-better-attachments
 Description: Better Wordpress Attachments
 Author: Dan Holloran
-Version: 1.3.3
+Version: 1.3.4
 Author URI: http://danholloran.com/
 */
 
@@ -41,7 +41,6 @@ if ( !function_exists( 'pp' ) ) {
 */
 require_once "libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php";
 require_once "classes/class-wp-better-attachments.php";
-require_once "libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php";
 require_once "classes/class-wpba-meta-box.php";
 require_once "classes/class-wpba-crop-resize.php";
 require_once "classes/class-wpba-ajax.php";

@@ -5,7 +5,6 @@
  * @author Tareq Hasan <tareq@weDevs.com>
  * @author Derek Marcinyshyn <derek@marcinyshyn.com>
  */
-if ( ! class_exists( 'WP_Settings_API_Bootstrap' ) ):
 	class WP_Settings_API_Bootstrap {
 
 		/**
@@ -470,5 +469,5 @@ if ( ! class_exists( 'WP_Settings_API_Bootstrap' ) ):
 
 	}
 	// initiate the class
+	global $wpba_wp_settings_api;
 	$wpba_wp_settings_api = new WP_Settings_API_Bootstrap();
-endif;
