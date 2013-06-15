@@ -106,7 +106,7 @@ if ( !class_exists( 'WPBA_Settings' ) ) :
 				'options'		=>	array(
 													'thumbnail'				=>	'Do Not Include Thumbnails',
 													'no_shortcodes'		=>	'Disable Shortcodes',
-													'no_crop_editor'	=>	'Disable WPBA Image Crop Editor'
+													// 'no_crop_editor'	=>	'Disable WPBA Image Crop Editor'
 												)
 			);
 
