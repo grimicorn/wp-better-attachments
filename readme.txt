@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
