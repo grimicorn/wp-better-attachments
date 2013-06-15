@@ -17,6 +17,8 @@
 
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
+<a href='http://www.pledgie.com/campaigns/20476'><img alt='Click here to lend your support to: WP Better Attachments and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/20476.png?skin_name=chrome' border='0' /></a>
+
 ---
 ###WPBA Attachments Exist
 `wpba_attachments_exist( array )`  
