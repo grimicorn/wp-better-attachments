@@ -94,6 +94,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		} // if()
 
 		$img_sizes = get_intermediate_image_sizes();
+
 		$attachments = array();
 		foreach ( $img_sizes as $img_size ) {
 			// Todo: there has to be a bettwr way!!!
@@ -104,10 +105,12 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 			$attachment_src[1] = $att_src[1]; // width
 			$attachment_src[2] = $att_src[2]; // height
 			$attachment_src[3] = $id;
+			$attachment_src[4] = ucwords( str_replace( '-', ' ', $img_size ) );
 			$attachments[$att_src[1].$att_src[2]] = $attachment_src;
 		} // foreach()
 
 		ksort( $attachments, SORT_NUMERIC );
+
 		return $attachments;
 	} // get_attachment_sizes()
 
@@ -117,6 +120,11 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	*/
 	public function is_equal_aspect_ratio( $orig_w, $orig_h, $crop_w, $crop_h )
 	{
+		if ( $orig_w == 0 OR $orig_h == 0 OR $crop_w == 0 OR $crop_h == 0) {
+			return false;
+		} // if()
+
+		//
 		if ( $orig_w/$orig_h <= $crop_w/$crop_h ) {
 			return false;
 		} // if()
@@ -143,11 +151,16 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 			$image_width = $attachment[1];
 			$image_height = $attachment[2];
 			$id = $attachment[3];
+			$title = $attachment[4];
 			$crop_points = 0;
 			$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
 			$crop_src = wp_get_attachment_image_src( $id, 'full');
 			$crop_src_width = $crop_src[1];
 			$crop_src_height = $crop_src[2];
+
+			if ( $crop_src_width == 0 OR $crop_src_height == 0 ) {
+				continue;
+			} // if()
 
 			// Get the crop points
 			if ( $attachment_meta AND isset( $attachment_meta["{$image_width}x{$image_height}"] ) ) {
@@ -164,7 +177,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 			if( $image_width  AND $image_larger_size AND !$equal_aspect_ratio ) {
 				$image_style = "width:auto;height:{$image_height}px";
 				$html .= '<li>' . $nl;
-				$html .= "<h3 class='pull-left'>{$image_width}px x {$image_height}px</h3>" . $nl;
+				$html .= "<h3 class='pull-left'>{$title} {$image_width}px x {$image_height}px</h3>" . $nl;
 				// $html .= '<a href="#" class="reset-thumbnails pull-left">Reset Original Thumbnail</a>' . $nl;
 				$html .= "<div class='clear'>" . $nl;
 				$html .= "<img src='{$image_src}' " . $nl;
