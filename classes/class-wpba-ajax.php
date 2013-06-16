@@ -250,7 +250,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	public function image_area_select_callback()
 	{
 		extract( $_POST );
-		$resize_crop_selection = resize_crop_selection();
+		global $wpba_crop_resize;
+		$resize_crop_selection = $wpba_crop_resize->resize_crop_selection();
 		// Save data we need for displaying new crop through JS
 		if ( $resize_crop_selection ) {
 			$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
