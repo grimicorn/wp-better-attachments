@@ -55,7 +55,8 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'open_new_window'				=>	false,
 			'show_post_thumbnail'		=>	true,
 			'no_attachments_msg'		=>	'Sorry, no attachments exist.',
-			'unstyled_list'					=> 	'unstyled'
+			'unstyled_list'					=> 	'unstyled',
+			'float_class'						=>	'pull-left'
 		);
 		$atts = shortcode_atts( $defaults, $args );
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
@@ -92,7 +93,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			$target = ( $open_new_window ) ? 'target="_blank"' : 'target="_self"';
 			$list .= "<li>";
 			if ( $show_icon ) $list .= $this->icon( $attachment, shortcode_atts( $defaults, $args ) );
-			$list .= "<a href='{$link}' title='{$title}' class='pull-left' {$target}>{$title}</a>";
+			$list .= "<a href='{$link}' title='{$title}' class='$float_class' {$target}>{$title}</a>";
 			$list .= "</li>" . $nl;
 		} // foreach()
 		$list .= "</ul>";
