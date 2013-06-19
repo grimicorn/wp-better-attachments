@@ -92,7 +92,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			$list .= "<li>";
 			if ( $show_icon ) $list .= $this->icon( $attachment, shortcode_atts( $defaults, $args ) );
 			$list .= "<a href='{$link}' title='{$title}' class='pull-left' {$target}>{$title}</a>";
-			$list .= "<li>" . $nl;
+			$list .= "</li>" . $nl;
 		} // foreach()
 		$list .= "</ul>";
 		$list .= '</div>' . $nl;
