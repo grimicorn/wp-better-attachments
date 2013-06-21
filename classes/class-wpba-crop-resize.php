@@ -124,8 +124,10 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 			return false;
 		} // if()
 
-		//
-		if ( $orig_w/$orig_h <= $crop_w/$crop_h ) {
+		// Validate Aspect Ratio
+		$orig_aspect_ratio = round( $orig_w/$orig_h, 1 );
+		$crop_aspect_ratio = round( $crop_w/$crop_h, 1 );
+		if ( $orig_aspect_ratio <= $crop_aspect_ratio ) {
 			return false;
 		} // if()
 
@@ -154,7 +156,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 			$title = $attachment[4];
 			$crop_points = 0;
 			$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
-			$crop_src = wp_get_attachment_image_src( $id, 'full');
+			$crop_src = wp_get_attachment_image_src( $id, 'full' );
 			$crop_src_width = $crop_src[1];
 			$crop_src_height = $crop_src[2];
 
@@ -174,7 +176,7 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 			$equal_aspect_ratio = !$this->is_equal_aspect_ratio( $crop_src_width, $crop_src_height, $image_width, $image_height);
 			$image_larger_size = ( $image_width < $crop_src_width AND $image_height < $crop_src_height );
-			if( $image_width  AND $image_larger_size AND !$equal_aspect_ratio ) {
+			if( $image_width AND $image_larger_size AND !$equal_aspect_ratio ) {
 				$image_style = "width:auto;height:{$image_height}px";
 				$html .= '<li>' . $nl;
 				$html .= "<h3 class='pull-left'>{$title} {$image_width}px x {$image_height}px</h3>" . $nl;
