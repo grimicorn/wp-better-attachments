@@ -27,36 +27,40 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$nl = "\n";
 		$plugin_url = plugins_url('wp-better-attachments');
 		$atts_to_be_cleaned = array(
-			'post_id'								=>	'int',
-			'show_icon'							=>	'boolean',
-			'file_type_categories'	=>	'array',
-			'file_extensions'				=>	'array',
-			'icon_size'							=>	'array',
-			'use_attachment_page'		=>	'boolean',
-			'open_new_window'				=>	'boolean',
-			'show_post_thumbnail'		=>	'boolean'
+			'post_id'								=> 'int',
+			'show_icon'							=> 'boolean',
+			'file_type_categories'	=> 'array',
+			'file_extensions'				=> 'array',
+			'icon_size'							=> 'array',
+			'use_attachment_page'		=> 'boolean',
+			'open_new_window'				=> 'boolean',
+			'show_post_thumbnail'		=> 'boolean'
 		);
 		$defaults = array(
-			'post_id'								=>	NULL,
-			'show_icon'							=>	true,
-			'file_type_categories'	=>	array(
+			'post_id'								=> NULL,
+			'show_icon'							=> true,
+			'file_type_categories'	=> array(
 				'image',
 				'file',
 				'audio',
 				'video'
 			),
-			'file_extensions'				=>	$this->get_allowed_extensions(),
-			'image_icon'						=>	"{$plugin_url}/assets/img/icons/image-icon.png",
-			'file_icon'							=>	"{$plugin_url}/assets/img/icons/file-icon.png",
-			'audio_icon'						=>	"{$plugin_url}/assets/img/icons/audio-icon.png",
-			'video_icon'						=>	"{$plugin_url}/assets/img/icons/video-icon.png",
-			'icon_size'							=>	array( 16, 20 ),
-			'use_attachment_page'		=>	false,
-			'open_new_window'				=>	false,
-			'show_post_thumbnail'		=>	true,
-			'no_attachments_msg'		=>	'Sorry, no attachments exist.',
-			'unstyled_list'					=> 	'unstyled',
-			'float_class'						=>	'pull-left'
+			'file_extensions'				=> $this->get_allowed_extensions(),
+			'image_icon'						=> "{$plugin_url}/assets/img/icons/image-icon.png",
+			'file_icon'							=> "{$plugin_url}/assets/img/icons/file-icon.png",
+			'audio_icon'						=> "{$plugin_url}/assets/img/icons/audio-icon.png",
+			'video_icon'						=> "{$plugin_url}/assets/img/icons/video-icon.png",
+			'icon_size'							=> array( 16, 20 ),
+			'use_attachment_page'		=> false,
+			'open_new_window'				=> false,
+			'show_post_thumbnail'		=> true,
+			'no_attachments_msg'		=> 'Sorry, no attachments exist.',
+			'wrap_class'						=> 'wpba wpba-wrap',
+			'list_class'						=> 'wpba-attachment-list unstyled',
+			'list_id'								=> 'wpba_attachment_list',
+			'list_item_class'				=> 'wpba-list-item pull-left',
+			'link_class'						=> 'wpba-link pull-left',
+			'icon_class'						=> 'wpba-icon pull-left'
 		);
 		$atts = shortcode_atts( $defaults, $args );
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
@@ -83,17 +87,16 @@ class WPBA_Frontend extends WP_Better_Attachments
 		// Go through the restrictions
 		$attachments = $this->check_allowed_file_type_categories( $attachments, $file_type_categories );
 		$attachments = $this->check_allowed_file_extensions( $attachments, $file_extensions );
-
 		// Build the list
-		$list .= '<div class="wpba">' . $nl;
-		$list .= '<ul class="wpba-attachment-list ' . $unstyled_list . '">';
+		$list .= "<div id='{$list_id}' class='{$wrap_class}'>" . $nl;
+		$list .= "<ul class='{$list_class}'>";
 		foreach ( $attachments as $attachment ) {
 			$title = $attachment->post_title;
 			$link = ( $use_attachment_page ) ? get_attachment_link( $attachment->ID ) : wp_get_attachment_url( $attachment->ID );
 			$target = ( $open_new_window ) ? 'target="_blank"' : 'target="_self"';
-			$list .= "<li>";
+			$list .= "<li id='{$list_id}_{$attachment->ID}' class='{$list_item_class}'>";
 			if ( $show_icon ) $list .= $this->icon( $attachment, shortcode_atts( $defaults, $args ) );
-			$list .= "<a href='{$link}' title='{$title}' class='$float_class' {$target}>{$title}</a>";
+			$list .= "<a href='{$link}' title='{$title}' class='{$link_class}' {$target}>{$title}</a>";
 			$list .= "</li>" . $nl;
 		} // foreach()
 		$list .= "</ul>";
@@ -111,11 +114,11 @@ class WPBA_Frontend extends WP_Better_Attachments
 	public function setup_build_flexslider( $args = array() )
 	{
 		$defaults = array(
-			'post_id'							=>	NULL,
-			'show_post_thumbnail'	=>	false,
-			'width'								=>	'600px',
-			'height'							=>	'auto',
-			'slider_properties'		=>	array( 'animation'	=>	'slide' ) // https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
+			'post_id'							=> NULL,
+			'show_post_thumbnail'	=> false,
+			'width'								=> '600px',
+			'height'							=> 'auto',
+			'slider_properties'		=> array( 'animation'	=> 'slide' ) // https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
 		);
 
 		if ( !empty( $args['slider_properties'] ) ) {
@@ -126,8 +129,8 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$atts = shortcode_atts( $defaults, $args );
 
 		$atts_to_be_cleaned = array(
-			'post_id'								=>	'int',
-			'show_post_thumbnail'		=>	'boolean'
+			'post_id'								=> 'int',
+			'show_post_thumbnail'		=> 'boolean'
 		);
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
 
@@ -187,6 +190,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$img_src = '';
 		$plugin_url = WPBA_PATH;
 		extract( $args );
+		$icon_class = ( isset( $icon_class ) ) ? $icon_class : '';
 		if ( $this->is_document( $attachment->post_mime_type ) ) {
 			$img_src = $file_icon;
 		} elseif ( $this->is_audio( $attachment->post_mime_type ) ) {
@@ -197,7 +201,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			$img_src = $image_icon;
 		}//if/elseif
 
-		$img = "<img src='{$img_src}' width='{$icon_size[0]}' height='{$icon_size[1]}' class='pull-left'>";
+		$img = "<img src='{$img_src}' width='{$icon_size[0]}' height='{$icon_size[1]}' class='{$icon_class}'>";
 		return $img;
 	} // placeholder_image()
 
