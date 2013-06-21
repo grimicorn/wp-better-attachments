@@ -59,6 +59,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - open_new_window="true"
 - show_post_thumbnail="true"
 - no_attachments_msg="Sorry, no attachments exist."
+- unstyled_class="unstyled"
+- float_class="pull-left"
 
 ###WPBA Attachment List Shortcode/Function
 `wpba_attachment_list( array() );`
@@ -75,7 +77,8 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - use_attachment_page	=>	true
 - open_new_window		=>	true
 - show_post_thumbnail	=>	true
-- no_attachments_msg	=>	"Sorry, no attachments exist."
+- unstyled_class	=>	"unstyled"
+- float_class     =>  "pull-left"
 
 ##Screenshots
 ###WPBA Post Editor Button
