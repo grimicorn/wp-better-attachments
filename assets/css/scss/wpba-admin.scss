@@ -3,8 +3,8 @@
 @import "admin/imgareaselect-default";
 
 /* Settings */
-.wpba-nav-tab-wrapper { display: none; }
 #wpba_settings {
+	opacity: 0;
 	h3 { display: none; }
 } // #wpba_settings
 

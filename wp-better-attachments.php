@@ -45,6 +45,7 @@ require_once "classes/class-wpba-meta-box.php";
 require_once "classes/class-wpba-crop-resize.php";
 require_once "classes/class-wpba-ajax.php";
 require_once "classes/class-wpba-settings.php";
+require_once "classes/class-wpba-settings-fields.php";
 require_once "classes/class-wpba-frontend.php";
 
 

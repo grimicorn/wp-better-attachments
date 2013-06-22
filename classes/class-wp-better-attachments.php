@@ -1,23 +1,74 @@
 <?php
 /**
- * WP Better Attachments
- */
+* WP Better Attachments
+*
+* @since 1.0.0
+*/
 class WP_Better_Attachments
 {
-	protected $global_settings;
-	protected $disabled_post_types;
+	public $global_settings;
+	public $disabled_post_types;
+	public $media_table_settings;
+	public $meta_box_settings;
+	public $edit_modal_settings;
+	public $disabled_file_types;
+	public $current_post_type_settings;
+	public $current_post_type_disabled_file_types;
+	public $current_post_obj;
+	public $current_post_type;
+	public $current_post_type_obj;
 
 	/**
 	* Constructor
 	*/
 	public function __construct( $config = array() ) {
-		// Settings
-		global $wpba_wp_settings_api;
-		$this->global_settings = $wpba_wp_settings_api->get_option( 'wpba-global-settings', 'wpba_settings', array());
-		$this->disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array());
-
+		// Setup
+		$this->init_global_settings();
 		$this->init_hooks();
 	} // __construct
+
+
+	/**
+	* Initialize Global Properties
+	*
+	* @return null
+	* @since 1.3.5
+	*/
+	public function init_global_properties()
+	{
+		global $post;
+		global $wpba_wp_settings_api;
+		$this->current_post_obj = new stdClass();
+		$this->current_post_type = '';
+		$this->current_post_type_obj = new stdClass();
+		$this->current_post_type_settings = array();
+		$this->current_post_type_disabled_file_types = array();
+		if ( !is_null( $post ) ) {
+			$this->current_post_obj = $post;
+			$this->current_post_type = $post->post_type;
+			$this->current_post_type_obj = get_post_type_object( $post->post_type );
+			$this->current_post_type_settings = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-settings", 'wpba_settings', array() );
+			$this->current_post_type_disabled_file_types = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-disable-attachment-types", 'wpba_settings', array() );
+		} // if()
+	} // init_global_settings()
+
+
+	/**
+	* Initialize Global Settings
+	*
+	* @return null
+	* @since 1.3.5
+	*/
+	public function init_global_settings()
+	{
+		global $wpba_wp_settings_api;
+		$this->global_settings = $wpba_wp_settings_api->get_option( 'wpba-global-settings', 'wpba_settings', array() );
+		$this->disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array() );
+		$this->media_table_settings = $wpba_wp_settings_api->get_option( 'wpba-media-table-settings', 'wpba_settings', array() );
+		$this->meta_box_settings = $wpba_wp_settings_api->get_option( 'wpba-meta-box-settings', 'wpba_settings', array() );
+		$this->edit_modal_settings = $wpba_wp_settings_api->get_option( 'wpba-edit-modal-settings', 'wpba_settings', array() );
+		$this->disabled_file_types = $wpba_wp_settings_api->get_option( 'wpba-disable-attachment-types', 'wpba_settings', array() );
+	} // init_global_settings()
 
 
 	/**
@@ -30,6 +81,10 @@ class WP_Better_Attachments
 		} // if()
 		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
 		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
+
+		// Properties
+		add_action('wp_head', array( &$this, 'init_global_properties' ) );
+		add_action('admin_head', array( &$this, 'init_global_properties' ) );
 	} // init_hooks()
 
 
@@ -70,6 +125,146 @@ class WP_Better_Attachments
 		return $actions;
 	} //unattach_media_row_action()
 
+
+	/**
+	* Check if disabled in settings
+	*
+	* @return boolean
+	* @since 1.3.5
+	*/
+	public function setting_disabled( $option_type )
+	{
+		if ( is_admin() ) return; // dev debug
+		if ( $this->current_post_type_disabled() ) return true;
+		switch ( $option_type ) {
+			case 'thumbnail':
+				if ( isset( $this->global_settings['thumbnail'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['mb_thumbnail'] ) )
+					return true;
+				break;
+			case 'shortcodes':
+				if ( isset( $this->global_settings['no_shortcodes'] ) )
+					return true;
+				break;
+			case 'crop-editor':
+				if ( isset( $this->global_settings['no_crop_editor'] ) )
+					return true;
+				break;
+			case 'crop-editor-all-image-sizes':
+				if ( isset( $this->global_settings['no_crop_editor'] ) )
+					return true;
+				if ( isset( $this->global_settings['all_crop_sizes'] ) )
+					return true;
+				break;
+			case 'media-table-unattach':
+				if ( isset( $this->media_table_settings['unattach_link'] ) )
+					return true;
+				break;
+			case 'media-table-reattach':
+				if ( isset( $this->media_table_settings['reattach_link'] ) )
+					return true;
+				break;
+			case 'meta-box-title-editor':
+				if ( isset( $this->meta_box_settings['gmb_title'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['title'] ) )
+					return true;
+				break;
+			case 'meta-box-caption':
+				if ( isset( $this->meta_box_settings['gmb_caption'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['caption'] ) )
+					return true;
+				break;
+			case 'meta-box-attachment-id':
+				if ( isset( $this->meta_box_settings['gmb_show_attachment_id'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['mb_show_attachment_id'] ) )
+					return true;
+				break;
+			case 'meta-box-unattach':
+				if ( isset( $this->meta_box_settings['gmb_unattach_link'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['mb_unattach_link'] ) )
+					return true;
+				break;
+			case 'meta-box-edit':
+				if ( isset( $this->meta_box_settings['gmb_edit_link'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['mb_edit_link'] ) )
+					return true;
+				break;
+			case 'meta-box-delete':
+				if ( isset( $this->meta_box_settings['gmb_delete_link'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['mb_delete_link'] ) )
+					return true;
+				break;
+			case 'image-file-type':
+				if ( isset( $this->disabled_file_types['disable_image'] ) )
+					return true;
+				if ( isset( $this->current_post_type_disabled_file_types['pt_disable_image'] ) )
+					return true;
+				break;
+			case 'video-file-type':
+				if ( isset( $this->disabled_file_types['disable_video'] ) )
+					return true;
+				if ( isset( $this->current_post_type_disabled_file_types['pt_disable_video'] ) )
+					return true;
+				break;
+			case 'audio-file-type':
+				if ( isset( $this->disabled_file_types['disable_audio'] ) )
+					return true;
+				if ( isset( $this->current_post_type_disabled_file_types['pt_disable_audio'] ) )
+					return true;
+				break;
+			case 'documents-file-type':
+				if ( isset( $this->disabled_file_types['disable_document'] ) )
+					return true;
+				if ( isset( $this->current_post_type_disabled_file_types['pt_disable_document'] ) )
+					return true;
+				break;
+			case 'edit-modal-caption':
+				if ( isset( $this->edit_modal_settings['gem_caption'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['em_caption'] ) )
+					return true;
+				break;
+			case 'edit-modal-alternative':
+				if ( isset( $this->edit_modal_settings['gem_alternative_text'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['em_alternative_text'] ) )
+					return true;
+				break;
+			case 'edit-modal-description':
+				if ( isset( $this->edit_modal_settings['gem_description'] ) )
+					return true;
+				if ( isset( $this->current_post_type_settings['em_description'] ) )
+					return true;
+				break;
+			default:
+				return false;
+				break;
+		}
+
+		return false;
+	} // setting_disabled()
+
+
+	/**
+	* Current Post Type Disabled
+	*
+	* @return boolean
+	* @since 1.3.5
+	*/
+	public function current_post_type_disabled()
+	{
+		if ( in_array( $this->current_post_type, $this->disabled_post_types ) )
+			return true;
+
+		return false;
+	} // current_post_type_disabled()
 
 	/**
 	* Enqueue Administrator Scripts and Styles

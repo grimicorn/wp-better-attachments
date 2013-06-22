@@ -330,3 +330,85 @@ wpba.resetClickHandlers = function() {
 	wpba.titleBlurHandler();
 	wpba.captionBlurHandler();
 }
+
+/**
+* Settings Disable Post Types CheckBox Handler
+*/
+wpba.settingsDisablePostTypes = function( that ) {
+	var postTypeFileTypesWrap = $('#wpba-'+that.val()+'-disable-attachment-types-wrap'),
+			postTypeFileTypesSect = postTypeFileTypesWrap.parents('tr'),
+			postTypeOptionsWrap = $('#wpba-'+that.val()+'-settings-wrap'),
+			postTypeOptionsSect = postTypeOptionsWrap.parents('tr'),
+			globalSettingsWrap = $('#wpba-global-settings-wrap').parents('tr'),
+			metaBoxSettingsWrap = $('#wpba-meta-box-settings-wrap').parents('tr'),
+			editModalSettingsWrap = $('#wpba-edit-modal-settings-wrap').parents('tr'),
+			disableFileTypesWrap = $('#wpba-disable-attachment-types-wrap').parents('tr'),
+			settingsCheckBox = $('#wpba-disable-post-types-wrap input[type="checkbox"]'),
+			allCheckboxesChecked = true
+	;
+
+	// Hide global settings if all posts are disabled
+	settingsCheckBox.each(function() {
+		if ( !$(this).is(':checked') ) {
+			allCheckboxesChecked = false;
+			return;
+		}
+	});
+
+	if ( allCheckboxesChecked ) {
+		globalSettingsWrap.hide();
+		metaBoxSettingsWrap.hide();
+		editModalSettingsWrap.hide();
+		disableFileTypesWrap.hide();
+	} else {
+		globalSettingsWrap.show();
+		metaBoxSettingsWrap.show();
+		editModalSettingsWrap.show();
+		disableFileTypesWrap.show();
+	} // if/else()
+
+	allCheckboxesChecked = true;
+
+	// Disable post type settings
+	if( that.is(':checked') ) {
+		postTypeOptionsSect.hide();
+		postTypeFileTypesSect.hide();
+	} else {
+		postTypeOptionsSect.show();
+		postTypeFileTypesSect.show();
+	}
+
+	var wpbaSettings = $('#wpba_settings');
+	wpbaSettings.animate({'opacity':1}, 150);
+}
+
+
+/**
+* Settings Disable Post Types CheckBox Handler
+*/
+wpba.globalSettingsHandler = function( that, selector ) {
+	elem = $(selector);
+	// Disable post type settings
+	if( that.is(':checked') ) {
+		elem.hide();
+		elem.next('br').hide();
+	} else {
+		elem.show();
+		elem.next('br').show();
+	}
+
+	var wpbaSettings = $('#wpba_settings');
+	wpbaSettings.animate({'opacity':1}, 150);
+}
+
+
+/**
+* Settings Check Box/Setup Handler
+*/
+wpba.settingsCheckBoxSetupHandler = function( elem, selector ){
+	elem.on('change', function(){
+			wpba.globalSettingsHandler( $(this), selector );
+		}).each(function() {
+			wpba.globalSettingsHandler( $(this), selector );
+		});
+}

@@ -12,7 +12,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	*/
 	public function __construct( $config = array() )
 	{
-
+		parent::__construct();
 	} // constructor()
 
 
