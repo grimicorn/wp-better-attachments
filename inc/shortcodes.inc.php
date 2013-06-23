@@ -81,19 +81,12 @@ function wpba_attachment_list( $args = array() ) {
 function wpba_flexslider_shortcode( $atts ) {
 	// Make sure atts is an array
 	$atts = ( gettype( $atts ) != 'array' ) ? array() : $atts;
+
 	global $wpba_frontend;
+
+	$wpba_frontend->register_flexslider();
+	wp_enqueue_script( 'wpba_front_end_styles' );
+
 	return $wpba_frontend->build_flexslider( $atts );
 } // wpba_flexslider_shortcode()
 add_shortcode( 'wpba-flexslider','wpba_flexslider_shortcode' );
-
-
-/**
-* WPBA FlexSlider Convenience Function
-*
-* @since 1.3.2
-*/
-function wpba_flexslider( $atts ) {
-	global $wpba_frontend;
-
-	return $wpba_frontend->build_flexslider( $args );
-} // wpba_flexslider()

@@ -76,9 +76,7 @@ class WP_Better_Attachments
 	*/
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
-		if ( !isset($this->global_settings['no_shortcodes']) ) {
-			add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
-		} // if()
+		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
 		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
 		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
 
@@ -323,6 +321,9 @@ class WP_Better_Attachments
 	*/
 	function enqueue_scripts()
 	{
+		if ( isset($this->global_settings['no_shortcodes']) )
+			return false;
+
 		// WPBA FrontEnd Styles
 		wp_register_style(
 			'wpba_front_end_styles',
@@ -332,16 +333,6 @@ class WP_Better_Attachments
 			'all'
 		);
 		wp_enqueue_style( 'wpba_front_end_styles' );
-
-		// WPBA FrontEnd Scripts
-		wp_register_script(
-			'wpba_front_end_styles',
-			plugins_url( 'assets/js/wpba-frontend.min.js' , dirname( __FILE__ ) ),
-			array( 'jquery' ),
-			WPBA_VERSION,
-			true
-		);
-		// wp_enqueue_script( 'wpba_front_end_styles' );
 	} // enqueue_scripts()
 
 
