@@ -55,6 +55,8 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'open_new_window'				=> false,
 			'show_post_thumbnail'		=> true,
 			'no_attachments_msg'		=> 'Sorry, no attachments exist.',
+			'unstyled_list'					=> null,
+			'float_class'						=> null,
 			'wrap_class'						=> 'wpba wpba-wrap',
 			'list_class'						=> 'wpba-attachment-list unstyled',
 			'list_id'								=> 'wpba_attachment_list',
@@ -83,6 +85,10 @@ class WPBA_Frontend extends WP_Better_Attachments
 		if ( is_null( $attachments ) OR count( $attachments ) == 0 ) {
 			return $no_attachments_msg;
 		} // if()
+
+		// Classes from original pull request to add ability to change classes
+		$link_class = ( isset( $float_class ) ) ? $float_class : $link_class;
+		$list_class = ( isset( $unstyled_list ) ) ? $unstyled_list : $list_class;
 
 		// Go through the restrictions
 		$attachments = $this->check_allowed_file_type_categories( $attachments, $file_type_categories );
