@@ -54,7 +54,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	 */
 	public function render_meta_box_content() {
 		global $post; ?>
-		<div id="wpba-post-<?php echo $post->ID; ?>" data-postid="<?php echo $post->ID; ?>" class="clearfix wpba">
+		<div id="wpba-post-<?php echo $post->ID; ?>" data-postid="<?php echo $post->ID; ?>" class="clearfix wpba<?php echo $this->display_class(); ?>">
 			<input type="hidden" name="wpba_nonce" id="wpba_nonce" value="<?php echo wp_create_nonce(basename(__FILE__)) ;?>" />
 			<div class="uploader pull-left">
 			<?php global $wp_version;
@@ -130,6 +130,23 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$html .= 'placeholder="Caption" >'.$attachment->post_excerpt.'</textarea>' . $nl;
 		return $html;
 	} // output_caption_input()
+
+	/**
+	* Editors Display Class
+	*
+	* @returns string
+	* @since 1.3.5
+	*/
+	public function display_class() {
+		global $post;
+		$post_type_obj = get_post_type_object( $post->post_type );
+		global $wpba_wp_settings_api;
+		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', array() );
+		if ( isset( $disabled_post_types['caption'] ) AND isset( $disabled_post_types['title'] ) )
+			return ' wpba-editor-collapsed';
+
+		return '';
+	}
 
 
 	/**
@@ -213,11 +230,13 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 						$file_type = pathinfo( $attachment_url, PATHINFO_EXTENSION );
 						$attachment_title = "<span class='wpba-filename'>{$file_name}</span>.{$file_type}";
 						$html .= '<span class="wpba-attachment-name">'.$attachment_title.'</span>';
-					} // if()
+						$html .= '<span class="wpba-attachment-id-output with-title">Attachment ID: '.$attachment->ID.'</span>';
+					} else {
+						$html .= '<span class="wpba-attachment-id-output">Attachment ID: '.$attachment->ID.'</span>';
+					} // if/else()
 					$html .= $placeholder_img;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="wpba-form-wrap pull-left" data-id="'.$attachment_id.'">' . $nl;
-					$html .= '<div class="wpba-attachment-id-output">Attachment ID: '.$attachment->ID.'</div>'  . $nl;
 					$html .= '<div>' . $this->output_title_input( array( 'attachment' => $attachment) )  . '</div>' . $nl;
 					$html .= '<div>' . $this->output_caption_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
 					// $html .= '<div>' . $this->output_wyswig_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;

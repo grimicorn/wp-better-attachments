@@ -19,7 +19,11 @@
 		img { margin-bottom: -3px; }
 	}
 	.wpba-edit-attachment {
-		a { text-decoration: none; }
+		position: relative;
+		a {
+			text-decoration: none;
+			font-size: 12px;
+		}
 	}
 	.wpba-drag-handle {
 		position: absolute;
@@ -37,14 +41,19 @@
 		-webkit-box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
 		box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
 		overflow: hidden;
+		img {
+			min-height: 150px;
+			&.icon { min-height: auto; }
+		}
 		.icon-wrap  { width: 100%; text-align: center; }
-		.icon { margin: 35px auto; }
+		.icon { margin: 30px auto; }
 		&:hover > .wpba-edit-attachment {
 			display: inline-block;
 		}
 		.wpba-edit-attachment {
 			position: absolute;
 			padding: 3px 6px 3px 7px;
+			max-width: 148px;
 			background: #FFF;
 			background: rgba(255,255,255,.8);
 			li {
@@ -81,12 +90,35 @@
 		.wpba-attachment-caption { height: 40px; resize:vertical; }
 	}
 	.wpba-attachment-id-output {
-		margin-bottom: 10px;
-		font-size: 14px;
+		top: 128px;
+		font-size: 12px;
+		position: relative;
+		width: 150px;
+		background: white;
+		display: block;
+		text-align: center;
+		padding: 3px 0;
+		background: #FFF;
+		background: rgba(255,255,255,0.8);
+		overflow: hidden;
+		&.with-title { top: 22px; background: rgba(255,255,255,0.8); }
 	}
-
-
 } // .wpba
+
+
+.wpba.wpba-editor-collapsed {
+	.wpba-attachment-item { margin: 0; }
+	li {
+		// float: left;
+		display: inline-block;
+		clear: none;
+		border: none;
+		&.inner { width: auto; }
+	}
+	.wpba-form-wrap,
+	.wpba-drag-handle { display: none; }
+} // .wpba
+
 
 
 .wpba-media-buttons-icon {
