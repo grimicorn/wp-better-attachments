@@ -185,6 +185,23 @@ class WPBA_Frontend extends WP_Better_Attachments
 		return $slider;
 	} // build_flexslider()
 
+	/**
+	* Registers FlexSlider JS
+	*
+	* @returns null
+	* @since 1.3.6
+	*/
+	public function register_flexslider()
+	{
+		// Enqueue FlexSlider
+		wp_register_script(
+			'wpba_front_end_styles',
+			plugins_url( 'assets/js/vendor/jquery.flexslider.min.js' , dirname( __FILE__ ) ),
+			array( 'jquery' ),
+			WPBA_VERSION,
+			true
+		);
+	} // register_flexslider()
 
 	/**
 	* Attachment placeholder image name
