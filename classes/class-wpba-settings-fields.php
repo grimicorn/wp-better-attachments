@@ -170,6 +170,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 		// Cleanup post types
 		foreach ( $post_types as $key => $post_type ) {
 			// Setup Post Type Settings
+			$post_type_settings[] = $this->get_meta_box_title_fields( $post_type );
 			$post_type_settings[] = $this->get_post_type_options( $post_type );
 			$post_type_settings[] = $this->get_post_type_attachment_types( $post_type );
 		} // foreach()
@@ -259,6 +260,25 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 			'options'   => $atttachment_types
 		);
 	} // get_attachment_types()
+
+
+	/**
+	* Meta Box Titles
+	*
+	* @since 1.3.6
+	* @return array
+	*/
+	public function get_meta_box_title_fields( $post_type )
+	{
+		$post_type_obj = get_post_type_object( $post_type );
+		return array(
+			'name'		=> "wpba-{$post_type_obj->name}-meta-box-title",
+			'label'		=> __( "{$post_type_obj->labels->name} Meta Box Title", 'wpba' ),
+			'desc'		=> __( '', 'wpba' ),
+			'type'		=> 'text',
+			'default'	=> 'WP Better Attachments'
+		);
+	} // get_meta_box_title_fields()
 } // class
 
 // initiate the class

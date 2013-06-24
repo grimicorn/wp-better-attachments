@@ -12,6 +12,7 @@ class WP_Better_Attachments
 	public $meta_box_settings;
 	public $edit_modal_settings;
 	public $disabled_file_types;
+	public $current_post_type_meta_box_title;
 	public $current_post_type_settings;
 	public $current_post_type_disabled_file_types;
 	public $current_post_obj;
@@ -47,6 +48,7 @@ class WP_Better_Attachments
 			$this->current_post_obj = $post;
 			$this->current_post_type = $post->post_type;
 			$this->current_post_type_obj = get_post_type_object( $post->post_type );
+			$this->current_post_type_meta_box_title = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-meta-box-title", 'wpba_settings', 'WP Better Attachments' );
 			$this->current_post_type_settings = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-settings", 'wpba_settings', array() );
 			$this->current_post_type_disabled_file_types = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-disable-attachment-types", 'wpba_settings', array() );
 		} // if()
@@ -116,8 +118,10 @@ class WP_Better_Attachments
 	function unattach_media_row_action( $actions, $post )
 	{
 		if ( $post->post_parent ) {
-			$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
-			$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
+			if ( !$this->setting_disabled( 'media-table-unattach' ) )
+				$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
+			if ( !$this->setting_disabled( 'media-table-reattach' ) )
+				$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
 		} // if()
 
 		return $actions;
@@ -132,7 +136,6 @@ class WP_Better_Attachments
 	*/
 	public function setting_disabled( $option_type )
 	{
-		if ( is_admin() ) return; // dev debug
 		if ( $this->current_post_type_disabled() ) return true;
 		switch ( $option_type ) {
 			case 'thumbnail':
@@ -399,10 +402,39 @@ class WP_Better_Attachments
 
 
 		// Get the attachments
-		$attachments = get_posts( $get_posts_args );
+		$attachments = $this->validate_attachment_mime_type( get_posts( $get_posts_args ) );
 
 		return $attachments;
 	} // get_post_attachments()
+
+
+	/**
+	* Validate Attachment Mime Type Settings
+	*
+	* @return boolean
+	* @since 1.3.6
+	*/
+	function validate_attachment_mime_type( $attachments )
+	{
+		$disable_image = $this->setting_disabled( 'image-file-type' );
+		$disable_video = $this->setting_disabled( 'video-file-type' );
+		$disable_audio = $this->setting_disabled( 'audio-file-type' );
+		$disable_document = $this->setting_disabled( 'documents-file-type' );
+
+		foreach ( $attachments as $key => $attachment ) {
+			$mime_type = get_post_mime_type( $attachment->ID );
+			if ( $this->is_image( $mime_type) AND $disable_image )
+				unset( $attachments[$key] );
+			if ( $this->is_video( $mime_type) AND $disable_video )
+				unset( $attachments[$key] );
+			if ( $this->is_audio( $mime_type) AND $disable_audio )
+				unset( $attachments[$key] );
+			if ( $this->is_document( $mime_type) AND $disable_document )
+				unset( $attachments[$key] );
+		} // foreach()
+
+		return $attachments;
+	} // validate_attachment_mime_type()
 
 
 	/**

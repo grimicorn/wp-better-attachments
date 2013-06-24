@@ -18,13 +18,7 @@
 		span { display: inline-block; height: 100%; }
 		img { margin-bottom: -3px; }
 	}
-	.wpba-edit-attachment {
-		position: relative;
-		a {
-			text-decoration: none;
-			font-size: 12px;
-		}
-	}
+
 	.wpba-drag-handle {
 		position: absolute;
 		right: 32px;
@@ -43,28 +37,33 @@
 		overflow: hidden;
 		img {
 			min-height: 150px;
+			&.wpba-preview-img {
+				margin-top: -22px;
+				&.attachment-disabled { margin-top: 0; }
+			}
 			&.icon { min-height: auto; }
 		}
 		.icon-wrap  { width: 100%; text-align: center; }
-		.icon { margin: 30px auto; }
-		&:hover > .wpba-edit-attachment {
-			display: inline-block;
-		}
-		.wpba-edit-attachment {
-			position: absolute;
-			padding: 3px 6px 3px 7px;
-			max-width: 148px;
-			background: #FFF;
-			background: rgba(255,255,255,.8);
-			li {
-				clear: none;
-				margin : 0 5px 0 0;
-				min-height: 0;
-				border-bottom: none;
-				padding-bottom: 0;
-			}
-		}
+		.icon { margin: 30px auto 0 auto; }
 	}
+	.wpba-edit-attachment {
+		position: absolute;
+		padding: 3px;
+		width: 144px;
+		background: #FFF;
+		background: rgba(255,255,255,.8);
+		li {
+			clear: none;
+			margin : 0 5px 0 0;
+			min-height: 0;
+			border-bottom: none;
+			padding-bottom: 0;
+		} // li
+		a {
+			text-decoration: none;
+			font-size: 12px;
+		} // a
+	} // .wpba-edit-attachment
 	.wpba-attachment-name {
 		position: absolute;
 		overflow: hidden;
@@ -101,7 +100,11 @@
 		background: #FFF;
 		background: rgba(255,255,255,0.8);
 		overflow: hidden;
-		&.with-title { top: 22px; background: rgba(255,255,255,0.8); }
+		&.with-title {
+			top: 22px;
+			background: rgba(255,255,255,0.8);
+		} // .with-title
+		&.no-menu { top: 0; }
 	}
 } // .wpba
 

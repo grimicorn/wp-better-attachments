@@ -84,7 +84,6 @@ class WPBA_Settings extends WP_Better_Attachments
 		$wpba_settings[] = $wpba_settings_fields->get_edit_modal_settings();
 		$wpba_settings = array_merge( $wpba_settings, $wpba_settings_fields->get_post_type_settings() );
 
-
 		// Settings
 		$settings_fields = array(
 			'wpba_settings' => $wpba_settings

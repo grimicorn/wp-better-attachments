@@ -1,13 +1,12 @@
 <?php
 /**
- * WP Better Attachments MEta Box
+ * WP Better Attachments Meta Box
  */
 class WPBA_Meta_Box extends WP_Better_Attachments
 {
-
 	/**
-	 * Constructor
-	 */
+	* Constructor
+	*/
 	public function __construct( $config = array() ) {
 		parent::__construct();
 		$this->init_hooks();
@@ -15,16 +14,20 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 
 	/**
-	 * Initialization Hooks
-	 */
+	* Initialization Hooks
+	*/
 	public function init_hooks() {
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_box' ) );
+
+		// Properties
+		add_action('wp_head', array( &$this, 'init_global_properties' ) );
+		add_action('admin_head', array( &$this, 'init_global_properties' ) );
 	} // init_hooks()
 
 
 	/**
-	 * Adds the meta box container
-	 */
+	* Adds the meta box container
+	*/
 	public function add_meta_box() {
 		$post_types = get_post_types();
 		unset( $post_types["attachment"] );
@@ -32,13 +35,16 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		unset( $post_types["nav_menu_item"] );
 		unset( $post_types["deprecated_log"] );
 		global $wpba_wp_settings_api;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( 'wpba-disable-post-types', 'wpba_settings', array() );
+		$disabled_post_types = $this->disabled_post_types;
 
 		foreach ( $post_types as $post_type ) {
 			if ( !in_array( $post_type, $disabled_post_types ) ) {
+				global $post;
+				global $wpba_wp_settings_api;
+				$meta_box_title = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-meta-box-title", 'wpba_settings', 'WP Better Attachments' );
 				add_meta_box(
 					'wpba_meta_box',
-					__( 'WP Better Attachments', WPBA_LANG ),
+					__( $meta_box_title, WPBA_LANG ),
 					array( &$this, 'render_meta_box_content' ),
 					$post_type,
 					'advanced',
@@ -50,8 +56,8 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 
 	/**
-	 * Render Meta Box content
-	 */
+	* Render Meta Box content
+	*/
 	public function render_meta_box_content() {
 		global $post; ?>
 		<div id="wpba-post-<?php echo $post->ID; ?>" data-postid="<?php echo $post->ID; ?>" class="clearfix wpba<?php echo $this->display_class(); ?>">
@@ -87,7 +93,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', array() );
 
 		// Make sure user has not disabled title editing
-		if ( isset( $disabled_post_types['title'] ) )
+		if ( $this->setting_disabled( 'meta-box-title-editor' ) )
 			return '';
 
 		// Build title form
@@ -116,7 +122,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', array() );
 
 		// Make sure user has not disabled caption editing
-		if ( isset( $disabled_post_types['caption'] ) )
+		if ( $this->setting_disabled( 'meta-box-caption' ) )
 			return '';
 
 		// Build caption form
@@ -131,6 +137,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		return $html;
 	} // output_caption_input()
 
+
 	/**
 	* Editors Display Class
 	*
@@ -140,9 +147,8 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	public function display_class() {
 		global $post;
 		$post_type_obj = get_post_type_object( $post->post_type );
-		global $wpba_wp_settings_api;
-		$disabled_post_types = $wpba_wp_settings_api->get_option( "wpba-{$post_type_obj->name}-settings", 'wpba_settings', array() );
-		if ( isset( $disabled_post_types['caption'] ) AND isset( $disabled_post_types['title'] ) )
+
+		if ( $this->setting_disabled( 'meta-box-title-editor' ) AND $this->setting_disabled( 'meta-box-caption' ) )
 			return ' wpba-editor-collapsed';
 
 		return '';
@@ -165,9 +171,10 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		return $html;
 	} // output_wyswig_input()
 
+
 	/**
-	 * Output Post Attachments
-	 */
+	* Output Post Attachments
+	*/
 	public function output_post_attachments( $args = array() )
 	{
 		extract( $args );
@@ -194,52 +201,24 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$html = '';
 		$nl = "\n";
 
+
 		foreach ( $attachments as $attachment ) {
 			$attachment_id = ( isset( $a_array ) and $a_array ) ? $attachment['id'] : $attachment->ID;
 			$attachment = get_post( $attachment_id );
 			$mime_type = get_post_mime_type( $attachment_id );
-			$attachment_edit_link = admin_url( "post.php?post={$attachment_id}&action=edit" );
-			$placeholder_img = '';
 
-			if ( $this->is_image( $mime_type ) ) {
-				$attachment_src = wp_get_attachment_image_src( $attachment_id, 'thumbnail' );
-				if ( !empty( $attachment_src ) )
-					$src = $attachment_src[0];
-					$width = $attachment_src[1];
-					$height = $attachment_src[2];
-					$id = $attachment->ID;
-					$placeholder_img .= '<img src="'.$src.'" width="'.$width.'" height="'.$height.'" class="attid-'.$id.'" data-url="'.$src.'">';
-			} else {
-				$placeholder_img_file = $this->placeholder_image( $mime_type );
-				$img_src = site_url().'/wp-includes/images/crystal/'.$placeholder_img_file;
-				$placeholder_img .= '<div class="icon-wrap"><img src="'.$img_src.'" class="icon" draggable="false"></div>';
-			} // if/else()
+
 
 			$html .= '<li class="wpba-attachment-item ui-state-default" id="attachment_'.$attachment_id.'" data-id="'.$attachment_id.'">' . $nl;
 				$html .= '<div class="inner">' . $nl;
 				$html .= '<div class="wpba-drag-handle"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>' . $nl;
 				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
-					$html .= '<ul class="unstyled pull-left wpba-edit-attachment hide-if-no-js" data-id="'.$attachment_id.'">' . $nl;
-						$html .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a> | </li>' . $nl;
-						$html .= '<li class="pull-left"><a href="'.$attachment_edit_link.'" class="wpba-edit">Edit</a> | </li>' . $nl;
-						$html .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>' . $nl;
-					$html .= '</ul>' . $nl;
-					if ( !$this->is_image( $mime_type ) ) {
-						$attachment_url = wp_get_attachment_url( $attachment->ID );
-						$file_name = pathinfo( $attachment_url, PATHINFO_FILENAME );
-						$file_type = pathinfo( $attachment_url, PATHINFO_EXTENSION );
-						$attachment_title = "<span class='wpba-filename'>{$file_name}</span>.{$file_type}";
-						$html .= '<span class="wpba-attachment-name">'.$attachment_title.'</span>';
-						$html .= '<span class="wpba-attachment-id-output with-title">Attachment ID: '.$attachment->ID.'</span>';
-					} else {
-						$html .= '<span class="wpba-attachment-id-output">Attachment ID: '.$attachment->ID.'</span>';
-					} // if/else()
-					$html .= $placeholder_img;
+					$html .= $this->output_menu_id_title( $attachment, $mime_type );
+					$html .= $this->output_placeholder_image( $attachment, $mime_type );
 				$html .= '</div>' . $nl;
 				$html .= '<div class="wpba-form-wrap pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= '<div>' . $this->output_title_input( array( 'attachment' => $attachment) )  . '</div>' . $nl;
 					$html .= '<div>' . $this->output_caption_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
-					// $html .= '<div>' . $this->output_wyswig_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="clear"></div>' . $nl;
 				$html .= '</div>' . $nl;
@@ -248,6 +227,92 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 		return $html;
 	} // build_image_attachment_li()
+
+
+	/**
+	* Output Edit Modal
+	*
+	* @return string
+	* @since 1.3.6
+	*/
+	public function output_edit_menu( $attachment )
+	{
+		if ( $this->setting_disabled( 'meta-box-unattach' ) AND $this->setting_disabled( 'meta-box-delete' ) AND $this->setting_disabled( 'meta-box-edit' ) )
+			return '';
+
+		$menu = '';
+		$nl = "\n";
+		$attachment_edit_link = admin_url( "post.php?post={$attachment->ID}&action=edit" );
+		$menu .= '<ul class="unstyled pull-left wpba-edit-attachment hide-if-no-js" data-id="'.$attachment->ID.'">' . $nl;
+			if ( !$this->setting_disabled( 'meta-box-unattach' ) )
+				$menu .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a></li>' . $nl;
+			if ( !$this->setting_disabled( 'meta-box-edit' ) )
+				$menu .= '<li class="pull-left"> | <a href="'.$attachment_edit_link.'" class="wpba-edit">Edit</a></li>' . $nl;
+			if ( !$this->setting_disabled( 'meta-box-delete' ) )
+				$menu .= '<li class="pull-left"> | <a href="#" class="wpba-delete">Delete</a></li>' . $nl;
+		$menu .= '</ul>' . $nl;
+
+		return $menu;
+	} // output_edit_menu()
+
+
+	/**
+	* Output attachment menu, title, and id
+	*
+	* @return string
+	* @since 1.3.6
+	*/
+	public function output_menu_id_title( $attachment, $mime_type )
+	{
+		$menu_id_title = '';
+		$menu = $this->output_edit_menu( $attachment );
+		$id_class = ( $menu == '' ) ? ' no-menu' : '';
+		$menu_id_title .= $menu;
+
+		if ( !$this->is_image( $mime_type ) ) {
+			$attachment_url = wp_get_attachment_url( $attachment->ID );
+			$file_name = pathinfo( $attachment_url, PATHINFO_FILENAME );
+			$file_type = pathinfo( $attachment_url, PATHINFO_EXTENSION );
+			$attachment_title = "<span class='wpba-filename'>{$file_name}</span>.{$file_type}";
+			$menu_id_title .= '<span class="wpba-attachment-name">'.$attachment_title.'</span>';
+			$id_class .= ' with-title';
+		} // if()
+
+		// Attachment ID
+		if ( !$this->setting_disabled( 'meta-box-attachment-id' ) )
+				$menu_id_title .= "<span class='wpba-attachment-id-output{$id_class}'>Attachment ID: {$attachment->ID}</span>";
+
+		return $menu_id_title;
+	} // output_menu_id_title()
+
+
+	/**
+	* Output Placeholder Image
+	*
+	* @return string
+	* @since 1.3.6
+	*/
+	function output_placeholder_image( $attachment, $mime_type )
+	{
+		$placeholder_img = '';
+		$img_class = ( $this->setting_disabled( 'meta-box-attachment-id' ) ) ? 'wpba-preview-img attachment-disabled' : 'wpba-preview-img';
+
+		if ( $this->is_image( $mime_type ) ) {
+			$attachment_src = wp_get_attachment_image_src( $attachment->ID, 'thumbnail' );
+			if ( !empty( $attachment_src ) )
+				$src = $attachment_src[0];
+				$width = $attachment_src[1];
+				$height = $attachment_src[2];
+				$id = $attachment->ID;
+				$placeholder_img .= "<img src='{$src}' width='{$width}' height='{$height}' class='attid-{$id} {$img_class}' data-url='{$src}'>";
+		} else {
+			$placeholder_img_file = $this->placeholder_image( $mime_type );
+			$img_src = site_url().'/wp-includes/images/crystal/'.$placeholder_img_file;
+			$placeholder_img .= '<div class="icon-wrap"><img src="'.$img_src.'" class="icon" draggable="false"></div>';
+		} // if/else()
+
+		return $placeholder_img;
+	} // placeholder_image()
 
 
 	/**
@@ -260,9 +325,15 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		if ( floatval( $wp_version ) <= 3.4 )
 			return '';
 
+		$modal_settings = json_encode(array(
+			'caption'			=> $this->setting_disabled( 'edit-modal-caption' ),
+			'alt'					=> $this->setting_disabled( 'edit-modal-alternative' ),
+			'description'	=> $this->setting_disabled( 'edit-modal-description' )
+		));
+
 		$html = '';
 		$nl = "\n";
-		$html .= '<div tabindex="0" id="wpba_edit_screen" class="supports-drag-drop" style="display: none;">' . $nl;
+		$html .= "<div tabindex='0' id='wpba_edit_screen' class='supports-drag-drop' style='display: none;' data-settings='{$modal_settings}'>" . $nl;
 		$html .= '<div class="media-modal wp-core-ui">' . $nl;
 		$html .= '<a id="wpba_edit_screen_close" class="media-modal-close" href="#" title="Close"><span class="media-modal-icon"></span></a>' . $nl;
 		$html .= '<div class="media-modal-content">' . $nl;
