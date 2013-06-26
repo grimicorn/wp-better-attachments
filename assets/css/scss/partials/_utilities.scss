@@ -4,6 +4,11 @@
 	.pull-left { float: left; }
 	.pull-right { float: right; }
 	.hide { display:none; }
+	.hide-text {
+		text-indent: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+	}
 	.clearfix { *zoom: 1; }
 	.clearfix:before,.clearfix:after {
 		display: table;

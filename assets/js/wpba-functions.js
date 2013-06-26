@@ -367,7 +367,7 @@ wpba.settingsDisablePostTypes = function( that ) {
 			settingsCheckBox = $('#wpba-disable-post-types-wrap input[type="checkbox"]'),
 			allCheckboxesChecked = true
 	;
-	console.log($('.wpba-page-meta-box-title').length);
+
 	// Hide global settings if all posts are disabled
 	settingsCheckBox.each(function() {
 		if ( !$(this).is(':checked') ) {
@@ -401,8 +401,8 @@ wpba.settingsDisablePostTypes = function( that ) {
 		metaBoxTitleSect.show();
 	}
 
-	var wpbaSettings = $('#wpba_settings');
-	wpbaSettings.animate({'opacity':1}, 150);
+	$('#wpba_settings').animate({'opacity':1}, 150);
+	$('.wpba-settings-sidebar').animate({'opacity':1}, 150);
 }
 
 
@@ -420,8 +420,8 @@ wpba.globalSettingsHandler = function( that, selector ) {
 		elem.next('br').show();
 	}
 
-	var wpbaSettings = $('#wpba_settings');
-	wpbaSettings.animate({'opacity':1}, 150);
+	$('#wpba_settings').animate({'opacity':1}, 150);
+	$('.wpba-settings-sidebar').animate({'opacity':1}, 150);
 }
 
 

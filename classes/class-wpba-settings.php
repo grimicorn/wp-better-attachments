@@ -97,17 +97,69 @@ class WPBA_Settings extends WP_Better_Attachments
 	* Display the admin page
 	*/
 	function plugin_page()
-	{
-		echo '<div class="wrap">';
-		echo '<div id="icon-options-general" class="icon32"></div>';
-		echo '<h2>WP Better Attachments Settings</h2>';
+	{?>
+		<div class="wrap wpba">
+		<div id="icon-options-general" class="icon32"></div>
+		<h2>WP Better Attachments Settings</h2>
+		<div class="wpba-settings-content pull-left">
+		<?php
 		settings_errors( 'wpba-disable-post-types', false, true );
-
 		// $this->wp_settings_api->show_navigation();
-		$this->wp_settings_api->show_forms();
+		$this->wp_settings_api->show_forms(); ?>
+		</div>
+		<div class="wpba-settings-sidebar pull-left">
+			<h3>Thanks for using WP Better Attachments!</h3>
+			<p>If you have an issue, found a bug, or like to request a feature please submit it on <a href="https://github.com/DHolloran/wp-better-attachments/issues/" target="_blank">GitHub</a>.</p>
+			<h4>To help me help you please include the following.</h4>
+			<ul>
+				<li>Version of WordPress</li>
+				<li>Browser(s) the issue occurred.</li>
+				<li>Any error debugging information you have encountered.</li>
+				<li>Did you try it on a clean WordPress install?</li>
+				<li>What did you do? What did you expect to happen? What did happen?</li>
+				<li>Screenshots if available.</li>
+			</ul>
+			<p>Posting your issue on GitHub with relevant information will help me fix issues and add new features ASAP, thanks in advance. Issues and feature requests post to GitHub directly get top priority.</p>
+			<hr>
+			<p>I appreciate your feedback, please leave a review <a href="http://wordpress.org/support/view/plugin-reviews/wp-better-attachments/" target="_blank">here</a> and let me know what your thoughts.</p>
+			<p>If you have a general question or just want to say high post a message on the <a href="http://wordpress.org/support/plugin/wp-better-attachments/" target="_blank">forums</a></p>
+			<hr>
+			<h4>Now for some shameless self promotion...</h4>
+			<p>
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://wordpress.org/plugins/wp-better-attachments/" data-text="Check out WP Better Attachments WordPress plugin" data-via="DHolloran">Tweet</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+			</p>
+			<p>
+				<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode('http://wordpress.org/plugins/wp-better-attachments/'); ?>)" target="_blank" class="fb-share hide-text">Share on Facebook</a>
+			</p>
+			<p>
+				<iframe src="http://ghbtns.com/github-btn.html?user=dholloran&repo=wp-better-attachments&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="75" height="20"></iframe>
+			</p>
+			<p>
+				<a href='https://alpha.app.net/intent/post/?text=Check%20out%20WP%20Better%20Attachments%20WordPress%20plugin. url=http%3A%2F%2Fwordpress.org%2Fplugins%2Fwp-better-attachments%2F' class='adn-button' target='_blank' data-type='share' data-width='121' data-height='20' data-text='Check out WP Better Attachments WordPress plugin.' data-url='http:&#x2F;&#x2F;wordpress.org&#x2F;plugins&#x2F;wp-better-attachments&#x2F;' >Share on App.net</a>
+<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script>
+			</p>
+			<p>
+				<script id='flattrbtn'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=DHolloran&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('flattrbtn');</script>
+			</p>
+			<p>
+				<a href='http://www.pledgie.com/campaigns/20476'><img alt='Click here to lend your support to: WP Better Attachments and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/20476.png?skin_name=chrome' border='0' /></a>
+			</p>
 
-		echo '</div>';
-	} // plugin_page()
+			<hr>
+			<p>If you want to hide this sidebar I understand, I develop client sites too just add this <code>.wpba-settings-sidebar{ display:none!important;}</code> to you administrator CSS.</p>
+			<hr>
+			<p>If you want to remove the menu item to prevent tampering with the plugin you can place this in your functions.php.</p>
+<pre><code>add_action( 'admin_menu', 'wpba_remove_menu_pages' );
+function wpba_remove_menu_pages() {
+ remove_submenu_page(
+  'options-general.php',
+  'wpba-settings'
+ );
+}</code></pre>
+		</div>
+		</div>
+	<?php } // plugin_page()
 
 	/**
 	* Get all the pages
