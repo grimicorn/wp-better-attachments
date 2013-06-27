@@ -100,11 +100,12 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$html = '';
 		$nl = "\n";
 		$html .= '<label class="wpba-label" for="attachment_'.$attachment->ID.'_title">Title</label>';
-		$html .= '<input ' . $nl;
-		$html .= 'class="pull-left wpba-attachment-title widefat" ' . $nl;
-		$html .= 'id="attachment_'.$attachment->ID.'_title" ' . $nl;
-		$html .= 'name="attachment_'.$attachment->ID.'_title" ' . $nl;
-		$html .= 'value="'.$attachment->post_title.'" ' . $nl;
+		$html .= '<input ';
+		$html .= 'type="text" ';
+		$html .= 'class="pull-left wpba-attachment-title widefat" ';
+		$html .= 'id="attachment_'.$attachment->ID.'_title" ';
+		$html .= 'name="attachment_'.$attachment->ID.'_title" ';
+		$html .= 'value="'.$attachment->post_title.'" ';
 		$html .= 'placeholder="Title">' . $nl;
 		return $html;
 	} // output_title_input()
