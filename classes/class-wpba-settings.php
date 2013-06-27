@@ -100,7 +100,7 @@ class WPBA_Settings extends WP_Better_Attachments
 	{?>
 		<div class="wrap wpba">
 		<div id="icon-options-general" class="icon32"></div>
-		<h2>WP Better Attachments Settings</h2>
+		<h2>WP Better Attachments <?php echo WPBA_VERSION; ?> Settings</h2>
 		<div class="wpba-settings-content pull-left">
 		<?php
 		settings_errors( 'wpba-disable-post-types', false, true );
