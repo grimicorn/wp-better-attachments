@@ -149,7 +149,7 @@ class WPBA_Settings extends WP_Better_Attachments
 			<hr>
 			<p>If you want to hide this sidebar I understand, I develop client sites too just add this <code>.wpba-settings-sidebar{ display:none!important;}</code> to you administrator CSS.</p>
 			<hr>
-			<p>If you want to remove the menu item to prevent tampering with the plugin you can place this in your functions.php.</p>
+			<p>If you want to remove the menu item to prevent tampering with the plugin you can place this in your functions.php. You can still accces this page using this url <a href="<?php echo network_admin_url( 'options-general.php?page=wpba-settings' ); ?>"><?php echo network_admin_url( 'options-general.php?page=wpba-settings' ); ?></a></p>
 <pre><code>add_action( 'admin_menu', 'wpba_remove_menu_pages' );
 function wpba_remove_menu_pages() {
  remove_submenu_page(
