@@ -352,8 +352,8 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 /**
  * Instantiate class and create return method for easier use later
  */
-global $wpbamb;
-$wpbamb = new WPBA_Meta_Box();
+global $wpba_meta_box;
+$wpba_meta_box = new WPBA_Meta_Box();
 
 function call_WPBA_Meta_Box() {
 	return new WPBA_Meta_Box();

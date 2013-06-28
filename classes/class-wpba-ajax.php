@@ -128,8 +128,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 				) );
 		} // foreach
 
-		global $wpbamb;
-		$image_html = $wpbamb->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
+		global $wpba_meta_box;
+		$image_html = $wpba_meta_box->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
 
 		echo json_encode( array(
 			'image' => $image_html
@@ -176,8 +176,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 				) );
 		} // foreach
 
-		global $wpbamb;
-		$html = $wpbamb->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
+		global $wpba_meta_box;
+		$html = $wpba_meta_box->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
 
 		echo json_encode( $html );
 		die();
@@ -211,7 +211,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 	*/
 	public function refresh_attachments_callback()
 	{
-		global $wpbamb;
+		global $wpba_meta_box;
 		extract( $_GET );
 
 		$html = '';
@@ -219,8 +219,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 		$attachments = $this->get_post_attachments( array( 'post' => get_post( $postid ) ) );
 		// Build Attachments Output
 		if ( !empty( $attachments ) ) {
-			global $wpbamb;
-			$html .= $wpbamb->build_image_attachment_li( $attachments );
+			global $wpba_meta_box;
+			$html .= $wpba_meta_box->build_image_attachment_li( $attachments );
 		} // if (!empty($attachments))
 
 		echo json_encode( $html );

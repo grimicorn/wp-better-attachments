@@ -16,26 +16,26 @@ class WPBA_Media_Library extends WP_Better_Attachments
 	* Initialization Hooks
 	*/
 	public function init_hooks() {
-		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
+		add_filter( 'media_row_actions', array( &$this, 'custom_row' ), 10, 2 );
 		add_filter("manage_upload_columns", array( &$this, 'upload_columns' ) );
-		add_action("manage_media_custom_column", array( &$this, 'media_custom_columns' ), 0, 2 );
+		add_action("manage_media_custom_column", array( &$this, 'custom_columns' ), 0, 2 );
 	} // init_hooks()
 
 
 	/**
 	* Add unattach link in media editor
 	*/
-	function unattach_media_row_action( $actions, $post )
+	function custom_row( $actions, $post )
 	{
 		if ( $post->post_parent ) {
-			if ( !$this->setting_disabled( 'media-table-unattach' ) )
+			if ( !$this->setting_disabled( 'media-table-unattach-link' ) )
 				$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
-			if ( !$this->setting_disabled( 'media-table-reattach' ) )
+			if ( !$this->setting_disabled( 'media-table-reattach-link' ) )
 				$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
 		} // if()
 
 		return $actions;
-	} //unattach_media_row_action()
+	} //custom_row()
 
 
 	/**
@@ -65,14 +65,14 @@ class WPBA_Media_Library extends WP_Better_Attachments
 	* @return null
 	* @since 1.3.6
 	*/
-	function media_custom_columns($column_name, $id)
+	function custom_columns($column_name, $id)
 	{
 		if( $column_name != 'wpba_parent' ) return;
 
 		$post = get_post($id);
 		$html = '';
-		$unattach = !$this->setting_disabled( 'media-table-unattach' );
-		$reattach = !$this->setting_disabled( 'media-table-reattach' );
+		$unattach = !$this->setting_disabled( 'media-table-unattach-col' );
+		$reattach = !$this->setting_disabled( 'media-table-reattach-col' );
 
 		if ( $post->post_parent > 0 ) {
 			if ( get_post($post->post_parent) )
@@ -97,7 +97,18 @@ class WPBA_Media_Library extends WP_Better_Attachments
 		} // if/else()
 
 		echo $html;
-	} // media_custom_columns()
+	} // custom_columns()
+
+	/**
+	* Media Edit Modal
+	*
+	* @return
+	* @since 1.3.6
+	*/
+	public function output_edit_modal()
+	{
+		// global $wpba_meta_box;
+	} // output_edit_modal()
 } // class()
 
 global $wpba_media_library;
