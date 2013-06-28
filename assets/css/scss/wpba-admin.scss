@@ -35,12 +35,14 @@
 	}
 }
 
+// Media Library
+.column-wpba_parent { width: 15%; }
+.wpba-list-spacer { display: none; }
+
 .wpba-attachment-editor {
 	.description { max-width: 650px; width: 100%; }
 	.unstyled { list-style: none; margin-left: 0; }
 	.pull-left { float: left; }
 	.pull-right { float: right; }
 	a.reset-thumbnails { padding: 7px 10px; text-decoration: none; }
-	// .hide { display: none; }
-	// .show { display: block; }
 } // .wpba-attachment-editor

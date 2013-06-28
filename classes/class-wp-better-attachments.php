@@ -79,7 +79,6 @@ class WP_Better_Attachments
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
-		add_filter( 'media_row_actions', array( &$this, 'unattach_media_row_action' ), 10, 2 );
 		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
 
 		// Properties
@@ -110,22 +109,6 @@ class WP_Better_Attachments
 		$out = '<a class="button wpba-attachments-button wpba-form-attachments-button" id="wpba_form_attachments_button" href="#"><span class="wpba-media-buttons-icon"></span> Add Attachments</a>';
 		return $context . $out;
 	} // add_form_button()
-
-
-	/**
-	* Add unattach link in media editor
-	*/
-	function unattach_media_row_action( $actions, $post )
-	{
-		if ( $post->post_parent ) {
-			if ( !$this->setting_disabled( 'media-table-unattach' ) )
-				$actions['unattach'] = '<a href="#" title="' . __( "Un-attach this media item." ) . '" class="wpba-unattach-library" data-id="'.$post->ID.'">' . __( 'Un-attach' ) . '</a>';
-			if ( !$this->setting_disabled( 'media-table-reattach' ) )
-				$actions['reattach'] = '<a class="hide-if-no-js wpba-reattach-library" title="' . __( "Re-attach this media item." ) . '" onclick="findPosts.open( '."'media[]','".$post->ID."'". '); return false;" href="#the-list">' . __( 'Re-attach' ) . '</a>';
-		} // if()
-
-		return $actions;
-	} //unattach_media_row_action()
 
 
 	/**
