@@ -29,8 +29,11 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 			'desc'			=> __( '', 'wpba' ),
 			'type'			=> 'multicheck',
 			'options'		=> array(
-											'unattach_link'	=> 'Disable Un-attach Link',
-											'reattach_link'	=> 'Disable Re-attach Link'
+											'unattach_link'			=> 'Disable Un-attach Link (hover menu)',
+											'reattach_link'			=> 'Disable Re-attach Link (hover menu)',
+											'col_edit_link'			=> 'Edit (column)',
+											'col_unattach_link'	=> 'Disable Un-attach Link (column)',
+											'col_reattach_link'	=> 'Disable Re-attach Link (column)'
 										)
 		);
 	} // get_media_table_settings()

@@ -141,12 +141,24 @@ class WP_Better_Attachments
 				if ( isset( $this->global_settings['all_crop_sizes'] ) )
 					return true;
 				break;
-			case 'media-table-unattach':
+			case 'media-table-edit-col':
+				if ( isset( $this->media_table_settings['col_edit_link'] ) )
+					return true;
+				break;
+			case 'media-table-unattach-link':
 				if ( isset( $this->media_table_settings['unattach_link'] ) )
 					return true;
 				break;
-			case 'media-table-reattach':
+			case 'media-table-unattach-col':
+				if ( isset( $this->media_table_settings['col_unattach_link'] ) )
+					return true;
+				break;
+			case 'media-table-reattach-link':
 				if ( isset( $this->media_table_settings['reattach_link'] ) )
+					return true;
+				break;
+			case 'media-table-reattach-col':
+				if ( isset( $this->media_table_settings['col_reattach_link'] ) )
 					return true;
 				break;
 			case 'meta-box-title-editor':
