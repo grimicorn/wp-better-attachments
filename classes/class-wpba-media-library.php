@@ -17,8 +17,9 @@ class WPBA_Media_Library extends WP_Better_Attachments
 	*/
 	public function init_hooks() {
 		add_filter( 'media_row_actions', array( &$this, 'custom_row' ), 10, 2 );
-		add_filter("manage_upload_columns", array( &$this, 'upload_columns' ) );
-		add_action("manage_media_custom_column", array( &$this, 'custom_columns' ), 0, 2 );
+		add_filter( 'manage_upload_columns', array( &$this, 'upload_columns' ) );
+		add_action( 'manage_media_custom_column', array( &$this, 'custom_columns' ), 0, 2 );
+		add_action( 'admin_footer', array( &$this, 'output_edit_modal' ) );
 	} // init_hooks()
 
 
@@ -69,10 +70,14 @@ class WPBA_Media_Library extends WP_Better_Attachments
 	{
 		if( $column_name != 'wpba_parent' ) return;
 
-		$post = get_post($id);
+		$post = get_post( $id );
+
 		$html = '';
 		$unattach = !$this->setting_disabled( 'media-table-unattach-col' );
 		$reattach = !$this->setting_disabled( 'media-table-reattach-col' );
+		$attachment_edit_link = admin_url( "post.php?post={$id}&action=edit" );
+		$is_image = $this->is_image( $post->post_mime_type );
+		$edit = ( !$this->setting_disabled( 'media-table-edit-col' ) AND $is_image );
 
 		if ( $post->post_parent > 0 ) {
 			if ( get_post($post->post_parent) )
@@ -80,10 +85,9 @@ class WPBA_Media_Library extends WP_Better_Attachments
 
 			$html .= '<strong>';
 			$html .= '<a href="'.get_edit_post_link( $post->post_parent ).'">'.$title.'</a></strong>, '.get_the_time(__('Y/m/d'));
-			$html .= '<br>';
-			$html .= '<a class="hide-if-no-js" href="#">'.__('Edit').'</a>';
-			$html .= '<br>';
-			$html .= '<div class="unattach-wrap">';
+			if ( $edit )
+				$html .= "<br><a href='{$attachment_edit_link}' class='wpba-edit'>Edit</a>";
+			$html .= '<br><div class="unattach-wrap">';
 			if ( $unattach )
 				$html .= '<a href="#" title="'.__( "Un-attach this media item." ).'" class="wpba-unattach-library" data-id="'.$post->ID.'">'.__( 'Un-attach' ).'</a>';
 			if ( $unattach AND $reattach )
@@ -94,6 +98,8 @@ class WPBA_Media_Library extends WP_Better_Attachments
 		} else {
 			$html .= __('(Unattached)').'<br>';
 			$html .= '<a class="hide-if-no-js" onclick="findPosts.open( '."'media[]','".$post->ID."'".'); return false;" href="#the-list">' . __( 'Attach' ) . '</a>';
+			if ( $edit )
+				$html .= "<br><a href='{$attachment_edit_link}' class='wpba-edit'>Edit</a>";
 		} // if/else()
 
 		echo $html;
@@ -107,7 +113,10 @@ class WPBA_Media_Library extends WP_Better_Attachments
 	*/
 	public function output_edit_modal()
 	{
-		// global $wpba_meta_box;
+		$current_page = get_current_screen();
+		if( !isset( $current_page->id ) OR $current_page->id != 'upload' ) return;
+		global $wpba_meta_box;
+		echo $wpba_meta_box->edit_modal();
 	} // output_edit_modal()
 } // class()
 

@@ -319,7 +319,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	/**
 	* Edit Modal
 	*/
-	protected function edit_modal()
+	public function edit_modal()
 	{
 		// Modal does not exist pre 3.5
 		global $wp_version;
