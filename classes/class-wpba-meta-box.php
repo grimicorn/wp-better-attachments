@@ -1,11 +1,18 @@
 <?php
 /**
- * WP Better Attachments Meta Box
- */
+* WP Better Attachments Meta Box
+*
+ * @package WP_Better_Attachments
+* @since 1.0.0
+* @author Dan Holloran dan@danholloran.com
+*/
 class WPBA_Meta_Box extends WP_Better_Attachments
 {
 	/**
 	* Constructor
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function __construct( $config = array() ) {
 		parent::__construct();
@@ -15,6 +22,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Initialization Hooks
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function init_hooks() {
 		add_action( 'add_meta_boxes', array( &$this, 'add_meta_box' ) );
@@ -27,6 +37,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Adds the meta box container
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function add_meta_box() {
 		$post_types = get_post_types();
@@ -57,6 +70,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Render Meta Box content
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function render_meta_box_content() {
 		global $post; ?>
@@ -83,6 +99,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Output Title Form Input
+	*
+	* @since 1.2.0
+	* @return string
 	*/
 	public function output_title_input( $args = array() )
 	{
@@ -113,6 +132,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Output Caption Form Input
+	*
+	* @since 1.2.0
+	* @return string
 	*/
 	public function output_caption_input( $args = array() )
 	{
@@ -142,8 +164,8 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 	/**
 	* Editors Display Class
 	*
-	* @returns string
 	* @since 1.3.5
+	* @return string
 	*/
 	public function display_class() {
 		global $post;
@@ -157,24 +179,10 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 
 	/**
-	* Output WYSWIG Form Input
-	*/
-	public function output_wyswig_input( $args = array() )
-	{
-		// Not Available before 3.3
-		global $wp_version;
-		if ( floatval($wp_version) >= 3.3 )
-			return false;
-
-		extract( $args );
-		$html = '';
-		$nl = "\n";
-		return $html;
-	} // output_wyswig_input()
-
-
-	/**
 	* Output Post Attachments
+ 	*
+	* @since 1.0.0
+	* @return string
 	*/
 	public function output_post_attachments( $args = array() )
 	{
@@ -196,6 +204,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Build Attachment List
+	*
+	* @since 1.0.0
+	* @return string
 	*/
 	public function build_image_attachment_li( $attachments, $args = array() ) {
 		extract( $args );
@@ -318,6 +329,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 	/**
 	* Edit Modal
+	*
+	* @return string
+	* @since 1.1.0
 	*/
 	public function edit_modal()
 	{
@@ -346,8 +360,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 
 		return $html;
 	} // edit_modal()
-
-} // END Class WP_Better_Attachments
+} // END Class WP_Better_Attachments()
 
 /**
  * Instantiate class and create return method for easier use later

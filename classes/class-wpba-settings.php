@@ -1,8 +1,9 @@
 <?php
 /**
- * WP Better Attachments Settings
- * http://kovshenin.com/2012/the-wordpress-settings-api/
- */
+* WP Better Attachments Settings
+* http://kovshenin.com/2012/the-wordpress-settings-api/
+* @package WP_Better_Attachments
+*/
 class WPBA_Settings extends WP_Better_Attachments
 {
 

@@ -2,18 +2,29 @@
 /**
 * WPBA Media Library
 *
+* @package WP_Better_Attachments
 * @since 1.3.6
+* @author Dan Holloran dan@danholloran.com
 */
 class WPBA_Media_Library extends WP_Better_Attachments
 {
-
+	/**
+	* Constructor
+	*
+	* @return null
+	* @since 1.3.6
+	*/
 	function __construct( $config = array() )
 	{
 		parent::__construct();
 	} // __construct()
 
+
 	/**
 	* Initialization Hooks
+	*
+	* @return null
+	* @since 1.3.6
 	*/
 	public function init_hooks() {
 		add_filter( 'media_row_actions', array( &$this, 'custom_row' ), 10, 2 );
@@ -25,6 +36,9 @@ class WPBA_Media_Library extends WP_Better_Attachments
 
 	/**
 	* Add unattach link in media editor
+	*
+	* @return array
+	* @since 1.3.6
 	*/
 	function custom_row( $actions, $post )
 	{
@@ -42,7 +56,7 @@ class WPBA_Media_Library extends WP_Better_Attachments
 	/**
 	* Media Upload Columns
 	*
-	* @return null
+	* @return array
 	* @since 1.3.6
 	*/
 	function upload_columns( $columns )
@@ -105,10 +119,11 @@ class WPBA_Media_Library extends WP_Better_Attachments
 		echo $html;
 	} // custom_columns()
 
+
 	/**
 	* Media Edit Modal
 	*
-	* @return
+	* @return null
 	* @since 1.3.6
 	*/
 	public function output_edit_modal()

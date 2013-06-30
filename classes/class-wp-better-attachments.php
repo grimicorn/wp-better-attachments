@@ -2,7 +2,9 @@
 /**
 * WP Better Attachments
 *
+* @package WP_Better_Attachments
 * @since 1.0.0
+* @author Dan Holloran dan@danholloran.com
 */
 class WP_Better_Attachments
 {
@@ -21,6 +23,9 @@ class WP_Better_Attachments
 
 	/**
 	* Constructor
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function __construct( $config = array() ) {
 		// Setup
@@ -75,6 +80,9 @@ class WP_Better_Attachments
 
 	/**
 	* Initialization Hooks
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function init_hooks() {
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
@@ -89,6 +97,9 @@ class WP_Better_Attachments
 
 	/**
 	* Add Attachments button above post editor
+	*
+	* @since 1.0.0
+	* @return string
 	*/
 	function add_form_button($context){
 		// Make sure the user has not disabled this post type
@@ -264,6 +275,9 @@ class WP_Better_Attachments
 
 	/**
 	* Enqueue Administrator Scripts and Styles
+	*
+	* @since 1.0.0
+	* @return null
 	*/
 	public function enqueue_admin_scripts()
 	{
@@ -316,6 +330,7 @@ class WP_Better_Attachments
 	* Enqueue Frontend Scripts and Styles
 	*
 	* @since 1.3.2
+	* @return null
 	*/
 	function enqueue_scripts()
 	{
@@ -336,6 +351,9 @@ class WP_Better_Attachments
 
 	/**
 	* Get attachment ID from src url
+	*
+	* @since 1.0.0
+	* @return string
 	*/
 	public function get_attachment_id_from_src( $image_src )
 	{
@@ -348,6 +366,9 @@ class WP_Better_Attachments
 
 	/**
 	* Get Post Attachments
+	*
+	* @since 1.0.0
+	* @return array
 	*/
 	public function get_post_attachments( $args = array() )
 	{
@@ -434,6 +455,9 @@ class WP_Better_Attachments
 
 	/**
 	* Attachment placeholder image name
+	*
+	* @since 1.0.0
+	* @return string
 	*/
 	protected function placeholder_image( $mime_type )
 	{
@@ -451,6 +475,9 @@ class WP_Better_Attachments
 
 	/**
 	* Attachment is an image
+	*
+	* @since 1.0.0
+	* @return boolean
 	*/
 	protected function is_image( $mime_type )
 	{
@@ -468,6 +495,9 @@ class WP_Better_Attachments
 
 	/**
 	* Attachment is a document
+	*
+	* @since 1.0.0
+	* @return boolean
 	*/
 	protected function is_document( $mime_type )
 	{
@@ -490,6 +520,9 @@ class WP_Better_Attachments
 
 	/**
 	* Attachment is a audio
+	*
+	* @since 1.0.0
+	* @return boolean
 	*/
 	protected function is_audio( $mime_type )
 	{
@@ -508,6 +541,9 @@ class WP_Better_Attachments
 
 	/**
 	* Attachment is a video
+	*
+	* @since 1.0.0
+	* @return boolean
 	*/
 	protected function is_video( $mime_type )
 	{
@@ -533,6 +569,7 @@ class WP_Better_Attachments
 	* Check Allowed Files
 	*
 	* @since 1.3.2
+	* @return array
 	*/
 	function check_allowed_file_extensions( $attachments, $allowed_extensions )
 	{
@@ -556,6 +593,7 @@ class WP_Better_Attachments
 	* Check Allowed File Type Categories
 	*
 	* @since 1.3.2
+	* @return array
 	*/
 	function check_allowed_file_type_categories( $attachments, $allowed_categories )
 	{
@@ -605,6 +643,7 @@ class WP_Better_Attachments
 	* Get Extensions From WP Allowed Mime Types
 	*
 	* @since 1.3.2
+	* @return array
 	*/
 	function get_allowed_extensions()
 	{
@@ -622,6 +661,9 @@ class WP_Better_Attachments
 
 	/**
 	* Attach
+	*
+	* @since 1.0.0
+	* @return boolean
 	*/
 	public function attach( $args = array() )
 	{
@@ -640,17 +682,16 @@ class WP_Better_Attachments
 			$attach[] = $att_id;
 		}
 
-		if ( ! empty( $attach ) ) {
+		if ( !empty( $attach ) ) {
 			$attach_string = implode( ',', $attach );
 			$attached = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET post_parent = %d WHERE post_type = 'attachment' AND ID IN ( $attach_string )", $parent_id ) );
 			foreach ( $attach as $att_id ) {
 				clean_attachment_cache( $att_id );
-			}
-		}
+			} // foreach()
+		} // if()
 
-		if ( isset( $attached ) ) {
+		if ( isset( $attached ) )
 			return true;
-		}
 
 		return false;
 	} //attach()
@@ -658,6 +699,9 @@ class WP_Better_Attachments
 
 	/**
 	* Un-attach
+	*
+	* @since 1.0.0
+	* @return boolean
 	*/
 	public function unattach( $args = array() )
 	{
@@ -677,6 +721,9 @@ class WP_Better_Attachments
 
 	/**
 	* Insert Attachment
+	*
+	* @since 1.0.0
+	* @return string
 	*/
 	public function insert_attachment( $url )
 	{
@@ -700,9 +747,7 @@ class WP_Better_Attachments
 
 		return $attach_id;
 	} // insert_attachemt()
-
-
-} // END Class WP_Better_Attachments
+} // END Class WP_Better_Attachments()
 
 /**
 * Instantiate class and create return method for easier use later

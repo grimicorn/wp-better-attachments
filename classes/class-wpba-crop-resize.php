@@ -1,26 +1,34 @@
 <?php
 /**
 *
+* @package WP_Better_Attachments
+* @since 1.3.0
+* @author Dan Holloran dan@danholloran.com
 */
 class WPBA_Crop_Resize extends WP_Better_Attachments
 {
-
 	/**
 	* Constructor
+	*
+	* @return null
+	* @since 1.3.0
 	*/
 	public function __construct( $config = array() )
 	{
 		parent::__construct();
-		if ( !isset( $this->global_settings['no_crop_editor'] ) ) {
+		if ( !isset( $this->global_settings['no_crop_editor'] ) )
 			add_action( 'admin_head', array( &$this, 'init_hooks' ) );
-		}
 	} // __construct()
 
 
 	/**
-	 * Initialization Hooks
-	 */
-	public function init_hooks() {
+	* Initialization Hooks
+	*
+	* @return null
+	* @since 1.3.0
+	*/
+	public function init_hooks()
+	{
 		global $post;
 		if ( !is_null( $post ) AND wp_attachment_is_image( $post->ID ) ) {
 			add_filter( 'attachment_fields_to_edit', array( &$this, 'output_attachments' ), 11, 2 );
@@ -30,6 +38,9 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 	/**
 	* Resize/Crop Selection
+	*
+	* @return boolean
+	* @since 1.3.0
 	*/
 	public function resize_crop_selection( $args = array() )
 	{
@@ -85,8 +96,12 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 	/**
 	* Get Attachment Sizes
+	*
+	* @return array
+	* @since 1.3.0
 	*/
-	public function get_attachment_sizes( $id='', $args = array() ) {
+	public function get_attachment_sizes( $id='', $args = array() )
+	{
 		extract( $args );
 		if ( $id == '' ) {
 			global $post;
@@ -117,6 +132,9 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 	/**
 	* Check Equal Aspect Ratio
+	*
+	* @return boolean
+	* @since 1.3.0
 	*/
 	public function is_equal_aspect_ratio( $orig_w, $orig_h, $crop_w, $crop_h )
 	{
@@ -134,8 +152,12 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		return true;
 	} // is_equal_aspect_ratio()
 
+
 	/**
 	* Output Attachments
+	*
+	* @return string
+	* @since 1.3.0
 	*/
 	public function output_attachments( $form_fields, $post = null ) {
 		$id = $post->ID;
@@ -208,14 +230,12 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 
 		return $form_fields;
 	} // output_attachments()
-
-
 } // class()
 
 
 /**
- * Instantiate class and create return method for easier use later
- */
+* Instantiate class and create return method for easier use later
+*/
 global $wpba_crop_resize;
 $wpba_crop_resize = new WPBA_Crop_Resize();
 

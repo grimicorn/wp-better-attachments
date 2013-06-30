@@ -3,12 +3,15 @@
 * WPBA Front End
 *
 * @since 1.3.2
+* @author Dan Holloran dan@danholloran.com
 */
 class WPBA_Frontend extends WP_Better_Attachments
 {
-
 	/**
 	* Constructor
+	*
+	* @since 1.3.2
+	* @return null
 	*/
 	public function __construct( $config = array() )
 	{
@@ -20,6 +23,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	* Frontend Build Attachments List
 	*
 	* @since 1.3.2
+	* @return string
 	*/
 	public function build_attachment_list( $args = array() )
 	{
@@ -116,6 +120,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	* Frontend Build FlexSlider
 	*
 	* @since 1.3.2
+	* @return array
 	*/
 	public function setup_build_flexslider( $args = array() )
 	{
@@ -148,6 +153,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	* Frontend Build FlexSlider
 	*
 	* @since 1.3.2
+	* @return string
 	*/
 	public function build_flexslider( $args = array() )
 	{
@@ -188,7 +194,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	/**
 	* Registers FlexSlider JS
 	*
-	* @returns null
+	* @return null
 	* @since 1.3.6
 	*/
 	public function register_flexslider()
@@ -207,6 +213,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 	* Attachment placeholder image name
 	*
 	* @since 1.3.2
+	* @return string
 	*/
 	public function icon( $attachment, $args )
 	{
@@ -228,9 +235,12 @@ class WPBA_Frontend extends WP_Better_Attachments
 		return $img;
 	} // placeholder_image()
 
+
 	/**
 	* Cleanup Shortcode Attributes
+	*
 	* @since 1.3.2
+	* @return array
 	*/
 	public function clean_shortcode_atts( $atts, $att_keys )
 	{
@@ -274,11 +284,11 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 		return $atts;
 	}
-} // class()
+} // END class WPBA_Frontend()
 
 
 /**
- * Instantiate class and create return method for easier use later
- */
+* Instantiate class and create return method for easier use later
+*/
 global $wpba_frontend;
 $wpba_frontend = new WPBA_Frontend();

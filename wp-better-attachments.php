@@ -1,8 +1,8 @@
 <?php
 /**
- * @package WP_Better_Attachments
- * @version 1.3.6
- */
+* @package WP_Better_Attachments
+* @version 1.3.6
+*/
 /*
 Plugin Name: WP Better Attachments
 Plugin URI: http://dholloran.github.io/wp-better-attachments
@@ -21,7 +21,7 @@ define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 *
 * Only on localhost
 */
-if ( !function_exists( 'pp' ) ) {
+if ( !function_exists( 'pp' ) AND $_SERVER['HTTP_HOST'] == 'localhost' ) {
 	function pp( $value )
 	{
 		if( $_SERVER['HTTP_HOST'] != 'localhost' ) return;
