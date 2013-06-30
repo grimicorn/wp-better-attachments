@@ -36,7 +36,6 @@ wpba.updateSortOrderClickHandler =  function() {
 			sortableImageElem = $( "#wpba_image_sortable" )
 	;
 	sortableImageElem.sortable();
-	sortableImageElem.disableSelection();
 	sortableImageElem.on( "sortupdate", function( e, ui ) {
 		wpba.updateSortOrder( sortableImageElem );
 	});
