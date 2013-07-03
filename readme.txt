@@ -109,6 +109,15 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Fixed attachment list generating extra list items
 * Added class and id parameters for each HTML element in the attachment list
 
+
+== 1.3.6 ==
+* Code cleanup and PHPDoc
+* Fixed metabox inputs not selectable in Firefox
+* Added granular settings
+* Added edit modal, un-attach link and re-attach link to Uploaded To column
+* Added ability to edit metabox title
+* Fixed crop editor not showing correct image sizes
+
 == Upgrade Notice ==
 
 = 1.0.0 =
