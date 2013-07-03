@@ -99,7 +99,7 @@ class WPBA_Settings extends WP_Better_Attachments
 	*/
 	function plugin_page()
 	{?>
-		<div class="wrap wpba">
+		<div class="wrap wpba wpba-loading">
 		<div id="icon-options-general" class="icon32"></div>
 		<h2>WP Better Attachments <?php echo WPBA_VERSION; ?> Settings</h2>
 		<div class="wpba-settings-content pull-left">

@@ -402,6 +402,7 @@ wpba.settingsDisablePostTypes = function( that ) {
 		metaBoxTitleSect.show();
 	}
 
+	$('.wpba-loading').removeClass('wpba-loading');
 	$('#wpba_settings').animate({'opacity':1}, 150);
 	$('.wpba-settings-sidebar').animate({'opacity':1}, 150);
 }

@@ -3,10 +3,17 @@
 @import "admin/imgareaselect-default";
 
 /* Settings */
+.wrap.wpba { float: left;}
 #wpba_settings {
 	opacity: 0;
 	h3 { display: none; }
 } // #wpba_settings
+
+.wpba-loading {
+	background-image: url("../img/loader.gif");
+	background-repeat: no-repeat;
+	background-position: center 300px;
+}
 
 .wpba-settings-content {
 	width: 60%;
