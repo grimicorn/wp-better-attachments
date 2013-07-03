@@ -67,6 +67,7 @@ class WPBA_Media_Library extends WP_Better_Attachments
 		unset($columns['comments']);
 		unset($columns['date']);
 		$columns['author'] = $author;
+		$parent = ( isset( $parent ) ) ? $parent : 'Uploaded To';
 		$columns['wpba_parent'] = $parent;
 		$columns['comments'] = $comments;
 		$columns['date'] = $date;
