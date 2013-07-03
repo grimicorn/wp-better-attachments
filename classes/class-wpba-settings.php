@@ -78,7 +78,7 @@ class WPBA_Settings extends WP_Better_Attachments
 		global $wpba_settings_fields;
 		$wpba_settings = array();
 		$wpba_settings[] = $wpba_settings_fields->get_post_type_disable_settings();
-		$wpba_settings[] = $wpba_settings_fields->get_global_settings();
+		$wpba_settings = array_merge( $wpba_settings, $wpba_settings_fields->get_global_settings() );
 		$wpba_settings[] = $wpba_settings_fields->get_media_table_settings();
 		$wpba_settings[] = $wpba_settings_fields->get_metabox_settings();
 		$wpba_settings[] = $wpba_settings_fields->get_attachment_types();

@@ -153,17 +153,27 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	{
 		// Global Settings
 		return array(
-			'name'			=> 'wpba-global-settings',
-			'label'			=> __( 'Global Settings' . $this->hide_link, 'wpba' ),
-			'desc'			=> __( '', 'wpba' ),
-			'type'			=> 'multicheck',
-			'options'		=> array(
-												'thumbnail'				=> 'Do Not Include Thumbnails',
-												'no_shortcodes'		=> 'Disable Shortcodes',
-												'no_crop_editor'	=> 'Disable WPBA Image Crop Editor',
-												'all_crop_sizes'	=> 'Show All Image Sizes WPBA Image Crop Editor',
-												'thumbnail'				=> 'Do Not Include Thumbnail'
-											)
+			array(
+				'name'			=> 'wpba-global-settings',
+				'label'			=> __( 'Global Settings' . $this->hide_link, 'wpba' ),
+				'desc'			=> __( '', 'wpba' ),
+				'type'			=> 'multicheck',
+				'options'		=> array(
+													'thumbnail'				=> 'Do Not Include Thumbnails',
+													'no_shortcodes'		=> 'Disable Shortcodes',
+													'no_crop_editor'	=> 'Disable WPBA Image Crop Editor',
+													'all_crop_sizes'	=> 'Show All Image Sizes WPBA Image Crop Editor',
+													'thumbnail'				=> 'Do Not Include Thumbnail'
+												)
+
+			),
+			array(
+				'name'	=> 'wpba-crop-editor-mesage',
+				'label'	=> __( 'Crop Editor Message', 'wpba' ),
+				'desc'	=> '',
+				'type'	=> 'textarea',
+				'default'	=> 'Below are all the available attachment sizes that will be cropped from the original image the other sizes will be scaled to fit.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.'
+			)
 		);
 	} // get_global_settings()
 

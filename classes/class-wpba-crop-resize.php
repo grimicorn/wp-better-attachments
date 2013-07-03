@@ -168,7 +168,10 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 		$html .= "<h2>WPBA Image Crop Editor</h2>" . $nl;
 		// $html .= '<a href="#" class="button">Show Thumbnails</a>' . $nl;
 		$html .= '<ul class="wpba-attachment-editor-list hide unstyled pull-left">' . $nl;
-		$html .= '<li class="description">Below are all the available attachment sizes that will be cropped from the original image the other sizes will be scaled to fit.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.</li>' . $nl;
+		global $wpba_wp_settings_api;
+		$crop_editor_default_msg = 'Below are all the available attachment sizes that will be cropped from the original image the other sizes will be scaled to fit.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.';
+		$crop_editor_msg = $wpba_wp_settings_api->get_option( "wpba-crop-editor-message", 'wpba_settings', $crop_editor_default_msg );
+		$html .= "<li class='description'>{$crop_editor_msg}</li>" . $nl;
 
 		foreach ( $attachments as $attachment ) {
 			$image_src = $attachment[0];
