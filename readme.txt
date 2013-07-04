@@ -155,3 +155,6 @@ Fixed activation error
 
 == 1.3.5 ==
 Fixed attachment list generating extra list items, Added alternate styling of meta box when editor is not activated and class/id parameters for each HTML element in the attachment list function/shortcode.
+
+== 1.3.6 ===
+Added granular settings; edit modal, un-attach link and re-attach link to Uploaded To column, miscellaneous bug fixes
