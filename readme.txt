@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
 Tested up to: 3.5.2
-Stable tag: 1.3.4
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,20 @@ None so far... If you have any issues please submit an [issue](https://github.co
 == 1.3.4 ==
 * Fixed activation error
 
+== 1.3.5 ==
+* Added alternate styling of meta box when editor is not activated.
+* Fixed attachment list generating extra list items
+* Added class and id parameters for each HTML element in the attachment list
+
+
+== 1.3.6 ==
+* Code cleanup and PHPDoc
+* Fixed metabox inputs not selectable in Firefox
+* Added granular settings
+* Added edit modal, un-attach link and re-attach link to Uploaded To column
+* Added ability to edit metabox title
+* Fixed crop editor not showing correct image sizes
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -138,3 +152,9 @@ Should resolve issues from last update and adds more settings control
 
 == 1.3.4 ==
 Fixed activation error
+
+== 1.3.5 ==
+Fixed attachment list generating extra list items, Added alternate styling of meta box when editor is not activated and class/id parameters for each HTML element in the attachment list function/shortcode.
+
+== 1.3.6 ===
+Added granular settings; edit modal, un-attach link and re-attach link to Uploaded To column, miscellaneous bug fixes

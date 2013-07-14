@@ -3,27 +3,53 @@
 @import "admin/imgareaselect-default";
 
 /* Settings */
-.wpba-nav-tab-wrapper { display: none; }
+.wrap.wpba { float: left;}
 #wpba_settings {
+	opacity: 0;
 	h3 { display: none; }
 } // #wpba_settings
 
-/* Attachment Editor */
-// .imgareaselect-border1,
-// .imgareaselect-border2,
-// .imgareaselect-border3,
-// .imgareaselect-border4,
-// .imgareaselect-selection,
-// .imgareaselect-outer {
-// 	display: none!important;
-// 	&.show { display: block!important; }
-// }
+.wpba-loading {
+	background-image: url("../img/loader.gif");
+	background-repeat: no-repeat;
+	background-position: center 300px;
+}
+
+.wpba-settings-content {
+	width: 60%;
+}
+.wpba-settings-sidebar {
+	opacity: 0;
+	width: 35%;
+	max-width: 35%;
+	margin-left: 0;
+	border-radius: 5px;
+	padding: 10px 20px;
+	background-color: rgb(245, 245, 245);
+	background-image: linear-gradient(to top, rgb(245, 245, 245), rgb(250, 250, 250));
+	border: 1px solid rgb(223, 223, 223);
+	color: rgb(51, 51, 51);
+	h3 { width: 100%; }
+	ul {
+		list-style-type: disc;
+		margin-left: 18px;
+	}
+	.fb-share {
+		background-image: url("../img/fb-share.png");
+		width: 112px;
+		height: 21px;
+		display: block;
+	}
+}
+
+// Media Library
+.column-wpba_parent { width: 15%; }
+.wpba-list-spacer { display: none; }
+
 .wpba-attachment-editor {
 	.description { max-width: 650px; width: 100%; }
 	.unstyled { list-style: none; margin-left: 0; }
 	.pull-left { float: left; }
 	.pull-right { float: right; }
 	a.reset-thumbnails { padding: 7px 10px; text-decoration: none; }
-	// .hide { display: none; }
-	// .show { display: block; }
 } // .wpba-attachment-editor

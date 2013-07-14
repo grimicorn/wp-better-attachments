@@ -3,7 +3,7 @@
 	height: 100%;
 	.uploader { margin-top: 10px; margin-bottom: 10px; }
 	#wpba_image_sortable { padding-top: 20px; border-top: 1px solid #dfdfdf;  }
-	li {
+	.wpba-image-attachments li {
 		clear: both;
 		margin: 0 20px 20px 0;
 		padding-bottom: 20px;
@@ -18,9 +18,7 @@
 		span { display: inline-block; height: 100%; }
 		img { margin-bottom: -3px; }
 	}
-	.wpba-edit-attachment {
-		a { text-decoration: none; }
-	}
+
 	.wpba-drag-handle {
 		position: absolute;
 		right: 32px;
@@ -37,25 +35,35 @@
 		-webkit-box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
 		box-shadow: inset 0 0 15px rgba(0,0,0,0.1),inset 0 0 0 1px rgba(0,0,0,0.05);
 		overflow: hidden;
-		.icon-wrap  { width: 100%; text-align: center; }
-		.icon { margin: 35px auto; }
-		&:hover > .wpba-edit-attachment {
-			display: inline-block;
-		}
-		.wpba-edit-attachment {
-			position: absolute;
-			padding: 3px 6px 3px 7px;
-			background: #FFF;
-			background: rgba(255,255,255,.8);
-			li {
-				clear: none;
-				margin : 0 5px 0 0;
-				min-height: 0;
-				border-bottom: none;
-				padding-bottom: 0;
+		img {
+			min-height: 150px;
+			&.wpba-preview-img {
+				margin-top: -22px;
+				&.attachment-disabled { margin-top: 0; }
 			}
+			&.icon { min-height: auto; }
 		}
+		.icon-wrap  { width: 100%; text-align: center; }
+		.icon { margin: 30px auto 0 auto; }
 	}
+	.wpba-edit-attachment {
+		position: absolute;
+		padding: 3px;
+		width: 144px;
+		background: #FFF;
+		background: rgba(255,255,255,.8);
+		li {
+			clear: none;
+			margin : 0 5px 0 0;
+			min-height: 0;
+			border-bottom: none;
+			padding-bottom: 0;
+		} // li
+		a {
+			text-decoration: none;
+			font-size: 12px;
+		} // a
+	} // .wpba-edit-attachment
 	.wpba-attachment-name {
 		position: absolute;
 		overflow: hidden;
@@ -72,7 +80,7 @@
 		line-height: 30px;
 	}
 	.wpba-form-wrap {
-		width: 400px;
+		width: 70%;
 		input {
 			max-width: 98%;
 			width: 100%;
@@ -81,12 +89,39 @@
 		.wpba-attachment-caption { height: 40px; resize:vertical; }
 	}
 	.wpba-attachment-id-output {
-		margin-bottom: 10px;
-		font-size: 14px;
+		top: 128px;
+		font-size: 12px;
+		position: relative;
+		width: 150px;
+		background: white;
+		display: block;
+		text-align: center;
+		padding: 3px 0;
+		background: #FFF;
+		background: rgba(255,255,255,0.8);
+		overflow: hidden;
+		&.with-title {
+			top: 22px;
+			background: rgba(255,255,255,0.8);
+		} // .with-title
+		&.no-menu { top: 0; }
 	}
-
-
 } // .wpba
+
+
+.wpba.wpba-editor-collapsed {
+	.wpba-attachment-item { margin: 0; }
+	li {
+		// float: left;
+		display: inline-block;
+		clear: none;
+		border: none;
+		&.inner { width: auto; }
+	}
+	.wpba-form-wrap,
+	.wpba-drag-handle { display: none; }
+} // .wpba
+
 
 
 .wpba-media-buttons-icon {

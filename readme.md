@@ -17,6 +17,8 @@
 
 If you have any issues please submit an [issue](https://github.com/DHolloran/wp-better-attachments/issues/new) or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at [Dan@danholloran.com](mailto:dan@danholloran.com).
 
+<a href='http://www.pledgie.com/campaigns/20476'><img alt='Click here to lend your support to: WP Better Attachments and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/20476.png?skin_name=chrome' border='0' /></a>
+
 ---
 ###WPBA Attachments Exist
 `wpba_attachments_exist( array )`  
@@ -57,23 +59,34 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - open_new_window="true"
 - show_post_thumbnail="true"
 - no_attachments_msg="Sorry, no attachments exist."
+- wrap_class="wpba wpba-wrap"
+- list_class="unstyled"
+- list_id="wpba_attachment_list"
+- list_item_class="wpba-list-item pull-left"
+- link_class="wpba-link pull-left"
+- icon_class="wpba-icon pull-left"
 
 ###WPBA Attachment List Shortcode/Function
 `wpba_attachment_list( array() );`
-####Default Parameters
-- post_id				=>	current post id // Takes a string or number
-- show_icon 			=>	false
-- file_type_categories	=>	array( 'image','file','audio','video' )
-- file_extensions 		=>	array( 'png', 'pdf', ... ) // Array of file extensions, defaults to WordPress allowed attachment types (get_allowed_mime_types())
-- image_icon			=>	"path/to/directory/image-icon.png"
-- file_icon				=>	"path/to/directory/file-icon.png"
-- audio_icon			=>	"path/to/directory/audio-icon.png"
-- video_icon			=>	"path/to/directory/video-icon.png"
-- icon_size				=>	array( 16,20 ); // string or number (width, height)
-- use_attachment_page	=>	true
-- open_new_window		=>	true
-- show_post_thumbnail	=>	true
-- no_attachments_msg	=>	"Sorry, no attachments exist."
+####Default Parameter- post_id				=> current post id // Takes a string or number
+- show_icon 			=> false
+- file_type_categories	=> array( image,file,audio,video )
+- file_extensions 		=> array( png, pdf, ... ) // Array of file extensions, defaults to WordPress allowed attachment types (get_allowed_mime_types())
+- image_icon			=> "path/to/directory/image-icon.png"
+- file_icon				=> "path/to/directory/file-icon.png"
+- audio_icon			=> "path/to/directory/audio-icon.png"
+- video_icon			=> "path/to/directory/video-icon.png"
+- icon_size				=> array( 16,20 ); // string or number (width, height)
+- use_attachment_page	=> true
+- open_new_window		=> true
+- show_post_thumbnail	=> true
+- no_attachments_msg	=> Sorry, no attachments exist.
+- wrap_class			=> wpba wpba-wrap
+- list_class			=> unstyled
+- list_id				=> wpba_attachment_list
+- list_item_class		=> wpba-list-item pull-left
+- link_class			=> wpba-link pull-left
+- icon_class			=> wpba-icon pull-left
 
 ##Screenshots
 ###WPBA Post Editor Button

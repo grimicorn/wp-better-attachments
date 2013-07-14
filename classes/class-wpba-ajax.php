@@ -1,13 +1,19 @@
 <?php
 /**
- * WP Better Attachments
- */
+* WP Better Attachments
+*
+* @package WP_Better_Attachments
+* @since 1.0.0
+* @author Dan Holloran dan@danholloran.com
+*/
 class WPBA_Ajax extends WP_Better_Attachments
 {
-
 	/**
-	 * Constructor
-	 */
+	* Constructor
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function __construct( $config = array() )
 	{
 		parent::__construct();
@@ -17,16 +23,22 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	 * Initialization Hooks
-	 */
+	* Initialization Hooks
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function init_hooks()
 	{
 	} // init_hooks()
 
 
 	/**
-	 * AJAX Hooks
-	 */
+	* AJAX Hooks
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function ajax_hooks()
 	{
 		add_action( 'wp_ajax_wpba_update_sort_order', array( &$this, 'update_sort_order_callback' ) );
@@ -41,8 +53,11 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	 * AJAX Update Sort Order
-	 */
+	* AJAX Update Sort Order
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function update_sort_order_callback()
 	{
 		extract( $_POST );
@@ -75,8 +90,11 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	 * AJAX Unattach Image
-	 */
+	* AJAX Unattach Image
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function unattach_attachment_callback()
 	{
 		extract( $_POST );
@@ -93,8 +111,11 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	 * AJAX Add Attachment
-	 */
+	* AJAX Add Attachment
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function add_attachment_callback()
 	{
 		extract( $_POST );
@@ -128,8 +149,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 				) );
 		} // foreach
 
-		global $wpbamb;
-		$image_html = $wpbamb->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
+		global $wpba_meta_box;
+		$image_html = $wpba_meta_box->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
 
 		echo json_encode( array(
 			'image' => $image_html
@@ -139,8 +160,11 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	 * AJAX Add Attachment - Old Media Uploader
-	 */
+	* AJAX Add Attachment - Old Media Uploader
+	*
+	* @return null
+	* @since 1.0.0
+	*/
 	public function add_attachment_old_callback()
 	{
 		extract( $_POST );
@@ -176,8 +200,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 				) );
 		} // foreach
 
-		global $wpbamb;
-		$html = $wpbamb->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
+		global $wpba_meta_box;
+		$html = $wpba_meta_box->build_image_attachment_li( $attachments, array( 'a_array' => true ) );
 
 		echo json_encode( $html );
 		die();
@@ -185,8 +209,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 
 	/**
-	 * AJAX Update Sort Order
-	 */
+	* AJAX Update Sort Order
+	*/
 	public function delete_attachment_callback()
 	{
 		extract( $_POST );
@@ -208,10 +232,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 	/**
 	* AJAX Refresh Attachments
+	*
+	* @return null
+	* @since 1.0.0
 	*/
 	public function refresh_attachments_callback()
 	{
-		global $wpbamb;
+		global $wpba_meta_box;
 		extract( $_GET );
 
 		$html = '';
@@ -219,8 +246,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 		$attachments = $this->get_post_attachments( array( 'post' => get_post( $postid ) ) );
 		// Build Attachments Output
 		if ( !empty( $attachments ) ) {
-			global $wpbamb;
-			$html .= $wpbamb->build_image_attachment_li( $attachments );
+			global $wpba_meta_box;
+			$html .= $wpba_meta_box->build_image_attachment_li( $attachments );
 		} // if (!empty($attachments))
 
 		echo json_encode( $html );
@@ -230,6 +257,9 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 	/**
 	* Update Post
+	*
+	* @return null
+	* @since 1.0.0
 	*/
 	public function update_post_callback()
 	{
@@ -246,11 +276,15 @@ class WPBA_Ajax extends WP_Better_Attachments
 
 	/**
 	* Image Area Select
+	*
+	* @return null
+	* @since 1.0.0
 	*/
 	public function image_area_select_callback()
 	{
 		extract( $_POST );
-		$resize_crop_selection = resize_crop_selection();
+		global $wpba_crop_resize;
+		$resize_crop_selection = $wpba_crop_resize->resize_crop_selection();
 		// Save data we need for displaying new crop through JS
 		if ( $resize_crop_selection ) {
 			$attachment_meta = get_post_meta( $id, 'wpba_crop_points', true );
@@ -267,13 +301,11 @@ class WPBA_Ajax extends WP_Better_Attachments
 		echo json_encode( $resize_crop_selection );
 		die();
 	} // image_area_select_callback()
+} // END Class WPBA_Ajax()
 
-
-} // END Class WPBA_Ajax
-
-/**
- * Instantiate class and create return method for easier use later
- */
+	/**
+	* Instantiate class and create return method for easier use later
+	*/
 global $wpba_ajax;
 $wpba_ajax = new WPBA_Ajax();
 
