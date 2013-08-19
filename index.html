@@ -49,6 +49,8 @@
 
 <p>If you have any issues please submit an <a href="https://github.com/DHolloran/wp-better-attachments/issues/new">issue</a> or fix it/submit a pull request I will try to handle it ASAP. You an also contact me at <a href="mailto:dan@danholloran.com">Dan@danholloran.com</a>.</p>
 
+<p><a href="http://www.pledgie.com/campaigns/20476"><img alt="Click here to lend your support to: WP Better Attachments and make a donation at www.pledgie.com !" src="http://www.pledgie.com/campaigns/20476.png?skin_name=chrome" border="0"></a></p>
+
 <hr><h3>
 <a name="wpba-attachments-exist" class="anchor" href="#wpba-attachments-exist"><span class="octicon octicon-link"></span></a>WPBA Attachments Exist</h3>
 
@@ -101,29 +103,39 @@
 <li>open_new_window="true"</li>
 <li>show_post_thumbnail="true"</li>
 <li>no_attachments_msg="Sorry, no attachments exist."</li>
-<li>unstyled_class="unstyled"</li>
+<li>wrap_class="wpba wpba-wrap"</li>
+<li>list_class="unstyled"</li>
+<li>list_id="wpba_attachment_list"</li>
+<li>list_item_class="wpba-list-item pull-left"</li>
+<li>link_class="wpba-link pull-left"</li>
+<li>icon_class="wpba-icon pull-left"</li>
 </ul><h3>
 <a name="wpba-attachment-list-shortcodefunction" class="anchor" href="#wpba-attachment-list-shortcodefunction"><span class="octicon octicon-link"></span></a>WPBA Attachment List Shortcode/Function</h3>
 
 <p><code>wpba_attachment_list( array() );</code></p>
 
 <h4>
-<a name="default-parameters-3" class="anchor" href="#default-parameters-3"><span class="octicon octicon-link"></span></a>Default Parameters</h4>
+<a name="default-parameter--post_id---------------current-post-id--takes-a-string-or-number" class="anchor" href="#default-parameter--post_id---------------current-post-id--takes-a-string-or-number"><span class="octicon octicon-link"></span></a>Default Parameter- post_id              =&gt; current post id // Takes a string or number</h4>
 
 <ul>
-<li>post_id               =&gt;  current post id // Takes a string or number</li>
-<li>show_icon             =&gt;  false</li>
-<li>file_type_categories  =&gt;  array( 'image','file','audio','video' )</li>
-<li>file_extensions       =&gt;  array( 'png', 'pdf', ... ) // Array of file extensions, defaults to WordPress allowed attachment types (get_allowed_mime_types())</li>
-<li>image_icon            =&gt;  "path/to/directory/image-icon.png"</li>
-<li>file_icon             =&gt;  "path/to/directory/file-icon.png"</li>
-<li>audio_icon            =&gt;  "path/to/directory/audio-icon.png"</li>
-<li>video_icon            =&gt;  "path/to/directory/video-icon.png"</li>
-<li>icon_size             =&gt;  array( 16,20 ); // string or number (width, height)</li>
-<li>use_attachment_page   =&gt;  true</li>
-<li>open_new_window       =&gt;  true</li>
-<li>show_post_thumbnail   =&gt;  true</li>
-<li>unstyled_class    =&gt;  "unstyled"</li>
+<li>show_icon             =&gt; false</li>
+<li>file_type_categories  =&gt; array( image,file,audio,video )</li>
+<li>file_extensions       =&gt; array( png, pdf, ... ) // Array of file extensions, defaults to WordPress allowed attachment types (get_allowed_mime_types())</li>
+<li>image_icon            =&gt; "path/to/directory/image-icon.png"</li>
+<li>file_icon             =&gt; "path/to/directory/file-icon.png"</li>
+<li>audio_icon            =&gt; "path/to/directory/audio-icon.png"</li>
+<li>video_icon            =&gt; "path/to/directory/video-icon.png"</li>
+<li>icon_size             =&gt; array( 16,20 ); // string or number (width, height)</li>
+<li>use_attachment_page   =&gt; true</li>
+<li>open_new_window       =&gt; true</li>
+<li>show_post_thumbnail   =&gt; true</li>
+<li>no_attachments_msg    =&gt; Sorry, no attachments exist.</li>
+<li>wrap_class            =&gt; wpba wpba-wrap</li>
+<li>list_class            =&gt; unstyled</li>
+<li>list_id               =&gt; wpba_attachment_list</li>
+<li>list_item_class       =&gt; wpba-list-item pull-left</li>
+<li>link_class            =&gt; wpba-link pull-left</li>
+<li>icon_class            =&gt; wpba-icon pull-left</li>
 </ul><h2>
 <a name="screenshots" class="anchor" href="#screenshots"><span class="octicon octicon-link"></span></a>Screenshots</h2>
 
