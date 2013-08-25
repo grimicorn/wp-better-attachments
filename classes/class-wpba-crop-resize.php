@@ -1,8 +1,11 @@
 <?php
 /**
+* WPBA Crop Resize
 *
 * @package WP_Better_Attachments
+*
 * @since 1.3.0
+*
 * @author Dan Holloran dan@danholloran.com
 */
 class WPBA_Crop_Resize extends WP_Better_Attachments
@@ -10,7 +13,6 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	/**
 	* Constructor
 	*
-	* @return null
 	* @since 1.3.0
 	*/
 	public function __construct( $config = array() )
@@ -21,11 +23,13 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	} // __construct()
 
 
+
 	/**
 	* Initialization Hooks
 	*
-	* @return null
 	* @since 1.3.0
+	*
+	* @return Void
 	*/
 	public function init_hooks()
 	{
@@ -36,11 +40,13 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	} // init_hooks()
 
 
+
 	/**
 	* Resize/Crop Selection
 	*
-	* @return boolean
 	* @since 1.3.0
+	*
+	* @return boolean
 	*/
 	public function resize_crop_selection( $args = array() )
 	{
@@ -94,11 +100,13 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	} // resize_crop_selection()
 
 
+
 	/**
 	* Get Attachment Sizes
 	*
-	* @return array
 	* @since 1.3.0
+	*
+	* @return array All attachment sizes
 	*/
 	public function get_attachment_sizes( $id='', $args = array() )
 	{
@@ -133,8 +141,9 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	/**
 	* Check Equal Aspect Ratio
 	*
-	* @return boolean
 	* @since 1.3.0
+	*
+	* @return boolean
 	*/
 	public function is_equal_aspect_ratio( $orig_w, $orig_h, $crop_w, $crop_h )
 	{
@@ -156,8 +165,9 @@ class WPBA_Crop_Resize extends WP_Better_Attachments
 	/**
 	* Output Attachments
 	*
-	* @return string
 	* @since 1.3.0
+	*
+	* @return string Attachments HTML
 	*/
 	public function output_attachments( $form_fields, $post = null ) {
 		$id = $post->ID;

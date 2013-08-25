@@ -1,16 +1,20 @@
 <?php
 /**
 * WP Better Attachments Settings
-* http://kovshenin.com/2012/the-wordpress-settings-api/
+*
+* @package WP_Better_Attachments
+*
+* @example http://kovshenin.com/2012/the-wordpress-settings-api/
+*
 * @package WP_Better_Attachments
 */
 class WPBA_Settings extends WP_Better_Attachments
 {
 
-	/**
-	* @var WP_Settings_API_Bootstrap
-	*/
+	/** @var WP_Settings_API_Bootstrap Class */
 	private $wp_settings_api;
+
+
 
 	/**
 	* Constructor
@@ -23,12 +27,15 @@ class WPBA_Settings extends WP_Better_Attachments
 		add_action( 'admin_menu', array( $this, 'admin_menu') );
 	} // __construct()
 
+
+
 	/**
 	* Initialize the settings on admin_init hook
+	*
+	* @return Void
 	*/
 	function admin_init()
 	{
-
 		//set the settings
 		$this->wp_settings_api->set_sections( $this->get_settings_sections() );
 		$this->wp_settings_api->set_fields( $this->get_settings_fields() );
@@ -36,6 +43,7 @@ class WPBA_Settings extends WP_Better_Attachments
 		//initialize settings
 		$this->wp_settings_api->admin_init();
 	} // admin_init()
+
 
 
 	/**
@@ -53,8 +61,12 @@ class WPBA_Settings extends WP_Better_Attachments
 		return $sections;
 	}
 
+
+
 	/**
 	* Add the menu on admin_menu hook
+	*
+	* @return  Void
 	*/
 	function admin_menu()
 	{
@@ -63,9 +75,10 @@ class WPBA_Settings extends WP_Better_Attachments
 			'WP Better Attachments',
 			'activate_plugins',
 			'wpba-settings',
-			array($this, 'plugin_page')
+			array( $this, 'plugin_page' )
 		);
 	} // admin_menu(
+
 
 
 	/**
@@ -94,8 +107,11 @@ class WPBA_Settings extends WP_Better_Attachments
 	} // get_settings_fields()
 
 
+
 	/**
 	* Display the admin page
+	*
+	* @return Void
 	*/
 	function plugin_page()
 	{?>
@@ -138,7 +154,7 @@ class WPBA_Settings extends WP_Better_Attachments
 			</p>
 			<p>
 				<a href='https://alpha.app.net/intent/post/?text=Check%20out%20WP%20Better%20Attachments%20WordPress%20plugin. url=http%3A%2F%2Fwordpress.org%2Fplugins%2Fwp-better-attachments%2F' class='adn-button' target='_blank' data-type='share' data-width='121' data-height='20' data-text='Check out WP Better Attachments WordPress plugin.' data-url='http:&#x2F;&#x2F;wordpress.org&#x2F;plugins&#x2F;wp-better-attachments&#x2F;' >Share on App.net</a>
-<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script>
+			<script>(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='//d2zh9g63fcvyrq.cloudfront.net/adn.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'adn-button-js'));</script>
 			</p>
 			<p>
 				<script id='flattrbtn'>(function(i){var f,s=document.getElementById(i);f=document.createElement('iframe');f.src='//api.flattr.com/button/view/?uid=DHolloran&button=compact&url='+encodeURIComponent(document.URL);f.title='Flattr';f.height=20;f.width=110;f.style.borderWidth=0;s.parentNode.insertBefore(f,s);})('flattrbtn');</script>
@@ -151,16 +167,19 @@ class WPBA_Settings extends WP_Better_Attachments
 			<p>If you want to hide this sidebar I understand, I develop client sites too just add this <code>.wpba-settings-sidebar{ display:none!important;}</code> to you administrator CSS.</p>
 			<hr>
 			<p>If you want to remove the menu item to prevent tampering with the plugin you can place this in your functions.php. You can still accces this page using this url <a href="<?php echo network_admin_url( 'options-general.php?page=wpba-settings' ); ?>"><?php echo network_admin_url( 'options-general.php?page=wpba-settings' ); ?></a></p>
-<pre><code>add_action( 'admin_menu', 'wpba_remove_menu_pages' );
-function wpba_remove_menu_pages() {
- remove_submenu_page(
-  'options-general.php',
-  'wpba-settings'
- );
-}</code></pre>
+			<pre><code>add_action( 'admin_menu', 'wpba_remove_menu_pages' );
+				function wpba_remove_menu_pages() {
+				 remove_submenu_page(
+				  'options-general.php',
+				  'wpba-settings'
+				 );
+				}
+			</code></pre>
 		</div>
 		</div>
 	<?php } // plugin_page()
+
+
 
 	/**
 	* Get all the pages
@@ -171,15 +190,13 @@ function wpba_remove_menu_pages() {
 	{
 		$pages = get_pages();
 		$pages_options = array();
-		if ( $pages ) {
-				foreach ($pages as $page) {
-						$pages_options[$page->ID] = $page->post_title;
-				}
-		}
+		if ( $pages )
+			foreach ($pages as $page)
+				$pages_options[$page->ID] = $page->post_title;
 
 		return $pages_options;
 	} // get_pages()
-} // class
+} // END Class WPBA_Settings()
 
 // initiate the class
 global $wpba_settings;

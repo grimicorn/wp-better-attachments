@@ -11,7 +11,6 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	* Constructor
 	*
-	* @return null
 	* @since 1.0.0
 	*/
 	public function __construct( $config = array() )
@@ -22,22 +21,26 @@ class WPBA_Ajax extends WP_Better_Attachments
 	} // __construct
 
 
+
 	/**
 	* Initialization Hooks
 	*
-	* @return null
 	* @since 1.0.0
+	*
+	* @return Void
 	*/
 	public function init_hooks()
 	{
 	} // init_hooks()
 
 
+
 	/**
 	* AJAX Hooks
 	*
-	* @return null
 	* @since 1.0.0
+	*
+	* @return Void
 	*/
 	public function ajax_hooks()
 	{
@@ -52,11 +55,12 @@ class WPBA_Ajax extends WP_Better_Attachments
 	} // ajax_hooks()
 
 
+
 	/**
 	* AJAX Update Sort Order
 	*
-	* @return null
 	* @since 1.0.0
+	* @return Void
 	*/
 	public function update_sort_order_callback()
 	{
@@ -89,11 +93,13 @@ class WPBA_Ajax extends WP_Better_Attachments
 	} // update_sort_order_callback()
 
 
+
 	/**
 	* AJAX Unattach Image
 	*
-	* @return null
 	* @since 1.0.0
+	*
+	* @return Void
 	*/
 	public function unattach_attachment_callback()
 	{
@@ -113,7 +119,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	* AJAX Add Attachment
 	*
-	* @return null
+	* @return Void
 	* @since 1.0.0
 	*/
 	public function add_attachment_callback()
@@ -162,7 +168,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	* AJAX Add Attachment - Old Media Uploader
 	*
-	* @return null
+	* @return Void
 	* @since 1.0.0
 	*/
 	public function add_attachment_old_callback()
@@ -233,7 +239,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	* AJAX Refresh Attachments
 	*
-	* @return null
+	* @return Void
 	* @since 1.0.0
 	*/
 	public function refresh_attachments_callback()
@@ -258,7 +264,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	* Update Post
 	*
-	* @return null
+	* @return Void
 	* @since 1.0.0
 	*/
 	public function update_post_callback()
@@ -277,7 +283,7 @@ class WPBA_Ajax extends WP_Better_Attachments
 	/**
 	* Image Area Select
 	*
-	* @return null
+	* @return Void
 	* @since 1.0.0
 	*/
 	public function image_area_select_callback()

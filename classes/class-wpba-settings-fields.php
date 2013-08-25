@@ -3,7 +3,9 @@
 * WP Better Attachments Settings Fields
 *
 * @since 1.3.6
+*
 * @package WP_Better_Attachments
+*
 * @author Dan Holloran dan@danholloran.com
 */
 class WPBA_Settings_Fields extends WP_Better_Attachments
@@ -13,7 +15,6 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	/**
 	* Constructor
 	*
-	* @return null
 	* @since 1.3.6
 	*/
 	function __construct( $config = array() )
@@ -23,11 +24,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // __construct
 
 
+
 	/**
 	* Media Page Settings
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array The media table settings
 	*/
 	public function get_media_table_settings()
 	{
@@ -48,11 +51,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_media_table_settings()
 
 
+
 	/**
 	* Meta Box Settings
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array The metabox settings
 	*/
 	public function get_metabox_settings()
 	{
@@ -78,7 +83,8 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	* Edit Modal Page Settings
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array The modal settings
 	*/
 	public function get_edit_modal_settings()
 	{
@@ -100,8 +106,9 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	/**
 	* Post Type Disable Settings
 	*
-	* @return array
 	* @since 1.3.6
+	*
+	* @return array Disabled post types settings
 	*/
 	function get_post_type_disable_settings()
 	{
@@ -128,8 +135,9 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	/**
 	* Get Post Types
 	*
-	* @return array
 	* @since 1.3.6
+	*
+	* @return array Retrieves all post types that support attachments
 	*/
 	function get_post_types()
 	{
@@ -143,11 +151,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_post_types()
 
 
+
 	/**
 	* Global Settings
 	*
-	* @return array
 	* @since 1.3.6
+	*
+	* @return array Global settings
 	*/
 	function get_global_settings()
 	{
@@ -178,11 +188,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_global_settings()
 
 
+
 	/**
 	* Post Type Options
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array Current all post type settings
 	*/
 	public function get_post_type_settings()
 	{
@@ -201,11 +213,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_post_type_settings()
 
 
+
 	/**
 	* Post Type Options
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array Current post type settings
 	*/
 	public function get_post_type_options( $post_type )
 	{
@@ -233,11 +247,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_post_type_options()
 
 
+
 	/**
 	* Get Current Post Type Attachment Types
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array Post type allowed attachment types
 	*/
 	public function get_post_type_attachment_types( $post_type )
 	{
@@ -259,11 +275,13 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_post_type_attachment_types()
 
 
+
 	/**
 	* Post Type Attachment Types
 	*
 	* @since 1.3.6
-	* @return array
+	*
+	* @return array Attachment types
 	*/
 	public function get_attachment_types()
 	{
@@ -288,7 +306,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	* Meta Box Titles
 	*
 	* @since 1.3.6
-	* @return array
+	* @return array Meta box titles
 	*/
 	public function get_meta_box_title_fields( $post_type )
 	{
@@ -301,7 +319,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 			'default'	=> 'WP Better Attachments'
 		);
 	} // get_meta_box_title_fields()
-} // class
+} // END Class WPBA_Settings_Fields()
 
 // initiate the class
 global $wpba_settings_fields;
