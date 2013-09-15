@@ -207,6 +207,7 @@
 			$html = '<div class="color-picker" style="position: relative;">';
 			$html .= sprintf( '<input type="text" class="%1$s-text popup-colorpicker" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
 			//$html .= '<div id="' . $args['id'] . 'picker" style="position: absolute"></div>';
+			$html .= '<br>';
 			$html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
 			$html .= '</div>';
 
@@ -225,6 +226,7 @@
 			$size = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
 // '#wpba-'+that.val()+'-meta-box-title'
 			$html = sprintf( '<input type="text" class="%1$s-text %3$s" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
+			$html .= '<br>';
 			$html .= sprintf( '<span class="description %2$s"> %1$s</span>', $args['desc'], $args['id'] );
 
 			echo $html;
@@ -261,6 +263,8 @@
 				$html .= sprintf( '<input type="checkbox" class="checkbox wpba-settings-%3$s" id="%1$s[%2$s][%3$s]" name="%1$s[%2$s][%3$s]" value="%3$s"%4$s />', $args['section'], $args['id'], $key, checked( $checked, $key, false ) );
 				$html .= sprintf( '<label for="%1$s[%2$s][%4$s]" class="wpba-settings-%4$s"> %3$s</label><br>', $args['section'], $args['id'], $label, $key );
 			}
+			$html .= '<br>';
+			$html .= '<br>';
 			$html .= sprintf( '<span class="description"> %s</label>', $args['desc'] );
 			$html .= '</div>';
 			echo $html;
@@ -280,6 +284,7 @@
 				$html .= sprintf( '<input type="radio" class="radio" id="%1$s[%2$s][%3$s]" name="%1$s[%2$s]" value="%3$s"%4$s />', $args['section'], $args['id'], $key, checked( $value, $key, false ) );
 				$html .= sprintf( '<label for="%1$s[%2$s][%4$s]"> %3$s</label><br>', $args['section'], $args['id'], $label, $key );
 			}
+			$html .= '<br>';
 			$html .= sprintf( '<span class="description"> %s</label>', $args['desc'] );
 
 			echo $html;
@@ -300,6 +305,7 @@
 				$html .= sprintf( '<option value="%s"%s>%s</option>', $key, selected( $value, $key, false ), $label );
 			}
 			$html .= sprintf( '</select>' );
+			$html .= '<br>';
 			$html .= sprintf( '<span class="description"> %s</span>', $args['desc'] );
 
 			echo $html;
@@ -316,6 +322,7 @@
 			$size = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
 
 			$html = sprintf( '<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]">%4$s</textarea>', $size, $args['section'], $args['id'], $value );
+			$html .= '<br>';
 			$html .= sprintf( '<br><span class="description"> %s</span>', $args['desc'] );
 
 			echo $html;
@@ -345,7 +352,7 @@
 			wp_editor( $value, $args['section'] . '[' . $args['id'] . ']', array( 'teeny' => true, 'textarea_rows' => 10 ) );
 
 			echo '</div>';
-
+			echo '<br>';
 			echo sprintf( '<br><span class="description"> %s</span>', $args['desc'] );
 		}
 
