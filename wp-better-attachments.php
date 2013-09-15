@@ -12,7 +12,7 @@ Version: 1.3.6
 Author URI: http://danholloran.com/
 */
 
-define( 'WPBA_VERSION', '1.3.6' );
+define( 'WPBA_VERSION', '1.3.7' );
 define( 'WPBA_LANG', 'wpba' );
 define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 

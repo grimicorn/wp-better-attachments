@@ -3,8 +3,8 @@ Contributors: dholloran
 Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
-Tested up to: 3.5.2
-Stable tag: 1.3.6
+Tested up to: 3.6.1
+Stable tag: 1.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -118,6 +118,8 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Added ability to edit metabox title
 * Fixed crop editor not showing correct image sizes
 
+== 1.3.7 ==
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -158,3 +160,5 @@ Fixed attachment list generating extra list items, Added alternate styling of me
 
 == 1.3.6 ===
 Added granular settings; edit modal, un-attach link and re-attach link to Uploaded To column, miscellaneous bug fixes
+
+== 1.3.7 ===
