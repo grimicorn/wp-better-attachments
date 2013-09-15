@@ -589,7 +589,8 @@ class WP_Better_Attachments
 			'application/vnd.ms-powerpoint',
 			'application/vnd.oasis.opendocument.text',
 			'application/vnd.ms-excel',
-			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+			'application/zip'
 		);
 		if ( in_array( $mime_type, $document_mime_types ) )
 			return true;
