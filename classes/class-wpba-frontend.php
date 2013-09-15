@@ -13,6 +13,8 @@ class WPBA_Frontend extends WP_Better_Attachments
 	/**
 	* Constructor
 	*
+	* @param array $config Class configuration
+	*
 	* @since 1.3.2
 	*/
 	public function __construct( $config = array() )
@@ -27,6 +29,30 @@ class WPBA_Frontend extends WP_Better_Attachments
 	*
 	* @since 1.3.2
 	*
+	* @param string[] {
+	* 	@type integer 'post_id'              Default: NULL
+	* 	@type boolean 'show_icon'            Default: true
+	* 	@type string 'file_type_categories' Default: array( 'image', 'file', 'audio', 'video' )
+	* 	@type string 'file_extensions'      Default: $this->get_allowed_extensions()
+	* 	@type string 'image_icon'           Default: "{$plugin_url}/assets/img/icons/image-icon.png"
+	* 	@type string 'file_icon'            Default: "{$plugin_url}/assets/img/icons/file-icon.png"
+	* 	@type string 'audio_icon'           Default: "{$plugin_url}/assets/img/icons/audio-icon.png"
+	* 	@type string 'video_icon'           Default: "{$plugin_url}/assets/img/icons/video-icon.png"
+	* 	@type string 'icon_size'            Default: array( 16, 20 )
+	* 	@type boolean 'use_attachment_page'  Default: false
+	* 	@type boolean 'open_new_window'      Default: false
+	* 	@type boolean 'show_post_thumbnail'  Default: true
+	* 	@type string 'no_attachments_msg'   Default: 'Sorry, no attachments exist.'
+	* 	@type string 'unstyled_list'        DEPRECATED Default: null
+	* 	@type string 'float_class'          DEPRECATED Default: null
+	* 	@type string 'wrap_class'           Default: 'wpba wpba-wrap'
+	* 	@type string 'list_class'           Default: 'wpba-attachment-list unstyled'
+	* 	@type string 'list_id'              Default: 'wpba_attachment_list'
+	* 	@type string 'list_item_class'      Default: 'wpba-list-item pull-left'
+	* 	@type string 'link_class'           Default: 'wpba-link pull-left'
+	* 	@type string 'icon_class'           Default: 'wpba-icon pull-left'
+	* }
+	*
 	* @return string WPBA Attachment List HTML
 	*/
 	public function build_attachment_list( $args = array() )
@@ -35,42 +61,42 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$nl = "\n";
 		$plugin_url = plugins_url('wp-better-attachments');
 		$atts_to_be_cleaned = array(
-			'post_id'								=> 'int',
-			'show_icon'							=> 'boolean',
-			'file_type_categories'	=> 'array',
-			'file_extensions'				=> 'array',
-			'icon_size'							=> 'array',
-			'use_attachment_page'		=> 'boolean',
-			'open_new_window'				=> 'boolean',
-			'show_post_thumbnail'		=> 'boolean'
+			'post_id'               => 'int',
+			'show_icon'             => 'boolean',
+			'file_type_categories'  => 'array',
+			'file_extensions'       => 'array',
+			'icon_size'             => 'array',
+			'use_attachment_page'   => 'boolean',
+			'open_new_window'       => 'boolean',
+			'show_post_thumbnail'   => 'boolean'
 		);
 		$defaults = array(
-			'post_id'								=> NULL,
-			'show_icon'							=> true,
-			'file_type_categories'	=> array(
+			'post_id'               => NULL,
+			'show_icon'             => true,
+			'file_type_categories'  => array(
 				'image',
 				'file',
 				'audio',
 				'video'
 			),
-			'file_extensions'				=> $this->get_allowed_extensions(),
-			'image_icon'						=> "{$plugin_url}/assets/img/icons/image-icon.png",
-			'file_icon'							=> "{$plugin_url}/assets/img/icons/file-icon.png",
-			'audio_icon'						=> "{$plugin_url}/assets/img/icons/audio-icon.png",
-			'video_icon'						=> "{$plugin_url}/assets/img/icons/video-icon.png",
-			'icon_size'							=> array( 16, 20 ),
-			'use_attachment_page'		=> false,
-			'open_new_window'				=> false,
-			'show_post_thumbnail'		=> true,
-			'no_attachments_msg'		=> 'Sorry, no attachments exist.',
-			'unstyled_list'					=> null,
-			'float_class'						=> null,
-			'wrap_class'						=> 'wpba wpba-wrap',
-			'list_class'						=> 'wpba-attachment-list unstyled',
-			'list_id'								=> 'wpba_attachment_list',
-			'list_item_class'				=> 'wpba-list-item pull-left',
-			'link_class'						=> 'wpba-link pull-left',
-			'icon_class'						=> 'wpba-icon pull-left'
+			'file_extensions'       => $this->get_allowed_extensions(),
+			'image_icon'            => "{$plugin_url}/assets/img/icons/image-icon.png",
+			'file_icon'             => "{$plugin_url}/assets/img/icons/file-icon.png",
+			'audio_icon'            => "{$plugin_url}/assets/img/icons/audio-icon.png",
+			'video_icon'            => "{$plugin_url}/assets/img/icons/video-icon.png",
+			'icon_size'             => array( 16, 20 ),
+			'use_attachment_page'   => false,
+			'open_new_window'       => false,
+			'show_post_thumbnail'   => true,
+			'no_attachments_msg'    => 'Sorry, no attachments exist.',
+			'unstyled_list'         => null,
+			'float_class'           => null,
+			'wrap_class'            => 'wpba wpba-wrap',
+			'list_class'            => 'wpba-attachment-list unstyled',
+			'list_id'               => 'wpba_attachment_list',
+			'list_item_class'       => 'wpba-list-item pull-left',
+			'link_class'            => 'wpba-link pull-left',
+			'icon_class'            => 'wpba-icon pull-left'
 		);
 		$atts = shortcode_atts( $defaults, $args );
 		$atts = $this->clean_shortcode_atts( $atts, $atts_to_be_cleaned );
@@ -122,11 +148,19 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 
 	/**
-	* FlexSlider properties
+	* Setup FlexSlider properties
 	*
 	* @since 1.3.2
 	*
-	* @return array FlexSlider Properties
+	* @param  string[]  $args {
+	* 	@type integer  post_id             Default NULL    Post ID of the post to retrieve attachments from
+	* 	@type boolean  show_post_thumbnail Default false   Overrides the show post thumbnail settings
+	* 	@type string   width               Default '600px' CSS Width of the slider
+	* 	@type string   height              Default 'auto'  CSS Height of the slider
+	* 	@type string   slider_properties   Default array( 'animation'	=> 'slide' )
+	* }
+	*
+	* @return array FlexSlider Properties https://github.com/woothemes/FlexSlider/wiki/FlexSlider-Properties
 	*/
 	public function setup_build_flexslider( $args = array() )
 	{
@@ -160,6 +194,14 @@ class WPBA_Frontend extends WP_Better_Attachments
 	* Frontend Build FlexSlider
 	*
 	* @since 1.3.2
+	*
+	* @param  string[]  $args {
+	* 	@type integer  post_id             Default NULL    Post ID of the post to retrieve attachments from
+	* 	@type boolean  show_post_thumbnail Default false   Overrides the show post thumbnail settings
+	* 	@type string   width               Default '600px' CSS Width of the slider
+	* 	@type string   height              Default 'auto'  CSS Height of the slider
+	* 	@type string   slider_properties   Default array( 'animation'	=> 'slide' )
+	* }
 	*
 	* @return string FlexSlider HTML
 	*/
@@ -227,6 +269,11 @@ class WPBA_Frontend extends WP_Better_Attachments
 	*
 	* @since 1.3.2
 	*
+	* @param  object $attachment A single attachment post type object
+	* @param  string[] $args {
+	* 	@type string icon_class Class to be added to the placeholder HTML image tag. Default '' empty string.
+	* }
+	*
 	* @return string Icon image HTML
 	*/
 	public function icon( $attachment, $args )
@@ -252,10 +299,14 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 
 	/**
-	* Cleanup Shortcode Attributes
+	* Set all values in an attribute array to the correct data type
 	*
 	* @since 1.3.2
-	* @return array
+	*
+	* @param  array $atts     Attributes to be cleaned '[attribute_name]' => '[attribute_value]'
+	* @param  array $att_keys Attribute data type '[attribute_name]' => '[attribute_data_type]'
+	*
+	* @return array All values set to there correct data type
 	*/
 	public function clean_shortcode_atts( $atts, $att_keys )
 	{

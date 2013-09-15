@@ -1,9 +1,18 @@
 <?php
 /**
-* Easy Attachment Function Convenience Function
-*
-* @since 1.2.0
-*/
+ * Easy Attachment Convenience Function
+ *
+ * @deprecated $post_id Deprecated 1.3.3 in favor of $args array.
+ *
+ * @since 1.2.0
+ *
+ * @param  string[]  $args {
+ * 	@type integer $post                Optional Post object used to retrieve attachments
+ * 	@type boolean $show_post_thumbnail Optional To include thumbnail as attachment. Default false
+ * }
+ *
+ * @return array       Retrieved attachment post objects
+ */
 function wpba_get_attachments( $args = array() )
 {
 	global $wpba;
@@ -31,8 +40,11 @@ function wpba_get_attachments( $args = array() )
 } // wpba_get_attachments()
 
 
+
 /**
 * Check if post has attachment
+*
+* @uses wpba_get_attachments()
 *
 * @since 1.3.3
 */
@@ -43,7 +55,8 @@ function wpba_attachments_exist( $args = array() )
 	} //if()
 
 	return false;
-}
+} // wpba_attachments_exist()
+
 
 
 /**
