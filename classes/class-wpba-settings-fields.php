@@ -12,6 +12,8 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 {
 	protected $hide_link;
 
+
+
 	/**
 	* Constructor
 	*
@@ -79,6 +81,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_metabox_settings()
 
 
+
 	/**
 	* Edit Modal Page Settings
 	*
@@ -101,6 +104,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 										)
 		);
 	} // get_edit_modal_settings()
+
 
 
 	/**
@@ -130,6 +134,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 			'options'		=> $post_types
 		);
 	} // get_post_type_disable_settings()
+
 
 
 	/**
@@ -207,6 +212,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 			$post_type_settings[] = $this->get_meta_box_title_fields( $post_type );
 			$post_type_settings[] = $this->get_post_type_options( $post_type );
 			$post_type_settings[] = $this->get_post_type_attachment_types( $post_type );
+      $post_type_settings[] = $this->get_enable_page_within_post_type( $post_type );
 		} // foreach()
 
 		return $post_type_settings;
@@ -225,16 +231,16 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	{
 		$post_type_obj = get_post_type_object( $post_type );
 		$post_type_options = array(
-			'title' 								=> 'Disable Title Editor (meta box)',
-			'caption'								=> 'Disable Caption Editor (meta box)',
-			'mb_show_attachment_id'	=> 'Disable Attachment ID (meta box)',
-			'mb_unattach_link'			=> 'Disable Un-attach Link (meta box)',
-			'mb_edit_link'					=> 'Disable Edit Link (meta box)',
-			'mb_delete_link'				=> 'Disable Delete Link (meta box)',
-			'em_caption'						=> 'Disable Caption (edit modal)',
-			'em_alternative_text'		=> 'Disable Alternative Text (edit modal)',
-			'em_description'				=> 'Disable Description (edit modal)',
-			'mb_thumbnail'					=> 'Do Not Include Thumbnail'
+			'title'                  => 'Disable Title Editor (meta box)',
+			'caption'                => 'Disable Caption Editor (meta box)',
+			'mb_show_attachment_id'  => 'Disable Attachment ID (meta box)',
+			'mb_unattach_link'       => 'Disable Un-attach Link (meta box)',
+			'mb_edit_link'           => 'Disable Edit Link (meta box)',
+			'mb_delete_link'         => 'Disable Delete Link (meta box)',
+			'em_caption'             => 'Disable Caption (edit modal)',
+			'em_alternative_text'    => 'Disable Alternative Text (edit modal)',
+			'em_description'         => 'Disable Description (edit modal)',
+			'mb_thumbnail'           => 'Do Not Include Thumbnail'
 		);
 
 		return array(
@@ -302,6 +308,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 	} // get_attachment_types()
 
 
+
 	/**
 	* Meta Box Titles
 	*
@@ -319,6 +326,26 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
 			'default'	=> 'WP Better Attachments'
 		);
 	} // get_meta_box_title_fields()
+
+
+
+  /**
+  * Enable pages by slug
+  *
+  * @since 1.3.7
+  * @return array Enabled pages by slug fields
+  */
+  public function get_enable_page_within_post_type( $post_type )
+  {
+    $post_type_obj = get_post_type_object( $post_type );
+    return array(
+      'name'    => "wpba-{$post_type_obj->name}-enabled-pages",
+      'label'   => __( "Enable only these pages", 'wpba' ),
+      'desc'    => __( 'Comma separated list of page slugs ex: slug1,slug2,slug-3', 'wpba' ),
+      'type'    => 'text',
+      'default' => ''
+    );
+  } // get_enable_page_within_post_type()
 } // END Class WPBA_Settings_Fields()
 
 // initiate the class

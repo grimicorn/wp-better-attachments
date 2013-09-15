@@ -1,8 +1,9 @@
-var wpba = {};
-
 /**
 * Variables
 */
+var wpba = {};
+
+
 
 /**
 * Updates Sort Order
@@ -25,7 +26,8 @@ wpba.updateSortOrder = function(elem) {
 		saveElem.addClass('hide');
 		return false;
 	});
-}
+};
+
 
 
 /**
@@ -39,7 +41,8 @@ wpba.updateSortOrderClickHandler =  function() {
 	sortableImageElem.on( "sortupdate", function( e, ui ) {
 		wpba.updateSortOrder( sortableImageElem );
 	});
-}
+};
+
 
 
 /**
@@ -64,7 +67,8 @@ wpba.unattachAttachment = function(that) {
 			wpba.updateSortOrder( sortableImageElem );
 		}
 	});
-}
+};
+
 
 
 /**
@@ -77,7 +81,8 @@ wpba.unattachAttachmentClickHandler = function() {
 		e.preventDefault();
 		return false;
 	});
-}
+};
+
 
 
 /**
@@ -106,7 +111,8 @@ wpba.unattachLibraryAttachmentClickHandler = function() {
 		e.preventDefault();
 		return false;
 	});
-}
+};
+
 
 
 /**
@@ -137,7 +143,8 @@ wpba.deleteAttachment = function(that) {
 			saveElem.addClass('hide');
 		});
 	}
-}
+};
+
 
 
 /**
@@ -150,7 +157,8 @@ wpba.deleteAttachmentClickHandler = function(){
 		e.preventDefault();
 		return false;
 	});
-}
+};
+
 
 
 /**
@@ -170,7 +178,8 @@ wpba.refreshAttachments = function(id) {
 	});
 
 	return false;
-}
+};
+
 
 
 /**
@@ -197,7 +206,8 @@ wpba.editModalClickHandler = function() {
 		});
 
 	} // editmodal
-}
+};
+
 
 
 /**
@@ -254,7 +264,8 @@ wpba.showEditScreenModal = function(that) {
 
 		return attid;
 	});
-}
+};
+
 
 
 /**
@@ -272,21 +283,8 @@ wpba.updatePost = function(id, key, value) {
 	;
 
 	$.post(ajaxurl, ajaxData, function(resp){});
-}
+};
 
-
-/**
-* Title Key Up Handler
-*/
-// wpba.titleKeyUpHandler = function() {
-// 	var $ = jQuery;
-// 	$('.wpba-attachment-title').on('keyup',function(){
-// 		var that = $(this),
-// 				id = that.parent('div').parent('div').data('id')
-// 		;
-// 		wpba.updatePost(id, 'post_title', that.val());
-// 	});
-// }
 
 
 /**
@@ -303,20 +301,6 @@ wpba.titleBlurHandler = function() {
 }
 
 
-/**
-* Caption Key Up Handler
-*/
-// wpba.captionKeyUpHandler = function() {
-// 	var $ = jQuery;
-
-// 	$('.wpba-attachment-caption').on('keyup',function(){
-// 		var that = $(this),
-// 				id = that.parent('div').parent('div').data('id')
-// 		;
-// 		wpba.updatePost(id, 'post_excerpt', that.val());
-// 	});
-// }
-
 
 /**
 * Caption Key Up Handler
@@ -330,9 +314,8 @@ wpba.captionBlurHandler = function() {
 		;
 		wpba.updatePost(id, 'post_excerpt', that.val());
 	});
-}
+};
 
-// [post_content] => description
 
 
 /**
@@ -348,7 +331,8 @@ wpba.resetClickHandlers = function() {
 	// wpba.captionKeyUpHandler();
 	wpba.titleBlurHandler();
 	wpba.captionBlurHandler();
-}
+};
+
 
 
 /**
@@ -361,6 +345,8 @@ wpba.settingsDisablePostTypes = function( that ) {
 			postTypeOptionsSect = postTypeOptionsWrap.parents('tr'),
 			metaBoxTitleWrap = $('.wpba-'+that.val()+'-meta-box-title'),
 			metaBoxTitleSect = metaBoxTitleWrap.parents('tr'),
+			enablePageBySlugWrap = $('.wpba-'+that.val()+'-enabled-pages'),
+			enablePageBySlugSect = enablePageBySlugWrap.parents('tr'),
 			globalSettingsWrap = $('#wpba-global-settings-wrap').parents('tr'),
 			metaBoxSettingsWrap = $('#wpba-meta-box-settings-wrap').parents('tr'),
 			editModalSettingsWrap = $('#wpba-edit-modal-settings-wrap').parents('tr'),
@@ -396,10 +382,12 @@ wpba.settingsDisablePostTypes = function( that ) {
 		postTypeOptionsSect.hide();
 		postTypeFileTypesSect.hide();
 		metaBoxTitleSect.hide();
+		enablePageBySlugSect.hide();
 	} else {
 		postTypeOptionsSect.show();
 		postTypeFileTypesSect.show();
 		metaBoxTitleSect.show();
+		enablePageBySlugSect.show();
 	}
 
 	$('.wpba-loading').removeClass('wpba-loading');
