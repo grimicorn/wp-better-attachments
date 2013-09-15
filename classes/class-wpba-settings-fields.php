@@ -340,7 +340,7 @@ class WPBA_Settings_Fields extends WP_Better_Attachments
     $post_type_obj = get_post_type_object( $post_type );
     return array(
       'name'    => "wpba-{$post_type_obj->name}-enabled-pages",
-      'label'   => __( "Enable only these pages", 'wpba' ),
+      'label'   => __( "Enable meta box only on these {$post_type_obj->labels->name} pages", 'wpba' ),
       'desc'    => __( 'Comma separated list of page slugs ex: slug1,slug2,slug-3', 'wpba' ),
       'type'    => 'text',
       'default' => ''
