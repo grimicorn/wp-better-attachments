@@ -1,0 +1,21 @@
+{
+  "name": "WP Better Attachments",
+  "version": "1.4.0",
+  "homepage": "https://github.com/DHolloran/wp-better-attachments",
+  "authors": [
+    "Dan Holloran"
+  ],
+  "description": "WordPress plugin that allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor. Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.",
+  "main": "wp-better-attachments.php",
+  "license": "GPL2",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+  }
+}

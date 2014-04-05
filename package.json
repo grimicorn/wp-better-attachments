@@ -1,0 +1,35 @@
+{
+  "name": "wp-better-attachments",
+  "version": "1.4.0",
+  "description": "WordPress plugin that allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor. Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types.",
+  "main": "wp-better-attachments.php",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": "https://github.com/DHolloran/wp-better-attachments.git",
+  "author": "Dan Holloran",
+  "license": "GPLv2",
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-sass": "x.x.x",
+    "grunt-contrib-watch": "x.x.x",
+    "grunt-contrib-imagemin": "x.x.x",
+    "grunt-contrib-uglify": "x.x.x",
+    "grunt-notify": "x.x.x",
+    "load-grunt-tasks": "x.x.x",
+    "grunt-contrib-copy": "x.x.x",
+    "load-grunt-config": "x.x.x",
+    "grunt-concurrent": "x.x.x",
+    "time-grunt": "x.x.x",
+    "grunt-autoprefixer": "x.x.x",
+    "grunt-group-css-media-queries": "x.x.x",
+    "grunt-contrib-cssmin": "x.x.x",
+    "grunt-imageoptim": "x.x.x",
+    "grunt-wp-assets": "x.x.x",
+    "grunt-contrib-clean": "x.x.x",
+    "grunt-contrib-csslint": "~x.x.x",
+    "grunt-jscs": "x.x.x",
+    "grunt-scss-lint": "x.x.x",
+    "grunt-contrib-jshint": "~x.x.x"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "curly"    : true,
+  "eqnull"   : true,
+  "eqeqeq"   : true,
+  "unused"   : true,
+  "undef"    : true,
+  "browser"  : true,
+  "devel"    : true,
+  "bitwise"  : true,
+  "esnext"   : true,
+  "immed"    : true,
+  "jquery"   : true,
+  "latedef"  : true,
+  "newcap"   : true,
+  "noarg"    : true,
+  "node"     : true,
+  "strict"   : false,
+  "trailing" : true,
+  "undef"    : true,
+  "predef"   : ["Modernizr"],
+  "globals"  : {
+    "wp"       : true,
+    "wpba"     : true,
+    "window"   : true,
+    "$"        : true,
+    "module"   : true,
+    "ajaxurl"  : true
+  }
+}
