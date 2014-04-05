@@ -1,56 +1,103 @@
 <?php
 /**
-* @package WP_Better_Attachments
-* @version 1.3.8
-*/
-/*
-Plugin Name: WP Better Attachments
-Plugin URI: http://dholloran.github.io/wp-better-attachments
-Description: Better Wordpress Attachments
-Author: Dan Holloran
-Version: 1.3.8
-Author URI: http://danholloran.com/
-*/
+ * WP Better Attachments
+ *
+ * @version      1.4.0
 
-define( 'WPBA_VERSION', '1.3.8' );
-define( 'WPBA_LANG', 'wpba' );
-define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
+ * @subpackage   WPBA
+ *
+ * @author       Dan Holloran    <dtholloran@gmail.com>
+ *
+ * @copyright    2013 - Present  Dan Holloran
+ */
 
 /*
-* Pretty Print Debug Function
-*
-* Only on localhost
+Plugin Name:  WP Better Attachments
+Plugin URI:   http://dholloran.github.io/wp-better-attachments
+Description:  Better Wordpress Attachments
+Author:       Dan Holloran
+Version:      1.4.0
+Author URI:   http://danholloran.com/
+License:      GPL2
 */
-if ( !function_exists( 'pp' ) AND $_SERVER['HTTP_HOST'] == 'localhost' ) {
-	function pp( $value )
-	{
-		if( $_SERVER['HTTP_HOST'] != 'localhost' ) return;
-		echo "<pre>";
-		if ( $value ) {
-			print_r( $value );
-		} else {
-			var_dump( $value );
-		}
-		echo "</pre>";
-	} // pp()
+
+
+/*
+	Copyright (C) 2014  Dan Holloran dtholloran@gmail.com
+
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License, version 2, as
+	published by the Free Software Foundation.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
+
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 } // if()
+
+
+if ( ! defined( 'WPBA_VERSION' ) ) {
+	/**
+	 * WP Better Attachments version number.
+	 *
+	 * @var  string
+	 */
+	define( 'WPBA_VERSION', '1.4.0' );
+} // if()
+
+if ( ! defined( 'WPBA_URL' ) ) {
+	/**
+	 * WP Better Attachments plugin URL without trailing slash (http://{plugins_url}/wp-better-attachments).
+	 *
+	 * @var  string
+	 */
+	define( 'WPBA_URL', plugins_url( '/wp-better-attachments' ) );
+} // if()
+
+if ( ! defined( 'WPBA_PATH' ) ) {
+	/**
+	 * WP Better Attachments plugin path without trailing slash (/PATH/TO/PLUGIN/DIRECTORY/wp-better-attachments).
+	 *
+	 * @var  string
+	 */
+	define( 'WPBA_PATH', trim( plugin_dir_path( __FILE__ ), '/' ) );
+} // if()
+
+// Debugging
+// require_once 'includes/wpba-debug.php';
+
 
 
 /**
 * Required Classes
 */
-require_once "libs/wp-settings-api-bootstrap/class.wp-settings-api-bootstrap.php";
-require_once "classes/class-wp-better-attachments.php";
-require_once "classes/class-wpba-media-library.php";
-require_once "classes/class-wpba-meta-box.php";
-require_once "classes/class-wpba-crop-resize.php";
-require_once "classes/class-wpba-ajax.php";
-require_once "classes/class-wpba-settings.php";
-require_once "classes/class-wpba-settings-fields.php";
-require_once "classes/class-wpba-frontend.php";
+$classes = array(
+	'class-wp-better-attachments',
+);
+foreach ( $classes as $class ) {
+	$has_php = ( strpos( $class, '.php' ) !== false );
+	$class   = ( $has_php ) ? $class : "{$class}.php";
+	require_once "classes/{$class}";
+} // foreach()
+
+
 
 
 /**
-* Includes
-*/
-require_once "inc/shortcodes.inc.php";
+ * Libs
+ */
+$libs = array();
+foreach ( $libs as $lib ) {
+	$has_php = ( strpos( $lib, '.php' ) !== false );
+	$lib     = ( $has_php ) ? $lib : "{$lib}.php";
+	require_once "lib/{$lib}";
+} // foreach()
