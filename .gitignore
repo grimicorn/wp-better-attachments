@@ -1,3 +1,5 @@
 .DS_Store
-*.sublime-workspace
-*.sublime-*
+*.sublime*
+node_modules
+docs
+bower_components
