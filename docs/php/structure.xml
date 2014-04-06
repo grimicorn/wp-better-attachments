@@ -1,0 +1,1393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project title="API Documentation" version="2.4.0&#10;">
+  <partials/>
+  <file path="class-wp-better-attachments.php" generated-path="class-wp-better-attachments.html" hash="e08c53ce9381905c71a497b65e1e83bc" package="WordPress\WPBA">
+    <docblock line="0">
+      <description>This class should be extended by every other WPBA class.</description>
+      <long-description>All of the setup logic should be contained here.</long-description>
+      <tag name="version" line="0" description="1.4.0"/>
+      <tag name="package" line="0" description="WordPress"/>
+      <tag name="subpackage" line="0" description="WPBA"/>
+      <tag name="since" line="0" description="1.4.0"/>
+      <tag name="author" line="0" description="Dan Holloran" link="mailto:dholloran@matchboxdesigngroup.com"/>
+      <tag name="copyright" line="0" description="2013 - Present         Dan Holloran"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="" line="18" package="global">
+      <extends/>
+      <name>WP_Better_Attachments</name>
+      <full_name>\WP_Better_Attachments</full_name>
+      <docblock line="18">
+        <description></description>
+        <long-description></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="28" package="global">
+        <name>__construct</name>
+        <full_name>\WP_Better_Attachments::__construct()</full_name>
+        <docblock line="28">
+          <description>WP_Better_Attachments class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="28" description="1.4.0"/>
+          <tag name="todo" line="28" description="Only add on required pages."/>
+          <tag name="param" line="28" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="51" package="global">
+        <name>add_global_public_js</name>
+        <full_name>\WP_Better_Attachments::add_global_public_js()</full_name>
+        <docblock line="51">
+          <description>Adds global public JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_head', array( &amp;$this, 'add_global_public_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="51" description="1.4.0"/>
+          <tag name="todo" line="51" description="Only add on required pages."/>
+          <tag name="return" line="51" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="74" package="global">
+        <name>add_global_admin_js</name>
+        <full_name>\WP_Better_Attachments::add_global_admin_js()</full_name>
+        <docblock line="74">
+          <description>Adds global wp-admin JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_head', array( &amp;$this, 'add_global_admin_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="74" description="1.4.0"/>
+          <tag name="todo" line="74" description="Only add on required pages."/>
+          <tag name="return" line="74" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="98" package="global">
+        <name>enqueue_public_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_public_assets()</full_name>
+        <docblock line="98">
+          <description>Enqueues scripts and styles for use on the public front end.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_enqueue_scripts', array( &amp;$this, 'enqueue_public_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="98" description="1.4.0"/>
+          <tag name="todo" line="98" description="Only add on required pages."/>
+          <tag name="return" line="98" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="115" package="global">
+        <name>enqueue_admin_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_admin_assets()</full_name>
+        <docblock line="115">
+          <description>Enqueues scripts and styles for use in wp-admin.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_enqueue_scripts', array( &amp;$this, 'enqueue_admin_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="115" description="1.4.0"/>
+          <tag name="return" line="115" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <markers>
+      <todo line="28">Only add on required pages.</todo>
+      <todo line="51">Only add on required pages.</todo>
+      <todo line="74">Only add on required pages.</todo>
+      <todo line="98">Only add on required pages.</todo>
+    </markers>
+    <source>eJzdVmFv2zYQ/Wz9ihtgTE6QSMk6rCjiuHXaYHXRbcayIh8FSqQlujKpklQSY9h/31GUbNmR46VegWE2YNi6e++Od8/HG74ussILj489OIY/Mq4hyYnWoDNZ5hRiBuzBMEEZfl8Cu2NqCdJkTMHt9GrsnAOLHec5yBmgCTQzZQG5THnS4kmkMIQLJEI0sxgLe4OMmksB1es8+DE4aywFST6TlDnLrVR0qpjWlUmX8dpqE2kwmoukRmyxkdJkUtWWd0TAe5nnUhEBq9eQZvWzNwtikiyWD5RpnopUybIIErkYNWyJLJaKp5mxuB/Ozl/AKdj0mDArunYQBIUen8EAvnM1i9gD10YPwL+dRlfMGKaisTEkyRbIoX04wvefXs91o9PHmnu2c70eptTt4uBYem1UmRipgsrbQZpquTq1nhtJJR7gN5EvgVAK2B7FvpRcYfMKLLreYCmIIgsAohRZAvQx2IynAG+b0PirVMRgkx0sxM+ijHNUx6wUiTVAFK1yHKwoLh3noC4FHjaEa/GlZCWDm0Txwmj7FDOMSEWD1bwvIuZcIu1c/JOaBr7vGxT4CfiNh8siwjxZXfKLR4SELrh4Bqfz36CsUx9jJX/OZUxymL6fwukIPtx05Z8xQjsCWLe0gjd5z5/OeT+P82vR/AWYZ7sXR57ntVWGZ9Dg0FD38MMNyHjOEtMWxTCRlI0OPtkwrHj+fc0qHFFKwJ3kdKcmu9IarJW4q539BU1rnF5J2Bp6PpmTh1LlPlyOwNUefzX9OrXWAKcxHv3E+XM9ufbtKEF//FvkhrNXQASFPtfR5Lr2cwLYCjvX0qrWlg+RbdvRBby2Fe0NnZhHd8QN82j66erj5G2EDb2Eob0XgCWZBGzcZ830Jg22jRJDfEeHjarJKuLqTqnV1F3FJ2R1X5xW9dgWVpemvk7o/xVVNVn9r0U1fvfL5Ndvp6l1DbckVV8UuMm4kV0dUZtljo9muAiUmtlu2n2laZHCDQVw19k/yA66Yr61/J7WX2dijQLbR7Olqk4bk8Y50faoVVs//f4RAvBDhw/RElJcaELrHlDy4lWAfQkcoL7FT0CUeW7/mHnu19cWBlQsRSDuLa6YWyHnuyLO2wFtrHlHKLzE2DrSZtceB2rdgTuq9BUaw0HWTLQ9ujp803iGsp6llXakfVJxvv9QKXVdzl+esUP1shrx++VSR43pTy8PUk7rVnkknM2Sec7YuaNbVdnRP8GdiwjDiWFud/Z69Y3YxwxihyNrHIbsNuCkFex+V7ALr0qFzwZHfwM5BTmk</source>
+  </file>
+  <file path="class-wpba-helpers.php" generated-path="class-wpba-helpers.html" hash="5075d440c480e9510dcfad275d15b725" package="WordPress\WPBA">
+    <docblock line="0">
+      <description>This class contains any sort of helper methods/properties that should be shared throughout the classes.</description>
+      <long-description>This class should be extended by all other classes except WP_Better_Attachments.</long-description>
+      <tag name="version" line="0" description="1.4.0"/>
+      <tag name="package" line="0" description="WordPress"/>
+      <tag name="subpackage" line="0" description="WPBA"/>
+      <tag name="since" line="0" description="1.4.0"/>
+      <tag name="author" line="0" description="Dan Holloran" link="mailto:dholloran@matchboxdesigngroup.com"/>
+      <tag name="copyright" line="0" description="2013 - Present         Dan Holloran"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="" line="18" package="global">
+      <extends>\WP_Better_Attachments</extends>
+      <name>WPBA_Helpers</name>
+      <full_name>\WPBA_Helpers</full_name>
+      <docblock line="18">
+        <description></description>
+        <long-description></long-description>
+      </docblock>
+      <property static="false" visibility="protected" namespace="" line="28" package="global">
+        <name>$cache_duration</name>
+        <full_name>\WPBA_Helpers::cache_duration</full_name>
+        <default>86400</default>
+        <docblock line="28">
+          <description>The length to cache a transient, default 24 hours.</description>
+          <long-description></long-description>
+          <tag name="since" line="28" description="1.4.0"/>
+          <tag name="todo" line="28" description="Add setting/filter to update the cache duration."/>
+          <tag name="var" line="28" description="" type="integer" variable="">
+            <type>integer</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="38" package="global">
+        <name>__construct</name>
+        <full_name>\WPBA_Helpers::__construct()</full_name>
+        <docblock line="38">
+          <description>WPBA_Helpers class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="38" description="1.4.0"/>
+          <tag name="param" line="38" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="55" package="global">
+        <name>_add_wpba_helpers_actions_filters</name>
+        <full_name>\WPBA_Helpers::_add_wpba_helpers_actions_filters()</full_name>
+        <docblock line="55">
+          <description>Handles adding all of the WPBA helpers actions and filters.</description>
+          <long-description>&lt;code&gt;$this-&gt;_add_wpba_helpers_actions_filters();&lt;/code&gt;</long-description>
+          <tag name="since" line="55" description="1.4.0"/>
+          <tag name="return" line="55" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="73" package="global">
+        <name>get_attachment_post_parent_id</name>
+        <full_name>\WPBA_Helpers::get_attachment_post_parent_id()</full_name>
+        <docblock line="73">
+          <description>Retrieves the attachment post parent ID.</description>
+          <long-description>&lt;code&gt;$post_parent_id = $this-&gt;get_attachment_post_parent_id( $post_parent );&lt;/code&gt;</long-description>
+          <tag name="param" line="73" description="&lt;p&gt;Optional, the post parent object or ID, defaults to current post.&lt;/p&gt;" type="object|integer" variable="$post_parent">
+            <type>object</type>
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="73" description="The attachments post parent ID." type="integer">
+            <type>integer</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_parent</name>
+          <default>null</default>
+          <type>object|integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="98" package="global">
+        <name>get_attachment_id</name>
+        <full_name>\WPBA_Helpers::get_attachment_id()</full_name>
+        <docblock line="98">
+          <description>Retrieves the attachment ID.</description>
+          <long-description>&lt;code&gt;$attachment_id = $this-&gt;get_attachment_id( $attachment );&lt;/code&gt;</long-description>
+          <tag name="param" line="98" description="&lt;p&gt;Optional, the post parent object or ID, defaults to current post.&lt;/p&gt;" type="object|integer" variable="$attachment">
+            <type>object</type>
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="98" description="The attachments post parent ID." type="integer">
+            <type>integer</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$attachment</name>
+          <default></default>
+          <type>object|integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="122" package="global">
+        <name>get_transient_id</name>
+        <full_name>\WPBA_Helpers::get_transient_id()</full_name>
+        <docblock line="122">
+          <description>Retrieves the transient ID for the current query.</description>
+          <long-description>&lt;code&gt;$this-&gt;get_transient_id( $attachments_query_args );&lt;/code&gt;</long-description>
+          <tag name="since" line="122" description="1.4.0"/>
+          <tag name="param" line="122" description="&lt;p&gt;The arguments for the query.&lt;/p&gt;" type="array" variable="$query_args">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="122" description="The transient ID." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$query_args</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="148" package="global">
+        <name>cache_attachments</name>
+        <full_name>\WPBA_Helpers::cache_attachments()</full_name>
+        <docblock line="148">
+          <description>Caches the attachments query.</description>
+          <long-description>&lt;code&gt;$this-&gt;cache_attachments( $transient_id, $attachments );&lt;/code&gt;</long-description>
+          <tag name="since" line="148" description="1.4.0"/>
+          <tag name="param" line="148" description="&lt;p&gt;The transient ID to use.&lt;/p&gt;" type="string" variable="$transient_id">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="148" description="&lt;p&gt;The attachments to cache.&lt;/p&gt;" type="array" variable="$attachments">
+            <type>array</type>
+          </tag>
+          <tag name="param" line="148" description="&lt;p&gt;Optional, the length of time to store the attachments, default 24 hours.&lt;/p&gt;" type="integer" variable="$cache_duration">
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="148" description="False if value was not set and true if value was set." type="boolean">
+            <type>boolean</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$transient_id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$attachments</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$cache_duration</name>
+          <default>null</default>
+          <type>integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="171" package="global">
+        <name>get_attachments_cache</name>
+        <full_name>\WPBA_Helpers::get_attachments_cache()</full_name>
+        <docblock line="171">
+          <description>Get the cached attachments.</description>
+          <long-description>&lt;code&gt;$cached_attachments = $this-&gt;get_attachments_cache( $transient_id );&lt;/code&gt;</long-description>
+          <tag name="since" line="171" description="1.4.0"/>
+          <tag name="param" line="171" description="&lt;p&gt;The transient ID to retrieve.&lt;/p&gt;" type="string" variable="$transient_id">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="171" description="Either false on failure/does not exist or the cached attachments." type="boolean|array">
+            <type>boolean</type>
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$transient_id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="194" package="global">
+        <name>delete_attachments_cache</name>
+        <full_name>\WPBA_Helpers::delete_attachments_cache()</full_name>
+        <docblock line="194">
+          <description>Delete an attachments cache.</description>
+          <long-description>&lt;code&gt;$this-&gt;delete_attachments_cache( $transient_id );&lt;/code&gt;</long-description>
+          <tag name="since" line="194" description="1.4.0"/>
+          <tag name="param" line="194" description="&lt;p&gt;The transient ID to delete.&lt;/p&gt;" type="string" variable="$transient_id">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="194" description="True if successful, false otherwise." type="boolean">
+            <type>boolean</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$transient_id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="217" package="global">
+        <name>_get_all_cached_attachment_transient_ids</name>
+        <full_name>\WPBA_Helpers::_get_all_cached_attachment_transient_ids()</full_name>
+        <docblock line="217">
+          <description>Retrieves all of the current transient IDs.</description>
+          <long-description>&lt;code&gt;$this-&gt;_get_all_cached_attachment_transient_ids();&lt;/code&gt;</long-description>
+          <tag name="since" line="217" description="1.4.0"/>
+          <tag name="uses" line="217" description="" link="$wpdb"/>
+          <tag name="param" line="217" description="&lt;p&gt;Optional, the transient id prefix to search for default _wpba.&lt;/p&gt;" type="string" variable="$prefix">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="217" description="All of the current transient IDs." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$prefix</name>
+          <default>'_wpba'</default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="251" package="global">
+        <name>clean_attachments_cache</name>
+        <full_name>\WPBA_Helpers::clean_attachments_cache()</full_name>
+        <docblock line="251">
+          <description>Clean the cached attachments.</description>
+          <long-description>&lt;code&gt;add_action( 'add_attachment', array( &amp;$this, 'clean_attachments_cache' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="251" description="1.4.0"/>
+          <tag name="param" line="251" description="&lt;p&gt;Optional, the transient id prefix to search for default _wpba.&lt;/p&gt;" type="string" variable="$prefix">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="251" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$prefix</name>
+          <default>'_wpba'</default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="280" package="global">
+        <name>get_attachments</name>
+        <full_name>\WPBA_Helpers::get_attachments()</full_name>
+        <docblock line="280">
+          <description>Retrieves all of the posts for the current/supplied post.</description>
+          <long-description>&lt;code&gt;$attachments = $this-&gt;get_attachments( $post );&lt;/code&gt;</long-description>
+          <tag name="see" line="280" description="" link="\http://codex.wordpress.org/Class_Reference/WP_Query"/>
+          <tag name="uses" line="280" description="" link="WP_Query"/>
+          <tag name="todo" line="280" description="Add setting to disable featured image."/>
+          <tag name="todo" line="280" description="Add the ability to add attachment to multiple posts."/>
+          <tag name="todo" line="280" description="Add setting/filter to disable the cache."/>
+          <tag name="param" line="280" description="&lt;p&gt;Optional, the post parent object or ID, defaults to current post.&lt;/p&gt;" type="object|integer" variable="$post_parent">
+            <type>object</type>
+            <type>integer</type>
+          </tag>
+          <tag name="param" line="280" description="&lt;p&gt;Optional, if the featured image should NOT be included as an attachment, default false.&lt;/p&gt;" type="boolean" variable="$disable_featured_image">
+            <type>boolean</type>
+          </tag>
+          <tag name="param" line="280" description="&lt;p&gt;Optional, arguments to alter the query, accepts anything WP_Query does.&lt;/p&gt;" type="array" variable="$query_args">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="280" description="The attachments." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_parent</name>
+          <default>null</default>
+          <type>object|integer</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$disable_featured_image</name>
+          <default>false</default>
+          <type>boolean</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$query_args</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="332" package="global">
+        <name>get_form_kses_allowed_html</name>
+        <full_name>\WPBA_Helpers::get_form_kses_allowed_html()</full_name>
+        <docblock line="332">
+          <description>All of the allowed tags when outputting form fields.</description>
+          <long-description></long-description>
+          <tag name="return" line="332" description="Allowed HTML tags." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="381" package="global">
+        <name>get_post_types</name>
+        <full_name>\WPBA_Helpers::get_post_types()</full_name>
+        <docblock line="381">
+          <description>Retrieves the enabled post types.</description>
+          <long-description></long-description>
+          <tag name="todo" line="381" description="Add setting to restrict post types."/>
+          <tag name="since" line="381" description="1.4.0"/>
+          <tag name="return" line="381" description="The enabled post types." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="28" package="global">
+        <name>__construct</name>
+        <full_name>\WP_Better_Attachments::__construct()</full_name>
+        <docblock line="28">
+          <description>WP_Better_Attachments class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="28" description="1.4.0"/>
+          <tag name="todo" line="28" description="Only add on required pages."/>
+          <tag name="param" line="28" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="51" package="global">
+        <name>add_global_public_js</name>
+        <full_name>\WP_Better_Attachments::add_global_public_js()</full_name>
+        <docblock line="51">
+          <description>Adds global public JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_head', array( &amp;$this, 'add_global_public_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="51" description="1.4.0"/>
+          <tag name="todo" line="51" description="Only add on required pages."/>
+          <tag name="return" line="51" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="74" package="global">
+        <name>add_global_admin_js</name>
+        <full_name>\WP_Better_Attachments::add_global_admin_js()</full_name>
+        <docblock line="74">
+          <description>Adds global wp-admin JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_head', array( &amp;$this, 'add_global_admin_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="74" description="1.4.0"/>
+          <tag name="todo" line="74" description="Only add on required pages."/>
+          <tag name="return" line="74" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="98" package="global">
+        <name>enqueue_public_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_public_assets()</full_name>
+        <docblock line="98">
+          <description>Enqueues scripts and styles for use on the public front end.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_enqueue_scripts', array( &amp;$this, 'enqueue_public_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="98" description="1.4.0"/>
+          <tag name="todo" line="98" description="Only add on required pages."/>
+          <tag name="return" line="98" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="115" package="global">
+        <name>enqueue_admin_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_admin_assets()</full_name>
+        <docblock line="115">
+          <description>Enqueues scripts and styles for use in wp-admin.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_enqueue_scripts', array( &amp;$this, 'enqueue_admin_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="115" description="1.4.0"/>
+          <tag name="return" line="115" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <markers>
+      <todo line="280">Add setting to disable featured image.</todo>
+      <todo line="280">Add the ability to add attachment to multiple posts.</todo>
+      <todo line="280">Add setting/filter to disable the cache.</todo>
+      <todo line="381">Add setting to restrict post types.</todo>
+      <todo line="28">Add setting/filter to update the cache duration.</todo>
+    </markers>
+    <source>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</source>
+  </file>
+  <file path="class-wpba-meta.php" generated-path="class-wpba-meta.html" hash="2fcc8f4cbf01dce3a11d9649c4b74b01" package="WordPress\WPBA">
+    <docblock line="0">
+      <description>This class contains anything to do with the Meta box or meta CRUD.</description>
+      <long-description></long-description>
+      <tag name="version" line="0" description="1.4.0"/>
+      <tag name="package" line="0" description="WordPress"/>
+      <tag name="subpackage" line="0" description="WPBA"/>
+      <tag name="since" line="0" description="1.4.0"/>
+      <tag name="author" line="0" description="Dan Holloran" link="mailto:dholloran@matchboxdesigngroup.com"/>
+      <tag name="copyright" line="0" description="2013 - Present         Dan Holloran"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="" line="17" package="global">
+      <extends>\WPBA_Helpers</extends>
+      <name>WPBA_Meta</name>
+      <full_name>\WPBA_Meta</full_name>
+      <docblock line="17">
+        <description></description>
+        <long-description></long-description>
+      </docblock>
+      <property static="false" visibility="public" namespace="" line="27" package="global">
+        <name>$meta_box_title</name>
+        <full_name>\WPBA_Meta::meta_box_title</full_name>
+        <default>'WP Better Attachments'</default>
+        <docblock line="27">
+          <description>The title for the meta box.</description>
+          <long-description></long-description>
+          <tag name="since" line="27" description="1.4.0"/>
+          <tag name="todo" line="27" description="Add setting to alter the meta box title."/>
+          <tag name="var" line="27" description="" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="" line="39" package="global">
+        <name>$_meta_box_id</name>
+        <full_name>\WPBA_Meta::_meta_box_id</full_name>
+        <default>'wpba_meta_box'</default>
+        <docblock line="39">
+          <description>The ID for the meta box.</description>
+          <long-description></long-description>
+          <tag name="todo" line="39" description="allow for multiple meta boxes on a page."/>
+          <tag name="since" line="39" description="1.4.0"/>
+          <tag name="var" line="39" description="" type="string" variable="">
+            <type>string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property static="false" visibility="protected" namespace="" line="28" package="global">
+        <name>$cache_duration</name>
+        <full_name>\WPBA_Helpers::cache_duration</full_name>
+        <default>86400</default>
+        <docblock line="28">
+          <description>The length to cache a transient, default 24 hours.</description>
+          <long-description></long-description>
+          <tag name="since" line="28" description="1.4.0"/>
+          <tag name="todo" line="28" description="Add setting/filter to update the cache duration."/>
+          <tag name="var" line="28" description="" type="integer" variable="">
+            <type>integer</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="50" package="global">
+        <name>__construct</name>
+        <full_name>\WPBA_Meta::__construct()</full_name>
+        <docblock line="50">
+          <description>WPBA_Meta class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="50" description="1.4.0"/>
+          <tag name="param" line="50" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="66" package="global">
+        <name>_add_wpba_meta_actions_filters</name>
+        <full_name>\WPBA_Meta::_add_wpba_meta_actions_filters()</full_name>
+        <docblock line="66">
+          <description>Handles adding all of the WPBA meta actions and filters.</description>
+          <long-description>&lt;code&gt;$this-&gt;_add_wpba_meta_actions_filters();&lt;/code&gt;</long-description>
+          <tag name="since" line="66" description="1.4.0"/>
+          <tag name="return" line="66" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="86" package="global">
+        <name>add_meta_box</name>
+        <full_name>\WPBA_Meta::add_meta_box()</full_name>
+        <docblock line="86">
+          <description>Adds the meta box container.</description>
+          <long-description>&lt;code&gt;add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );&lt;/code&gt;</long-description>
+          <tag name="todo" line="86" description="setting to limit adding to post type."/>
+          <tag name="since" line="86" description="1.4.0"/>
+          <tag name="param" line="86" description="&lt;p&gt;The current post type.&lt;/p&gt;" type="string" variable="$post_type">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="86" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_type</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="114" package="global">
+        <name>save</name>
+        <full_name>\WPBA_Meta::save()</full_name>
+        <docblock line="114">
+          <description>Saves the meta when the post is saved.</description>
+          <long-description>&lt;code&gt;add_action( 'save_post', array( $this, 'save' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="114" description="1.4.0"/>
+          <tag name="param" line="114" description="&lt;p&gt;The ID of the post being saved.&lt;/p&gt;" type="integer" variable="$post_id">
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="114" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_id</name>
+          <default></default>
+          <type>integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="168" package="global">
+        <name>_sanitize_fields</name>
+        <full_name>\WPBA_Meta::_sanitize_fields()</full_name>
+        <docblock line="168">
+          <description>Handles sanitizing of the meta box fields.</description>
+          <long-description>&lt;code&gt;
+$fields = array( 'input_id_text' =&gt; 'value' );
+$fields = $this-&gt;_sanitize_fields( $fields );
+&lt;/code&gt;</long-description>
+          <tag name="since" line="168" description="1.4.0"/>
+          <tag name="param" line="168" description="&lt;p&gt;The fields to sanitize.&lt;/p&gt;" type="array" variable="$fields">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="168" description="The sanitized fields." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$fields</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="190" package="global">
+        <name>_update_attachment_meta</name>
+        <full_name>\WPBA_Meta::_update_attachment_meta()</full_name>
+        <docblock line="190">
+          <description>Updates the meta.</description>
+          <long-description>&lt;code&gt;&lt;/code&gt;</long-description>
+          <tag name="todo" line="190" description="Add code example."/>
+          <tag name="todo" line="190" description="Build out method."/>
+          <tag name="since" line="190" description="1.4.0"/>
+          <tag name="param" line="190" description="&lt;p&gt;The ID of the post being updated.&lt;/p&gt;" type="integer" variable="$post_id">
+            <type>integer</type>
+          </tag>
+          <tag name="param" line="190" description="&lt;p&gt;The fields to update.&lt;/p&gt;" type="array" variable="$fields">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="190" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_id</name>
+          <default></default>
+          <type>integer</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$fields</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="216" package="global">
+        <name>render_meta_box_content</name>
+        <full_name>\WPBA_Meta::render_meta_box_content()</full_name>
+        <docblock line="216">
+          <description>Render Meta Box content.</description>
+          <long-description>&lt;code&gt;
+add_meta_box(
+	$this-&gt;_meta_box_id,
+	__( $this-&gt;meta_box_title, 'wpba' ),
+	array( $this, 'render_meta_box_content' ),
+	$post_type,
+	'advanced',
+	'high'
+);
+&lt;/code&gt;</long-description>
+          <tag name="since" line="216" description="1.4.0"/>
+          <tag name="uses" line="216" description="" link="WPBA_Meta_Form_Fields"/>
+          <tag name="param" line="216" description="&lt;p&gt;The post object.&lt;/p&gt;" type="object" variable="$post">
+            <type>object</type>
+          </tag>
+          <tag name="return" line="216" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post</name>
+          <default></default>
+          <type>object</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="249" package="global">
+        <name>attachment_menu</name>
+        <full_name>\WPBA_Meta::attachment_menu()</full_name>
+        <docblock line="249">
+          <description>Attachment menu.</description>
+          <long-description>&lt;code&gt;$attachment_menu = $this-&gt;attachment_menu( $attachment );&lt;/code&gt;</long-description>
+          <tag name="since" line="249" description="1.4.0"/>
+          <tag name="param" line="249" description="&lt;p&gt;The attachment post.&lt;/p&gt;" type="object" variable="$attachment">
+            <type>object</type>
+          </tag>
+          <tag name="return" line="249" description="The attachment menu HTML." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$attachment</name>
+          <default></default>
+          <type>object</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="280" package="global">
+        <name>build_attachment_thumbnail</name>
+        <full_name>\WPBA_Meta::build_attachment_thumbnail()</full_name>
+        <docblock line="280">
+          <description>Retrieves the attachment thumbnail.</description>
+          <long-description>&lt;code&gt;
+foreach ( $attachments as $attachment ) {
+	$allowed_html = $this-&gt;get_form_kses_allowed_html();
+	echo wp_kses( $this-&gt;build_attachment_thumbnail( $attachment ), $allowed_html );
+} // foreach
+&lt;/code&gt;</long-description>
+          <tag name="since" line="280" description="1.4.0"/>
+          <tag name="param" line="280" description="&lt;p&gt;The attachment post.&lt;/p&gt;" type="object" variable="$attachment">
+            <type>object</type>
+          </tag>
+          <tag name="return" line="280" description="The attachment thumbnail HTML." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$attachment</name>
+          <default></default>
+          <type>object</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="310" package="global">
+        <name>build_attachment_fields</name>
+        <full_name>\WPBA_Meta::build_attachment_fields()</full_name>
+        <docblock line="310">
+          <description>Builds the attachment fields.</description>
+          <long-description>&lt;code&gt;
+foreach ( $attachments as $attachment ) {
+	$allowed_html = $this-&gt;get_form_kses_allowed_html();
+	echo wp_kses( $this-&gt;build_attachment_fields( $attachment ), $allowed_html );
+} // foreach
+&lt;/code&gt;</long-description>
+          <tag name="since" line="310" description="1.4.0"/>
+          <tag name="uses" line="310" description="" link="WPBA_Meta_Form_Fields"/>
+          <tag name="param" line="310" description="&lt;p&gt;The attachment post.&lt;/p&gt;" type="object" variable="$attachment">
+            <type>object</type>
+          </tag>
+          <tag name="return" line="310" description="The attachment form fields." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$attachment</name>
+          <default></default>
+          <type>object</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="28" package="global">
+        <name>__construct</name>
+        <full_name>\WP_Better_Attachments::__construct()</full_name>
+        <docblock line="28">
+          <description>WP_Better_Attachments class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="28" description="1.4.0"/>
+          <tag name="todo" line="28" description="Only add on required pages."/>
+          <tag name="param" line="28" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="55" package="global">
+        <name>_add_wpba_helpers_actions_filters</name>
+        <full_name>\WPBA_Helpers::_add_wpba_helpers_actions_filters()</full_name>
+        <docblock line="55">
+          <description>Handles adding all of the WPBA helpers actions and filters.</description>
+          <long-description>&lt;code&gt;$this-&gt;_add_wpba_helpers_actions_filters();&lt;/code&gt;</long-description>
+          <tag name="since" line="55" description="1.4.0"/>
+          <tag name="return" line="55" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="73" package="global">
+        <name>get_attachment_post_parent_id</name>
+        <full_name>\WPBA_Helpers::get_attachment_post_parent_id()</full_name>
+        <docblock line="73">
+          <description>Retrieves the attachment post parent ID.</description>
+          <long-description>&lt;code&gt;$post_parent_id = $this-&gt;get_attachment_post_parent_id( $post_parent );&lt;/code&gt;</long-description>
+          <tag name="param" line="73" description="&lt;p&gt;Optional, the post parent object or ID, defaults to current post.&lt;/p&gt;" type="object|integer" variable="$post_parent">
+            <type>object</type>
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="73" description="The attachments post parent ID." type="integer">
+            <type>integer</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_parent</name>
+          <default>null</default>
+          <type>object|integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="98" package="global">
+        <name>get_attachment_id</name>
+        <full_name>\WPBA_Helpers::get_attachment_id()</full_name>
+        <docblock line="98">
+          <description>Retrieves the attachment ID.</description>
+          <long-description>&lt;code&gt;$attachment_id = $this-&gt;get_attachment_id( $attachment );&lt;/code&gt;</long-description>
+          <tag name="param" line="98" description="&lt;p&gt;Optional, the post parent object or ID, defaults to current post.&lt;/p&gt;" type="object|integer" variable="$attachment">
+            <type>object</type>
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="98" description="The attachments post parent ID." type="integer">
+            <type>integer</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$attachment</name>
+          <default></default>
+          <type>object|integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="122" package="global">
+        <name>get_transient_id</name>
+        <full_name>\WPBA_Helpers::get_transient_id()</full_name>
+        <docblock line="122">
+          <description>Retrieves the transient ID for the current query.</description>
+          <long-description>&lt;code&gt;$this-&gt;get_transient_id( $attachments_query_args );&lt;/code&gt;</long-description>
+          <tag name="since" line="122" description="1.4.0"/>
+          <tag name="param" line="122" description="&lt;p&gt;The arguments for the query.&lt;/p&gt;" type="array" variable="$query_args">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="122" description="The transient ID." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$query_args</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="148" package="global">
+        <name>cache_attachments</name>
+        <full_name>\WPBA_Helpers::cache_attachments()</full_name>
+        <docblock line="148">
+          <description>Caches the attachments query.</description>
+          <long-description>&lt;code&gt;$this-&gt;cache_attachments( $transient_id, $attachments );&lt;/code&gt;</long-description>
+          <tag name="since" line="148" description="1.4.0"/>
+          <tag name="param" line="148" description="&lt;p&gt;The transient ID to use.&lt;/p&gt;" type="string" variable="$transient_id">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="148" description="&lt;p&gt;The attachments to cache.&lt;/p&gt;" type="array" variable="$attachments">
+            <type>array</type>
+          </tag>
+          <tag name="param" line="148" description="&lt;p&gt;Optional, the length of time to store the attachments, default 24 hours.&lt;/p&gt;" type="integer" variable="$cache_duration">
+            <type>integer</type>
+          </tag>
+          <tag name="return" line="148" description="False if value was not set and true if value was set." type="boolean">
+            <type>boolean</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$transient_id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$attachments</name>
+          <default></default>
+          <type>array</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$cache_duration</name>
+          <default>null</default>
+          <type>integer</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="171" package="global">
+        <name>get_attachments_cache</name>
+        <full_name>\WPBA_Helpers::get_attachments_cache()</full_name>
+        <docblock line="171">
+          <description>Get the cached attachments.</description>
+          <long-description>&lt;code&gt;$cached_attachments = $this-&gt;get_attachments_cache( $transient_id );&lt;/code&gt;</long-description>
+          <tag name="since" line="171" description="1.4.0"/>
+          <tag name="param" line="171" description="&lt;p&gt;The transient ID to retrieve.&lt;/p&gt;" type="string" variable="$transient_id">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="171" description="Either false on failure/does not exist or the cached attachments." type="boolean|array">
+            <type>boolean</type>
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$transient_id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="194" package="global">
+        <name>delete_attachments_cache</name>
+        <full_name>\WPBA_Helpers::delete_attachments_cache()</full_name>
+        <docblock line="194">
+          <description>Delete an attachments cache.</description>
+          <long-description>&lt;code&gt;$this-&gt;delete_attachments_cache( $transient_id );&lt;/code&gt;</long-description>
+          <tag name="since" line="194" description="1.4.0"/>
+          <tag name="param" line="194" description="&lt;p&gt;The transient ID to delete.&lt;/p&gt;" type="string" variable="$transient_id">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="194" description="True if successful, false otherwise." type="boolean">
+            <type>boolean</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$transient_id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="" line="217" package="global">
+        <name>_get_all_cached_attachment_transient_ids</name>
+        <full_name>\WPBA_Helpers::_get_all_cached_attachment_transient_ids()</full_name>
+        <docblock line="217">
+          <description>Retrieves all of the current transient IDs.</description>
+          <long-description>&lt;code&gt;$this-&gt;_get_all_cached_attachment_transient_ids();&lt;/code&gt;</long-description>
+          <tag name="since" line="217" description="1.4.0"/>
+          <tag name="uses" line="217" description="" link="$wpdb"/>
+          <tag name="param" line="217" description="&lt;p&gt;Optional, the transient id prefix to search for default _wpba.&lt;/p&gt;" type="string" variable="$prefix">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="217" description="All of the current transient IDs." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$prefix</name>
+          <default>'_wpba'</default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="251" package="global">
+        <name>clean_attachments_cache</name>
+        <full_name>\WPBA_Helpers::clean_attachments_cache()</full_name>
+        <docblock line="251">
+          <description>Clean the cached attachments.</description>
+          <long-description>&lt;code&gt;add_action( 'add_attachment', array( &amp;$this, 'clean_attachments_cache' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="251" description="1.4.0"/>
+          <tag name="param" line="251" description="&lt;p&gt;Optional, the transient id prefix to search for default _wpba.&lt;/p&gt;" type="string" variable="$prefix">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="251" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$prefix</name>
+          <default>'_wpba'</default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="280" package="global">
+        <name>get_attachments</name>
+        <full_name>\WPBA_Helpers::get_attachments()</full_name>
+        <docblock line="280">
+          <description>Retrieves all of the posts for the current/supplied post.</description>
+          <long-description>&lt;code&gt;$attachments = $this-&gt;get_attachments( $post );&lt;/code&gt;</long-description>
+          <tag name="see" line="280" description="" link="\http://codex.wordpress.org/Class_Reference/WP_Query"/>
+          <tag name="uses" line="280" description="" link="WP_Query"/>
+          <tag name="todo" line="280" description="Add setting to disable featured image."/>
+          <tag name="todo" line="280" description="Add the ability to add attachment to multiple posts."/>
+          <tag name="todo" line="280" description="Add setting/filter to disable the cache."/>
+          <tag name="param" line="280" description="&lt;p&gt;Optional, the post parent object or ID, defaults to current post.&lt;/p&gt;" type="object|integer" variable="$post_parent">
+            <type>object</type>
+            <type>integer</type>
+          </tag>
+          <tag name="param" line="280" description="&lt;p&gt;Optional, if the featured image should NOT be included as an attachment, default false.&lt;/p&gt;" type="boolean" variable="$disable_featured_image">
+            <type>boolean</type>
+          </tag>
+          <tag name="param" line="280" description="&lt;p&gt;Optional, arguments to alter the query, accepts anything WP_Query does.&lt;/p&gt;" type="array" variable="$query_args">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="280" description="The attachments." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$post_parent</name>
+          <default>null</default>
+          <type>object|integer</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$disable_featured_image</name>
+          <default>false</default>
+          <type>boolean</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$query_args</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="332" package="global">
+        <name>get_form_kses_allowed_html</name>
+        <full_name>\WPBA_Helpers::get_form_kses_allowed_html()</full_name>
+        <docblock line="332">
+          <description>All of the allowed tags when outputting form fields.</description>
+          <long-description></long-description>
+          <tag name="return" line="332" description="Allowed HTML tags." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="381" package="global">
+        <name>get_post_types</name>
+        <full_name>\WPBA_Helpers::get_post_types()</full_name>
+        <docblock line="381">
+          <description>Retrieves the enabled post types.</description>
+          <long-description></long-description>
+          <tag name="todo" line="381" description="Add setting to restrict post types."/>
+          <tag name="since" line="381" description="1.4.0"/>
+          <tag name="return" line="381" description="The enabled post types." type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="51" package="global">
+        <name>add_global_public_js</name>
+        <full_name>\WP_Better_Attachments::add_global_public_js()</full_name>
+        <docblock line="51">
+          <description>Adds global public JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_head', array( &amp;$this, 'add_global_public_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="51" description="1.4.0"/>
+          <tag name="todo" line="51" description="Only add on required pages."/>
+          <tag name="return" line="51" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="74" package="global">
+        <name>add_global_admin_js</name>
+        <full_name>\WP_Better_Attachments::add_global_admin_js()</full_name>
+        <docblock line="74">
+          <description>Adds global wp-admin JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_head', array( &amp;$this, 'add_global_admin_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="74" description="1.4.0"/>
+          <tag name="todo" line="74" description="Only add on required pages."/>
+          <tag name="return" line="74" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="98" package="global">
+        <name>enqueue_public_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_public_assets()</full_name>
+        <docblock line="98">
+          <description>Enqueues scripts and styles for use on the public front end.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_enqueue_scripts', array( &amp;$this, 'enqueue_public_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="98" description="1.4.0"/>
+          <tag name="todo" line="98" description="Only add on required pages."/>
+          <tag name="return" line="98" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="115" package="global">
+        <name>enqueue_admin_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_admin_assets()</full_name>
+        <docblock line="115">
+          <description>Enqueues scripts and styles for use in wp-admin.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_enqueue_scripts', array( &amp;$this, 'enqueue_admin_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="115" description="1.4.0"/>
+          <tag name="return" line="115" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <markers>
+      <todo line="86">setting to limit adding to post type.</todo>
+      <todo line="190">Add code example.</todo>
+      <todo line="190">Build out method.</todo>
+      <todo line="27">Add setting to alter the meta box title.</todo>
+      <todo line="39">allow for multiple meta boxes on a page.</todo>
+    </markers>
+    <source>eJzNWm1v2zgS/hz/Cq4vqJzCjnfv7tMmzm7a7G4L3F6LNt39cCgEWqIjbmVJEKm8XNH/fjNDiqLebCdFgXOBRiKHw3l7hsOxz38qkmKyfP58wp6z60QqFqVcwf95prnMFOPZg05kdsN0zuKc3UmdMJ0I9rvQnK3ze5aXbIvPL999uDoFLsjo51tRKplnjD4/nP7z9Pt6puDRJ34jzMyfeRm/LYVSNKWqdTP759sXl/UaJbPIruhw45VOQADzueIZe5WnaV7yjLnPeZzYsZ+3XEcJyBwLJW+ymzKvitMo317U3KK8eCjlTaJx3d+//+EfbMFQPJFpx87fBBYtJ3LDZuw7Y7ZQ3Eul1YwFKH6INgrYCfz7PDkydnXjTNxrkcV25JVICzAZ0h2hM46OyB2CaalTwTagIxp9a41+SgSGqraOsYs3rnPwF7uMY6aE1taFPNWizcts0eJ4y9GkSpewiIaW8H9RrVMZsWNcF8K60Ii2Ql3ZC9gB+F5qzaNkC/ZSwdlk0lXm9dVuTYzEHIx7R4TbKtWySBtqoRgEFWcFxMiADXomGFaklLdcC3YcOlVkjHrcFWvuxkh+X4HGcw4hwLiKdF4e5I6Cl3wL2pUlf2DsGJZv5A1jL2tm8FaVXANqTrs231RZhBMsDN2uM8diZXjObJzBKl6CB3780ac+OUNljo4By2pxEfI4Dht1OXFX4UZidCgkPjr6wpbL1oYnbXu84lmcgkOAFcYWeI3lG/ItWsq4zDKGJBIzy9y31XmUx+LiUJnOl0Q+YOu+sUuhqxKSwG0u457jG3Pu2dKYE4nMFOAaX+oQESqYW9szUmLenifon/VYKH4rwiJXur8ap9wq44A9InaCFNCu2ui2iVyUfcN/pWID/jAAZn7CSeVW6jpI4B0VZ/qhGMLvOGoshgE3uD7E9YxSSlSVGOwjbIfDoAMqX7OZv4H1fzOiAGs2Wm+EDpvxGl50FsgsrG3nKObM5+KQetTam0YcRL3kNDczYTirt28n4bnJXeAWS9nxHVgoFmXDEWMCjNbQe4KaAXD3LQeXxEE9kMC5GNCzCWmKTrmBCLTPLVW6cfkeAtsLzLtEZPRGboOiAwM/3hOhB+HmMUmiji0J1riB08v6CA4De1jZfEZCrgXGX0/Ow0IMl80a9tb7YLSXiYg+gRlZXpUsy1FQtIbQpy6cvoMRGIDl4ds376//M/08ECFfQlo8/ejFlpWs3rXjNYpss+PqMNYmxGH9H6KUmwcwDddkHyf3LU9l7Et+V4S3RGx4gA70Fzw2vBO5eCNFGity56GKwPNr9BXIIPG0YVAX5shsToaFWmLLEq5AUnQkxB6UmpCWtIjnTEFRK6C0zQLN7jikElPo1nVvo04sNpBHY4jEqzev//1bePnh+s37yz9+QUmfPWPtwUfJbqIATVkpUQaKQS24Ba9jqm/2D7DqCdjKuStwqA0+Oq/X5ajJiyEyDCOO+BGxhJyFPOZ+KNYLB0VtwRxeRKrEgRsZoD51I3pZ4naNmd7zTGr5X+EsBcgtKgOVYxM1LpbPOoM22pRlYYMMAtKSnLjo/lDEWCTgHtyVs5S2zEbNoCkbW2rU+1TEJPRokQFs11o997e3WmPUToYrLSs85iGbmdwpb9j0E6h5buxg82ZAhgMJQg3XEIipCxYAeCtMomfdNYfYzmz5hNxry2HHi1KvfQYg1nsOptx6rfvg2npF3LLJcPk3rhGE6sSLVDPcFGXdhd3jzsRQc+D1HbOjeMIbG07CDZFvi/pq1sy/qGQaQ16joEzy+HGFVH3Y7T/rTAzHp4/zmFl1wBHZ88YoZqykc989xg8jS7rueEf1j2lZvLA1MRCPwaVblMHQWFWGUweWZUj6qLqMtm0VZjjSrsxopC7N4OUpUIRMqpjtuNAFN/wVzsvwV7L1UAjl679EpG25ZPxPT2b88dXRiBms5+tz4ybN1zxlx81lCI/1sIZmJzeDRq1a3ZuxfOcMrrXCXtCOqekg4jDR27S9knb5BDYKfZpZc2AgXqHkMFUQiWNrCjgNWURHOzYz4BaUQrDSPewICiOiN+LPDqmH5mxneVafYCJKchacVymT8WpKxlJ5qfk6BRrqXJjRRWORBaq4sNhKpdKLCu78D6mIpxcBmQcIBBCz1gEGhZby390BTyJMz1OJIgQeOD971IuL11dfAitRUMmF0mCdBRRZvEqhEkMRa8EXUottcDE9a9gH57LWJuYqkdimYO5pATtUDY9FQifoFLKutBoZLuAG9KzD7xpTq59OdFJt1xmX6aytKeSiVsScPIapO20O5RicL9NacEp81h+ev5dVaghofgxRvXaBX+Bk1UBvppVawaYOGp2JjjZPuoe5vOJxouzivSNyBzNM3SBg3YKAt3Vkr65//9d4h223WrYhQAVuKrNPWFHFW7jwVyVEyJSEK5LiJ3xY9aL9mbnKrnC5w+uxNWtg3GteT1eAH4CwRUcLk6yo0nSRio0FCXLzwMwSGQNgNossX/wFtyg4IPkCcdgHnwWU2zJAyFpQuU0ANJwlpdispn9rJ5AqMwynFx8yK8D5kl94seop4zgHjnPgOINszqRNTnDaBUzzElLxKgjXKc8+BRe/wKjb6+u0iEUqNKSGK/o7poADmF8V4qSDXDdw+jUIBKiouyCev1yKGStHHpN8qWZ4yllmln6DpAhsOynriTeFb54dnFp7UsTB9rDZYoiSeYgfnKeYi+Xt2JEtt3CRX9yVvGBekO/heFjq3skCgqNdToUkSYsHZheobt26wJRarmsXkE7m1jmoV9M432GcJVini8ghaofQHX7rgpWuWD2k7r5k/9/B9PAy46sx+vQrxLcCM7X8eh2AfUgeNNlTrh/YWllzhb3V6a4CeOqivCODlx9Mr6bTwvGuH14Gw1tnb03dJ8TJ4KPjQOVlIOMArYdQ9KhM0z9I+VqkBqfX/rhtFcF4S5+GgaWj1qRhTn0mOwxrSgN/qwuND2oU8QI9NaaTuI9EWei9WtV0fb1emg0O0cwyGdaNA3IO0o/apoBdP1bUSBL1mqZts3C4IeGuNNUxDMyZrl7HKC2rhB0JcHtINtp93eOZ6BI2u27c5xvJfQvW627aM2B8H3v7rnkOh8qYLXvfQfUjJxYqKuXO6KnbLfuip6brR89Vs8khEWQZfU0EGU3pnKILHOZyZb9b9xrDpK3Nf3NsaC1Lsc1vhZcSTV5tnWJ0jNXJcftQQL0s7823z775wNGtnGRjFE8muKTQV1WjIXlyhj57R8KYA/bSxrLXzMfzyP7FXpzRbtb5gUZLJIinwJDBRkrbNnb7GGsU7vxcxJswPdaX4Art+q8szqMKveh+nOGRXu76sUrbzPbXKORRM7QczO9FkT64L/jHmj7+oum86xAXKC1I4M9vkGAAD6+vdqEAZvuxvyfgAf69MIeraSwsUgbTPV238hKbtWOSIklIJLsk9qgeLXmz9iANjnv1w0hxbyf3VfaG7IDSvuE3XJTUJSHZrw/anfLtKa4734eM1VEnEzPvykLK1PhlbaY0z7RElNEPoCb9+gq4m5fE/jZuxTJx5/M6m7gD4H/nfg8z</source>
+  </file>
+  <file path="class-wpba-meta-form-fields.php" generated-path="class-wpba-meta-form-fields.html" hash="edd50de30c636efdfe375f36521348f5" package="WordPress\WPBA">
+    <docblock line="0">
+      <description>This class handles all of the form types used in the meta box.</description>
+      <long-description></long-description>
+      <tag name="version" line="0" description="1.4.0"/>
+      <tag name="package" line="0" description="WordPress"/>
+      <tag name="subpackage" line="0" description="WPBA"/>
+      <tag name="since" line="0" description="1.4.0"/>
+      <tag name="author" line="0" description="Dan Holloran" link="mailto:dholloran@matchboxdesigngroup.com"/>
+      <tag name="copyright" line="0" description="2013 - Present         Dan Holloran"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="" line="17" package="global">
+      <extends>\WP_Better_Attachments</extends>
+      <name>WPBA_Meta_Form_Fields</name>
+      <full_name>\WPBA_Meta_Form_Fields</full_name>
+      <docblock line="17">
+        <description></description>
+        <long-description></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="25" package="global">
+        <name>__construct</name>
+        <full_name>\WPBA_Meta_Form_Fields::__construct()</full_name>
+        <docblock line="25">
+          <description>WPBA_Meta_Form_Fields class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="25" description="1.4.0"/>
+          <tag name="param" line="25" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="54" package="global">
+        <name>build_inputs</name>
+        <full_name>\WPBA_Meta_Form_Fields::build_inputs()</full_name>
+        <docblock line="54">
+          <description>Builds all of the inputs for the meta box.</description>
+          <long-description>&lt;code&gt;
+$attachment_fields = '';
+$input_fields      = array();
+
+// Attachment title
+$input_fields['post_title'] = array(
+	'id'    =&gt; 'post_title',
+ 'label' =&gt; 'Title',
+ 'value' =&gt; $attachment-&gt;post_title,
+ 'type'  =&gt; 'text',
+ 'attrs' =&gt; array(),
+);
+$attachment_fields .= $wpba_meta_form_fields-&gt;build_inputs( $input_fields );</long-description>
+          <tag name="since" line="54" description="1.4.0"/>
+          <tag name="param" line="54" description="&lt;p&gt;The input(s) information (id,label,value,type,attrs).&lt;/p&gt;" type="array" variable="$inputs">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="54" description="The input(s) HTML." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$inputs</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="93" package="global">
+        <name>label</name>
+        <full_name>\WPBA_Meta_Form_Fields::label()</full_name>
+        <docblock line="93">
+          <description>Creates a label for a form input field.</description>
+          <long-description>&lt;code&gt;$this-&gt;label( $label, $id );&lt;/code&gt;</long-description>
+          <tag name="since" line="93" description="1.4.0"/>
+          <tag name="param" line="93" description="&lt;p&gt;The input fields ID value.&lt;/p&gt;" type="string" variable="$id">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="93" description="&lt;p&gt;The text to be displayed in the label.&lt;/p&gt;" type="string" variable="$label">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="93" description="The label for the form input field." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$id</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$label</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="126" package="global">
+        <name>textarea</name>
+        <full_name>\WPBA_Meta_Form_Fields::textarea()</full_name>
+        <docblock line="126">
+          <description>Creates a &lt;textarea&gt;.</description>
+          <long-description>&lt;code&gt;
+$label = ( isset( $label ) ) ? $label : '';
+$value = ( isset( $value ) ) ? $value : '';
+$type  = ( isset( $type ) ) ? $type : 'text';
+$attrs = ( isset( $attrs ) ) ? $attrs : array();
+
+$input_html  = '';
+$input_html .= $this-&gt;textarea( $id, $label, $value, $attrs );
+&lt;/code&gt;</long-description>
+          <tag name="since" line="126" description="1.4.0"/>
+          <tag name="param" line="126" description="&lt;p&gt;The ID &amp; name attribute to identify the form field.&lt;/p&gt;" type="integer" variable="$id">
+            <type>integer</type>
+          </tag>
+          <tag name="param" line="126" description="&lt;p&gt;Optional, the text to be displayed in the label.&lt;/p&gt;" type="string" variable="$label">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="126" description="&lt;p&gt;Optional, the value &amp; placeholder of the form field.&lt;/p&gt;" type="string" variable="$value">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="126" description="&lt;p&gt;Optional, the type of input to create, defaults to text.&lt;/p&gt;" type="string" variable="$type">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="126" description="&lt;p&gt;Optional, attributes to add to the input field.&lt;/p&gt;" type="array" variable="$attrs">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="126" description="The input field." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$id</name>
+          <default></default>
+          <type>integer</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$label</name>
+          <default>''</default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$value</name>
+          <default>''</default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$attrs</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="169" package="global">
+        <name>input</name>
+        <full_name>\WPBA_Meta_Form_Fields::input()</full_name>
+        <docblock line="169">
+          <description>Creates an &lt;input&gt; field.</description>
+          <long-description>&lt;code&gt;
+$label = ( isset( $label ) ) ? $label : '';
+$value = ( isset( $value ) ) ? $value : '';
+$type  = ( isset( $type ) ) ? $type : 'text';
+$attrs = ( isset( $attrs ) ) ? $attrs : array();
+
+$input_html  = '';
+$input_html .= $this-&gt;input( $id, $label, $value, $type, $attrs );
+&lt;/code&gt;</long-description>
+          <tag name="since" line="169" description="1.4.0"/>
+          <tag name="param" line="169" description="&lt;p&gt;The ID &amp; name attribute to identify the form field.&lt;/p&gt;" type="integer" variable="$id">
+            <type>integer</type>
+          </tag>
+          <tag name="param" line="169" description="&lt;p&gt;Optional, the text to be displayed in the label.&lt;/p&gt;" type="string" variable="$label">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="169" description="&lt;p&gt;Optional, the value &amp; placeholder of the form field.&lt;/p&gt;" type="string" variable="$value">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="169" description="&lt;p&gt;Optional, the type of input to create, defaults to text.&lt;/p&gt;" type="string" variable="$type">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="169" description="&lt;p&gt;Optional, attributes to add to the input field.&lt;/p&gt;" type="array" variable="$attrs">
+            <type>array</type>
+          </tag>
+          <tag name="return" line="169" description="The input field." type="string">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$id</name>
+          <default></default>
+          <type>integer</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$label</name>
+          <default>''</default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$value</name>
+          <default>''</default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$type</name>
+          <default>'text'</default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$attrs</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="28" package="global">
+        <name>__construct</name>
+        <full_name>\WP_Better_Attachments::__construct()</full_name>
+        <docblock line="28">
+          <description>WP_Better_Attachments class constructor.</description>
+          <long-description></long-description>
+          <tag name="since" line="28" description="1.4.0"/>
+          <tag name="todo" line="28" description="Only add on required pages."/>
+          <tag name="param" line="28" description="&lt;p&gt;Class configuration.&lt;/p&gt;" type="array" variable="$config">
+            <type>array</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$config</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="51" package="global">
+        <name>add_global_public_js</name>
+        <full_name>\WP_Better_Attachments::add_global_public_js()</full_name>
+        <docblock line="51">
+          <description>Adds global public JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_head', array( &amp;$this, 'add_global_public_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="51" description="1.4.0"/>
+          <tag name="todo" line="51" description="Only add on required pages."/>
+          <tag name="return" line="51" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="74" package="global">
+        <name>add_global_admin_js</name>
+        <full_name>\WP_Better_Attachments::add_global_admin_js()</full_name>
+        <docblock line="74">
+          <description>Adds global wp-admin JS object.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_head', array( &amp;$this, 'add_global_admin_js' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="74" description="1.4.0"/>
+          <tag name="todo" line="74" description="Only add on required pages."/>
+          <tag name="return" line="74" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="98" package="global">
+        <name>enqueue_public_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_public_assets()</full_name>
+        <docblock line="98">
+          <description>Enqueues scripts and styles for use on the public front end.</description>
+          <long-description>&lt;code&gt;add_action( 'wp_enqueue_scripts', array( &amp;$this, 'enqueue_public_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="98" description="1.4.0"/>
+          <tag name="todo" line="98" description="Only add on required pages."/>
+          <tag name="return" line="98" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="" line="115" package="global">
+        <name>enqueue_admin_assets</name>
+        <full_name>\WP_Better_Attachments::enqueue_admin_assets()</full_name>
+        <docblock line="115">
+          <description>Enqueues scripts and styles for use in wp-admin.</description>
+          <long-description>&lt;code&gt;add_action( 'admin_enqueue_scripts', array( &amp;$this, 'enqueue_admin_assets' ) );&lt;/code&gt;</long-description>
+          <tag name="since" line="115" description="1.4.0"/>
+          <tag name="return" line="115" description="" type="void">
+            <type>void</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+    <source>eJztWEtv20YQPku/YmoYoWTokbQ9STKTOEGQAA2ag4EcioJYkStpEYokuEvbgqD/3tnZXb5MJlaKohcrQEzO49t5z0qr19kuG86vroZwBbc7ISGMmZSwY0kUcwksjiHdgNpx2KT5HtQhQ2oheQQiIfKeKwbr9GGGCBrkzR3PpUgToM+r2e+zl46TsfAb23LD+Zrm0ZecS0ksWawr7tcvN2+djhRJaDVaaKxQuzS3nPcsgY9pHKc5S6D8rKKdpb3ZMxXu0MyIS7FNtnlaZLMw3fsOLUyzQy62O6X1fn356jeYgjaPJ6qEqx+CSvOh2MAIfjEhC/iDkEqOwNPmB58xLMEHDFnwQfA4kh6M8d9xODDx7ZQB/qB4EmlucMOV4nnwVikW7vZohdTKA52pwQAN7gYw4GGaSJUXoUrzGUkbFRdLE8UaPWM52wOwPGcHgEtU34gtwDsHhm9FzhQm1cDN8f+sWMcihE2RhJoBQVCeOiohrg3myLqOWixHVxaLuvR4iZwTzOcNjPEQPzV/bwqhHazVo0iyAqOCZdmqw8qzVZhG3DfPl6wMZbAx0boGz1taLqE5Bn1K45c1RLSySgkooWLeAfCXl6VSBcT2/i6RjOTAE5FHB/hQl5sYNngxW/PYI/Ztk3PH4oITp+bN1K9ASkndp545QmFVVRCol0uCsN5ZznjZG6bZNVzeZ2sW6BAHegxYztRf66wEJhOjVhAbcSv7uK/4XPVZEMzBrcvxSI7xQZ9LNQgjEU0oRhOKx0T7OiG/xo1yz7kqcpwGWFEi2VZToYn88fbzH/1l3eWgfFzX1vOd2se2qjQVTeYYS6gUmbSPTnGAyckZ9YylG9XBJXmIYCMQUnItYCj6zNfuZWErGOUpFg15Q7Hy5qUmr6MGDXmiWHF6XtjisRoU4oaGoVgV87Kouoa05L1QJgQW3rg9CJnkBh5HAvMWhtoIpK47hStp6jsxHaVoYp2fWKcmpR1LC7JG0W/2/EHEN6yI1fcPMNXQg0711XeIfqThZRzFueUINvt6kiHJFmPt+HLsNWqsPffeIYjSixhMxvW4Y2YXm4Khbns89KxjpDSqfBIRerCaV3Pxqe3pmkgjNHoIbLt/eg8UsFmforGfFHU+QaWw5hAJmcXsUN0nSOxJfXzrpMsd0B2Wrr52cakS7kqTdrrrPt3LZc1aO2wHUerEppnei1Vp0LV3RPST5x8N2Gk1p7/+RZl4Y0R/xleu7v3epXbWlNAKZ40JrXDmnLAr5KxBUflW786O9fzzY0HH7SeqXiSKb3neLHus9BeQsD0HfYBYF4rrYhYR7kyxOVSVWKvBx/1QNsSfma5Ihoarp7dGF57JXQvPEF8AIoUcb8MRelO/0P/ARpP9to2aiCCm09DYkEp2AnbWSk3TjrRx3Y53qanhlqEkZRZFhNEcMmdu9x/NgM7yoaqbVH1CL66gW1vfXAat2bVrQEt82boLGLa+Cugnus25HjSDpgVzcSTBk54oJHjyLqoRVK2Zx5po2x6bcJ/FWPn4zQS0M3WRsbtvIBDdsKuQE9x9zrLAfKlAOAx1kHOqJAQLEMybem6ptK9BZfu2V+7FKhJ35puK9qg64jQlwammgL5wTl2GagzPzM+ePd411rttcNDYtm5SU0/bl6C8mcCxHrGT73KwmpfTudMibzVHP317FfzO+i/LcNyzBxJYkZrft+ufd8HZN7jnffC8D9r74HEJdS4D8vbafa9+Xg7/13I4UiZO/8FuMNVSWwz6IP1CBzb3REmk4NeyUO+wGrm1Tf7d6jAVi8mlt86fBOn7CTI/JVIxnEfYl+aHveFgG6drFvf8toNndDMwdQm/7ztsOSy/F/0DXgh37A==</source>
+  </file>
+  <package name="WordPress" full_name="WordPress">
+    <package name="WPBA" full_name="WordPress\WPBA"/>
+  </package>
+  <package name="global" full_name="global"/>
+  <namespace name="global" full_name="global"/>
+  <deprecated count="0"/>
+</project>

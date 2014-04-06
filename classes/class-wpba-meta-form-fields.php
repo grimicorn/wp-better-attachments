@@ -1,9 +1,5 @@
 <?php
 /**
-* WP Better Attachments Meta Form Fields Class
-*/
-
-/**
  * This class handles all of the form types used in the meta box.
  *
  * @version      1.4.0

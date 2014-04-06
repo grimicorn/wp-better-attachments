@@ -1,9 +1,5 @@
 <?php
 /**
-* WP Better Attachments Base Class
-*/
-
-/**
  * This class should be extended by every other WPBA class.
  * All of the setup logic should be contained here.
  *
@@ -30,14 +26,21 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 * @param  array  $config  Class configuration.
 		 */
 		public function __construct( $config = array() ) {
+			// Enqueue Scripts
 			add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_public_assets' ) );
 			add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_assets' ) );
+
+			// Add Global PHP -> JS
+			add_action( 'wp_head', array( &$this, 'add_global_public_js' ) );
+			add_action( 'admin_head', array( &$this, 'add_global_admin_js' ) );
 		} // __construct()
 
 
 
 		/**
-		 * Adds global public JS.
+		 * Adds global public JS object.
+		 *
+		 * <code>add_action( 'wp_head', array( &$this, 'add_global_public_js' ) );</code>
 		 *
 		 * @since  1.4.0
 		 *
@@ -59,7 +62,8 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 
 
 		/**
-		 * Adds global wp-admin JS.
+		 * Adds global wp-admin JS object.
+		 * <code>add_action( 'admin_head', array( &$this, 'add_global_admin_js' ) );</code>
 		 *
 		 * @since  1.4.0
 		 *

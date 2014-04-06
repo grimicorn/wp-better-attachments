@@ -1,9 +1,5 @@
 <?php
 /**
- * WP Better Attachments Helper Class.
- */
-
-/**
  * This class contains any sort of helper methods/properties that should be shared throughout the classes.
  * This class should be extended by all other classes except WP_Better_Attachments.
  *
@@ -275,8 +271,9 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 * @todo    Add the ability to add attachment to multiple posts.
 		 * @todo    Add setting/filter to disable the cache.
 		 *
-		 * @param object|integer  $post_parent  Optional, the post parent object or ID, defaults to current post.
-		 * @param array           $query_args   Optional, arguments to alter the query, accepts anything WP_Query does.
+		 * @param object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
+		 * @param boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
+		 * @param array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
 		 *
 		 * @return  array                       The attachments.
 		 */

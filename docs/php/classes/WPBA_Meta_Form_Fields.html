@@ -1,0 +1,335 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>API Documentation » \WPBA_Meta_Form_Fields</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">API Documentation</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/WordPress.html"><i class="icon-folder-open"></i> WordPress</a></li>
+<li><a href="../packages/global.html"><i class="icon-folder-open"></i> global</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">0</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<div class="btn-toolbar">
+<div class="btn-group visibility" data-toggle="buttons-checkbox">
+<button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button>
+</div>
+<div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+</div>
+<ul class="side-nav nav nav-list"><li class="nav-header">
+<i title="Methods" class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct() :: WPBA_Meta_Form_Fields class constructor."><span class="description">WPBA_Meta_Form_Fields class constructor.</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method___construct" title="__construct() :: WP_Better_Attachments class constructor."><span class="description">WP_Better_Attachments class constructor.</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_add_global_admin_js" title="add_global_admin_js() :: Adds global wp-admin JS object."><span class="description">Adds global wp-admin JS object.</span><pre>add_global_admin_js()</pre></a></li>
+<li class="method public "><a href="#method_add_global_public_js" title="add_global_public_js() :: Adds global public JS object."><span class="description">Adds global public JS object.</span><pre>add_global_public_js()</pre></a></li>
+<li class="method public "><a href="#method_build_inputs" title="build_inputs() :: Builds all of the inputs for the meta box."><span class="description">Builds all of the inputs for the meta box.</span><pre>build_inputs()</pre></a></li>
+<li class="method public "><a href="#method_enqueue_admin_assets" title="enqueue_admin_assets() :: Enqueues scripts and styles for use in wp-admin."><span class="description">Enqueues scripts and styles for use in wp-admin.</span><pre>enqueue_admin_assets()</pre></a></li>
+<li class="method public "><a href="#method_enqueue_public_assets" title="enqueue_public_assets() :: Enqueues scripts and styles for use on the public front end."><span class="description">Enqueues scripts and styles for use on the public front end.</span><pre>enqueue_public_assets()</pre></a></li>
+<li class="method public "><a href="#method_input" title="input() :: Creates an &lt;input&gt; field."><span class="description">Creates an &lt;input&gt; field.</span><pre>input()</pre></a></li>
+<li class="method public "><a href="#method_label" title="label() :: Creates a label for a form input field."><span class="description">Creates a label for a form input field.</span><pre>label()</pre></a></li>
+<li class="method public "><a href="#method_textarea" title="textarea() :: Creates a &lt;textarea&gt;."><span class="description">Creates a &lt;textarea&gt;.</span><pre>textarea()</pre></a></li>
+</ul>
+</li></ul>
+</div>
+<div class="span8">
+<a id="\WPBA_Meta_Form_Fields"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i title="Classes" class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/WPBA_Meta_Form_Fields.html">WPBA_Meta_Form_Fields</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description"></p>
+<div class="details">
+<div class="long_description"></div>
+<h3>
+<i title="Methods" class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
+<h2>WPBA_Meta_Form_Fields class constructor.</h2>
+<pre>__construct(array $config<code> = array()</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$config</h4>
+<code>array</code><p>Class configuration.</p></div>
+</div></div>
+</div>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
+<h2>WP_Better_Attachments class constructor.</h2>
+<pre>__construct(array $config<code> = array()</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>todo</th>
+<td>Only add on required pages.</td>
+</tr>
+</table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$config</h4>
+<code>array</code><p>Class configuration.</p></div>
+</div></div>
+</div>
+<a id="method_add_global_admin_js"></a><div class="element clickable method public method_add_global_admin_js" data-toggle="collapse" data-target=".method_add_global_admin_js .collapse" title="public">
+<h2>Adds global wp-admin JS object.</h2>
+<pre>add_global_admin_js() : void</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>add_action( 'admin_head', array( &$this, 'add_global_admin_js' ) );</code></div>
+<table class="table table-bordered">
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>todo</th>
+<td>Only add on required pages.</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="method_add_global_public_js"></a><div class="element clickable method public method_add_global_public_js" data-toggle="collapse" data-target=".method_add_global_public_js .collapse" title="public">
+<h2>Adds global public JS object.</h2>
+<pre>add_global_public_js() : void</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>add_action( 'wp_head', array( &$this, 'add_global_public_js' ) );</code></div>
+<table class="table table-bordered">
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>todo</th>
+<td>Only add on required pages.</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="method_build_inputs"></a><div class="element clickable method public method_build_inputs" data-toggle="collapse" data-target=".method_build_inputs .collapse" title="public">
+<h2>Builds all of the inputs for the meta box.</h2>
+<pre>build_inputs(array $inputs<code> = array()</code>) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>
+$attachment_fields = '';
+$input_fields      = array();
+
+// Attachment title
+$input_fields['post_title'] = array(
+	'id'    => 'post_title',
+ 'label' => 'Title',
+ 'value' => $attachment->post_title,
+ 'type'  => 'text',
+ 'attrs' => array(),
+);
+$attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );</div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$inputs</h4>
+<code>array</code><p>The input(s) information (id,label,value,type,attrs).</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>The input(s) HTML.</div>
+</div></div>
+</div>
+<a id="method_enqueue_admin_assets"></a><div class="element clickable method public method_enqueue_admin_assets" data-toggle="collapse" data-target=".method_enqueue_admin_assets .collapse" title="public">
+<h2>Enqueues scripts and styles for use in wp-admin.</h2>
+<pre>enqueue_admin_assets() : void</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_assets' ) );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_enqueue_public_assets"></a><div class="element clickable method public method_enqueue_public_assets" data-toggle="collapse" data-target=".method_enqueue_public_assets .collapse" title="public">
+<h2>Enqueues scripts and styles for use on the public front end.</h2>
+<pre>enqueue_public_assets() : void</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_public_assets' ) );</code></div>
+<table class="table table-bordered">
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>todo</th>
+<td>Only add on required pages.</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="method_input"></a><div class="element clickable method public method_input" data-toggle="collapse" data-target=".method_input .collapse" title="public">
+<h2>Creates an &lt;input&gt; field.</h2>
+<pre>input(integer $id, string $label<code> = ''</code>, string $value<code> = ''</code>, string $type<code> = 'text'</code>, array $attrs<code> = array()</code>) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>
+$label = ( isset( $label ) ) ? $label : '';
+$value = ( isset( $value ) ) ? $value : '';
+$type  = ( isset( $type ) ) ? $type : 'text';
+$attrs = ( isset( $attrs ) ) ? $attrs : array();
+
+$input_html  = '';
+$input_html .= $this->input( $id, $label, $value, $type, $attrs );
+</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>integer</code><p>The ID & name attribute to identify the form field.</p></div>
+<div class="subelement argument">
+<h4>$label</h4>
+<code>string</code><p>Optional, the text to be displayed in the label.</p></div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>string</code><p>Optional, the value & placeholder of the form field.</p></div>
+<div class="subelement argument">
+<h4>$type</h4>
+<code>string</code><p>Optional, the type of input to create, defaults to text.</p></div>
+<div class="subelement argument">
+<h4>$attrs</h4>
+<code>array</code><p>Optional, attributes to add to the input field.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>The input field.</div>
+</div></div>
+</div>
+<a id="method_label"></a><div class="element clickable method public method_label" data-toggle="collapse" data-target=".method_label .collapse" title="public">
+<h2>Creates a label for a form input field.</h2>
+<pre>label(string $id, string $label) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>$this->label( $label, $id );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>string</code><p>The input fields ID value.</p></div>
+<div class="subelement argument">
+<h4>$label</h4>
+<code>string</code><p>The text to be displayed in the label.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>The label for the form input field.</div>
+</div></div>
+</div>
+<a id="method_textarea"></a><div class="element clickable method public method_textarea" data-toggle="collapse" data-target=".method_textarea .collapse" title="public">
+<h2>Creates a &lt;textarea&gt;.</h2>
+<pre>textarea(integer $id, string $label<code> = ''</code>, string $value<code> = ''</code>, array $attrs<code> = array()</code>) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>
+$label = ( isset( $label ) ) ? $label : '';
+$value = ( isset( $value ) ) ? $value : '';
+$type  = ( isset( $type ) ) ? $type : 'text';
+$attrs = ( isset( $attrs ) ) ? $attrs : array();
+
+$input_html  = '';
+$input_html .= $this->textarea( $id, $label, $value, $attrs );
+</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>integer</code><p>The ID & name attribute to identify the form field.</p></div>
+<div class="subelement argument">
+<h4>$label</h4>
+<code>string</code><p>Optional, the text to be displayed in the label.</p></div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>string</code><p>Optional, the value & placeholder of the form field.</p></div>
+<div class="subelement argument">
+<h4>$attrs</h4>
+<code>array</code><p>Optional, attributes to add to the input field.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>The input field.</div>
+</div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.4.0
+</a> and<br>
+            generated on 2014-04-06T10:12:39-05:00.<br></footer></div>
+</div>
+</body>
+</html>

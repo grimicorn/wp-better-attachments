@@ -1,9 +1,5 @@
 <?php
 /**
-* WP Better Attachments Meta Class.
-*/
-
-/**
  * This class contains anything to do with the Meta box or meta CRUD.
  *
  * @version      1.4.0
@@ -82,6 +78,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @todo    setting to limit adding to post type.
 		 *
 		 * @since   1.4.0
+		 *
+		 * @param   string  $post_type  The current post type.
 		 *
 		 * @return  void
 		 */

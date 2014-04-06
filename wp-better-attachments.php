@@ -1,6 +1,6 @@
 <?php
 /**
- * WP Better Attachments
+ * WP Better Attachments.
  *
  * @version      1.4.0
 
