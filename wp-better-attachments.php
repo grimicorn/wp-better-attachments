@@ -4,6 +4,7 @@
  *
  * @version      1.4.0
 
+ * @package      WordPress
  * @subpackage   WPBA
  *
  * @author       Dan Holloran    <dtholloran@gmail.com>
@@ -19,6 +20,8 @@ Author:       Dan Holloran
 Version:      1.4.0
 Author URI:   http://danholloran.com/
 License:      GPL2
+Text Domain:  wpba
+Domain Path:  lang
 */
 
 
@@ -39,10 +42,13 @@ License:      GPL2
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 } // if()
+
 
 
 if ( ! defined( 'WPBA_VERSION' ) ) {
@@ -54,6 +60,8 @@ if ( ! defined( 'WPBA_VERSION' ) ) {
 	define( 'WPBA_VERSION', '1.4.0' );
 } // if()
 
+
+
 if ( ! defined( 'WPBA_URL' ) ) {
 	/**
 	 * WP Better Attachments plugin URL without trailing slash (http://{plugins_url}/wp-better-attachments).
@@ -62,6 +70,8 @@ if ( ! defined( 'WPBA_URL' ) ) {
 	 */
 	define( 'WPBA_URL', plugins_url( '/wp-better-attachments' ) );
 } // if()
+
+
 
 if ( ! defined( 'WPBA_PATH' ) ) {
 	/**
@@ -73,7 +83,7 @@ if ( ! defined( 'WPBA_PATH' ) ) {
 } // if()
 
 // Debugging
-// require_once 'includes/wpba-debug.php';
+require_once 'libs/wpba-debug.php';
 
 
 
@@ -82,13 +92,15 @@ if ( ! defined( 'WPBA_PATH' ) ) {
 */
 $classes = array(
 	'class-wp-better-attachments',
+	'class-wpba-helpers',
+	'class-wpba-meta-form-fields',
+	'class-wpba-meta',
 );
 foreach ( $classes as $class ) {
 	$has_php = ( strpos( $class, '.php' ) !== false );
 	$class   = ( $has_php ) ? $class : "{$class}.php";
 	require_once "classes/{$class}";
 } // foreach()
-
 
 
 
