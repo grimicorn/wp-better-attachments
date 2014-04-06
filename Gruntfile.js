@@ -17,9 +17,8 @@ module.exports = function(grunt) {
 
 	// CSS
 	grunt.registerTask('css', [
-		'clean:distCSS',
-		'sass:site',
-		'sass:ltie9',
+		'clean:cssDist',
+		'sass:public',
 		'sass:admin',
 		'autoprefixer',
 		'group_css_media_queries',
@@ -29,9 +28,8 @@ module.exports = function(grunt) {
 
 	// JS
 	grunt.registerTask('js', [
-		'clean:distJS',
-		'uglify:site',
-		'uglify:env',
+		'clean:jsDist',
+		'uglify:public',
 		'uglify:admin',
 		'version'
 	]);
@@ -48,13 +46,13 @@ module.exports = function(grunt) {
 		'css'
 	]);
 
-	// Run Build process
+	// Run Dist process
 	grunt.registerTask('build', [
 		'clean:distCSS',
 		'clean:distJS',
-		'sass:siteBuild',
-		'sass:ltie9Build',
-		'sass:adminBuild',
+		'sass:publicDist',
+		'sass:ltie9Dist',
+		'sass:adminDist',
 		'imageoptim:all',
 		'uglify:build',
 		'autoprefixer',

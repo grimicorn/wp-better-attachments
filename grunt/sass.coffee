@@ -34,7 +34,7 @@ module.exports =
     files: [
       expand: true
       cwd: "assets/css/scss/admin"
-      src: ["admin.scss"]
+      src: ["wpba-admin.scss"]
       dest: "assets/css/dist"
       ext: ".min.css"
     ]
@@ -47,7 +47,7 @@ module.exports =
     files: [
       expand: true
       cwd: "assets/css/scss/admin"
-      src: ["admin.scss"]
+      src: ["wpba-admin.scss"]
       dest: "assets/css/dist"
       ext: ".min.css"
     ]
