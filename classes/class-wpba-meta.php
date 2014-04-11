@@ -300,7 +300,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  array  The possible post keys.
 		 */
 		private function _possible_post_keys() {
-			return array( 'ID',
+			return array(
+				'ID',
 				'post_author',
 				'post_date',
 				'post_date_gmt',
@@ -364,7 +365,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			foreach ( $posts_to_update as $post_to_update_key => $post_to_update ) {
 				// Only add what can be updated through wp_update_post() we will take care of custom meta later.
 				$post_args = array();
-				foreach ( $post_to_update as $post_key => $post_value) {
+				foreach ( $post_to_update as $post_key => $post_value ) {
 					if ( in_array( $post_key, $post_updateable_keys ) ) {
 						$post_args[$post_key] = $post_value;
 
@@ -383,7 +384,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				unset( $post_data['ID'] ); // Don't need to update the ID
 
 				if ( ! empty( $post_data ) ) {
-					foreach ( $post_data as $meta_key => $meta_value) {
+					foreach ( $post_data as $meta_key => $meta_value ) {
 						$prev_value = get_post_meta( $post_id, $meta_key, true );
 						update_post_meta( $post_id, $meta_key, $meta_value, $prev_value );
 					} // foreach()
@@ -456,13 +457,162 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  string               The attachment menu HTML.
 		 */
 		public function attachment_menu( $attachment ) {
-			$edit_link = admin_url( "post.php?post={$attachment->ID}&action=edit" );
+			$post_type             = get_post_type();
+			$edit_link             = admin_url( "post.php?post={$attachment->ID}&action=edit" );
+			$display_unattach_link = true;
+			$display_edit_link     = true;
+			$display_delete_link   = true;
 
+
+
+			/**
+			 * Allows enabling/disabling the unattach link for all post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_display_unattach_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_display_unattach_link', 'myprefix_wpba_display_unattach_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_unattach_link = apply_filters( "{$this->meta_box_id}_display_unattach_link", $display_unattach_link );
+
+
+
+			/**
+			 * Allows enabling/disabling the unattach link for specific post type.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_type_display_unattach_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_display_unattach_link', 'myprefix_wpba_post_type_display_unattach_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_unattach_link = apply_filters( "{$this->meta_box_id}_{$post_type}_display_unattach_link", $display_unattach_link );
+
+
+
+			/**
+			 * Allows enabling/disabling the delete link for all post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_display_delete_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_display_delete_link', 'myprefix_wpba_display_delete_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_delete_link = apply_filters( "{$this->meta_box_id}_display_delete_link", $display_delete_link );
+
+
+
+			/**
+			 * Allows enabling/disabling the delete link for specific post type.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_type_display_delete_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_display_delete_link', 'myprefix_wpba_post_type_display_delete_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_delete_link = apply_filters( "{$this->meta_box_id}_{$post_type}_display_delete_link", $display_delete_link );
+
+
+
+			/**
+			 * Allows enabling/disabling the edit link for all post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_display_edit_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_display_edit_link', 'myprefix_wpba_display_edit_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_edit_link = apply_filters( "{$this->meta_box_id}_display_edit_link", $display_edit_link );
+
+
+
+			/**
+			 * Allows enabling/disabling the edit link for specific post type.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_type_display_edit_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_display_edit_link', 'myprefix_wpba_post_type_display_edit_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_edit_link = apply_filters( "{$this->meta_box_id}_{$post_type}_display_edit_link", $display_edit_link );
+
+
+			// No point in going any further since if all links have been disabled.
+			if ( ! $display_unattach_link and ! $display_delete_link and ! $display_edit_link ) {
+				return '';
+			} // if()
+
+			// Build the menu
 			$menu  = '';
 			$menu .= "<ul class='list-unstyled pull-left wpba-attachment-menu hide-if-no-js' data-id='{$attachment->ID}'>";
-			$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-unattach">Un-attach</a></li>';
-			$menu .= "<li class='pull-left text-center'><a href='{$edit_link}' class='wpba-edit' target='_blank'>Edit</a></li>";
-			$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-delete">Delete</a></li>';
+
+			// Unattach Link
+			if ( (boolean) $display_unattach_link ) {
+				$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-unattach">Un-attach</a></li>';
+			} // if()
+
+			// Edit Link
+			if ( (boolean) $display_edit_link ) {
+				$menu .= "<li class='pull-left text-center'><a href='{$edit_link}' class='wpba-edit' target='_blank'>Edit</a></li>";
+			} // if()
+
+			if ( (boolean) $display_delete_link ) {
+				$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-delete">Delete</a></li>';
+			} // if()
+
 			$menu .= '</ul>';
 
 			return $menu;
