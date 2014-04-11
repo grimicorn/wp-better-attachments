@@ -13,11 +13,12 @@ module.exports =
 
   admin:
     options:
-      sourceMap: "admin.min.js.map"
+      sourceMap: "wpba-admin.min.js.map"
 
     files:
       "assets/js/dist/wpba-admin.min.js": [
-        "assets/js/src/admin/*.js"
+        "assets/js/src/admin/wpba-meta.js"
+        "assets/js/src/admin/wpba-admin.js"
       ]
 
   dist:

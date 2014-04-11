@@ -53,7 +53,10 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  void
 		 */
 		private function _add_wpba_meta_actions_filters() {
+			// Add meta box
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+
+			// Save meta box input
 			add_action( 'save_post', array( $this, 'save' ) );
 		} // _add_wpba_meta_actions_filters()
 
@@ -431,7 +434,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			<div class="wpba-wrap wpba-utils wpba-meta-box-wrap clearfix">
 				<ul id="wpba_sortable" class="wpba-attachment-form-fields list-inline clearfix">
 					<?php foreach ( $attachments as $attachment ) { ?>
-					<li id="attachment_<?php echo esc_attr( $attachment->ID ); ?>" class="ui-state-default wpba-sortable-item clearfix pull-left">
+					<li id="wpba_attachment_<?php echo esc_attr( $attachment->ID ); ?>" class="ui-state-default wpba-sortable-item clearfix pull-left attachment-item">
 						<i class="dashicons dashicons-menu wpba-sort-handle"></i>
 						<?php echo wp_kses( $this->build_attachment_thumbnail( $attachment ), $allowed_html ); ?>
 						<?php echo wp_kses( $this->build_attachment_fields( $attachment ), $allowed_html ); ?>
@@ -601,16 +604,23 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			// Unattach Link
 			if ( (boolean) $display_unattach_link ) {
-				$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-unattach">Un-attach</a></li>';
+				$menu .= '<li class="pull-left text-center">';
+				$menu .= "<a href='#' id='wpba_unattach_{$attachment->ID}' class='wpba-unattach-link'>Un-attach</a>";
+				$menu .= '</li>';
 			} // if()
 
 			// Edit Link
 			if ( (boolean) $display_edit_link ) {
-				$menu .= "<li class='pull-left text-center'><a href='{$edit_link}' class='wpba-edit' target='_blank'>Edit</a></li>";
+				$menu .= '<li class="pull-left text-center">';
+				$menu .= "<a href='{$edit_link}' class='wpba-edit-link' target='_blank'>Edit</a>";
+				$menu .= '</li>';
 			} // if()
 
+			// Delete Link
 			if ( (boolean) $display_delete_link ) {
-				$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-delete">Delete</a></li>';
+				$menu .= '<li class="pull-left text-center">';
+				$menu .= "<a href='#' id='wpba_delete_{$attachment->ID}' class='wpba-delete-link'>Delete</a>";
+				$menu .= '</li>';
 			} // if()
 
 			$menu .= '</ul>';

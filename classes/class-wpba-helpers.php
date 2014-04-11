@@ -408,6 +408,53 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 			return $post_types;
 		} // get_post_types()
+
+
+
+		/**
+		* Un-attach
+		*
+		* <code>$unattach = $this->unattach_attachment( $attachment_id );</code>
+		*
+		* @since 1.4.0
+		*
+		* @param   integer  $attachment_id  The attachment post id to unattach.
+		*
+		* @return boolean
+		*/
+		public function unattach_attachment( $attachment_id ) {
+			$post_args = array(
+				'ID'          => $attachment_id,
+				'post_parent' => 0,
+			);
+			$update = wp_update_post( $post_args, true );
+
+			if ( is_wp_error( $update ) ) {
+				return false;
+			} // if()
+
+			return true;
+		} // unattach_attachment()
+
+
+
+		/**
+		 * Handles deleting an attachment.
+		 *
+		 * <code>$delete = $this->delete_attachment( $attachment_id );</code>
+		 *
+		 * @param   integer  $attachment_id  The attachment post id to delete.
+		 *
+		 * @return  boolean                  True on success and false on failure.
+		 */
+		public function delete_attachment( $attachment_id ) {
+			$deleted = wp_delete_attachment( $attachment_id, true );
+			if ( false === $deleted ) {
+				return false;
+			} // if()
+
+			return true;
+		} // delete_attachment()
 	} // WPBA_Helpers()
 
 	// Instantiate Class

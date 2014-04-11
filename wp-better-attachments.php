@@ -95,6 +95,7 @@ $classes = array(
 	'class-wpba-helpers',
 	'class-wpba-meta-form-fields',
 	'class-wpba-meta',
+	'class-wpba-ajax',
 );
 foreach ( $classes as $class ) {
 	$has_php = ( strpos( $class, '.php' ) !== false );
