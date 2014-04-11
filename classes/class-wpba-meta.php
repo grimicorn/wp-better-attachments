@@ -75,10 +75,48 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		public function add_meta_box( $post_type ) {
 			$post_types = $this->get_post_types();
 
+			/**
+			 * Allows filtering of the meta box title for all post types.
+			 *
+			 * <code>
+			 * function myprefix_meta_box_title( $input_fields ) {
+			 * 	return 'Attachments';
+			 * }
+			 * add_filter( 'wpba_meta_box_meta_box_title', 'myprefix_meta_box_title' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$meta_box_title = apply_filters( "{$this->meta_box_id}_meta_box_title", $this->meta_box_title );
+
+			/**
+			 * Allows filtering of the meta box title for a specific post type.
+			 *
+			 * <code>
+			 * function myprefix_post_type_meta_box_title( $input_fields ) {
+			 * 	return 'Slides';
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_meta_box_title', 'myprefix_post_type_meta_box_title' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$meta_box_title = apply_filters( "{$this->meta_box_id}_{$post_type}_meta_box_title", $this->meta_box_title );
+
 			if ( in_array( $post_type, $post_types ) ) {
 				add_meta_box(
 					$this->meta_box_id,
-					__( $this->meta_box_title, 'wpba' ),
+					__( $meta_box_title, 'wpba' ),
 					array( $this, 'render_meta_box_content' ),
 					$post_type,
 					'advanced',
@@ -486,6 +524,32 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			$attachment_id_base = "{$this->meta_box_id}_attachment_{$attachment->ID}";
 			$atttachment_fields = '';
+			$input_fields       = $this->_get_attachment_fields( $attachment );
+
+			// Adds a prefix so we know to grab them and save them.
+			foreach ( $input_fields as $key => $value ) {
+				$input_fields[$key]['id'] = "{$attachment_id_base}_{$value['id']}";
+			} // foreach()
+
+			$attachment_fields  = '';
+			$attachment_fields .= '<div class="wpba-attachment-fields-wrap pull-left">';
+			$attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );
+			$attachment_fields .= '</div>';
+
+			return $attachment_fields;
+		} // build_attachment_fields()
+
+
+
+		/**
+		 * Retrieves the attachment input fields.
+		 *
+		 * @param   object  $attachment  The attachment post.
+		 *
+		 * @return  array                The attachment input fields.
+		 */
+		private function _get_attachment_fields( $attachment ) {
+			$post_type    = get_post_type();
 			$input_fields = array();
 
 			// Attachment title
@@ -527,13 +591,13 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			);
 
 
-
 			/**
-			 * Allows filtering of the input fields, add/remove fields.
+			 * Allows filtering of the input fields for all post types, add/remove fields.
 			 *
 			 * <code>
 			 * function myprefix_wpba_input_fields( $input_fields ) {
 			 * 	unset( $input_fields['alt_text'] ); // Removes the Alt text input.
+			 * 	return $input_fields;
 			 * }
 			 * add_filter( 'wpba_meta_box_input_fields', 'myprefix_wpba_input_fields' );
 			 * </code>
@@ -548,6 +612,26 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			$input_fields = apply_filters( "{$this->meta_box_id}_input_fields", $input_fields );
 
 
+
+			/**
+			 * Allows filtering of the input fields for specific post type, add/remove fields.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_type_input_fields( $input_fields ) {
+			 * 	unset( $input_fields['alt_text'] ); // Removes the Alt text input.
+			 * 	return $input_fields;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_input_fields', 'myprefix_wpba_post_type_input_fields' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   array
+			 */
+			$input_fields = apply_filters( "{$this->meta_box_id}_{$post_type}_input_fields", $input_fields );
 
 			// Attachment ID field
 			$input_fields['ID'] = array(
@@ -566,18 +650,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				'attrs' => array( 'class' => 'menu-order-input', ),
 			);
 
-			// Adds a prefix so we know to grab them and save them.
-			foreach ( $input_fields as $key => $value ) {
-				$input_fields[$key]['id'] = "{$attachment_id_base}_{$value['id']}";
-			} // foreach()
-
-			$attachment_fields  = '';
-			$attachment_fields .= '<div class="wpba-attachment-fields-wrap pull-left">';
-			$attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );
-			$attachment_fields .= '</div>';
-
-			return $attachment_fields;
-		} // build_attachment_fields()
+			return $input_fields;
+		} // _get_attachment_fields()
 	} // WPBA_Meta()
 
 	// Instantiate Class
