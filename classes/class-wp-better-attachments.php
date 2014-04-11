@@ -17,6 +17,18 @@
 if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 	class WP_Better_Attachments {
 		/**
+		 * The ID for the meta box.
+		 *
+		 * @todo  allow for multiple meta boxes on a page.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @var   string
+		 */
+		protected $meta_box_id = 'wpba_meta_box';
+
+
+		/**
 		 * WP_Better_Attachments class constructor.
 		 *
 		 * @since  1.4.0
@@ -52,7 +64,6 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 			// Add Global PHP -> JS
 			$mdg_globals = array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'isIE'    => ( $ltie9 and $is_IE ),
 			);
 			$mdg_globals = json_encode( $mdg_globals ); ?>
 			<script>var WPBA_PUBLIC_JS = <?php echo wp_kses( $mdg_globals, 'data' ); ?>;</script>
@@ -75,7 +86,6 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 			// Add Global PHP -> JS
 			$mdg_globals = array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'isIE'    => ( $ltie9 and $is_IE ),
 			);
 			$mdg_globals = json_encode( $mdg_globals ); ?>
 			<script>var WPBA_ADMIN_JS = <?php echo wp_kses( $mdg_globals, 'data' ); ?>;</script>
@@ -113,8 +123,8 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 * @return  void
 		 */
 		public function enqueue_admin_assets() {
-			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.170e.min.css', array(), null, 'all' );
-			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.bd67.min.js', array(), null, true );
+			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.0478.min.css', array(), null, 'all' );
+			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.fade.min.js', array(), null, true );
 			wp_enqueue_script( 'wpba_admin_js' );
 		} // enqueue_admin_assets()
 	} // WP_Better_Attachments()

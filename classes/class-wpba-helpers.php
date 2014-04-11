@@ -214,7 +214,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * @return  array            All of the current transient IDs.
 		 */
-		private function _get_all_cached_attachment_transient_ids( $prefix = '_wpba') {
+		private function _get_all_cached_attachment_transient_ids( $prefix = '_wpba' ) {
 			global $wpdb;
 			$sql = "SELECT `option_name` AS `name`, `option_value` AS `value`
 							FROM  $wpdb->options
@@ -293,7 +293,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				'post_type'   => 'attachment',
 				'post_status' => 'inherit',
 				'post_parent' => $post_parent_id,
-				'order'       => 'DESC',
+				'order'       => 'ASC',
 				'orderby'     => 'menu_order',
 			);
 
@@ -386,6 +386,25 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			unset( $post_types['revision'] );
 			unset( $post_types['nav_menu_item'] );
 			unset( $post_types['deprecated_log'] );
+
+			/**
+			 * Allows filtering of the allowed post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_types( $post_types ) {
+			 * 	unset( $post_types['page'] ); // Removes the "page" post type.
+			 * }
+			 * add_filter( 'wpba_meta_box_post_types', 'myprefix_wpba_post_types' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   array
+			 */
+			$post_types = apply_filters( "{$this->meta_box_id}_post_types", $post_types );
 
 			return $post_types;
 		} // get_post_types()
