@@ -95,7 +95,7 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 				return '';
 			} // if()
 
-			return "<label for='{$id}'>{$label}</label>";
+			return "<label for='{$id}' class='pull-left'>{$label}</label>";
 		} // label()
 
 
@@ -115,6 +115,8 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
+		 * @todo    Allow for merging of the class attribute.
+		 *
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
@@ -124,17 +126,17 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * @return  string           The input field.
 		 */
 		public function textarea( $id, $label = '', $value = '', $attrs = array() ) {
-			// Attributes
-			$input_attrs = array();
-			foreach ( $attrs as $attr => $value ) {
-				$input_attrs = "{$attr}='{$value}'";
-			} // foreach()
-			$input_attrs = trim( implode( ' ', $input_attrs ) );
+			$default_attrs = array(
+				'class' => 'pull-left',
+			);
+			$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );
+
+
 
 			// Build the input
 			$wrap_class  = str_replace( '_', '-', $id );
 			$input_html  = '';
-			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap'>";
+			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap clearfix clear'>";
 			$input_html .= $this->label( $id, $label );
 			$input_html .= "<textarea id='{$id}' name='{$id}_textarea' {$input_attrs}>{$value}</textarea>";
 			$input_html .= '</div>';
@@ -158,6 +160,8 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
+		 * @todo    Allow for merging of the class attribute.
+		 *
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
@@ -167,23 +171,51 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * @return  string           The input field.
 		 */
 		public function input( $id, $label = '', $value = '', $type = 'text', $attrs = array() ) {
-			// Attributes
-			$input_attrs = array();
-			foreach ( $attrs as $attr => $value ) {
-				$input_attrs = "{$attr}='{$value}'";
-			} // foreach()
-			$input_attrs = trim( implode( ' ', $input_attrs ) );
+			$default_attrs = array(
+			'class' => 'pull-left',
+			);
+			$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );
 
 			// Build the input
 			$wrap_class  = str_replace( '_', '-', $id );
 			$input_html  = '';
-			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-{$type}-input-wrap'>";
+			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-{$type}-input-wrap clearfix clear'>";
 			$input_html .= $this->label( $id, $label );
-			$input_html .= "<input id='{$id}' type='{$type}' name='{$id}_{$type}' value='{$value}' placeholder='{$value}'{$input_attrs}>";
+			$input_html .= "<input id='{$id}' type='{$type}' name='{$id}_{$type}' value='{$value}' placeholder='{$value}' {$input_attrs}>";
 			$input_html .= '</div>';
 
 			return $input_html;
 		} // input()
+
+
+		/**
+		 * Merges two sets of attributes together and combines them for a HTML element.
+		 *
+		 * @param   array   $defaults  The default attributes.
+		 * @param   array   $attrs     The supplied attributes
+		 *
+		 * @return  string             The merged HTML element attributes.
+		 */
+		public function merge_element_attributes( $defaults, $attrs ) {
+			// Merge the attributes together
+			foreach ( $defaults as $key => $value ) {
+				if ( isset( $attrs[$key] ) ) {
+					$attrs[$key] = "{$attrs[$key]} {$value}";
+				} else {
+					$attrs[$key] = $value;
+				} // if/else()
+			} // foreach()
+
+			// Flatten the attributes
+			$input_attrs = array();
+			foreach ( $attrs as $attr => $attr_value ) {
+				$attr_value    = ( $attr == 'class' ) ? "{$attr_value} pull-left" : $attr_value;
+				$input_attrs[] = "{$attr}='{$attr_value}'";
+			} // foreach()
+			$input_attrs = trim( implode( ' ', $input_attrs ) );
+
+			return $input_attrs;
+		} // merge_element_attributes()
 	} // WPBA_Meta_Form_Fields()
 
 	// Instantiate Class

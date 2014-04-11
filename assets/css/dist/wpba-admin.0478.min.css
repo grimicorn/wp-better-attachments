@@ -1806,4 +1806,172 @@ body .ui-tooltip {
   border-radius: 8px;
 }
 
+.wpba-utils.pull-left,
+.wpba-utils .pull-left {
+  float: left;
+}
+
+.wpba-utils.pull-right,
+.wpba-utils .pull-right {
+  float: right;
+}
+
+.wpba-utils.list-unstyled,
+.wpba-utils.list-inline,
+.wpba-utils .list-unstyled,
+.wpba-utils .list-inline {
+  padding-left: 0;
+  list-style: none;
+}
+
+.wpba-utils.list-inline,
+.wpba-utils .list-inline {
+  margin-left: -5px;
+}
+
+.wpba-utils.list-inline>li,
+.wpba-utils .list-inline>li {
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.wpba-utils.cl,
+.wpba-utils .cl,
+.wpba-utils.clear,
+.wpba-utils .clear {
+  clear: both;
+}
+
+.wpba-utils.clearfix:before,
+.wpba-utils.clearfix:after,
+.wpba-utils .clearfix:before,
+.wpba-utils .clearfix:after {
+  content: " ";
+  display: table;
+}
+
+.wpba-utils.clearfix:after,
+.wpba-utils .clearfix:after {
+  clear: both;
+}
+
+.wpba-utils.text-center,
+.wpba-utils .text-center {
+  text-align: center;
+}
+
+.wpba-utils.text-left,
+.wpba-utils .text-left {
+  text-align: left;
+}
+
+.wpba-utils.text-right,
+.wpba-utils .text-right {
+  text-align: right;
+}
+
+.wpba-meta-box-wrap {
+  padding-top: 20px;
+}
+
+.wpba-meta-box-wrap .ui-state-highlight {
+  background: #eee;
+  border: 1px dashed #c8c8c8;
+}
+
+.wpba-meta-box-wrap .wpba-sort-handle {
+  right: 0;
+  top: 0;
+  position: absolute;
+  padding: 0 10px 10px;
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+  cursor: move;
+}
+
+.wpba-meta-box-wrap li.wpba-sortable-item {
+  position: relative;
+  padding-bottom: 20px;
+  padding-right: 55px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  background: none;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner {
+  position: relative;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu {
+  background: #fff;
+  background: rgba(255,255,255,0.85);
+  display: none;
+  width: 150px;
+  height: 90px;
+  position: absolute;
+  top: 1px;
+  bottom: 0;
+  left: 1px;
+  right: 0;
+  padding: 30px 0;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu li {
+  line-height: 30px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a {
+  color: #0074a2;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a:hover,
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a:active,
+.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a:focus {
+  color: #2ea2cc;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap img {
+  border: 1px solid #eee;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-image-wrap:hover .wpba-attachment-menu {
+  display: block;
+  cursor: pointer;
+}
+
+.wpba-meta-box-wrap .wpba-attachment-fields-wrap {
+  padding-left: 20px;
+  margin-left: 20px;
+}
+
+.wpba-meta-box-wrap .wpba-textarea-input-wrap,
+.wpba-meta-box-wrap .wpba-text-input-wrap {
+  margin-bottom: 10px;
+}
+
+.wpba-meta-box-wrap .wpba-textarea-input-wrap label,
+.wpba-meta-box-wrap .wpba-text-input-wrap label {
+  width: 100px;
+  margin-right: 10px;
+  height: 27px;
+  line-height: 27px;
+}
+
+.wpba-meta-box-wrap .wpba-textarea-input-wrap textarea,
+.wpba-meta-box-wrap .wpba-textarea-input-wrap input,
+.wpba-meta-box-wrap .wpba-text-input-wrap textarea,
+.wpba-meta-box-wrap .wpba-text-input-wrap input {
+  width: 300px;
+}
+
+.wpba-meta-box-wrap .wpba-textarea-input-wrap textarea,
+.wpba-meta-box-wrap .wpba-text-input-wrap textarea {
+  resize: vertical;
+}
+
 /*# sourceMappingURL=wpba-admin.min.css.map */

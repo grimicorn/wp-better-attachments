@@ -10,7 +10,20 @@ jQuery((function($) {
 	meta.initSorting = function() {
 		meta.sortableElem.sortable({
 			placeholder : 'ui-state-highlight',
-			items       : '.wpba-sortable-item'
+			items       : '.wpba-sortable-item',
+			handle      : '.wpba-sort-handle',
+			cursor      : "move",
+			start       : function( event, ui ) {
+				$('.ui-state-highlight').css({
+					'height' : ui.item.outerHeight(),
+					'width'  : ui.item.outerWidth(),
+				});
+			},
+			update      : function() {
+				meta.sortableElem.find('.wpba-sortable-item').each(function(index, el) {
+					$(el).find('.menu-order-input').val(index + 1);
+				});
+			}
 		});
 	}; // meta.initSorting()
 

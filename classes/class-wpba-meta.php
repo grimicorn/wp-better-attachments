@@ -27,17 +27,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		public $meta_box_title = 'WP Better Attachments';
 
 
-		/**
-		 * The ID for the meta box.
-		 *
-		 * @todo  allow for multiple meta boxes on a page.
-		 *
-		 * @since 1.4.0
-		 *
-		 * @var   string
-		 */
-		private $_meta_box_id = 'wpba_meta_box';
-
 
 
 		/**
@@ -88,7 +77,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			if ( in_array( $post_type, $post_types ) ) {
 				add_meta_box(
-					$this->_meta_box_id,
+					$this->meta_box_id,
 					__( $this->meta_box_title, 'wpba' ),
 					array( $this, 'render_meta_box_content' ),
 					$post_type,
@@ -113,14 +102,14 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 */
 		public function save( $post_id ) {
 			// Check if our nonce is set.
-			if ( ! isset( $_POST["{$this->_meta_box_id}_nonce"] ) ) {
+			if ( ! isset( $_POST["{$this->meta_box_id}_nonce"] ) ) {
 				return $post_id;
 			} // if()
 
-			$nonce = $_POST["{$this->_meta_box_id}_nonce"];
+			$nonce = $_POST["{$this->meta_box_id}_nonce"];
 
 			// Verify that the nonce is valid.
-			if ( ! wp_verify_nonce( $nonce, '{$this->_meta_box_id}_save_fields' ) ){
+			if ( ! wp_verify_nonce( $nonce, '{$this->meta_box_id}_save_fields' ) ){
 				return $post_id;
 			} // if()
 
@@ -140,14 +129,71 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				} // if()
 			} // if/else()
 
+			// Group the user input
+			$fields = $this->_group_meta_fields( $_POST );
+
 			// Sanitize the user input.
-			$fields = $_POST;
 			$fields = $this->_sanitize_fields( $fields );
 
 			// Update the attachment meta.
-			$attachment_id = $post_id;
-			$this->_update_attachment_meta( $attachment_id, $fields );
+			$this->_update_attachment_meta( $fields );
 		} // save
+
+
+
+		/**
+		 * Handles grouping of the submitted meta fields.
+		 *
+		 * <code>
+		 * $fields = array( 'input_id_text' => 'value' );
+		 * $fields = $this->_group_meta_fields( $fields );
+		 * </code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   array  $fields  The submitted meta fields.
+		 *
+		 * @return  array           The grouped meta fields.
+		 */
+		private function _group_meta_fields( $fields ) {
+			$attachment_id_base = "{$this->meta_box_id}_attachment_";
+
+			// Strip the id base
+			$stripped_id_fields = array();
+			foreach ( $fields as $key => $value ) {
+				// We only want to group WPBA meta fields.
+				if ( strpos( $key, $attachment_id_base ) === false ) {
+					continue;
+				} // if()
+
+				$stripped_key                      = str_replace( $attachment_id_base, '', $key );
+				$stripped_id_fields[$stripped_key] = $value;
+			} // foreach()
+
+			// Sort the fields.
+			$sorted_fields = array();
+			foreach ( $stripped_id_fields as $key => $value ) {
+				// Attachment ID
+				$first_underscore = strpos( $key, '_' );
+				$attachment_id    = substr( $key, 0, $first_underscore );
+				$key              = substr_replace( $key, '', 0, $first_underscore + 1 );
+
+				// Type
+				$type = strrchr( $key, '_' );
+				$key  = str_replace( $type, '', $key );
+				$type = trim( $type, '_' );
+
+				// Add the sorted values
+				$sorted_fields[] = array(
+					'value'     => $value,
+					'type'      => $type,
+					'meta_name' => $key,
+					'post_id'   => $attachment_id,
+				);
+			} // foreach()
+
+			return $sorted_fields;
+		} // _group_meta_fields()
 
 
 
@@ -156,6 +202,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 *
 		 * <code>
 		 * $fields = array( 'input_id_text' => 'value' );
+		 * $fields = $this->_group_meta_fields( $fields );
 		 * $fields = $this->_sanitize_fields( $fields );
 		 * </code>
 		 *
@@ -166,6 +213,39 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  array            The sanitized fields.
 		 */
 		private function _sanitize_fields( $fields ) {
+			foreach ( $fields as $key => $field ) {
+				extract( $field );
+
+				$sanitized_value = '';
+				switch ( $field_type ) {
+					case 'text':
+						$sanitized_value = sanitize_text_field( $value );
+						break;
+
+					case 'file':
+						$sanitized_value = esc_url_raw( $value, $protocols );
+						break;
+
+					case 'url':
+						$sanitized_value = esc_url_raw( $value, $protocols );
+						break;
+
+					case 'email':
+						$sanitized_value = sanitize_email( $value );
+						break;
+
+					case 'textarea':
+						$sanitized_value = wp_kses( $value, 'post' );
+						break;
+
+					default:
+						$sanitized_value = esc_attr( $value );
+						break;
+				} // switch()
+
+				$fields[$key]['value'] = $sanitized_value;
+				unset( $fields[$key]['type'] );
+			} // foreach()
 
 			return $fields;
 		} // _sanitize_fields()
@@ -173,21 +253,105 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 
 		/**
-		 * Updates the meta.
+		 * Retrieves the possible post keys when using get_post().
 		 *
-		 * <code></code>
+		 * <code>$post_updateable_keys = $this->_possible_post_keys();</code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @return  array  The possible post keys.
+		 */
+		private function _possible_post_keys() {
+			return array( 'ID',
+				'post_author',
+				'post_date',
+				'post_date_gmt',
+				'post_content',
+				'post_title',
+				'post_excerpt',
+				'post_status',
+				'comment_status',
+				'ping_status',
+				'post_password',
+				'post_name',
+				'to_ping',
+				'pinged',
+				'post_modified',
+				'post_modified_gmt',
+				'post_content_filtered',
+				'post_parent',
+				'guid',
+				'menu_order',
+				'post_type',
+				'post_mime_type',
+				'comment_count',
+				'filter',
+			);
+		} // _possible_post_keys()
+
+
+
+		/**
+		 * Updates the attachment meta.
+		 *
+		 * <code>
+		 * $fields = array( 'input_id_text' => 'value' );
+		 * $fields = $this->_group_meta_fields( $fields );
+		 * $fields = $this->_sanitize_fields( $fields );
+		 * $this->_update_attachment_meta( $fields );
+		 * </code>
 		 *
 		 * @todo    Add code example.
 		 * @todo    Build out method.
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   integer $post_id The ID of the post being updated.
 		 * @param   array   $fields  The fields to update.
 		 *
 		 * @return  void
 		 */
-		private function _update_attachment_meta( $post_id, $fields ) {} // _update_attachment_meta()
+		private function _update_attachment_meta( $fields ) {
+			// Add all the values into posts
+			$posts_to_update = array();
+			foreach ( $fields as $key => $field ) {
+				extract( $field );
+				if ( ! isset( $posts_to_update[$post_id] ) ) {
+					$posts_to_update[$post_id] = array();
+				} // if()
+				$posts_to_update[$post_id][$meta_name] = $value;
+			} // foreach
+
+			// Update the post data using wp_update_post()
+			$post_updateable_keys = $this->_possible_post_keys();
+			foreach ( $posts_to_update as $post_to_update_key => $post_to_update ) {
+				// Only add what can be updated through wp_update_post() we will take care of custom meta later.
+				$post_args = array();
+				foreach ( $post_to_update as $post_key => $post_value) {
+					if ( in_array( $post_key, $post_updateable_keys ) ) {
+						$post_args[$post_key] = $post_value;
+
+						if ( $post_key != 'ID' ) {
+							unset( $posts_to_update[$post_to_update_key][$post_key] );
+						} // id()
+					} // if()
+				} // foreach()
+
+				$update_post = wp_update_post( $post_to_update, true );
+			} // foreach()
+
+			// Update custom meta
+			foreach ( $posts_to_update as $post_key => $post_data ) {
+				$post_id = $post_data['ID'];
+				unset( $post_data['ID'] ); // Don't need to update the ID
+
+				if ( ! empty( $post_data ) ) {
+					foreach ( $post_data as $meta_key => $meta_value) {
+						$prev_value = get_post_meta( $post_id, $meta_key, true );
+						update_post_meta( $post_id, $meta_key, $meta_value, $prev_value );
+					} // foreach()
+				} // if()
+			} // foreach()
+		} // _update_attachment_meta()
 
 
 
@@ -196,7 +360,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 *
 		 * <code>
 		 * add_meta_box(
-		 * 	$this->_meta_box_id,
+		 * 	$this->meta_box_id,
 		 * 	__( $this->meta_box_title, 'wpba' ),
 		 * 	array( $this, 'render_meta_box_content' ),
 		 * 	$post_type,
@@ -206,6 +370,9 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * </code>
 		 *
 		 * @since   1.4.0
+		 *
+		 * @todo    Add setting to disable file types.
+		 * @todo    Add toggles to disable/enable file types visibility.
 		 *
 		 * @uses    WPBA_Meta_Form_Fields
 		 *
@@ -220,17 +387,21 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			$allowed_html = $this->get_form_kses_allowed_html();
 
 			// Add an nonce field so we can check for it later.
-			wp_nonce_field( '{$this->_meta_box_id}_save_fields', "{$this->_meta_box_id}_nonce" );
+			wp_nonce_field( '{$this->meta_box_id}_save_fields', "{$this->meta_box_id}_nonce" ); ?>
 
-			echo '<ul id="wpba_sortable" class="wpba-attachment-form-fields list-unstyled">';
-			foreach ( $attachments as $attachment ) {
-				echo "<li id='attachment_{$attachment->ID}' class='ui-state-default wpba-sortable-item'>";
-				echo '<i class="dashicons dashicons-menu wpba-sort-handle"></i>';
-				echo wp_kses( $this->build_attachment_thumbnail( $attachment ), $allowed_html );
-				echo wp_kses( $this->build_attachment_fields( $attachment ), $allowed_html );
-				echo '</li>';
-			} // foreach
-			echo '</ul>';
+			<div class="wpba-wrap wpba-utils wpba-meta-box-wrap clearfix">
+				<ul id="wpba_sortable" class="wpba-attachment-form-fields list-inline clearfix">
+					<?php foreach ( $attachments as $attachment ) { ?>
+					<li id="attachment_<?php echo esc_attr( $attachment->ID ); ?>" class="ui-state-default wpba-sortable-item clearfix pull-left">
+						<i class="dashicons dashicons-menu wpba-sort-handle"></i>
+						<?php echo wp_kses( $this->build_attachment_thumbnail( $attachment ), $allowed_html ); ?>
+						<?php echo wp_kses( $this->build_attachment_fields( $attachment ), $allowed_html ); ?>
+					</li>
+					<?php } // foreach() ?>
+				</ul>
+			</div> <!-- /.wpba-wrap -->
+
+			<?php
 		} // render_meta_box_content()
 
 
@@ -249,11 +420,11 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		public function attachment_menu( $attachment ) {
 			$edit_link = admin_url( "post.php?post={$attachment->ID}&action=edit" );
 
-			$menu = '';
-			$menu .= "<ul class='list-unstyled pull-left wpba-edit-attachment hide-if-no-js' data-id='{$attachment->ID}'>";
-			$menu .= '<li class="pull-left"><a href="#" class="wpba-unattach">Un-attach</a></li>';
-			$menu .= "<li class='pull-left'><a href='{$edit_link}' class='wpba-edit' target='_blank'>Edit</a></li>";
-			$menu .= '<li class="pull-left"><a href="#" class="wpba-delete">Delete</a></li>';
+			$menu  = '';
+			$menu .= "<ul class='list-unstyled pull-left wpba-attachment-menu hide-if-no-js' data-id='{$attachment->ID}'>";
+			$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-unattach">Un-attach</a></li>';
+			$menu .= "<li class='pull-left text-center'><a href='{$edit_link}' class='wpba-edit' target='_blank'>Edit</a></li>";
+			$menu .= '<li class="pull-left text-center"><a href="#" class="wpba-delete">Delete</a></li>';
 			$menu .= '</ul>';
 
 			return $menu;
@@ -280,7 +451,10 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		public function build_attachment_thumbnail( $attachment ) {
 			$attachment_thumbnail  = '';
 			$attachment_thumbnail .= '<div class="wpba-attachment-image-wrap pull-left">';
+			$attachment_thumbnail .= "<strong class='wpba-attachment-id'>Attachment ID: {$attachment->ID}</strong>";
+			$attachment_thumbnail .= '<div class="inner">';
 			$attachment_thumbnail .= $this->attachment_menu( $attachment );
+			$attachment_thumbnail .= '</div>';
 			$attachment_thumbnail .= wp_get_attachment_image( $attachment->ID, 'thumbnail', true, array( 'class' => 'wpba-attachment-image' ) );
 			$attachment_thumbnail .= '</div>';
 
@@ -310,7 +484,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		public function build_attachment_fields( $attachment ) {
 			global $wpba_meta_form_fields;
 
-			$attachment_id_base = "attachment_{$attachment->ID}";
+			$attachment_id_base = "{$this->meta_box_id}_attachment_{$attachment->ID}";
 			$atttachment_fields = '';
 			$input_fields = array();
 
@@ -361,7 +535,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * function myprefix_wpba_input_fields( $input_fields ) {
 			 * 	unset( $input_fields['alt_text'] ); // Removes the Alt text input.
 			 * }
-			 * add_filter( 'wpba_meta_box_input_fields', 'filter_test' );
+			 * add_filter( 'wpba_meta_box_input_fields', 'myprefix_wpba_input_fields' );
 			 * </code>
 			 *
 			 * @since 1.4.0
@@ -371,7 +545,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 *
 			 * @var   array
 			 */
-			$input_fields = apply_filters( "{$this->_meta_box_id}_input_fields", $input_fields );
+			$input_fields = apply_filters( "{$this->meta_box_id}_input_fields", $input_fields );
 
 
 
@@ -389,7 +563,13 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				'label' => '',
 				'value' => $attachment->menu_order,
 				'type'  => 'hidden',
+				'attrs' => array( 'class' => 'menu-order-input', ),
 			);
+
+			// Adds a prefix so we know to grab them and save them.
+			foreach ( $input_fields as $key => $value ) {
+				$input_fields[$key]['id'] = "{$attachment_id_base}_{$value['id']}";
+			} // foreach()
 
 			$attachment_fields  = '';
 			$attachment_fields .= '<div class="wpba-attachment-fields-wrap pull-left">';
