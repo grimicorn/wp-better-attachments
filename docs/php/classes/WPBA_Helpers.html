@@ -68,6 +68,7 @@
 <li class="method public "><a href="#method_add_global_public_js" title="add_global_public_js() :: Adds global public JS object."><span class="description">Adds global public JS object.</span><pre>add_global_public_js()</pre></a></li>
 <li class="method public "><a href="#method_cache_attachments" title="cache_attachments() :: Caches the attachments query."><span class="description">Caches the attachments query.</span><pre>cache_attachments()</pre></a></li>
 <li class="method public "><a href="#method_clean_attachments_cache" title="clean_attachments_cache() :: Clean the cached attachments."><span class="description">Clean the cached attachments.</span><pre>clean_attachments_cache()</pre></a></li>
+<li class="method public "><a href="#method_delete_attachment" title="delete_attachment() :: Handles deleting an attachment."><span class="description">Handles deleting an attachment.</span><pre>delete_attachment()</pre></a></li>
 <li class="method public "><a href="#method_delete_attachments_cache" title="delete_attachments_cache() :: Delete an attachments cache."><span class="description">Delete an attachments cache.</span><pre>delete_attachments_cache()</pre></a></li>
 <li class="method public "><a href="#method_enqueue_admin_assets" title="enqueue_admin_assets() :: Enqueues scripts and styles for use in wp-admin."><span class="description">Enqueues scripts and styles for use in wp-admin.</span><pre>enqueue_admin_assets()</pre></a></li>
 <li class="method public "><a href="#method_enqueue_public_assets" title="enqueue_public_assets() :: Enqueues scripts and styles for use on the public front end."><span class="description">Enqueues scripts and styles for use on the public front end.</span><pre>enqueue_public_assets()</pre></a></li>
@@ -78,6 +79,7 @@
 <li class="method public "><a href="#method_get_form_kses_allowed_html" title="get_form_kses_allowed_html() :: All of the allowed tags when outputting form fields."><span class="description">All of the allowed tags when outputting form fields.</span><pre>get_form_kses_allowed_html()</pre></a></li>
 <li class="method public "><a href="#method_get_post_types" title="get_post_types() :: Retrieves the enabled post types."><span class="description">Retrieves the enabled post types.</span><pre>get_post_types()</pre></a></li>
 <li class="method public "><a href="#method_get_transient_id" title="get_transient_id() :: Retrieves the transient ID for the current query."><span class="description">Retrieves the transient ID for the current query.</span><pre>get_transient_id()</pre></a></li>
+<li class="method public "><a href="#method_unattach_attachment" title="unattach_attachment() :: Un-attach"><span class="description">Un-attach</span><pre>unattach_attachment()</pre></a></li>
 </ul>
 </li>
 <li class="nav-header private">» Private
@@ -91,7 +93,10 @@
                     <ul></ul>
 </li>
 <li class="nav-header protected">» Protected
-                    <ul><li class="property protected "><a href="#property_cache_duration" title="$cache_duration() :: The length to cache a transient, default 24 hours."><span class="description"></span><pre>$cache_duration</pre></a></li></ul>
+                    <ul>
+<li class="property protected "><a href="#property_cache_duration" title="$cache_duration() :: The length to cache a transient, default 24 hours."><span class="description"></span><pre>$cache_duration</pre></a></li>
+<li class="property protected "><a href="#property_meta_box_id" title="$meta_box_id() :: The ID for the meta box."><span class="description"></span><pre>$meta_box_id</pre></a></li>
+</ul>
 </li>
 </ul>
 </div>
@@ -223,6 +228,21 @@
 <div class="subelement argument">
 <h4>$prefix</h4>
 <code>string</code><p>Optional, the transient id prefix to search for default _wpba.</p></div>
+</div></div>
+</div>
+<a id="method_delete_attachment"></a><div class="element clickable method public method_delete_attachment" data-toggle="collapse" data-target=".method_delete_attachment .collapse" title="public">
+<h2>Handles deleting an attachment.</h2>
+<pre>delete_attachment(integer $attachment_id) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>$delete = $this->delete_attachment( $attachment_id );</code></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$attachment_id</h4>
+<code>integer</code><p>The attachment post id to delete.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>True on success and false on failure.</div>
 </div></div>
 </div>
 <a id="method_delete_attachments_cache"></a><div class="element clickable method public method_delete_attachments_cache" data-toggle="collapse" data-target=".method_delete_attachments_cache .collapse" title="public">
@@ -417,6 +437,24 @@
 <code>string</code>The transient ID.</div>
 </div></div>
 </div>
+<a id="method_unattach_attachment"></a><div class="element clickable method public method_unattach_attachment" data-toggle="collapse" data-target=".method_unattach_attachment .collapse" title="public">
+<h2>Un-attach</h2>
+<pre>unattach_attachment(integer $attachment_id) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>$unattach = $this->unattach_attachment( $attachment_id );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$attachment_id</h4>
+<code>integer</code><p>The attachment post id to unattach.</p></div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
 <a id="method__add_wpba_helpers_actions_filters"></a><div class="element clickable method private method__add_wpba_helpers_actions_filters" data-toggle="collapse" data-target=".method__add_wpba_helpers_actions_filters .collapse" title="private">
 <h2>Handles adding all of the WPBA helpers actions and filters.</h2>
 <pre>_add_wpba_helpers_actions_filters() : void</pre>
@@ -478,6 +516,28 @@
 </table>
 </div></div>
 </div>
+<a id="property_meta_box_id"> </a><div class="element clickable property protected property_meta_box_id" data-toggle="collapse" data-target=".property_meta_box_id .collapse" title="protected">
+<h2>The ID for the meta box.</h2>
+<pre>$meta_box_id : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'wpba_meta_box'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
 </div>
 </div>
 </div>
@@ -486,7 +546,7 @@
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.4.0
 </a> and<br>
-            generated on 2014-04-06T10:12:39-05:00.<br></footer></div>
+            generated on 2014-04-12T16:27:56-05:00.<br></footer></div>
 </div>
 </body>
 </html>

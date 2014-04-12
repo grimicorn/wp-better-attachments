@@ -101,7 +101,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				return $attachment->ID;
 			} else if ( gettype( intval( $post->ID ) ) == 'integer' ) {
 					return $attachment;
-				} else {
+			} else {
 				return false;
 			} // if/elseif/else()
 		} // get_attachment_id()
