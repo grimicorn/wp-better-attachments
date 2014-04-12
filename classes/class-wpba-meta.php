@@ -91,7 +91,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -110,7 +109,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -432,9 +430,10 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			wp_nonce_field( '{$this->meta_box_id}_save_fields', "{$this->meta_box_id}_nonce" ); ?>
 
 			<div class="wpba-wrap wpba-utils wpba-meta-box-wrap clearfix">
-				<ul id="wpba_sortable" class="wpba-attachment-form-fields list-inline clearfix">
+				<?php echo wp_kses( $this->add_attachment_button( $post ), 'post' ); ?>
+				<ul id="wpba_sortable" class="clear wpba-attachment-form-fields list-inline clearfix">
 					<?php foreach ( $attachments as $attachment ) { ?>
-					<li id="wpba_attachment_<?php echo esc_attr( $attachment->ID ); ?>" class="ui-state-default wpba-sortable-item clearfix pull-left attachment-item">
+					<li id="wpba_attachment_<?php echo esc_attr( $attachment->ID ); ?>" class="clear ui-state-default wpba-sortable-item clearfix pull-left attachment-item">
 						<i class="dashicons dashicons-menu wpba-sort-handle"></i>
 						<?php echo wp_kses( $this->build_attachment_thumbnail( $attachment ), $allowed_html ); ?>
 						<?php echo wp_kses( $this->build_attachment_fields( $attachment ), $allowed_html ); ?>
@@ -445,6 +444,72 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			<?php
 		} // render_meta_box_content()
+
+
+
+		/**
+		 * Adds a button for uploading attachments.
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   object  $post  WordPress post object to add the attachment(s) to.
+		 *
+		 * @return  string         The upload button HTML
+		 */
+		public function add_attachment_button( $post ) {
+			$upload_button_content = 'Add Attachment(s)';
+			$post_type             = get_post_type( $post );
+
+			/**
+			 * Allows for changing of the upload button content for all post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_upload_button_content( $upload_button_content ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_upload_button_content', 'myprefix_wpba_upload_button_content' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$upload_button_content = apply_filters( "{$this->meta_box_id}_upload_button_content", $upload_button_content );
+
+
+
+			/**
+			 * Allows for changing of the upload button content for specific post type.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_type_upload_button_content( $upload_button_content ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_upload_button_content', 'myprefix_wpba_post_type_upload_button_content' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$upload_button_content = apply_filters( "{$this->meta_box_id}_{$post_type}_upload_button_content", $upload_button_content );
+
+
+
+			$upload_button  = '';
+			$upload_button .= '<div class="wp-media-buttons">';
+			$upload_button .= "<a href='#' id='wpba_add_{$post->ID}' class='wpba-add-link button add_media' title='{$upload_button_content}'>";
+			$upload_button .= '<span class="wp-media-buttons-icon"></span>';
+			$upload_button .= "<span class='wpba-add-link-title'>&nbsp;{$upload_button_content}</span>";
+			$upload_button .= '</a>';
+			$upload_button .= '</div>';
+
+			return $upload_button;
+		}
 
 
 
@@ -481,7 +546,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -502,7 +566,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -523,7 +586,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -544,7 +606,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -565,7 +626,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -586,7 +646,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -663,7 +722,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -684,7 +742,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   string
 			 */
@@ -811,7 +868,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   array
 			 */
@@ -833,7 +889,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * @since 1.4.0
 			 *
 			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
 			 *
 			 * @var   array
 			 */

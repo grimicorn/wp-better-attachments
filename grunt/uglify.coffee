@@ -17,6 +17,7 @@ module.exports =
 
     files:
       "assets/js/dist/wpba-admin.min.js": [
+        "assets/js/src/admin/wpba-media-handler.js"
         "assets/js/src/admin/wpba-meta.js"
         "assets/js/src/admin/wpba-admin.js"
       ]

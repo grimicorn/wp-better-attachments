@@ -7,7 +7,7 @@ jQuery((function($) {
 	 *
 	 * @since   1.4.0
 	 *
-	 * @return  {void}
+	 * @return  {Void}
 	 */
 	meta.initSorting = function() {
 		meta.sortableElem.sortable({
@@ -32,7 +32,9 @@ jQuery((function($) {
 	/**
 	 * Handles removing of an attachment item.
 	 *
-	 * @param   {object}   elem  jQuery selector object of either the child of an attachment item or the attachment item to remove.
+	 * @since   1.4.0
+	 *
+	 * @param   {Object}   elem  jQuery selector object of either the child of an attachment item or the attachment item to remove.
 	 *
 	 * @return  {Boolean}  false
 	 */
@@ -64,9 +66,10 @@ jQuery((function($) {
 	 */
 	meta.delete = function(id, callback) {
 		var ajaxParams = {
-			action : 'wpba_delete_attachment',
-			id     : id,
-		};
+					action : 'wpba_delete_attachment',
+					id     : id,
+				}
+		;
 
 		// Delete attachment
 		$.post(ajaxurl, ajaxParams, function(data, textStatus) {
@@ -90,9 +93,9 @@ jQuery((function($) {
 	 *
 	 * @since   1.4.0
 	 *
-	 * @param   {object}   elem  Optional, jQuery selector object.
+	 * @param   {Object}   elem  Optional, jQuery selector object.
 	 *
-	 * @return  {boolean}        false
+	 * @return  {Boolean}        false
 	 */
 	meta.deleteHandler = function(elem) {
 		elem = ( typeof elem === 'undefined' ) ? $('.wpba-delete-link') : elem;
@@ -156,9 +159,9 @@ jQuery((function($) {
 	 *
 	 * @since   1.4.0
 	 *
-	 * @param   {object}   elem  Optional, jQuery selector object.
+	 * @param   {Object}   elem  Optional, jQuery selector object.
 	 *
-	 * @return  {boolean}        false
+	 * @return  {Boolean}        false
 	 */
 	meta.unattachHandler = function(elem) {
 		elem = ( typeof elem === 'undefined' ) ? $('.wpba-unattach-link') : elem;
@@ -181,9 +184,9 @@ jQuery((function($) {
 	 *
 	 * @since   1.4.0
 	 *
-	 * @param   {object}   elem  Optional, jQuery selector object.
+	 * @param   {Object}   elem  Optional, jQuery selector object.
 	 *
-	 * @return  {boolean}        false
+	 * @return  {Boolean}        false
 	 */
 	meta.eventHandlers = function(elem) {
 		// Unattach Attachment Handler
@@ -203,7 +206,7 @@ jQuery((function($) {
 	 *
 	 * @since   1.4.0
 	 *
-	 * @return  {void}
+	 * @return  {Void}
 	 */
 	meta.init = function() {
 		meta.sortableElem = $( "#wpba_sortable" );
