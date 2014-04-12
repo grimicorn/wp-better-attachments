@@ -76,10 +76,10 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				global $post;
 				return get_the_id();
 			} else if ( gettype( $post_parent ) === 'object' ) {
-					return $post_parent->ID;
-				} else if ( gettype( intval( $post->ID ) ) == 'integer' ) {
-					return $post_parent;
-				} else {
+				return $post_parent->ID;
+			} else if ( gettype( intval( $post_parent ) ) == 'integer' ) {
+				return $post_parent;
+			} else {
 				return false;
 			} // if/elseif/else()
 		} // get_attachment_post_parent_id()

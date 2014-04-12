@@ -426,24 +426,53 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			$attachments  = $this->get_attachments( $post, true );
 			$allowed_html = $this->get_form_kses_allowed_html();
 
+			// Get all of the current attachment IDs, used when adding attachments so we do not have duplicates.
+			$attachment_ids = array();
+			foreach ( $attachments as $attachment ) {
+				$attachment_ids[] = $attachment->ID;
+			} // foreach()
+			$attachment_ids = implode( ',', $attachment_ids );
+
 			// Add an nonce field so we can check for it later.
 			wp_nonce_field( '{$this->meta_box_id}_save_fields', "{$this->meta_box_id}_nonce" ); ?>
 
 			<div class="wpba-wrap wpba-utils wpba-meta-box-wrap clearfix">
 				<?php echo wp_kses( $this->add_attachment_button( $post ), 'post' ); ?>
-				<ul id="wpba_sortable" class="clear wpba-attachment-form-fields list-inline clearfix">
-					<?php foreach ( $attachments as $attachment ) { ?>
-					<li id="wpba_attachment_<?php echo esc_attr( $attachment->ID ); ?>" class="clear ui-state-default wpba-sortable-item clearfix pull-left attachment-item">
-						<i class="dashicons dashicons-menu wpba-sort-handle"></i>
-						<?php echo wp_kses( $this->build_attachment_thumbnail( $attachment ), $allowed_html ); ?>
-						<?php echo wp_kses( $this->build_attachment_fields( $attachment ), $allowed_html ); ?>
-					</li>
-					<?php } // foreach() ?>
+				<ul id="wpba_sortable" class="clear wpba-attachment-form-fields list-inline clearfix" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-attachmentids="<?php echo esc_attr( $attachment_ids ); ?>">
+					<?php $this->build_attachment_items( $attachments ); ?>
 				</ul>
 			</div> <!-- /.wpba-wrap -->
 
 			<?php
 		} // render_meta_box_content()
+
+
+		/**
+		 * Handles building of the attachment items from the supplied attachments.
+		 *
+		 * @param   array    $attachments  The attachments to build the items for.
+		 * @param   boolean  $echo         Optional, output the attachments, default true.
+		 *
+		 * @return  string                 The attachment items HTML.
+		 */
+		public function build_attachment_items( $attachments, $echo = true ) {
+			$attachment_items = '';
+			$allowed_html     = $this->get_form_kses_allowed_html();
+
+			foreach ( $attachments as $attachment ) {
+				$attachment_items .= "<li id='wpba_attachment_{$attachment->ID}' class='clear ui-state-default wpba-sortable-item clearfix pull-left attachment-item'>";
+				$attachment_items .= '<i class="dashicons dashicons-menu wpba-sort-handle"></i>';
+				$attachment_items .= $this->build_attachment_thumbnail( $attachment );
+				$attachment_items .= $this->build_attachment_fields( $attachment );
+				$attachment_items .= '</li>';
+			} // foreach()
+
+			if ( $echo ) {
+				echo wp_kses( $attachment_items, $allowed_html );
+			} // if()
+
+			return $attachment_items;
+		} // build_attachment_items()
 
 
 
@@ -701,6 +730,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
+		 * @todo    Add filter for image size?
+		 *
 		 * @param   object  $attachment  The attachment post.
 		 *
 		 * @return  string               The attachment thumbnail HTML.
@@ -917,5 +948,5 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 	// Instantiate Class
 	global $wpba_meta;
-	$wpba_helpers = new WPBA_Meta();
+	$wpba_meta = new WPBA_Meta();
 } // if()
