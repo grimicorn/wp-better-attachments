@@ -5,3 +5,5 @@ bower_components
 .sass-cache
 *.map
 phpdoc-cache-*
+/assets/js/src/admin/HTML/
+/assets/js/src/admin/Rails/
