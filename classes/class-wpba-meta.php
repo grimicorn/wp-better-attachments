@@ -472,7 +472,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * Allows enabling/disabling the unattach link for all post types.
 			 *
 			 * <code>
-			 * function myprefix_wpba_display_unattach_link( $input_fields ) {
+			 * function myprefix_wpba_display_unattach_link( $display_unattach_link ) {
 			 * 	return false;
 			 * }
 			 * add_filter( 'wpba_meta_box_display_unattach_link', 'myprefix_wpba_display_unattach_link' );
@@ -493,7 +493,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * Allows enabling/disabling the unattach link for specific post type.
 			 *
 			 * <code>
-			 * function myprefix_wpba_post_type_display_unattach_link( $input_fields ) {
+			 * function myprefix_wpba_post_type_display_unattach_link( $display_unattach_link ) {
 			 * 	return false;
 			 * }
 			 * add_filter( 'wpba_meta_box_post_type_display_unattach_link', 'myprefix_wpba_post_type_display_unattach_link' );
@@ -514,7 +514,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * Allows enabling/disabling the delete link for all post types.
 			 *
 			 * <code>
-			 * function myprefix_wpba_display_delete_link( $input_fields ) {
+			 * function myprefix_wpba_display_delete_link( $display_delete_link ) {
 			 * 	return false;
 			 * }
 			 * add_filter( 'wpba_meta_box_display_delete_link', 'myprefix_wpba_display_delete_link' );
@@ -535,7 +535,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * Allows enabling/disabling the delete link for specific post type.
 			 *
 			 * <code>
-			 * function myprefix_wpba_post_type_display_delete_link( $input_fields ) {
+			 * function myprefix_wpba_post_type_display_delete_link( $display_delete_link ) {
 			 * 	return false;
 			 * }
 			 * add_filter( 'wpba_meta_box_post_type_display_delete_link', 'myprefix_wpba_post_type_display_delete_link' );
@@ -556,7 +556,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * Allows enabling/disabling the edit link for all post types.
 			 *
 			 * <code>
-			 * function myprefix_wpba_display_edit_link( $input_fields ) {
+			 * function myprefix_wpba_display_edit_link( $display_edit_link ) {
 			 * 	return false;
 			 * }
 			 * add_filter( 'wpba_meta_box_display_edit_link', 'myprefix_wpba_display_edit_link' );
@@ -577,7 +577,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 * Allows enabling/disabling the edit link for specific post type.
 			 *
 			 * <code>
-			 * function myprefix_wpba_post_type_display_edit_link( $input_fields ) {
+			 * function myprefix_wpba_post_type_display_edit_link( $display_edit_link ) {
 			 * 	return false;
 			 * }
 			 * add_filter( 'wpba_meta_box_post_type_display_edit_link', 'myprefix_wpba_post_type_display_edit_link' );
@@ -647,9 +647,55 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  string               The attachment thumbnail HTML.
 		 */
 		public function build_attachment_thumbnail( $attachment ) {
+			$display_attachment_id = true;
+			$post_type             = get_post_type();
+
+			/**
+			 * Allows enable/disable displaying of the attachment ID for all post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_display_unattach_link( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_display_unattach_link', 'myprefix_wpba_display_unattach_link' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_attachment_id = apply_filters( "{$this->meta_box_id}_display_attachment_id", $display_attachment_id );
+
+
+
+			/**
+			 * Allows enable/disable displaying of the attachment ID for specific post type.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_type_display_attachment_id( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_display_attachment_id', 'myprefix_wpba_post_type_display_attachment_id' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   string
+			 */
+			$display_attachment_id = apply_filters( "{$this->meta_box_id}_{$post_type}_display_attachment_id", $display_attachment_id );
+
+
 			$attachment_thumbnail  = '';
 			$attachment_thumbnail .= '<div class="wpba-attachment-image-wrap pull-left">';
-			$attachment_thumbnail .= "<strong class='wpba-attachment-id'>Attachment ID: {$attachment->ID}</strong>";
+			if ( (boolean)$display_attachment_id ) {
+				$attachment_thumbnail .= "<strong class='wpba-attachment-id'>Attachment ID: {$attachment->ID}</strong>";
+			} // if()
 			$attachment_thumbnail .= '<div class="inner">';
 			$attachment_thumbnail .= $this->attachment_menu( $attachment );
 			$attachment_thumbnail .= '</div>';
