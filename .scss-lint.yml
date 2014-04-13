@@ -59,6 +59,9 @@ linters:
   SortedProperties:
     enabled: false
 
+  PropertySortOrder:
+    enabled: false
+
   SpaceAfterComma:
     enabled: true
 
