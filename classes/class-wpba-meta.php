@@ -198,6 +198,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  array           The grouped meta fields.
 		 */
 		private function _group_meta_fields( $fields ) {
+			// pp( $_POST );
+			// die();
 			$attachment_id_base = "{$this->meta_box_id}_attachment_";
 
 			// Strip the id base
@@ -280,7 +282,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 						$sanitized_value = wp_kses( $value, 'post' );
 						break;
 
-					case 'wp_editor':
+					case 'editor':
 						$sanitized_value = wp_kses( $value, 'post' );
 						break;
 
@@ -445,11 +447,43 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			<div class="wpba-wrap wpba-utils wpba-meta-box-wrap clearfix">
 				<?php echo wp_kses( $this->add_attachment_button( $post ), 'post' ); ?>
+
+				<div class="wpba-before-meta-box-list clear clearfix">
+					<?php
+					/**
+					 * Fires directly before the WPBA attachment list.
+					 *
+					 * @since  1.4.0
+					 *
+					 * @todo   Create example documentation.
+					 *
+					 * @param  object  The current post.
+					 * @param  array   All of the attachments for the current post.
+					 */
+					do_action( 'wpba_before_meta_box_list', $post, $attachments ); ?>
+				</div> <!-- /.wpba-before-meta-box-list -->
+
+				<?php // Attachment List ?>
 				<ul id="wpba_sortable" class="clear wpba-attachment-form-fields list-inline clearfix" data-postid="<?php echo esc_attr( $post->ID ); ?>" data-attachmentids="<?php echo esc_attr( $attachment_ids ); ?>">
 					<?php $this->build_attachment_items( $attachments ); ?>
 				</ul>
-			</div> <!-- /.wpba-wrap -->
 
+				<div class="wpba-after-meta-box-list clear clearfix">
+					<?php
+					/**
+					 * Fires directly after the WPBA attachment list.
+					 *
+					 * @since  1.4.0
+					 *
+					 * @todo   Create example documentation.
+					 *
+					 * @param  object  The current post.
+					 * @param  array   All of the attachments for the current post.
+					 */
+					do_action( 'wpba_after_meta_box_list', $post, $attachments ); ?>
+				</div> <!-- /.wpba-after-meta-box-list -->
+
+			</div> <!-- /.wpba-wrap -->
 			<?php
 		} // render_meta_box_content()
 
@@ -959,7 +993,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				'id'    => 'post_content',
 				'label' => 'Description',
 				'value' => $attachment->post_content,
-				'type'  => 'wp_editor',
+				'type'  => 'editor',
 				'attrs' => array(),
 			);
 
