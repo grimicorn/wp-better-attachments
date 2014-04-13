@@ -108,9 +108,12 @@ foreach ( $classes as $class ) {
 /**
  * Libs
  */
-$libs = array();
+$libs = array(
+	'wpba-functions',
+	'wpba-shortcodes',
+);
 foreach ( $libs as $lib ) {
 	$has_php = ( strpos( $lib, '.php' ) !== false );
 	$lib     = ( $has_php ) ? $lib : "{$lib}.php";
-	require_once "lib/{$lib}";
+	require_once "libs/{$lib}";
 } // foreach()
