@@ -47,6 +47,8 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
+		 * @todo    Document input types.
+		 *
 		 * @param   array   $inputs  The input(s) information (id,label,value,type,attrs).
 		 *
 		 * @return  string           The input(s) HTML.
@@ -63,7 +65,7 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 				$attrs = ( isset( $attrs ) ) ? $attrs : array();
 
 				switch ( $type ) {
-					case 'wp_editor':
+					case 'editor':
 						$input_html .= $this->wp_editor( $id, $label, $value );
 						break;
 
@@ -121,7 +123,6 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
-		 * @param   string   $type   Optional, the type of input to create, defaults to text.
 		 *
 		 * @return  string           The input field.
 		 */
@@ -140,7 +141,7 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 				'quicktags'     => false,
 			);
 			ob_start();
-			wp_editor( 'test', $id, $wp_editor_settings );
+			wp_editor( $value, "{$id}_editor", $wp_editor_settings );
 			$input_html .= ob_get_clean();
 
 			$input_html .= '</div>';
@@ -168,7 +169,6 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
-		 * @param   string   $type   Optional, the type of input to create, defaults to text.
 		 * @param   array    $attrs  Optional, attributes to add to the input field.
 		 *
 		 * @return  string           The input field.

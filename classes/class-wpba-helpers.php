@@ -150,6 +150,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 * @return  boolean                  False if value was not set and true if value was set.
 		 */
 		public function cache_attachments( $transient_id, $attachments, $cache_duration = null ) {
+			$post_type      = get_post_type();
 			$cache_duration = ( is_null( $cache_duration ) ) ? $this->cache_duration : $cache_duration;
 
 
