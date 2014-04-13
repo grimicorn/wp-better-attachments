@@ -66,7 +66,9 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * <code>$post_parent_id = $this->get_attachment_post_parent_id( $post_parent );</code>
 		 *
-		 * @param object|integer  $post_parent  Optional, the post parent object or ID, defaults to current post.
+		 * @since   1.4.0
+		 *
+		 * @param   object|integer  $post_parent  Optional, the post parent object or ID, defaults to current post.
 		 *
 		 * @return  integer                     The attachments post parent ID.
 		 */
@@ -91,7 +93,9 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * <code>$attachment_id = $this->get_attachment_id( $attachment );</code>
 		 *
-		 * @param object|integer  $attachment  Optional, the post parent object or ID, defaults to current post.
+		 * @since   1.4.0
+		 *
+		 * @param   object|integer  $attachment  Optional, the post parent object or ID, defaults to current post.
 		 *
 		 * @return  integer                    The attachments post parent ID.
 		 */
@@ -147,6 +151,55 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 */
 		public function cache_attachments( $transient_id, $attachments, $cache_duration = null ) {
 			$cache_duration = ( is_null( $cache_duration ) ) ? $this->cache_duration : $cache_duration;
+
+
+			/**
+			 * Allows filtering of the cache duration for all post types.
+			 * Either the time duration in seconds or false to disable the cache, useful for development.
+			 *
+			 * <code>
+			 * function myprefix_cache_duration( $input_fields ) {
+			 * 	return ( 12 * HOUR_IN_SECONDS );
+			 * }
+			 * add_filter( 'wpba_meta_box_cache_duration', 'myprefix_cache_duration' );
+			 * </code>
+			 *
+			 * @see https://codex.wordpress.org/Transients_API
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$cache_duration = apply_filters( "{$this->meta_box_id}_cache_duration", $cache_duration );
+
+
+
+			/**
+			 * Allows filtering of the cache duration for a specific post type.
+			 * Either the time duration in seconds or false to disable the cache, useful for development.
+			 *
+			 * <code>
+			 * function myprefix_post_type_cache_duration( $input_fields ) {
+			 * 	return ( 12 * HOUR_IN_SECONDS );
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_cache_duration', 'myprefix_post_type_cache_duration' );
+			 * </code>
+			 *
+			 * @see https://codex.wordpress.org/Transients_API
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$cache_duration = apply_filters( "{$this->meta_box_id}_{$post_type}_cache_duration", $cache_duration );
+
+
+			// Allows for disabling of the cache
+			$cache_duration = ( $cache_duration === false ) ? 0 : $cache_duration;
 
 			if ( is_multisite() ) {
 				return set_site_transient( $transient_id, $attachments, $cache_duration );
@@ -265,23 +318,24 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * @see     http://codex.wordpress.org/Class_Reference/WP_Query
 		 *
+		 * @since   1.4.0
+		 *
 		 * @uses    WP_Query
 		 *
-		 * @todo    Add setting to disable featured image.
 		 * @todo    Add the ability to add attachment to multiple posts.
-		 * @todo    Add setting/filter to disable the cache.
 		 *
-		 * @param object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
-		 * @param boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
-		 * @param array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
+		 * @param   object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
+		 * @param   boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
+		 * @param   array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
 		 *
-		 * @return  array                       The attachments.
+		 * @return  array                                    The attachments.
 		 */
 		public function get_attachments( $post_parent = null, $disable_featured_image = false, $query_args = array() ) {
 			// Debugging purposes only
 			// $this->clean_attachments_cache();
 
 			$post_parent_id = $this->get_attachment_post_parent_id( $post_parent );
+			$post_type      = get_post_type( $post_parent_id );
 
 			// Post parent ID does not exist
 			if ( ! $post_parent_id ) {
@@ -296,6 +350,43 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				'order'       => 'ASC',
 				'orderby'     => 'menu_order',
 			);
+
+
+			/**
+			 * Allows filtering of disabling the featured image for all post types.
+			 *
+			 * <code>
+			 * function myprefix_disable_featured_image( $input_fields ) {
+			 * 	return true;
+			 * }
+			 * add_filter( 'wpba_meta_box_disable_featured_image', 'myprefix_disable_featured_image' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$disable_featured_image = apply_filters( "{$this->meta_box_id}_disable_featured_image", $disable_featured_image );
+
+			/**
+			 * Allows filtering of disabling the featured image for a specific post type.
+			 *
+			 * <code>
+			 * function myprefix_post_type_disable_featured_image( $input_fields ) {
+			 * 	return true;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_disable_featured_image', 'myprefix_post_type_disable_featured_image' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$disable_featured_image = apply_filters( "{$this->meta_box_id}_{$post_type}_disable_featured_image", $disable_featured_image );
 
 			// Disable the featured image? It is an attachment ya'know.
 			if ( $disable_featured_image ) {
