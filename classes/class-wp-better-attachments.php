@@ -128,8 +128,8 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 				wp_enqueue_media();
 			} // if()
 
-			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.0478.min.css', array(), null, 'all' );
-			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.3560.min.js', array( 'jquery-ui-sortable' ), null, true );
+			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.8f34.min.css', array(), null, 'all' );
+			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.2b61.min.js', array( 'jquery-ui-sortable' ), null, true );
 			wp_enqueue_script( 'wpba_admin_js' );
 		} // enqueue_admin_assets()
 	} // WP_Better_Attachments()
