@@ -58,6 +58,9 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			// Save meta box input
 			add_action( 'save_post', array( $this, 'save' ) );
+
+			// Adds an attachments button above the post editor
+			add_action( 'media_buttons_context', array( &$this, 'add_editor_form_button' ), 11 );
 		} // _add_wpba_meta_actions_filters()
 
 
@@ -274,6 +277,10 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 						break;
 
 					case 'textarea':
+						$sanitized_value = wp_kses( $value, 'post' );
+						break;
+
+					case 'wp_editor':
 						$sanitized_value = wp_kses( $value, 'post' );
 						break;
 
@@ -530,15 +537,87 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 
 			$upload_button  = '';
-			$upload_button .= '<div class="wp-media-buttons">';
 			$upload_button .= "<a href='#' id='wpba_add_{$post->ID}' class='wpba-add-link button add_media' title='{$upload_button_content}'>";
 			$upload_button .= '<span class="wp-media-buttons-icon"></span>';
 			$upload_button .= "<span class='wpba-add-link-title'>&nbsp;{$upload_button_content}</span>";
 			$upload_button .= '</a>';
-			$upload_button .= '</div>';
 
 			return $upload_button;
-		}
+		} // add_attachment_button()
+
+
+
+		/**
+		* Add Attachments button above post editor
+		*
+		* @since 1.4.0
+		*
+		* @param   string  $context HTML above post editor.
+		*
+		* @return  string  The add attachment button added to the HTML above the post editor.
+		*/
+		function add_editor_form_button( $context ) {
+			global $post;
+
+			$post_type                  = get_post_type();
+			$display_editor_form_button = true;
+
+			/**
+			 * Allows filtering of the meta box title for all post types.
+			 *
+			 * <code>
+			 * function myprefix_display_editor_form_button( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_display_editor_form_button', 'myprefix_display_editor_form_button' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$display_editor_form_button = apply_filters( "{$this->meta_box_id}_display_editor_form_button", $display_editor_form_button );
+
+			/**
+			 * Allows filtering of the meta box title for a specific post type.
+			 *
+			 * <code>
+			 * function myprefix_post_type_display_editor_form_button( $input_fields ) {
+			 * 	return false;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_display_editor_form_button', 'myprefix_post_type_display_editor_form_button' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$display_editor_form_button = apply_filters( "{$this->meta_box_id}_{$post_type}_display_editor_form_button", $display_editor_form_button );
+
+			// Make sure the user has not disabled displaying the button.
+			if ( ! $display_editor_form_button ) {
+				return $context;
+			} // if()
+
+			// Make sure the user has not disabled this post type
+			if ( ! in_array( $post_type, $this->get_post_types() ) ) {
+				return $context;
+			} // if()
+
+
+			// Check if the button has been added
+			$button_added = ( strpos( $context, 'wpba-add-link-title' ) === false ) ? false : true;
+			if ( $button_added ){
+				return $context;
+			} // if()
+
+			return $context .= $this->add_attachment_button( $post );
+		} // add_editor_form_button()
+
 
 
 
@@ -880,7 +959,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				'id'    => 'post_content',
 				'label' => 'Description',
 				'value' => $attachment->post_content,
-				'type'  => 'textarea',
+				'type'  => 'wp_editor',
 				'attrs' => array(),
 			);
 
