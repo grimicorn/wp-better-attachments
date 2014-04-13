@@ -63,6 +63,10 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 				$attrs = ( isset( $attrs ) ) ? $attrs : array();
 
 				switch ( $type ) {
+					case 'wp_editor':
+						$input_html .= $this->wp_editor( $id, $label, $value );
+						break;
+
 					case 'textarea':
 						$input_html .= $this->textarea( $id, $label, $value, $attrs );
 						break;
@@ -101,6 +105,52 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 
 
 		/**
+		 * Creates a wp_editor instance.
+		 *
+		 * <code>
+		 * $label = ( isset( $label ) ) ? $label : '';
+		 * $value = ( isset( $value ) ) ? $value : '';
+		 * $type  = ( isset( $type ) ) ? $type : 'text';
+		 *
+		 * $input_html  = '';
+		 * $input_html .= $this->wp_editor( $id, $label, $value );
+		 * </code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   integer  $id     The ID & name attribute to identify the form field.
+		 * @param   string   $label  Optional, the text to be displayed in the label.
+		 * @param   string   $value  Optional, the value & placeholder of the form field.
+		 * @param   string   $type   Optional, the type of input to create, defaults to text.
+		 *
+		 * @return  string           The input field.
+		 */
+		public function wp_editor( $id, $label = '', $value = '' ) {
+			// Build the input
+			$wrap_class  = str_replace( '_', '-', $id );
+			$input_html  = '';
+			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap clearfix clear'>";
+			$input_html .= $this->label( $id, $label );
+
+			$wp_editor_settings = array(
+				'media_buttons' => false,
+				'textarea_rows' => 2,
+				'teeny'         => true,
+				'editor_class'  => 'wpba-wyswig pull-left',
+				'quicktags'     => false,
+			);
+			ob_start();
+			wp_editor( 'test', $id, $wp_editor_settings );
+			$input_html .= ob_get_clean();
+
+			$input_html .= '</div>';
+
+			return $input_html;
+		} // wp_editor()
+
+
+
+		/**
 		 * Creates a <textarea>.
 		 *
 		 * <code>
@@ -114,8 +164,6 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * </code>
 		 *
 		 * @since   1.4.0
-		 *
-		 * @todo    Allow for merging of the class attribute.
 		 *
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.
@@ -159,8 +207,6 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * </code>
 		 *
 		 * @since   1.4.0
-		 *
-		 * @todo    Allow for merging of the class attribute.
 		 *
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.

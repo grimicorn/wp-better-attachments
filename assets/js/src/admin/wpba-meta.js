@@ -1,6 +1,13 @@
 /* global WPBA_ADMIN_JS */
+/* global tinymce */
 jQuery((function($) {
 	var meta = {};
+
+	meta.initWYSIWGEditor = function() {
+		var wyswigSelector = '.wpba-wyswig';
+		meta.wyswigEditors = $(wyswigSelector);
+		// tinymce.init({selector:wyswigSelector});
+	};
 
 	/**
 	 * Initializes sorting of the attachments.
@@ -10,18 +17,36 @@ jQuery((function($) {
 	 * @return  {Void}
 	 */
 	meta.initSorting = function() {
+		meta.sortableElem = $( "#wpba_sortable" );
+
 		meta.sortableElem.sortable({
 			placeholder : 'ui-state-highlight',
 			items       : '.wpba-sortable-item',
 			handle      : '.wpba-sort-handle',
 			cursor      : "move",
 			start       : function( event, ui ) {
+				// Makes the box the correct size when sorting
 				$('.ui-state-highlight').css({
 					'height' : ui.item.outerHeight(),
 					'width'  : ui.item.outerWidth(),
 				});
+
+				// Handles TinyMCE sorting issue
+				meta.sortableElem.find(meta.wyswigEditors).each(function(index, el){
+					tinymce.execCommand( 'mceRemoveEditor', false, $(el).attr('id') ); // TinyMCE 4.x
+					tinymce.execCommand( 'mceRemoveControl', false, $(el).attr('id') ); // TinyMCE 3.x
+				});
+			},
+			stop: function() {
+				// Handles TinyMCE sorting issue
+				meta.sortableElem.find(meta.wyswigEditors).each(function(index, el){
+						tinymce.execCommand( 'mceAddEditor', true, $(el).attr('id') ); // TinyMCE 4.x
+						tinymce.execCommand( 'mceAddControl', true, $(el).attr('id') ); // TinyMCE 3.x
+						meta.sortableElem.sortable("refresh");
+				});
 			},
 			update      : function() {
+				// Set the correct menu order
 				meta.sortableElem.find('.wpba-sortable-item').each(function(index, el) {
 					$(el).find('.menu-order-input').val(index + 1);
 				});
@@ -58,7 +83,7 @@ jQuery((function($) {
 
 	/**
 	 * Retrieves the current post ID if available.
-	 *
+	 * @since  1.4.0
 	 * @return  {Number|Boolean}  The posts ID if available and false if not.
 	 */
 	meta.getCurrentPostID = function() {
@@ -72,7 +97,7 @@ jQuery((function($) {
 
 	/**
 	 * Handles adding an attachment.
-	 *
+	 * @since  1.4.0
 	 * @param  {Array}     attachmentIDs  The IDs of the attachments to add.
 	 * @param  {Function}  callback        Optional, function to execute after adding attachments is complete, receives the success/failure as a parameter.
 	 *
@@ -97,7 +122,7 @@ jQuery((function($) {
 			// Add the new attachments
 
 			if ( success && sortableElemExists && data.html !== '' ) {
-				meta.sortableElem.append(data.html).sortable('refresh');
+				meta.sortableElem.prepend(data.html).sortable('refresh');
 			} // if()
 
 			// Execute optional callback
@@ -125,6 +150,8 @@ jQuery((function($) {
 
 			meta.add(attachmentIDs);
 		});
+
+		return false;
 	}; // meta.addHandler()
 
 	/**
@@ -284,7 +311,7 @@ jQuery((function($) {
 	 * @return  {Void}
 	 */
 	meta.init = function() {
-		meta.sortableElem = $( "#wpba_sortable" );
+		meta.initWYSIWGEditor();
 		meta.initSorting();
 		meta.addHandler();
 		meta.resetEventHandlers();
