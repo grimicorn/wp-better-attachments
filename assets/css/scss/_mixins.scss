@@ -11,9 +11,10 @@
 @mixin clearfix() {
 	&:before,
 	&:after {
-		content: " "; // 1
+		content: ' '; // 1
 		display: table; // 2
 	}
+
 	&:after {
 		clear: both;
 	}
@@ -26,4 +27,13 @@
 @mixin background-opacity($color, $opacity) {
 	background: $color;
 	background: rgba($color, $opacity);
+}
+
+// Box sizing
+//
+// @param  $boxmodel  The sizing property value.
+@mixin box-sizing($boxmodel) {
+	-webkit-box-sizing: $boxmodel;
+	-moz-box-sizing: $boxmodel;
+	box-sizing: $boxmodel;
 }

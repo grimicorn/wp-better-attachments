@@ -1847,7 +1847,7 @@ body .ui-tooltip {
 .wpba-utils.clearfix:after,
 .wpba-utils .clearfix:before,
 .wpba-utils .clearfix:after {
-  content: " ";
+  content: ' ';
   display: table;
 }
 
@@ -1892,6 +1892,9 @@ body .ui-tooltip {
 }
 
 .wpba-meta-box-wrap li.wpba-sortable-item {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
   position: relative;
   padding-bottom: 20px;
   padding-right: 55px;
@@ -1899,6 +1902,7 @@ body .ui-tooltip {
   margin-bottom: 20px;
   border: 0;
   background: none;
+  width: 100%;
 }
 
 .wpba-meta-box-wrap .wpba-attachment-image-wrap .inner {

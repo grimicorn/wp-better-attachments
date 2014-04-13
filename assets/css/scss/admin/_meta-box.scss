@@ -1,9 +1,9 @@
 .wpba-meta-box-wrap {
 	padding-top: 20px;
 
-	.ui-state-highlight { 
+	.ui-state-highlight {
 		background: #eee;
-		border: 1px dashed darken(#eee, 15%); 
+		border: 1px dashed darken(#eee, 15%);
 	} // .ui-state-highlight
 
 	.wpba-sort-handle {
@@ -18,6 +18,7 @@
 	} // .wpba-sort-handle
 
 	li.wpba-sortable-item {
+		@include box-sizing(border-box);
 		position: relative;
 		padding-bottom: 20px;
 		padding-right: 55px;
@@ -25,6 +26,7 @@
 		margin-bottom: 20px;
 		border: 0;
 		background: none;
+		width: 100%;
 	} // .wpba-sortable-item
 
 	.wpba-attachment-image-wrap {
