@@ -57,6 +57,10 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			add_action( 'add_attachment', array( &$this, 'clean_attachments_cache' ) );
 			add_action( 'edit_attachment', array( &$this, 'clean_attachments_cache' ) );
 			add_action( 'delete_attachment', array( &$this, 'clean_attachments_cache' ) );
+			add_action( 'save_post', array( &$this, 'clean_attachments_cache' ) );
+			Add_action( 'wpba_attachment_unattached', array( &$this, 'clean_attachments_cache' ) );
+			Add_action( 'wpba_attachment_unattached', array( &$this, 'clean_attachments_cache' ) );
+			Add_action( 'wpba_attachment_deleted', array( &$this, 'clean_attachments_cache' ) );
 		} // _add_wpba_helpers_actions_filters()
 
 
@@ -387,7 +391,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			 *
 			 * @var   string
 			 */
-			$disable_featured_image = apply_filters( "{$this->meta_box_id}_{$post_type}_disable_featured_image", $disable_featured_image );
+			$disable_featured_image = apply_filters( "{$this->meta_box_id}_{$post_type}_disable_featured_image", $disable_featured_image, $post_type );
 
 			// Disable the featured image? It is an attachment ya'know.
 			if ( $disable_featured_image ) {
@@ -504,15 +508,49 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 
 		/**
-		* Un-attach
+		* Handles attaching attachments.
+		*
+		* <code>$attach = $this->attach_attachment( $attachment_id );</code>
+		*
+		* @since   1.4.0
+		*
+		* @param   integer  $attachment_id  The attachment post id to attach.
+		* @param   integer  $post_id        The post id to attach the attachment to.
+		*
+		* @return  boolean                  True on success false on failure.
+		*/
+		public function attach_attachment( $attachment_id, $post_id ) {
+			$post_args = array(
+				'ID'          => $attachment_id,
+				'post_parent' => $post_id,
+			);
+			$update = wp_update_post( $post_args, true );
+
+			if ( is_wp_error( $update ) ) {
+				return false;
+			} // if()
+
+			/**
+			 * Runs when WP Better Attachments attaches an attachment.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'wpba_attachment_unattached' );
+
+			return true;
+		} // attach_attachment()
+
+
+		/**
+		* Handles un-attaching an attachment.
 		*
 		* <code>$unattach = $this->unattach_attachment( $attachment_id );</code>
 		*
-		* @since 1.4.0
+		* @since   1.4.0
 		*
 		* @param   integer  $attachment_id  The attachment post id to unattach.
 		*
-		* @return boolean
+		* @return  boolean                  True on success false on failure.
 		*/
 		public function unattach_attachment( $attachment_id ) {
 			$post_args = array(
@@ -524,6 +562,13 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			if ( is_wp_error( $update ) ) {
 				return false;
 			} // if()
+
+			/**
+			 * Runs when WP Better Attachments un-attaches an attachment.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'wpba_attachment_unattached' );
 
 			return true;
 		} // unattach_attachment()
@@ -544,6 +589,13 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			if ( false === $deleted ) {
 				return false;
 			} // if()
+
+			/**
+			 * Runs when WP Better Attachments deletes an attachment.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'wpba_attachment_deleted' );
 
 			return true;
 		} // delete_attachment()
