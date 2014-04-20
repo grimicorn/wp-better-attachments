@@ -96,6 +96,7 @@ $classes = array(
 	'class-wpba-meta-form-fields',
 	'class-wpba-meta',
 	'class-wpba-ajax',
+	// 'class-wpba-notifications',
 );
 foreach ( $classes as $class ) {
 	$has_php = ( strpos( $class, '.php' ) !== false );
@@ -111,6 +112,8 @@ foreach ( $classes as $class ) {
 $libs = array(
 	'wpba-functions',
 	'wpba-shortcodes',
+	'wpba-filter-settings',
+	'wpba-filter-post-type-settings',
 );
 foreach ( $libs as $lib ) {
 	$has_php = ( strpos( $lib, '.php' ) !== false );
