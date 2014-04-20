@@ -1,4 +1,20 @@
 <?php
+/**
+ * WP Better Attachments shortcodes.
+ *
+ * @version      1.4.0
+ *
+ * @package      WordPress
+ * @subpackage   WPBA
+ *
+ * @since        1.4.0
+ *
+ * @author       Dan Holloran          <dholloran@matchboxdesigngroup.com>
+ *
+ * @copyright    2013 - Present         Dan Holloran
+ */
+
+
 // post_id="current_post_id"
 // show_icon="false"
 // file_type_categories="image,file,audio,video"

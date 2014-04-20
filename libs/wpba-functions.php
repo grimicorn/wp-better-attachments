@@ -1,5 +1,22 @@
 <?php
 /**
+ * WP Better Attachments functions.
+ *
+ * @version      1.4.0
+ *
+ * @package      WordPress
+ * @subpackage   WPBA
+ *
+ * @since        1.4.0
+ *
+ * @author       Dan Holloran          <dholloran@matchboxdesigngroup.com>
+ *
+ * @copyright    2013 - Present         Dan Holloran
+ */
+
+
+
+/**
  * Checks if the post has any attachments.
  *
  * <code>$attachments_exist = wpba_attachments_exist( get_the_id(), false );</code>
