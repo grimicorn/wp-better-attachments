@@ -30,6 +30,13 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 
 
 
+		public function response( $data ) {
+			echo json_encode( $data );
+			die();
+		} // response()
+
+
+
 		/**
 		 * Handles adding all of the WPBA meta actions and filters.
 		 *
@@ -72,33 +79,33 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 			$attachment_ids         = $_POST['attachmentids'];
 			$current_attachment_ids = $_POST['currentattachments'];
 
-			// Make sure we do not duplicate attachments in the UI
-			$post_not_in = array();
-			foreach ( $attachment_ids as $attachment_key => $attachment_id ) {
-				if ( in_array( $attachment_id, $current_attachment_ids ) ) {
-					$post_not_in[] = $attachment_id;
-					unset( $attachment_ids[$attachment_key] );
-				} // if()
-			} // foreach()
-
 			// Get the attachments
 			$query_args  = array(
 				'post__in'     => $attachment_ids,
-				'post__not_in' => $post_not_in,
 			);
 			$attachments = $this->get_attachments( $post_id, false, $query_args );
+
+			// Handle attaching the attachments and removing the duplicates.
+			foreach ( $attachments as $key => $attachment ) {
+				if ( $attachment->post_parent != $post_id ) {
+					// Attach attachment
+					$this->attach_attachment( $attachment->ID, $post_id );
+				} else {
+					// Remove duplicate
+					unset( $attachments[$key] );
+				} // if/else()
+			} // foreach()
 
 			// Get the attachment items HTML
 			global $wpba_meta;
 			$attachment_items = $wpba_meta->build_attachment_items( $attachments, false );
 
-			// Send everything back to the JS
+			// Send the status and HTML back in JSON
 			$data = array(
 				'success' => true,
 				'html'    => $attachment_items,
 			);
-			echo json_encode( $data );
-			die();
+			$this->response( $data );
 		} // wpba_add_attachments_callback()
 
 
@@ -122,8 +129,7 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 			} // if()
 
 			// Unattach the attachment and send the status back as JSON.
-			echo json_encode( $unattach = $this->unattach_attachment( $attachment_id ) );
-			die();
+			$this->response( $this->unattach_attachment( $attachment_id ) );
 		} // wpba_unattach_attachment_callback
 
 
@@ -147,8 +153,7 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 			} // if()
 
 			// Delete the attachment and send the status back as JSON.
-			echo json_encode( $this->delete_attachment( $attachment_id ) );
-			die();
+			$this->response( $this->delete_attachment( $attachment_id ) );
 		} // wpba_delete_attachment_callback
 	} // WPBA_AJAX()
 
