@@ -535,7 +535,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			 *
 			 * @since 1.4.0
 			 */
-			do_action( 'wpba_attachment_unattached' );
+			do_action( 'wpba_attachment_attached' );
 
 			return true;
 		} // attach_attachment()
