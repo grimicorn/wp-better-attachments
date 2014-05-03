@@ -1,13 +1,47 @@
 /* global WPBA_ADMIN_JS */
 /* global tinymce */
 jQuery((function($) {
-	var meta = {};
+	var meta = {
+		wyswig : {}
+	};
 
-	meta.initWYSIWGEditor = function() {
+	/**
+	 * Initializes new WYSWIG editors added by AJAX.
+	 *
+	 * @return  {Void}
+	 */
+	meta.wyswig.initNew = function() {
+		var wyswigAJAX = $('.wpba-wyswig-input-wrap.ajax'),
+				wyswigElem = wyswigAJAX.find('textarea')
+		;
+
+		if ( wyswigElem.length === 0 ) {
+			return;
+		} // if()
+
+		wyswigElem.each(function(index, el) {
+			var that           = $(el),
+					id             = that.attr('id'),
+					editorSelector = '#' + id
+			;
+
+			// Init tinymce
+			tinymce.init({
+				selector: editorSelector,
+				menubar : false
+			});
+		});
+	}; // meta.wyswig.initNew()
+
+	/**
+	 * Initializes the WYSWIG editor.
+	 *
+	 * @return  {Void}
+	 */
+	meta.wyswig.init = function() {
 		var wyswigSelector = '.wpba-wyswig';
 		meta.wyswigEditors = $(wyswigSelector);
-		// tinymce.init({selector:wyswigSelector});
-	};
+	}; // meta.wyswig.init()
 
 	/**
 	 * Initializes sorting of the attachments.
@@ -120,9 +154,10 @@ jQuery((function($) {
 			;
 
 			// Add the new attachments
-
 			if ( success && sortableElemExists && data.html !== '' ) {
 				meta.sortableElem.prepend(data.html).sortable('refresh');
+				// Init any WYSWIG editors
+				meta.wyswig.initNew();
 			} // if()
 
 			// Execute optional callback
@@ -311,7 +346,7 @@ jQuery((function($) {
 	 * @return  {Void}
 	 */
 	meta.init = function() {
-		meta.initWYSIWGEditor();
+		meta.wyswig.init();
 		meta.initSorting();
 		meta.addHandler();
 		meta.resetEventHandlers();
