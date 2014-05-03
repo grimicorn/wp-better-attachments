@@ -42,6 +42,8 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 		 *
 		 * <code>$this->_add_wpba_meta_actions_filters();</code>
 		 *
+		 * @internal
+		 *
 		 * @since   1.4.0
 		 *
 		 * @return  void
@@ -79,22 +81,33 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 			$attachment_ids         = $_POST['attachmentids'];
 			$current_attachment_ids = $_POST['currentattachments'];
 
+			// Make sure we do not duplicate attachments
+			foreach ( $attachment_ids as $attachment_key => $attachment_id ) {
+				if ( in_array( $attachment_id, $current_attachment_ids ) ) {
+					unset( $attachment_ids[$attachment_key] );
+				} // if()
+			} // foreach()
+
+			// If we have nothing to add then we are done, Nothing to see here folks....
+			if ( empty( $attachment_ids ) ) {
+				// Send the status and HTML back in JSON
+				$data = array(
+					'success' => false,
+					'html'    => '',
+				);
+				$this->response( $data );
+			} // if()
+
+			// Attach attachments
+			foreach ( $attachment_ids as $attachment_id ) {
+				$this->attach_attachment( $attachment_id, $post_id );
+			} // foreach()
+
 			// Get the attachments
-			$query_args  = array(
-				'post__in'     => $attachment_ids,
+			$query_args = array(
+				'post__in' => $attachment_ids,
 			);
 			$attachments = $this->get_attachments( $post_id, false, $query_args );
-
-			// Handle attaching the attachments and removing the duplicates.
-			foreach ( $attachments as $key => $attachment ) {
-				if ( $attachment->post_parent != $post_id ) {
-					// Attach attachment
-					$this->attach_attachment( $attachment->ID, $post_id );
-				} else {
-					// Remove duplicate
-					unset( $attachments[$key] );
-				} // if/else()
-			} // foreach()
 
 			// Get the attachment items HTML
 			global $wpba_meta;
