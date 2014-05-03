@@ -2,9 +2,9 @@
 Contributors: dholloran
 Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
-Requires at least: 3.5
-Tested up to: 3.6.1
-Stable tag: 1.3.8
+Requires at least: 3.6
+Tested up to: 3.9
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
