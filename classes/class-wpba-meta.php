@@ -28,7 +28,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 
 
-
 		/**
 		 * WPBA_Meta class constructor.
 		 *
@@ -47,6 +46,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * Handles adding all of the WPBA meta actions and filters.
 		 *
 		 * <code>$this->_add_wpba_meta_actions_filters();</code>
+		 *
+		 * @internal
 		 *
 		 * @since   1.4.0
 		 *
@@ -195,6 +196,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * $fields = $this->_group_meta_fields( $fields );
 		 * </code>
 		 *
+		 * @internal
+		 *
 		 * @since   1.4.0
 		 *
 		 * @param   array  $fields  The submitted meta fields.
@@ -254,6 +257,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * $fields = $this->_sanitize_fields( $fields );
 		 * </code>
 		 *
+		 * @internal
+		 *
 		 * @since   1.4.0
 		 *
 		 * @param   array   $fields  The fields to sanitize.
@@ -309,6 +314,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 *
 		 * <code>$post_updateable_keys = $this->_possible_post_keys();</code>
 		 *
+		 * @internal
+		 *
 		 * @since   1.4.0
 		 *
 		 * @return  array  The possible post keys.
@@ -353,6 +360,8 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * $fields = $this->_sanitize_fields( $fields );
 		 * $this->_update_attachment_meta( $fields );
 		 * </code>
+		 *
+		 * @internal
 		 *
 		 * @todo    Add code example.
 		 * @todo    Build out method.
@@ -492,8 +501,11 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		} // render_meta_box_content()
 
 
+
 		/**
 		 * Handles building of the attachment items from the supplied attachments.
+		 *
+		 * @since   1.4.0
 		 *
 		 * @param   array    $attachments  The attachments to build the items for.
 		 * @param   boolean  $echo         Optional, output the attachments, default true.
@@ -595,7 +607,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		*
 		* @return  string  The add attachment button added to the HTML above the post editor.
 		*/
-		function add_editor_form_button( $context ) {
+		public function add_editor_form_button( $context ) {
 			global $post;
 
 			$post_type                  = get_post_type();
@@ -956,6 +968,10 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 		/**
 		 * Retrieves the attachment input fields.
+		 *
+		 * <code>$input_fields = $this->_get_attachment_fields( $attachment );</code>
+		 *
+		 * @internal
 		 *
 		 * @param   object  $attachment  The attachment post.
 		 *
