@@ -1,16 +1,19 @@
-/* global WPBA_ADMIN_JS */
-/* global tinymce */
+/* global WPBA_ADMIN_JS, tinymce */
 jQuery((function($) {
 	var meta = {
-		wyswig : {}
+		wyswig     : {},
+		attachment : {}
 	};
 
 	/**
 	 * Initializes new WYSWIG editors added by AJAX.
 	 *
+	 * @since   1.4.0
+	 *
 	 * @return  {Void}
 	 */
 	meta.wyswig.initNew = function() {
+
 		var wyswigAJAX = $('.wpba-wyswig-input-wrap.ajax'),
 				wyswigElem = wyswigAJAX.find('textarea')
 		;
@@ -36,6 +39,8 @@ jQuery((function($) {
 	/**
 	 * Initializes the WYSWIG editor.
 	 *
+	 * @since   1.4.0
+	 *
 	 * @return  {Void}
 	 */
 	meta.wyswig.init = function() {
@@ -44,13 +49,58 @@ jQuery((function($) {
 	}; // meta.wyswig.init()
 
 	/**
+	 * Adds attachment ID(s) to the list of currently attached posts.
+	 *
+	 * @since   1.4.0
+	 *
+	 * @param   {String}  ids  Comma separated list of ID(s) to add.
+	 *
+	 * @return  {Boolean}      false
+	 */
+	meta.attachment.addIDs = function(ids) {
+		// Make sure the IDs do not have a trailing comma
+		ids = ids.replace(/,\s*$/, "");
+
+		var currentIDs    = meta.sortableElem.data('attachmentids'),
+				newIDs = ( currentIDs === '' || typeof currentIDs === 'undefined' ) ? ids : currentIDs + ',' + ids
+		;
+		meta.sortableElem.data('attachmentids', newIDs);
+
+		return false;
+	}; // meta.attachment.addIDs()
+
+	/**
+	 * Removes attachment ID from the list of currently attached posts.
+	 *
+	 * @since   1.4.0
+	 *
+	 * @param   {String}  id   The ID to remove.
+	 *
+	 * @return  {Boolean}      false
+	 */
+	meta.attachment.removeIDs = function(id) {
+		var currentIDs = meta.sortableElem.data('attachmentids').toString().split(',');
+
+		$.each(currentIDs, function(index, val) {
+			if ( val === id ) {
+				currentIDs.splice( index, 1 );
+			} // if()
+		});
+
+		// Update the IDs
+		meta.sortableElem.data('attachmentids', currentIDs.join());
+
+		return false;
+	}; // meta.attachment.removeIDs()
+
+	/**
 	 * Initializes sorting of the attachments.
 	 *
 	 * @since   1.4.0
 	 *
 	 * @return  {Void}
 	 */
-	meta.initSorting = function() {
+	meta.attachment.initSorting = function() {
 		meta.sortableElem = $( "#wpba_sortable" );
 
 		meta.sortableElem.sortable({
@@ -86,7 +136,7 @@ jQuery((function($) {
 				});
 			}
 		});
-	}; // meta.initSorting()
+	}; // meta.attachment.initSorting()
 
 	/**
 	 * Handles removing of an attachment item.
@@ -97,7 +147,7 @@ jQuery((function($) {
 	 *
 	 * @return  {Boolean}  false
 	 */
-	meta.removeAttachmentItem = function(elem) {
+	meta.attachment.remove = function(elem) {
 		if ( meta.sortableElem.length === 0 || typeof meta.sortableElem === 'undefined' ) {
 			return false;
 		} // if()
@@ -117,7 +167,9 @@ jQuery((function($) {
 
 	/**
 	 * Retrieves the current post ID if available.
+	 *
 	 * @since  1.4.0
+	 *
 	 * @return  {Number|Boolean}  The posts ID if available and false if not.
 	 */
 	meta.getCurrentPostID = function() {
@@ -132,12 +184,13 @@ jQuery((function($) {
 	/**
 	 * Handles adding an attachment.
 	 * @since  1.4.0
+	 *
 	 * @param  {Array}     attachmentIDs  The IDs of the attachments to add.
 	 * @param  {Function}  callback        Optional, function to execute after adding attachments is complete, receives the success/failure as a parameter.
 	 *
 	 * @return boolean     false
 	 */
-	meta.add = function( attachmentIDs, callback ) {
+	meta.attachment.add = function( attachmentIDs, callback ) {
 		var currentAttachments = meta.sortableElem.data('attachmentids'),
 				ajaxData = {
 					postid             : meta.getCurrentPostID(),
@@ -156,8 +209,15 @@ jQuery((function($) {
 			// Add the new attachments
 			if ( success && sortableElemExists && data.html !== '' ) {
 				meta.sortableElem.prepend(data.html).sortable('refresh');
+				// Reset handlers
+				meta.resetEventHandlers();
+
 				// Init any WYSWIG editors
 				meta.wyswig.initNew();
+
+				// Add the new post(s) to the  current post id(s)
+				var newIDs = ( attachmentIDs.length === 0 ) ? '' : attachmentIDs.join();
+				meta.attachment.addIDs(newIDs);
 			} // if()
 
 			// Execute optional callback
@@ -167,7 +227,7 @@ jQuery((function($) {
 		});
 
 		return false;
-	}; // meta.add()
+	}; // meta.attachment.add()
 
 	/**
 	 * Handles for when an attachment is added.
@@ -176,18 +236,18 @@ jQuery((function($) {
 	 *
 	 * @return  boolean  false
 	 */
-	meta.addHandler = function() {
+	meta.attachment.addHandler = function() {
 		WPBA_ADMIN_JS.media.uploader.init($('.wpba-add-link'), function( attachments ) {
 			var attachmentIDs = [];
 			$.each(attachments, function(index, val) {
 				attachmentIDs.push( val.id );
 			});
 
-			meta.add(attachmentIDs);
+			meta.attachment.add(attachmentIDs);
 		});
 
 		return false;
-	}; // meta.addHandler()
+	}; // meta.attachment.addHandler()
 
 	/**
 	 * Deletes an attachment.
@@ -201,7 +261,7 @@ jQuery((function($) {
 	 *
 	 * @return  {Boolean}         false
 	 */
-	meta.delete = function(id, callback) {
+	meta.attachment.delete = function(id, callback) {
 		var ajaxParams = {
 					action : 'wpba_delete_attachment',
 					id     : id,
@@ -213,7 +273,8 @@ jQuery((function($) {
 			var success = ( textStatus === 'success' && $.parseJSON(data) === true ) ? true : false;
 
 			if ( success ) {
-				meta.removeAttachmentItem( $('#wpba_attachment_' + id) );
+				meta.attachment.remove( $('#wpba_attachment_' + id) );
+				meta.attachment.removeIDs( id );
 			} // if()
 
 			// Execute optional callback
@@ -223,7 +284,7 @@ jQuery((function($) {
 		});
 
 		return false;
-	}; // meta.delete()
+	}; // meta.attachment.delete()
 
 	/**
 	 * Delete link event click handler.
@@ -234,8 +295,8 @@ jQuery((function($) {
 	 *
 	 * @return  {Boolean}        false
 	 */
-	meta.deleteHandler = function(elem) {
-		elem = ( typeof elem === 'undefined' ) ? $('.wpba-delete-link') : elem;
+	meta.attachment.deleteHandler = function(elem) {
+		elem = ( typeof elem === 'undefined' ) ? $('.wpba-delete-link').not('.wpba-has-delete-handler') : elem.not('.wpba-has-delete-handler');
 
 		elem.on('click', function(e) {
 			e.preventDefault();
@@ -248,13 +309,16 @@ jQuery((function($) {
 
 			// Delete the attachment
 			var attachmentId = $(this).attr('id').replace('wpba_delete_', '');
-			meta.delete( attachmentId );
+			meta.attachment.delete( attachmentId );
 
 			return false;
 		});
 
+		// Add class for delete handler
+		elem.addClass('wpba-has-delete-handler');
+
 		return false;
-	}; // meta.deleteHandler()
+	}; // meta.attachment.deleteHandler()
 
 	/**
 	 * Unattaches an attachment.
@@ -266,9 +330,9 @@ jQuery((function($) {
 	 * @param   {Number|String}  id        The attachment ID to unattach.
 	 * @param   {Function}       callback  Optional, function to execute after unattach is complete, receives the success/failure as a parameter.
 	 *
-	 * @return  {Boolean}            false
+	 * @return  {Boolean}                  false
 	 */
-	meta.unattach = function(id, callback) {
+	meta.attachment.unattach = function(id, callback) {
 		var ajaxParams = {
 			action : 'wpba_unattach_attachment',
 			id     : id,
@@ -279,7 +343,8 @@ jQuery((function($) {
 			var success = ( textStatus === 'success' && $.parseJSON(data) === true ) ? true : false;
 
 			if ( success ) {
-				meta.removeAttachmentItem( $('#wpba_attachment_' + id) );
+				meta.attachment.remove( $('#wpba_attachment_' + id) );
+				meta.attachment.removeIDs( id );
 			} // if()
 
 			// Execute optional callback
@@ -289,7 +354,7 @@ jQuery((function($) {
 		});
 
 		return false;
-	}; // meta.unattach()
+	}; // meta.attachment.unattach()
 
 	/**
 	 * Unattach link event click handler.
@@ -300,21 +365,24 @@ jQuery((function($) {
 	 *
 	 * @return  {Boolean}        false
 	 */
-	meta.unattachHandler = function(elem) {
-		elem = ( typeof elem === 'undefined' ) ? $('.wpba-unattach-link') : elem;
+	meta.attachment.unattachHandler = function(elem) {
+		elem = ( typeof elem === 'undefined' ) ? $('.wpba-unattach-link').not('.wpba-has-unattach-handler') : elem.not('.wpba-has-unattach-handler');
 
 		elem.on('click', function(e) {
 			e.preventDefault();
 
 			// Unattach the attachment
 			var attachmentId = $(this).attr('id').replace('wpba_unattach_', '');
-			meta.unattach( attachmentId );
+			meta.attachment.unattach( attachmentId );
 
 			return false;
 		});
 
+		// Add class for unattach handler
+		elem.addClass('wpba-has-unattach-handler');
+
 		return false;
-	}; // meta.unattachHandler()
+	}; // meta.attachment.unattachHandler()
 
 	/**
 	 * All of the meta event handlers.
@@ -327,10 +395,10 @@ jQuery((function($) {
 	 */
 	meta.resetEventHandlers = function(elem) {
 		// Unattach Attachment Handler
-		meta.unattachHandler(elem);
+		meta.attachment.unattachHandler(elem);
 
 		// Delete Attachment Handler
-		meta.deleteHandler(elem);
+		meta.attachment.deleteHandler(elem);
 
 		// Refreshes sortable elements
 		meta.sortableElem.sortable( 'refresh' );
@@ -347,8 +415,8 @@ jQuery((function($) {
 	 */
 	meta.init = function() {
 		meta.wyswig.init();
-		meta.initSorting();
-		meta.addHandler();
+		meta.attachment.initSorting();
+		meta.attachment.addHandler();
 		meta.resetEventHandlers();
 	}; // meta.init()
 
@@ -362,29 +430,3 @@ jQuery((function($) {
 	// Allow other scripts to have access to meta methods/properties.
 	WPBA_ADMIN_JS.meta = meta;
 })(jQuery));
-
-/**
- * Avoid `console` errors in browsers that lack a console.
- */
-(function() {
-	var method,
-			noop    = function() {},
-			methods = [
-				'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
-				'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
-				'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
-				'timeStamp', 'trace', 'warn'
-			],
-			length  = methods.length,
-			console = ( window.console = window.console || {} )
-	;
-
-	while ( length-- ) {
-		method = methods[length];
-
-		// Only stub undefined methods.
-		if (!console[method]) {
-			console[method] = noop;
-		}
-	}
-}());
