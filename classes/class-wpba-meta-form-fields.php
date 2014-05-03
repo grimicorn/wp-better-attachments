@@ -127,10 +127,14 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 * @return  string           The input field.
 		 */
 		public function wp_editor( $id, $label = '', $value = '' ) {
+			// Adds a AJAX loading class so the editor can be initialized
+			$is_add_attachments = ( isset( $_POST['action'] ) and $_POST['action'] = 'wpba_add_attachments' );
+			$ajax_class         = ( $is_add_attachments ) ? ' ajax' : '';
+
 			// Build the input
 			$wrap_class  = str_replace( '_', '-', $id );
 			$input_html  = '';
-			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap clearfix clear'>";
+			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-wyswig-input-wrap clearfix clear{$ajax_class}'>";
 			$input_html .= $this->label( $id, $label );
 
 			$wp_editor_settings = array(
