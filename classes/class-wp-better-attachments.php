@@ -28,6 +28,31 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		public $meta_box_id = 'wpba_meta_box';
 
 
+		/**
+		 * The the meta key for allowing attachments to be added to multiple posts.
+		 *
+		 * @todo  allow for multiple meta boxes on a page.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @var   string
+		 */
+		public $attachment_multi_meta_key;
+
+
+
+		/**
+		 * The the meta key for attachments menu order when added to multiple posts.
+		 *
+		 * @todo  allow for multiple meta boxes on a page.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @var   string
+		 */
+		public $attachment_multi_menu_order_meta_key;
+
+
 
 		/**
 		 * WP_Better_Attachments class constructor.
@@ -46,6 +71,9 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 			// Add Global PHP -> JS
 			add_action( 'wp_head', array( &$this, 'add_global_public_js' ) );
 			add_action( 'admin_head', array( &$this, 'add_global_admin_js' ) );
+
+			$this->attachment_multi_meta_key            = "{$this->meta_box_id}_multi_attach";
+			$this->attachment_multi_menu_order_meta_key = "{$this->meta_box_id}_multi_attach_menu_order";
 		} // __construct()
 
 
@@ -142,104 +170,9 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 			} // if()
 
 			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.8f34.min.css', array(), null, 'all' );
-			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.3ae5.min.js', array( 'jquery-ui-sortable' ), null, true );
+			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.cdb1.min.js', array( 'jquery-ui-sortable' ), null, true );
 			wp_enqueue_script( 'wpba_admin_js' );
 		} // enqueue_admin_assets()
-
-
-
-		/**
-		* Handles attaching attachments.
-		*
-		* <code>$attach = $this->attach_attachment( $attachment_id );</code>
-		*
-		* @since   1.4.0
-		*
-		* @param   integer  $attachment_id  The attachment post id to attach.
-		* @param   integer  $post_id        The post id to attach the attachment to.
-		*
-		* @return  boolean                  True on success false on failure.
-		*/
-		public function attach_attachment( $attachment_id, $post_id ) {
-			$post_args = array(
-				'ID'          => $attachment_id,
-				'post_parent' => $post_id,
-			);
-			$update = wp_update_post( $post_args, true );
-
-			if ( is_wp_error( $update ) ) {
-				return false;
-			} // if()
-
-			/**
-			 * Runs when WP Better Attachments attaches an attachment.
-			 *
-			 * @since 1.4.0
-			 */
-			do_action( 'wpba_attachment_attached' );
-
-			return true;
-		} // attach_attachment()
-
-
-		/**
-		* Handles un-attaching an attachment.
-		*
-		* <code>$unattach = $this->unattach_attachment( $attachment_id );</code>
-		*
-		* @since   1.4.0
-		*
-		* @param   integer  $attachment_id  The attachment post id to unattach.
-		*
-		* @return  boolean                  True on success false on failure.
-		*/
-		public function unattach_attachment( $attachment_id ) {
-			$post_args = array(
-				'ID'          => $attachment_id,
-				'post_parent' => 0,
-			);
-			$update = wp_update_post( $post_args, true );
-
-			if ( is_wp_error( $update ) ) {
-				return false;
-			} // if()
-
-			/**
-			 * Runs when WP Better Attachments un-attaches an attachment.
-			 *
-			 * @since 1.4.0
-			 */
-			do_action( 'wpba_attachment_unattached' );
-
-			return true;
-		} // unattach_attachment()
-
-
-
-		/**
-		 * Handles deleting an attachment.
-		 *
-		 * <code>$delete = $this->delete_attachment( $attachment_id );</code>
-		 *
-		 * @param   integer  $attachment_id  The attachment post id to delete.
-		 *
-		 * @return  boolean                  True on success and false on failure.
-		 */
-		public function delete_attachment( $attachment_id ) {
-			$deleted = wp_delete_attachment( $attachment_id, true );
-			if ( false === $deleted ) {
-				return false;
-			} // if()
-
-			/**
-			 * Runs when WP Better Attachments deletes an attachment.
-			 *
-			 * @since 1.4.0
-			 */
-			do_action( 'wpba_attachment_deleted' );
-
-			return true;
-		} // delete_attachment()
 	} // WP_Better_Attachments()
 
 	// Instantiate Class

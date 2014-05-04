@@ -336,6 +336,7 @@ jQuery((function($) {
 		var ajaxParams = {
 			action : 'wpba_unattach_attachment',
 			id     : id,
+			postID : meta.getCurrentPostID()
 		};
 
 		// Unattach attachment

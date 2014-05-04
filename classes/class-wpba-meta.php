@@ -205,8 +205,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  array           The grouped meta fields.
 		 */
 		private function _group_meta_fields( $fields ) {
-			// pp( $_POST );
-			// die();
 			$attachment_id_base = "{$this->meta_box_id}_attachment_";
 
 			// Strip the id base
@@ -373,6 +371,9 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  void
 		 */
 		private function _update_attachment_meta( $fields ) {
+			global $post;
+			$parent_post_id = $post->ID;
+
 			// Add all the values into posts
 			$posts_to_update = array();
 			foreach ( $fields as $key => $field ) {
@@ -382,6 +383,23 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 				} // if()
 				$posts_to_update[$post_id][$meta_name] = $value;
 			} // foreach
+
+			// For multiple posts add menu order to custom menu order
+			foreach ( $posts_to_update as $post_key => $post_data ) {
+				$post_id = $post_data['ID'];
+				$attachment_multi_parents_meta = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
+				$attachment_multi_parents      = explode( ',', $attachment_multi_parents_meta );
+				if ( in_array( $parent_post_id, $attachment_multi_parents ) ) {
+					$prev_value                  = get_post_meta( $post_id, $this->attachment_multi_menu_order_meta_key, true );
+					$prev_value                  = ( $prev_value == '' ) ? array() : $prev_value;
+					$meta_value                  = $prev_value;
+					$meta_value[$parent_post_id] = $post_data['menu_order'];
+
+					update_post_meta( $post_id, $this->attachment_multi_menu_order_meta_key, $meta_value, $prev_value );
+
+					unset( $posts_to_update[$post_key]['menu_order'] );
+				} // if()
+			} // foreach()
 
 			// Update the post data using wp_update_post()
 			$post_updateable_keys = $this->_possible_post_keys();
@@ -513,6 +531,11 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @return  string                 The attachment items HTML.
 		 */
 		public function build_attachment_items( $attachments, $echo = true ) {
+			$meta = array();
+			foreach ($attachments as $attachment ) {
+				$meta[] = get_post_meta( $attachment->ID, $this->attachment_multi_meta_key, true );
+			} // foreach()
+
 			$attachment_items = '';
 			$allowed_html     = $this->get_form_kses_allowed_html();
 

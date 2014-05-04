@@ -321,110 +321,6 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 
 		/**
-		 * Retrieves all of the posts for the current/supplied post.
-		 *
-		 * <code>$attachments = $this->get_attachments( $post );</code>
-		 *
-		 * @see     http://codex.wordpress.org/Class_Reference/WP_Query
-		 *
-		 * @since   1.4.0
-		 *
-		 * @uses    WP_Query
-		 *
-		 * @todo    Add the ability to add attachment to multiple posts.
-		 *
-		 * @param   object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
-		 * @param   boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
-		 * @param   array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
-		 *
-		 * @return  array                                    The attachments.
-		 */
-		public function get_attachments( $post_parent = null, $disable_featured_image = false, $query_args = array() ) {
-			// Debugging purposes only
-			// $this->clean_attachments_cache();
-
-			$post_parent_id = $this->get_attachment_post_parent_id( $post_parent );
-			$post_type      = get_post_type( $post_parent_id );
-
-			// Post parent ID does not exist
-			if ( ! $post_parent_id ) {
-				return array();
-			} // if()
-
-			// Default query arguments.
-			$default_query_args = array(
-				'post_type'   => 'attachment',
-				'post_status' => 'inherit',
-				'post_parent' => $post_parent_id,
-				'order'       => 'ASC',
-				'orderby'     => 'menu_order',
-			);
-
-
-			/**
-			 * Allows filtering of disabling the featured image for all post types.
-			 *
-			 * <code>
-			 * function myprefix_disable_featured_image( $input_fields ) {
-			 * 	return true;
-			 * }
-			 * add_filter( 'wpba_meta_box_disable_featured_image', 'myprefix_disable_featured_image' );
-			 * </code>
-			 *
-			 * @since 1.4.0
-			 *
-			 * @todo  Create example documentation.
-			 *
-			 * @var   string
-			 */
-			$disable_featured_image = apply_filters( "{$this->meta_box_id}_disable_featured_image", $disable_featured_image );
-
-			/**
-			 * Allows filtering of disabling the featured image for a specific post type.
-			 *
-			 * <code>
-			 * function myprefix_post_type_disable_featured_image( $input_fields ) {
-			 * 	return true;
-			 * }
-			 * add_filter( 'wpba_meta_box_post_type_disable_featured_image', 'myprefix_post_type_disable_featured_image' );
-			 * </code>
-			 *
-			 * @since 1.4.0
-			 *
-			 * @todo  Create example documentation.
-			 *
-			 * @var   string
-			 */
-			$disable_featured_image = apply_filters( "{$this->meta_box_id}_{$post_type}_disable_featured_image", $disable_featured_image, $post_type );
-
-			// Disable the featured image? It is an attachment ya'know.
-			if ( $disable_featured_image ) {
-				$default_query_args['post__not_in'] = array( get_post_thumbnail_id( $post_parent_id ) );
-			} // if()
-
-			// Merge default and supplied query arguments
-			$attachments_query_args = array_merge( $default_query_args, $query_args );
-
-			// Attachments transient
-			$transient_id       = $this->get_transient_id( $attachments_query_args );
-			$cached_attachments = $this->get_attachments_cache( $transient_id );
-			if ( $cached_attachments !== false ) {
-				return $cached_attachments;
-			} // if()
-
-			// Get the attachments
-			$attachments_query = new WP_Query( $attachments_query_args );
-			$attachments       = $attachments_query->get_posts();
-
-			// Cache the attachments for the default time
-			$this->cache_attachments( $transient_id, $attachments );
-
-			return $attachments;
-		} // get_attachments()
-
-
-
-		/**
 		 * All of the allowed tags when outputting form fields.
 		 *
 		 * @return array Allowed HTML tags.
@@ -508,6 +404,355 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 			return $post_types;
 		} // get_post_types()
+
+
+
+		/**
+		 * Sorts the attachments by menu order.
+		 * Since the attachment can have multiple parents the conventional menu order will not work.
+		 *
+		 * <code>$attachments = $this->sort_attachments_menu_order( $attachments );</code>
+		 *
+		 * @param   array    $attachments     The attachment posts to sort.
+		 * @param   integer  $post_parent_id  Optional, the post id of the parent.
+		 *
+		 * @return  array                     The sorted attachment posts.
+		 */
+		public function sort_attachments_menu_order( $attachments, $post_parent_id = null ) {
+			if ( empty( $attachments ) ) {
+				return $attachments;
+			} // if()
+
+			if ( is_null( $post_parent_id ) ) {
+				global $post;
+				$post_parent_id = $post->ID;
+			} // if()
+
+			//
+			$to_sort = array();
+			foreach ( $attachments as $key => $attachment ) {
+				if ( $attachment->post_parent == $post_parent_id ) {
+					$menu_order_key = "{$attachment->menu_order}{$attachment->ID}";
+					$to_sort[$menu_order_key] = $attachment;
+				} else {
+					$menu_order_meta          = get_post_meta( $attachment->ID, $this->attachment_multi_menu_order_meta_key, true );
+					$menu_order               = ( $menu_order_meta == '' ) ? array() : $menu_order_meta;
+					$order                    = ( isset( $menu_order[$post_parent_id] ) ) ? $menu_order[$post_parent_id] : 0;
+					$menu_order_key           = "{$order}{$attachment->ID}";
+					$to_sort[$menu_order_key] = $attachment;
+				} // if/else()
+
+				unset( $attachments[$key] );
+			} // foreach()
+
+			// Sort the attachments
+			ksort( $to_sort, SORT_NUMERIC );
+
+			// Return keys to 0,1,2,....
+			foreach ( $to_sort as $key => $value ) {
+				$attachments[] = $value;
+			} // foreach()
+
+			return $attachments;
+		} // sort_attachments_menu_order()
+
+
+
+		/**
+		 * Retrieves all of the posts for the current/supplied post.
+		 *
+		 * <code>$attachments = $this->get_attachments( $post );</code>
+		 *
+		 * @see     http://codex.wordpress.org/Class_Reference/WP_Query
+		 *
+		 * @since   1.4.0
+		 *
+		 * @uses    WP_Query
+		 *
+		 * @todo    Add the ability to add attachment to multiple posts.
+		 *
+		 * @param   object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
+		 * @param   boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
+		 * @param   array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
+		 *
+		 * @return  array                                    The attachments.
+		 */
+		public function get_attachments( $post_parent = null, $disable_featured_image = false, $query_args = array() ) {
+			// Debugging purposes only
+			$this->clean_attachments_cache();
+
+			$post_parent_id = $this->get_attachment_post_parent_id( $post_parent );
+			$post_type      = get_post_type( $post_parent_id );
+
+			// Post parent ID does not exist
+			if ( ! $post_parent_id ) {
+				return array();
+			} // if()
+
+			// Default query arguments.
+			$default_query_args = array(
+				'post_type'   => 'attachment',
+				'post_status' => 'inherit',
+				'post_parent' => $post_parent_id,
+				'order'       => 'ASC',
+				'orderby'     => 'menu_order',
+			);
+
+
+
+			/**
+			 * Allows filtering of disabling the featured image for all post types.
+			 *
+			 * <code>
+			 * function myprefix_disable_featured_image( $input_fields ) {
+			 * 	return true;
+			 * }
+			 * add_filter( 'wpba_meta_box_disable_featured_image', 'myprefix_disable_featured_image' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$disable_featured_image = apply_filters( "{$this->meta_box_id}_disable_featured_image", $disable_featured_image );
+
+			/**
+			 * Allows filtering of disabling the featured image for a specific post type.
+			 *
+			 * <code>
+			 * function myprefix_post_type_disable_featured_image( $input_fields ) {
+			 * 	return true;
+			 * }
+			 * add_filter( 'wpba_meta_box_post_type_disable_featured_image', 'myprefix_post_type_disable_featured_image' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 *
+			 * @var   string
+			 */
+			$disable_featured_image = apply_filters( "{$this->meta_box_id}_{$post_type}_disable_featured_image", $disable_featured_image, $post_type );
+
+			// Disable the featured image? It is an attachment ya'know.
+			if ( $disable_featured_image ) {
+				$default_query_args['post__not_in'] = array( get_post_thumbnail_id( $post_parent_id ) );
+			} // if()
+
+			// Merge default and supplied query arguments
+			$attachments_query_args = array_merge( $default_query_args, $query_args );
+
+			// Attachments transient
+			$transient_id       = $this->get_transient_id( $attachments_query_args );
+			$cached_attachments = $this->get_attachments_cache( $transient_id );
+			if ( $cached_attachments !== false ) {
+				return $cached_attachments;
+			} // if()
+
+			// Get the attachments
+			$attachments_query = new WP_Query( $attachments_query_args );
+			$attachments       = $attachments_query->get_posts();
+
+			// Handle attachments added to multiple posts
+			unset( $attachments_query_args['post_parent'] );
+			$attachments_query_args['meta_query'] = array(
+				array(
+					'key'     => $this->attachment_multi_meta_key,
+					'value'   => $post_parent_id,
+					'compare' => 'IN',
+				),
+			);
+			$attachments_query = new WP_Query( $attachments_query_args );
+			$attachments       = array_merge( $attachments, $attachments_query->get_posts() );
+
+			// Sort the attachments by menu order
+			$attachments = $this->sort_attachments_menu_order( $attachments, $post_parent_id );
+
+			// Cache the attachments for the default time
+			$this->cache_attachments( $transient_id, $attachments );
+
+			return $attachments;
+		} // get_attachments()
+
+
+		/**
+		 * Allows attaching attachments to multiple posts
+		 *
+		 * <code>
+		 * if ( $attachment->post_parent != 0 and $attachment->post_parent != $post_id ) {
+		 * 	$this->_attach_attachments_multiple_posts( $attachment_id, $post_id );
+		 * } // if()
+		 *
+		 * @internal
+		 *
+		 * @param   integer  $attachment_id  The post ID of the attachment to attach.
+		 * @param   integer  $post_id        The post ID of the post to attach the attachment.
+		 *
+		 * @return  mixed                    Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
+		 *                                   NOTE: If the meta_value passed to this function is the same as the value that is already in the database, this function returns false.
+		 */
+		private function _attach_attachments_multiple_posts( $attachment_id, $post_id ) {
+			$prev_value   = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
+			$prev_value   = ( $prev_value == '' ) ? '' : $prev_value;
+			$parent_ids   = explode( ',', $prev_value );
+			$parent_ids[] = $post_id;
+			$parent_ids   = array_unique( $parent_ids );
+			$parent_ids   = implode( ',', $parent_ids );
+			$meta_value   = trim( $parent_ids, ',' );
+			return update_post_meta( $attachment_id, $this->attachment_multi_meta_key, $meta_value );
+		} // _attach_attachments_multiple_posts
+
+
+
+		/**
+		* Handles attaching attachments.
+		*
+		* <code>$attach = $this->attach_attachment( $attachment_id );</code>
+		*
+		* @since   1.4.0
+		*
+		* @param   integer  $attachment_id  The attachment post id to attach.
+		* @param   integer  $post_id        The post id to attach the attachment to.
+		*
+		* @return  boolean                  True on success false on failure.
+		*/
+		public function attach_attachment( $attachment_id, $post_id ) {
+			$attachment = get_post( $attachment_id );
+
+			// Allows attaching attachments to multiple posts
+			if ( $attachment->post_parent != 0 and $attachment->post_parent != $post_id ) {
+				$attach = $this->_attach_attachments_multiple_posts( $attachment_id, $post_id );
+				return ( $attach !== false );
+			} // if()
+
+			$post_args = array(
+				'ID'          => $attachment_id,
+				'post_parent' => $post_id,
+			);
+			$update = wp_update_post( $post_args, true );
+
+			if ( is_wp_error( $update ) ) {
+				return false;
+			} // if()
+
+			/**
+			 * Runs when WP Better Attachments attaches an attachment.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'wpba_attachment_attached' );
+
+			return true;
+		} // attach_attachment()
+
+
+
+		/**
+		 * Allows un-attaching attachments to multiple posts
+		 *
+		 * <code>
+		 * if ( $attachment->post_parent != 0 and $attachment->post_parent != $post_id ) {
+		 * 	$this->_unattach_attachments_multiple_posts( $attachment_id, $post_id );
+		 * } // if()
+		 *
+		 * @internal
+		 *
+		 * @param   integer  $attachment_id  The post ID of the attachment to unattach.
+		 * @param   integer  $post_id        The post ID of the post to unattach the attachment.
+		 *
+		 * @return  mixed                    Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
+		 *                                   NOTE: If the meta_value passed to this function is the same as the value that is already in the database, this function returns false.
+		 */
+		private function _unattach_attachments_multiple_posts( $attachment_id, $post_id ) {
+			$prev_value   = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
+			$prev_value   = ( $prev_value == '' ) ? '' : $prev_value;
+			$parent_ids   = explode( ',', $prev_value );
+
+			// Remove the ID
+			foreach ( $parent_ids as $key => $id ) {
+				if ( $post_id == $id ) {
+					unset( $parent_ids[$key] );
+				} // if()
+			} // foreach
+
+			$parent_ids   = array_unique( $parent_ids );
+			$parent_ids   = implode( ',', $parent_ids );
+			$meta_value   = trim( $parent_ids, ',' );
+
+			return update_post_meta( $attachment_id, $this->attachment_multi_meta_key, $meta_value );
+		} // _unattach_attachments_multiple_posts
+
+
+
+		/**
+		* Handles un-attaching an attachment.
+		*
+		* <code>$unattach = $this->unattach_attachment( $attachment_id );</code>
+		*
+		* @since   1.4.0
+		*
+		* @param   integer  $attachment_id  The attachment post id to unattach.
+		*
+		* @return  boolean                  True on success false on failure.
+		*/
+		public function unattach_attachment( $attachment_id, $post_id ) {
+			$attachment = get_post( $attachment_id );
+
+			// Allows unattaching attachments to multiple posts
+			if ( $attachment->post_parent == 0 or $attachment->post_parent != $post_id ) {
+				$attach = $this->_unattach_attachments_multiple_posts( $attachment_id, $post_id );
+				return ( $attach !== false );
+			} // if()
+
+			$post_args = array(
+				'ID'          => $attachment_id,
+				'post_parent' => 0,
+			);
+			$update = wp_update_post( $post_args, true );
+
+			if ( is_wp_error( $update ) ) {
+				return false;
+			} // if()
+
+			/**
+			 * Runs when WP Better Attachments un-attaches an attachment.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'wpba_attachment_unattached' );
+
+			return true;
+		} // unattach_attachment()
+
+
+
+		/**
+		 * Handles deleting an attachment.
+		 *
+		 * <code>$delete = $this->delete_attachment( $attachment_id );</code>
+		 *
+		 * @param   integer  $attachment_id  The attachment post id to delete.
+		 *
+		 * @return  boolean                  True on success and false on failure.
+		 */
+		public function delete_attachment( $attachment_id ) {
+			$deleted = wp_delete_attachment( $attachment_id, true );
+			if ( false === $deleted ) {
+				return false;
+			} // if()
+
+			/**
+			 * Runs when WP Better Attachments deletes an attachment.
+			 *
+			 * @since 1.4.0
+			 */
+			do_action( 'wpba_attachment_deleted' );
+
+			return true;
+		} // delete_attachment()
+
 	} // WPBA_Helpers()
 
 	// Instantiate Class

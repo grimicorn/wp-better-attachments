@@ -30,6 +30,15 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 
 
 
+		/**
+		 * Handles sending the data back to the JavaScript.
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   mixed   $data  Data to be sent back to JavaScript.
+		 *
+		 * @return  void
+		 */
 		public function response( $data ) {
 			echo json_encode( $data );
 			die();
@@ -134,15 +143,16 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 		 */
 		public function wpba_unattach_attachment_callback() {
 			$attachment_id = $_POST['id'];
+			$post_id       = $_POST['postID'];
 
 			// Make sure we have something to work with
-			if ( ! isset( $attachment_id ) ) {
+			if ( ! isset( $attachment_id ) or ! isset( $post_id ) ) {
 				echo json_encode( false );
 				die();
 			} // if()
 
 			// Unattach the attachment and send the status back as JSON.
-			$this->response( $this->unattach_attachment( $attachment_id ) );
+			$this->response( $this->unattach_attachment( $attachment_id, $post_id ) );
 		} // wpba_unattach_attachment_callback
 
 
