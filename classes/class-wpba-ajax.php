@@ -25,7 +25,7 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 		public function __construct( $config = array() ) {
 			parent::__construct();
 
-			$this->_add_wpba_meta_actions_filters();
+			$this->_add_wpba_ajax_actions_filters();
 		} // __construct()
 
 
@@ -49,7 +49,7 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 		/**
 		 * Handles adding all of the WPBA meta actions and filters.
 		 *
-		 * <code>$this->_add_wpba_meta_actions_filters();</code>
+		 * <code>$this->_add_wpba_ajax_actions_filters();</code>
 		 *
 		 * @internal
 		 *
@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 		 *
 		 * @return  void
 		 */
-		private function _add_wpba_meta_actions_filters() {
+		private function _add_wpba_ajax_actions_filters() {
 			// Add attachments callback
 			add_action( 'wp_ajax_wpba_add_attachments', array( &$this, 'wpba_add_attachments_callback' ) );
 
@@ -66,7 +66,7 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 
 			// Delete attachment AJAX callback
 			add_action( 'wp_ajax_wpba_delete_attachment', array( &$this, 'wpba_delete_attachment_callback' ) );
-		} // _add_wpba_meta_actions_filters()
+		} // _add_wpba_ajax_actions_filters()
 
 
 
@@ -181,6 +181,6 @@ if ( ! class_exists( 'WPBA_AJAX' ) ) {
 	} // WPBA_AJAX()
 
 	// Instantiate Class
-	global $wpba_meta;
-	$wpba_helpers = new WPBA_AJAX();
+	global $wpba_ajax;
+	$wpba_ajax = new WPBA_AJAX();
 } // if()
