@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 <meta charset="utf-8">
-<title>API Documentation » \WPBA_Meta</title>
+<title>API Documentation » \WPBA_Image_Cropper</title>
 <meta name="author" content="Mike van Riel">
 <meta name="description" content="">
 <link href="../css/template.css" rel="stylesheet" media="all">
@@ -64,18 +64,12 @@
                     <ul>
 <li class="method public "><a href="#method___construct" title="__construct() :: WPBA_Meta class constructor."><span class="description">WPBA_Meta class constructor.</span><pre>__construct()</pre></a></li>
 <li class="method public "><a href="#method___construct" title="__construct() :: WP_Better_Attachments class constructor."><span class="description">WP_Better_Attachments class constructor.</span><pre>__construct()</pre></a></li>
-<li class="method public "><a href="#method_add_attachment_button" title="add_attachment_button() :: Adds a button for uploading attachments."><span class="description">Adds a button for uploading attachments.</span><pre>add_attachment_button()</pre></a></li>
-<li class="method public "><a href="#method_add_editor_form_button" title="add_editor_form_button() :: Add Attachments button above post editor"><span class="description">Add Attachments button above post editor</span><pre>add_editor_form_button()</pre></a></li>
 <li class="method public "><a href="#method_add_global_admin_js" title="add_global_admin_js() :: Adds global wp-admin JS object."><span class="description">Adds global wp-admin JS object.</span><pre>add_global_admin_js()</pre></a></li>
 <li class="method public "><a href="#method_add_global_public_js" title="add_global_public_js() :: Adds global public JS object."><span class="description">Adds global public JS object.</span><pre>add_global_public_js()</pre></a></li>
-<li class="method public "><a href="#method_add_meta_box" title="add_meta_box() :: Adds the meta box container."><span class="description">Adds the meta box container.</span><pre>add_meta_box()</pre></a></li>
 <li class="method public "><a href="#method_attach_attachment" title="attach_attachment() :: Handles attaching attachments."><span class="description">Handles attaching attachments.</span><pre>attach_attachment()</pre></a></li>
-<li class="method public "><a href="#method_attachment_menu" title="attachment_menu() :: Attachment menu."><span class="description">Attachment menu.</span><pre>attachment_menu()</pre></a></li>
-<li class="method public "><a href="#method_build_attachment_fields" title="build_attachment_fields() :: Builds the attachment fields."><span class="description">Builds the attachment fields.</span><pre>build_attachment_fields()</pre></a></li>
-<li class="method public "><a href="#method_build_attachment_items" title="build_attachment_items() :: Handles building of the attachment items from the supplied attachments."><span class="description">Handles building of the attachment items from the supplied attachments.</span><pre>build_attachment_items()</pre></a></li>
-<li class="method public "><a href="#method_build_attachment_thumbnail" title="build_attachment_thumbnail() :: Retrieves the attachment thumbnail."><span class="description">Retrieves the attachment thumbnail.</span><pre>build_attachment_thumbnail()</pre></a></li>
 <li class="method public "><a href="#method_cache_attachments" title="cache_attachments() :: Caches the attachments query."><span class="description">Caches the attachments query.</span><pre>cache_attachments()</pre></a></li>
 <li class="method public "><a href="#method_clean_attachments_cache" title="clean_attachments_cache() :: Clean the cached attachments."><span class="description">Clean the cached attachments.</span><pre>clean_attachments_cache()</pre></a></li>
+<li class="method public "><a href="#method_crop" title="crop() :: Crops an image to the given x/y width/height."><span class="description">Crops an image to the given x/y width/height.</span><pre>crop()</pre></a></li>
 <li class="method public "><a href="#method_delete_attachment" title="delete_attachment() :: Handles deleting an attachment."><span class="description">Handles deleting an attachment.</span><pre>delete_attachment()</pre></a></li>
 <li class="method public "><a href="#method_delete_attachments_cache" title="delete_attachments_cache() :: Delete an attachments cache."><span class="description">Delete an attachments cache.</span><pre>delete_attachments_cache()</pre></a></li>
 <li class="method public "><a href="#method_enqueue_admin_assets" title="enqueue_admin_assets() :: Enqueues scripts and styles for use in wp-admin."><span class="description">Enqueues scripts and styles for use in wp-admin.</span><pre>enqueue_admin_assets()</pre></a></li>
@@ -88,9 +82,7 @@
 <li class="method public "><a href="#method_get_post_types" title="get_post_types() :: Retrieves the enabled post types."><span class="description">Retrieves the enabled post types.</span><pre>get_post_types()</pre></a></li>
 <li class="method public "><a href="#method_get_transient_id" title="get_transient_id() :: Retrieves the transient ID for the current query."><span class="description">Retrieves the transient ID for the current query.</span><pre>get_transient_id()</pre></a></li>
 <li class="method public "><a href="#method_merge_element_attributes" title="merge_element_attributes() :: Merges two sets of attributes together and combines them for a HTML element."><span class="description">Merges two sets of attributes together and combines them for a HTML element.</span><pre>merge_element_attributes()</pre></a></li>
-<li class="method public "><a href="#method_render_meta_box_content" title="render_meta_box_content() :: Render Meta Box content."><span class="description">Render Meta Box content.</span><pre>render_meta_box_content()</pre></a></li>
 <li class="method public "><a href="#method_sanitize_input_fields" title="sanitize_input_fields() :: Handles sanitizing input fields value dependent of the field type."><span class="description">Handles sanitizing input fields value dependent of the field type.</span><pre>sanitize_input_fields()</pre></a></li>
-<li class="method public "><a href="#method_save" title="save() :: Saves the meta when the post is saved."><span class="description">Saves the meta when the post is saved.</span><pre>save()</pre></a></li>
 <li class="method public "><a href="#method_sort_attachments_menu_order" title="sort_attachments_menu_order() :: Sorts the attachments by menu order."><span class="description">Sorts the attachments by menu order.</span><pre>sort_attachments_menu_order()</pre></a></li>
 <li class="method public "><a href="#method_unattach_attachment" title="unattach_attachment() :: Handles un-attaching an attachment."><span class="description">Handles un-attaching an attachment.</span><pre>unattach_attachment()</pre></a></li>
 </ul>
@@ -101,28 +93,56 @@
 <li class="property public "><a href="#property_attachment_multi_menu_order_meta_key" title="$attachment_multi_menu_order_meta_key() :: The meta key for attachments menu order when added to multiple posts."><span class="description"></span><pre>$attachment_multi_menu_order_meta_key</pre></a></li>
 <li class="property public "><a href="#property_attachment_multi_meta_key" title="$attachment_multi_meta_key() :: The meta key for allowing attachments to be added to multiple posts."><span class="description"></span><pre>$attachment_multi_meta_key</pre></a></li>
 <li class="property public "><a href="#property_meta_box_id" title="$meta_box_id() :: The ID for the meta box."><span class="description"></span><pre>$meta_box_id</pre></a></li>
-<li class="property public "><a href="#property_meta_box_title" title="$meta_box_title() :: The title for the meta box."><span class="description"></span><pre>$meta_box_title</pre></a></li>
 <li class="property public "><a href="#property_option_prefix" title="$option_prefix() :: The prefix for all options."><span class="description"></span><pre>$option_prefix</pre></a></li>
 </ul>
 </li>
 <li class="nav-header protected">» Protected
                     <ul><li class="property protected "><a href="#property_cache_duration" title="$cache_duration() :: The length to cache a transient, default 24 hours."><span class="description"></span><pre>$cache_duration</pre></a></li></ul>
 </li>
+<li class="nav-header private">» Private
+                    <ul><li class="property private "><a href="#property__disable" title="$_disable() :: Enable/Disable the image cropper functionality."><span class="description"></span><pre>$_disable</pre></a></li></ul>
+</li>
 </ul>
 </div>
 <div class="span8">
-<a id="\WPBA_Meta"></a><ul class="breadcrumb">
+<a id="\WPBA_Image_Cropper"></a><ul class="breadcrumb">
 <li>
 <a href="../index.html"><i title="Classes" class="icon-custom icon-class"></i></a><span class="divider">\</span>
 </li>
 <li class="active">
-<span class="divider">\</span><a href="../classes/WPBA_Meta.html">WPBA_Meta</a>
+<span class="divider">\</span><a href="../classes/WPBA_Image_Cropper.html">WPBA_Image_Cropper</a>
 </li>
 </ul>
 <div class="element class">
-<p class="short_description"></p>
+<p class="short_description">This class contains the image cropper functionality.</p>
 <div class="details">
 <div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>version</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>package</th>
+<td><a href="../packages/WordPress.WPBA.html">WordPress</a></td>
+</tr>
+<tr>
+<th>subpackage</th>
+<td>WPBA</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>author</th>
+<td><a href="mailto:dholloran@matchboxdesigngroup.com">Dan Holloran</a></td>
+</tr>
+<tr>
+<th>copyright</th>
+<td>2013 - Present         Dan Holloran</td>
+</tr>
+</table>
 <h3>
 <i title="Methods" class="icon-custom icon-method"></i> Methods</h3>
 <a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
@@ -163,44 +183,6 @@
 <code>array</code><p>Class configuration.</p></div>
 </div></div>
 </div>
-<a id="method_add_attachment_button"></a><div class="element clickable method public method_add_attachment_button" data-toggle="collapse" data-target=".method_add_attachment_button .collapse" title="public">
-<h2>Adds a button for uploading attachments.</h2>
-<pre>add_attachment_button(object $post) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$post</h4>
-<code>object</code><p>WordPress post object to add the attachment(s) to.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The upload button HTML</div>
-</div></div>
-</div>
-<a id="method_add_editor_form_button"></a><div class="element clickable method public method_add_editor_form_button" data-toggle="collapse" data-target=".method_add_editor_form_button .collapse" title="public">
-<h2>Add Attachments button above post editor</h2>
-<pre>add_editor_form_button(string $context) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$context</h4>
-<code>string</code><p>HTML above post editor.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The add attachment button added to the HTML above the post editor.</div>
-</div></div>
-</div>
 <a id="method_add_global_admin_js"></a><div class="element clickable method public method_add_global_admin_js" data-toggle="collapse" data-target=".method_add_global_admin_js .collapse" title="public">
 <h2>Adds global wp-admin JS object.</h2>
 <pre>add_global_admin_js() : void</pre>
@@ -237,28 +219,6 @@
 </table>
 </div></div>
 </div>
-<a id="method_add_meta_box"></a><div class="element clickable method public method_add_meta_box" data-toggle="collapse" data-target=".method_add_meta_box .collapse" title="public">
-<h2>Adds the meta box container.</h2>
-<pre>add_meta_box(string $post_type) : void</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );</code></div>
-<table class="table table-bordered">
-<tr>
-<th>todo</th>
-<td>setting to limit adding to post type.</td>
-</tr>
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-</table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$post_type</h4>
-<code>string</code><p>The current post type.</p></div>
-</div></div>
-</div>
 <a id="method_attach_attachment"></a><div class="element clickable method public method_attach_attachment" data-toggle="collapse" data-target=".method_attach_attachment .collapse" title="public">
 <h2>Handles attaching attachments.</h2>
 <pre>attach_attachment(integer $attachment_id, integer $post_id) : boolean</pre>
@@ -279,107 +239,6 @@
 <h3>Returns</h3>
 <div class="subelement response">
 <code>boolean</code>True on success false on failure.</div>
-</div></div>
-</div>
-<a id="method_attachment_menu"></a><div class="element clickable method public method_attachment_menu" data-toggle="collapse" data-target=".method_attachment_menu .collapse" title="public">
-<h2>Attachment menu.</h2>
-<pre>attachment_menu(object $attachment) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>$attachment_menu = $this->attachment_menu( $attachment );</code></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$attachment</h4>
-<code>object</code><p>The attachment post.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The attachment menu HTML.</div>
-</div></div>
-</div>
-<a id="method_build_attachment_fields"></a><div class="element clickable method public method_build_attachment_fields" data-toggle="collapse" data-target=".method_build_attachment_fields .collapse" title="public">
-<h2>Builds the attachment fields.</h2>
-<pre>build_attachment_fields(object $attachment) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>
-foreach ( $attachments as $attachment ) {
-	$allowed_html = $this->get_form_kses_allowed_html();
-	echo wp_kses( $this->build_attachment_fields( $attachment ), $allowed_html );
-} // foreach
-</code></div>
-<table class="table table-bordered">
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-<tr>
-<th>uses</th>
-<td><a href="WPBA_Meta_Form_Fields"></a></td>
-</tr>
-</table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$attachment</h4>
-<code>object</code><p>The attachment post.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The attachment form fields.</div>
-</div></div>
-</div>
-<a id="method_build_attachment_items"></a><div class="element clickable method public method_build_attachment_items" data-toggle="collapse" data-target=".method_build_attachment_items .collapse" title="public">
-<h2>Handles building of the attachment items from the supplied attachments.</h2>
-<pre>build_attachment_items(array $attachments, boolean $echo<code> = true</code>) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$attachments</h4>
-<code>array</code><p>The attachments to build the items for.</p></div>
-<div class="subelement argument">
-<h4>$echo</h4>
-<code>boolean</code><p>Optional, output the attachments, default true.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The attachment items HTML.</div>
-</div></div>
-</div>
-<a id="method_build_attachment_thumbnail"></a><div class="element clickable method public method_build_attachment_thumbnail" data-toggle="collapse" data-target=".method_build_attachment_thumbnail .collapse" title="public">
-<h2>Retrieves the attachment thumbnail.</h2>
-<pre>build_attachment_thumbnail(object $attachment) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>
-foreach ( $attachments as $attachment ) {
-	$allowed_html = $this->get_form_kses_allowed_html();
-	echo wp_kses( $this->build_attachment_thumbnail( $attachment ), $allowed_html );
-} // foreach
-</code></div>
-<table class="table table-bordered">
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Add filter for image size?</td>
-</tr>
-</table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$attachment</h4>
-<code>object</code><p>The attachment post.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The attachment thumbnail HTML.</div>
 </div></div>
 </div>
 <a id="method_cache_attachments"></a><div class="element clickable method public method_cache_attachments" data-toggle="collapse" data-target=".method_cache_attachments .collapse" title="public">
@@ -421,6 +280,57 @@ foreach ( $attachments as $attachment ) {
 <div class="subelement argument">
 <h4>$prefix</h4>
 <code>string</code><p>Optional, the transient id prefix to search for default _wpba.</p></div>
+</div></div>
+</div>
+<a id="method_crop"></a><div class="element clickable method public method_crop" data-toggle="collapse" data-target=".method_crop .collapse" title="public">
+<h2>Crops an image to the given x/y width/height.</h2>
+<pre>crop(string $src, int $src_x, int $src_y, int $src_w, int $src_h, int $dst_w<code> = null</code>, int $dst_h<code> = null</code>, boolean $src_abs<code> = false</code>) : boolean | \WP_Error</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
+<th>uses</th>
+<td><a href="WP_Image_Editor"></a></td>
+</tr>
+<tr>
+<th>see</th>
+<td><a href="%5Chttp://codex.wordpress.org/Class_Reference/WP_Image_Editor"></a></td>
+</tr>
+</table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$src</h4>
+<code>string</code><p>The source file or Attachment ID.</p></div>
+<div class="subelement argument">
+<h4>$src_x</h4>
+<code>int</code><p>The start x position to crop from.</p></div>
+<div class="subelement argument">
+<h4>$src_y</h4>
+<code>int</code><p>The start y position to crop from.</p></div>
+<div class="subelement argument">
+<h4>$src_w</h4>
+<code>int</code><p>The width to crop.</p></div>
+<div class="subelement argument">
+<h4>$src_h</h4>
+<code>int</code><p>The height to crop.</p></div>
+<div class="subelement argument">
+<h4>$dst_w</h4>
+<code>int</code><p>Optional. The destination width.</p></div>
+<div class="subelement argument">
+<h4>$dst_h</h4>
+<code>int</code><p>Optional. The destination height.</p></div>
+<div class="subelement argument">
+<h4>$src_abs</h4>
+<code>boolean</code><p>Optional. If the source crop points are absolute.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code><code>\WP_Error</code>
+</div>
 </div></div>
 </div>
 <a id="method_delete_attachment"></a><div class="element clickable method public method_delete_attachment" data-toggle="collapse" data-target=".method_delete_attachment .collapse" title="public">
@@ -660,45 +570,6 @@ foreach ( $attachments as $attachment ) {
 <code>string</code>The merged HTML element attributes.</div>
 </div></div>
 </div>
-<a id="method_render_meta_box_content"></a><div class="element clickable method public method_render_meta_box_content" data-toggle="collapse" data-target=".method_render_meta_box_content .collapse" title="public">
-<h2>Render Meta Box content.</h2>
-<pre>render_meta_box_content(object $post) : void</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>
-add_meta_box(
-	$this->meta_box_id,
-	__( $this->meta_box_title, 'wpba' ),
-	array( $this, 'render_meta_box_content' ),
-	$post_type,
-	'advanced',
-	'high'
-);
-</code></div>
-<table class="table table-bordered">
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Add setting to disable file types.</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Add toggles to disable/enable file types visibility.</td>
-</tr>
-<tr>
-<th>uses</th>
-<td><a href="WPBA_Meta_Form_Fields"></a></td>
-</tr>
-</table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$post</h4>
-<code>object</code><p>The post object.</p></div>
-</div></div>
-</div>
 <a id="method_sanitize_input_fields"></a><div class="element clickable method public method_sanitize_input_fields" data-toggle="collapse" data-target=".method_sanitize_input_fields .collapse" title="public">
 <h2>Handles sanitizing input fields value dependent of the field type.</h2>
 <pre>sanitize_input_fields(string $field_type, mixed $value) : mixed</pre>
@@ -715,22 +586,6 @@ add_meta_box(
 <h3>Returns</h3>
 <div class="subelement response">
 <code>mixed</code>The sanitized meta data.</div>
-</div></div>
-</div>
-<a id="method_save"></a><div class="element clickable method public method_save" data-toggle="collapse" data-target=".method_save .collapse" title="public">
-<h2>Saves the meta when the post is saved.</h2>
-<pre>save(integer $post_id) : void</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>add_action( 'save_post', array( $this, 'save' ) );</code></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$post_id</h4>
-<code>integer</code><p>The ID of the post being saved.</p></div>
 </div></div>
 </div>
 <a id="method_sort_attachments_menu_order"></a><div class="element clickable method public method_sort_attachments_menu_order" data-toggle="collapse" data-target=".method_sort_attachments_menu_order .collapse" title="public">
@@ -841,28 +696,6 @@ add_meta_box(
 </table>
 </div></div>
 </div>
-<a id="property_meta_box_title"> </a><div class="element clickable property public property_meta_box_title" data-toggle="collapse" data-target=".property_meta_box_title .collapse" title="public">
-<h2>The title for the meta box.</h2>
-<pre>$meta_box_title : string</pre>
-<div class="row collapse"><div class="detail-description">
-<h3>Default</h3>
-<div class="subelement argument"><code>'WP Better Attachments'</code></div>
-</div></div>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<table class="table table-bordered">
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Add setting to alter the meta box title.</td>
-</tr>
-</table>
-</div></div>
-</div>
 <a id="property_option_prefix"> </a><div class="element clickable property public property_option_prefix" data-toggle="collapse" data-target=".property_option_prefix .collapse" title="public">
 <h2>The prefix for all options.</h2>
 <pre>$option_prefix : string</pre>
@@ -905,6 +738,22 @@ add_meta_box(
 <td>Add setting/filter to update the cache duration.</td>
 </tr>
 </table>
+</div></div>
+</div>
+<a id="property__disable"> </a><div class="element clickable property private property__disable" data-toggle="collapse" data-target=".property__disable .collapse" title="private">
+<h2>Enable/Disable the image cropper functionality.</h2>
+<pre>$_disable : boolean</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>false</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
 </div></div>
 </div>
 </div>

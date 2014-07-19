@@ -790,10 +790,8 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 					break;
 
 				case 'wysiwg_editor':
-					$value = wp_kses( $value, 'post' );
+					$value = wp_kses( html_entity_decode( $value ), 'post' );
 					break;
-
-
 
 				case 'multi_input':
 					$value = wp_kses( $value, 'post' );

@@ -32,7 +32,7 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">0</span></a></li>
+                <span class="label label-info">1</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
@@ -66,6 +66,7 @@
 <li class="method public "><a href="#method___construct" title="__construct() :: WP_Better_Attachments class constructor."><span class="description">WP_Better_Attachments class constructor.</span><pre>__construct()</pre></a></li>
 <li class="method public "><a href="#method_add_global_admin_js" title="add_global_admin_js() :: Adds global wp-admin JS object."><span class="description">Adds global wp-admin JS object.</span><pre>add_global_admin_js()</pre></a></li>
 <li class="method public "><a href="#method_add_global_public_js" title="add_global_public_js() :: Adds global public JS object."><span class="description">Adds global public JS object.</span><pre>add_global_public_js()</pre></a></li>
+<li class="method public "><a href="#method_attach_attachment" title="attach_attachment() :: Handles attaching attachments."><span class="description">Handles attaching attachments.</span><pre>attach_attachment()</pre></a></li>
 <li class="method public "><a href="#method_cache_attachments" title="cache_attachments() :: Caches the attachments query."><span class="description">Caches the attachments query.</span><pre>cache_attachments()</pre></a></li>
 <li class="method public "><a href="#method_clean_attachments_cache" title="clean_attachments_cache() :: Clean the cached attachments."><span class="description">Clean the cached attachments.</span><pre>clean_attachments_cache()</pre></a></li>
 <li class="method public "><a href="#method_delete_attachment" title="delete_attachment() :: Handles deleting an attachment."><span class="description">Handles deleting an attachment.</span><pre>delete_attachment()</pre></a></li>
@@ -79,28 +80,27 @@
 <li class="method public "><a href="#method_get_form_kses_allowed_html" title="get_form_kses_allowed_html() :: All of the allowed tags when outputting form fields."><span class="description">All of the allowed tags when outputting form fields.</span><pre>get_form_kses_allowed_html()</pre></a></li>
 <li class="method public "><a href="#method_get_post_types" title="get_post_types() :: Retrieves the enabled post types."><span class="description">Retrieves the enabled post types.</span><pre>get_post_types()</pre></a></li>
 <li class="method public "><a href="#method_get_transient_id" title="get_transient_id() :: Retrieves the transient ID for the current query."><span class="description">Retrieves the transient ID for the current query.</span><pre>get_transient_id()</pre></a></li>
-<li class="method public "><a href="#method_unattach_attachment" title="unattach_attachment() :: Un-attach"><span class="description">Un-attach</span><pre>unattach_attachment()</pre></a></li>
+<li class="method public "><a href="#method_merge_element_attributes" title="merge_element_attributes() :: Merges two sets of attributes together and combines them for a HTML element."><span class="description">Merges two sets of attributes together and combines them for a HTML element.</span><pre>merge_element_attributes()</pre></a></li>
+<li class="method public "><a href="#method_response" title="response() :: Handles sending the data back to the JavaScript."><span class="description">Handles sending the data back to the JavaScript.</span><pre>response()</pre></a></li>
+<li class="method public "><a href="#method_sanitize_input_fields" title="sanitize_input_fields() :: Handles sanitizing input fields value dependent of the field type."><span class="description">Handles sanitizing input fields value dependent of the field type.</span><pre>sanitize_input_fields()</pre></a></li>
+<li class="method public "><a href="#method_sort_attachments_menu_order" title="sort_attachments_menu_order() :: Sorts the attachments by menu order."><span class="description">Sorts the attachments by menu order.</span><pre>sort_attachments_menu_order()</pre></a></li>
+<li class="method public "><a href="#method_unattach_attachment" title="unattach_attachment() :: Handles un-attaching an attachment."><span class="description">Handles un-attaching an attachment.</span><pre>unattach_attachment()</pre></a></li>
 <li class="method public "><a href="#method_wpba_add_attachments_callback" title="wpba_add_attachments_callback() :: Handles the attach AJAX callback."><span class="description">Handles the attach AJAX callback.</span><pre>wpba_add_attachments_callback()</pre></a></li>
 <li class="method public "><a href="#method_wpba_delete_attachment_callback" title="wpba_delete_attachment_callback() :: Handles the delete link AJAX callback."><span class="description">Handles the delete link AJAX callback.</span><pre>wpba_delete_attachment_callback()</pre></a></li>
 <li class="method public "><a href="#method_wpba_unattach_attachment_callback" title="wpba_unattach_attachment_callback() :: Handles the unattach link AJAX callback."><span class="description">Handles the unattach link AJAX callback.</span><pre>wpba_unattach_attachment_callback()</pre></a></li>
 </ul>
 </li>
-<li class="nav-header private">» Private
-                    <ul>
-<li class="method private "><a href="#method__add_wpba_helpers_actions_filters" title="_add_wpba_helpers_actions_filters() :: Handles adding all of the WPBA helpers actions and filters."><span class="description">Handles adding all of the WPBA helpers actions and filters.</span><pre>_add_wpba_helpers_actions_filters()</pre></a></li>
-<li class="method private "><a href="#method__add_wpba_meta_actions_filters" title="_add_wpba_meta_actions_filters() :: Handles adding all of the WPBA meta actions and filters."><span class="description">Handles adding all of the WPBA meta actions and filters.</span><pre>_add_wpba_meta_actions_filters()</pre></a></li>
-<li class="method private "><a href="#method__get_all_cached_attachment_transient_ids" title="_get_all_cached_attachment_transient_ids() :: Retrieves all of the current transient IDs."><span class="description">Retrieves all of the current transient IDs.</span><pre>_get_all_cached_attachment_transient_ids()</pre></a></li>
-</ul>
-</li>
 <li class="nav-header">
 <i title="Properties" class="icon-custom icon-property"></i> Properties
-                    <ul></ul>
+                    <ul>
+<li class="property public "><a href="#property_attachment_multi_menu_order_meta_key" title="$attachment_multi_menu_order_meta_key() :: The meta key for attachments menu order when added to multiple posts."><span class="description"></span><pre>$attachment_multi_menu_order_meta_key</pre></a></li>
+<li class="property public "><a href="#property_attachment_multi_meta_key" title="$attachment_multi_meta_key() :: The meta key for allowing attachments to be added to multiple posts."><span class="description"></span><pre>$attachment_multi_meta_key</pre></a></li>
+<li class="property public "><a href="#property_meta_box_id" title="$meta_box_id() :: The ID for the meta box."><span class="description"></span><pre>$meta_box_id</pre></a></li>
+<li class="property public "><a href="#property_option_prefix" title="$option_prefix() :: The prefix for all options."><span class="description"></span><pre>$option_prefix</pre></a></li>
+</ul>
 </li>
 <li class="nav-header protected">» Protected
-                    <ul>
-<li class="property protected "><a href="#property_cache_duration" title="$cache_duration() :: The length to cache a transient, default 24 hours."><span class="description"></span><pre>$cache_duration</pre></a></li>
-<li class="property protected "><a href="#property_meta_box_id" title="$meta_box_id() :: The ID for the meta box."><span class="description"></span><pre>$meta_box_id</pre></a></li>
-</ul>
+                    <ul><li class="property protected "><a href="#property_cache_duration" title="$cache_duration() :: The length to cache a transient, default 24 hours."><span class="description"></span><pre>$cache_duration</pre></a></li></ul>
 </li>
 </ul>
 </div>
@@ -191,6 +191,28 @@
 <td>Only add on required pages.</td>
 </tr>
 </table>
+</div></div>
+</div>
+<a id="method_attach_attachment"></a><div class="element clickable method public method_attach_attachment" data-toggle="collapse" data-target=".method_attach_attachment .collapse" title="public">
+<h2>Handles attaching attachments.</h2>
+<pre>attach_attachment(integer $attachment_id, integer $post_id) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>$attach = $this->attach_attachment( $attachment_id );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$attachment_id</h4>
+<code>integer</code><p>The attachment post id to attach.</p></div>
+<div class="subelement argument">
+<h4>$post_id</h4>
+<code>integer</code><p>The post id to attach the attachment to.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>boolean</code>True on success false on failure.</div>
 </div></div>
 </div>
 <a id="method_cache_attachments"></a><div class="element clickable method public method_cache_attachments" data-toggle="collapse" data-target=".method_cache_attachments .collapse" title="public">
@@ -304,6 +326,10 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"><code>$attachment_id = $this->get_attachment_id( $attachment );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$attachment</h4>
@@ -319,6 +345,10 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"><code>$post_parent_id = $this->get_attachment_post_parent_id( $post_parent );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$post_parent</h4>
@@ -340,20 +370,16 @@
 <td><a href="%5Chttp://codex.wordpress.org/Class_Reference/WP_Query"></a></td>
 </tr>
 <tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+<tr>
 <th>uses</th>
 <td><a href="WP_Query"></a></td>
 </tr>
 <tr>
 <th>todo</th>
-<td>Add setting to disable featured image.</td>
-</tr>
-<tr>
-<th>todo</th>
 <td>Add the ability to add attachment to multiple posts.</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Add setting/filter to disable the cache.</td>
 </tr>
 </table>
 <h3>Parameters</h3>
@@ -395,7 +421,11 @@
 <pre>get_form_kses_allowed_html() : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
+<div class="long_description"><code>$allowed_html = $this->get_form_kses_allowed_html();</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
 <h3>Returns</h3>
 <div class="subelement response">
 <code>array</code>Allowed HTML tags.</div>
@@ -441,9 +471,85 @@
 <code>string</code>The transient ID.</div>
 </div></div>
 </div>
+<a id="method_merge_element_attributes"></a><div class="element clickable method public method_merge_element_attributes" data-toggle="collapse" data-target=".method_merge_element_attributes .collapse" title="public">
+<h2>Merges two sets of attributes together and combines them for a HTML element.</h2>
+<pre>merge_element_attributes(array $defaults, array $attrs) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$defaults</h4>
+<code>array</code><p>The default attributes.</p></div>
+<div class="subelement argument">
+<h4>$attrs</h4>
+<code>array</code><p>The supplied attributes</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>The merged HTML element attributes.</div>
+</div></div>
+</div>
+<a id="method_response"></a><div class="element clickable method public method_response" data-toggle="collapse" data-target=".method_response .collapse" title="public">
+<h2>Handles sending the data back to the JavaScript.</h2>
+<pre>response(mixed $data) : void</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$data</h4>
+<code>mixed</code><p>Data to be sent back to JavaScript.</p></div>
+</div></div>
+</div>
+<a id="method_sanitize_input_fields"></a><div class="element clickable method public method_sanitize_input_fields" data-toggle="collapse" data-target=".method_sanitize_input_fields .collapse" title="public">
+<h2>Handles sanitizing input fields value dependent of the field type.</h2>
+<pre>sanitize_input_fields(string $field_type, mixed $value) : mixed</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$field_type</h4>
+<code>string</code><p>The field id/type.</p></div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>mixed</code><p>The meta value to be sanitized.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>mixed</code>The sanitized meta data.</div>
+</div></div>
+</div>
+<a id="method_sort_attachments_menu_order"></a><div class="element clickable method public method_sort_attachments_menu_order" data-toggle="collapse" data-target=".method_sort_attachments_menu_order .collapse" title="public">
+<h2>Sorts the attachments by menu order.</h2>
+<pre>sort_attachments_menu_order(array $attachments, integer $post_parent_id<code> = null</code>) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description">Since the attachment can have multiple parents the conventional menu order will not work.
+
+<code>$attachments = $this->sort_attachments_menu_order( $attachments );</code></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$attachments</h4>
+<code>array</code><p>The attachment posts to sort.</p></div>
+<div class="subelement argument">
+<h4>$post_parent_id</h4>
+<code>integer</code><p>Optional, the post id of the parent.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>The sorted attachment posts.</div>
+</div></div>
+</div>
 <a id="method_unattach_attachment"></a><div class="element clickable method public method_unattach_attachment" data-toggle="collapse" data-target=".method_unattach_attachment .collapse" title="public">
-<h2>Un-attach</h2>
-<pre>unattach_attachment(integer $attachment_id) : boolean</pre>
+<h2>Handles un-attaching an attachment.</h2>
+<pre>unattach_attachment(integer $attachment_id, $post_id) : boolean</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <div class="long_description"><code>$unattach = $this->unattach_attachment( $attachment_id );</code></div>
@@ -455,8 +561,10 @@
 <div class="subelement argument">
 <h4>$attachment_id</h4>
 <code>integer</code><p>The attachment post id to unattach.</p></div>
+<div class="subelement argument"><h4>$post_id</h4></div>
 <h3>Returns</h3>
-<div class="subelement response"><code>boolean</code></div>
+<div class="subelement response">
+<code>boolean</code>True on success false on failure.</div>
 </div></div>
 </div>
 <a id="method_wpba_add_attachments_callback"></a><div class="element clickable method public method_wpba_add_attachments_callback" data-toggle="collapse" data-target=".method_wpba_add_attachments_callback .collapse" title="public">
@@ -495,57 +603,96 @@
 </tr></table>
 </div></div>
 </div>
-<a id="method__add_wpba_helpers_actions_filters"></a><div class="element clickable method private method__add_wpba_helpers_actions_filters" data-toggle="collapse" data-target=".method__add_wpba_helpers_actions_filters .collapse" title="private">
-<h2>Handles adding all of the WPBA helpers actions and filters.</h2>
-<pre>_add_wpba_helpers_actions_filters() : void</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>$this->_add_wpba_helpers_actions_filters();</code></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-</div></div>
-</div>
-<a id="method__add_wpba_meta_actions_filters"></a><div class="element clickable method private method__add_wpba_meta_actions_filters" data-toggle="collapse" data-target=".method__add_wpba_meta_actions_filters .collapse" title="private">
-<h2>Handles adding all of the WPBA meta actions and filters.</h2>
-<pre>_add_wpba_meta_actions_filters() : void</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>$this->_add_wpba_meta_actions_filters();</code></div>
-<table class="table table-bordered"><tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr></table>
-</div></div>
-</div>
-<a id="method__get_all_cached_attachment_transient_ids"></a><div class="element clickable method private method__get_all_cached_attachment_transient_ids" data-toggle="collapse" data-target=".method__get_all_cached_attachment_transient_ids .collapse" title="private">
-<h2>Retrieves all of the current transient IDs.</h2>
-<pre>_get_all_cached_attachment_transient_ids(string $prefix<code> = '_wpba'</code>) : array</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"><code>$this->_get_all_cached_attachment_transient_ids();</code></div>
-<table class="table table-bordered">
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-<tr>
-<th>uses</th>
-<td><a href="%24wpdb"></a></td>
-</tr>
-</table>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$prefix</h4>
-<code>string</code><p>Optional, the transient id prefix to search for default _wpba.</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>array</code>All of the current transient IDs.</div>
-</div></div>
-</div>
 <h3>
 <i title="Properties" class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_attachment_multi_menu_order_meta_key"> </a><div class="element clickable property public property_attachment_multi_menu_order_meta_key" data-toggle="collapse" data-target=".property_attachment_multi_menu_order_meta_key .collapse" title="public">
+<h2>The meta key for attachments menu order when added to multiple posts.</h2>
+<pre>$attachment_multi_menu_order_meta_key : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="property_attachment_multi_meta_key"> </a><div class="element clickable property public property_attachment_multi_meta_key" data-toggle="collapse" data-target=".property_attachment_multi_meta_key .collapse" title="public">
+<h2>The meta key for allowing attachments to be added to multiple posts.</h2>
+<pre>$attachment_multi_meta_key : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="property_meta_box_id"> </a><div class="element clickable property public property_meta_box_id" data-toggle="collapse" data-target=".property_meta_box_id .collapse" title="public">
+<h2>The ID for the meta box.</h2>
+<pre>$meta_box_id : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'wpba_meta_box'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="property_option_prefix"> </a><div class="element clickable property public property_option_prefix" data-toggle="collapse" data-target=".property_option_prefix .collapse" title="public">
+<h2>The prefix for all options.</h2>
+<pre>$option_prefix : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'wpba_opt'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
 <a id="property_cache_duration"> </a><div class="element clickable property protected property_cache_duration" data-toggle="collapse" data-target=".property_cache_duration .collapse" title="protected">
 <h2>The length to cache a transient, default 24 hours.</h2>
 <pre>$cache_duration : integer</pre>
@@ -568,28 +715,6 @@
 </table>
 </div></div>
 </div>
-<a id="property_meta_box_id"> </a><div class="element clickable property protected property_meta_box_id" data-toggle="collapse" data-target=".property_meta_box_id .collapse" title="protected">
-<h2>The ID for the meta box.</h2>
-<pre>$meta_box_id : string</pre>
-<div class="row collapse"><div class="detail-description">
-<h3>Default</h3>
-<div class="subelement argument"><code>'wpba_meta_box'</code></div>
-</div></div>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<table class="table table-bordered">
-<tr>
-<th>todo</th>
-<td>allow for multiple meta boxes on a page.</td>
-</tr>
-<tr>
-<th>since</th>
-<td>1.4.0</td>
-</tr>
-</table>
-</div></div>
-</div>
 </div>
 </div>
 </div>
@@ -598,7 +723,7 @@
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.4.0
 </a> and<br>
-            generated on 2014-04-12T16:27:56-05:00.<br></footer></div>
+            generated on 2014-07-18T21:18:54-05:00.<br></footer></div>
 </div>
 </body>
 </html>

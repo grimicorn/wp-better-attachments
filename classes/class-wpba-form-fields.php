@@ -1,6 +1,6 @@
 <?php
 /**
- * This class handles all of the form types used in the meta box.
+ * This class handles all of the form types used.
  *
  * @version      1.4.0
  *
@@ -13,10 +13,10 @@
  *
  * @copyright    2013 - Present         Dan Holloran
  */
-if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
-	class WPBA_Meta_Form_Fields extends WP_Better_Attachments {
+if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
+	class WPBA_Form_Fields extends WPBA_Helpers {
 		/**
-		 * WPBA_Meta_Form_Fields class constructor.
+		 * WPBA_Form_Fields class constructor.
 		 *
 		 * @since  1.4.0
 		 *
@@ -25,62 +25,6 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		public function __construct( $config = array() ) {
 			parent::__construct();
 		} // __construct()
-
-
-
-		/**
-		 * Builds all of the inputs for the meta box.
-		 *
-		 * <code>
-		 * $attachment_fields = '';
-		 * $input_fields      = array();
-		 *
-		 * // Attachment title
-		 * $input_fields['post_title'] = array(
-		 * 	'id'    => 'post_title',
-		 *  'label' => 'Title',
-		 *  'value' => $attachment->post_title,
-		 *  'type'  => 'text',
-		 *  'attrs' => array(),
-		 * );
-		 * $attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );
-		 *
-		 * @since   1.4.0
-		 *
-		 * @todo    Document input types.
-		 *
-		 * @param   array   $inputs  The input(s) information (id,label,value,type,attrs).
-		 *
-		 * @return  string           The input(s) HTML.
-		 */
-		public function build_inputs( $inputs = array() ) {
-			$input_html = '';
-
-			foreach ( $inputs as $input ) {
-				extract( $input );
-
-				$label = ( isset( $label ) ) ? $label : '';
-				$value = ( isset( $value ) ) ? $value : '';
-				$type  = ( isset( $type ) ) ? $type : 'text';
-				$attrs = ( isset( $attrs ) ) ? $attrs : array();
-
-				switch ( $type ) {
-					case 'editor':
-						$input_html .= $this->wp_editor( $id, $label, $value );
-						break;
-
-					case 'textarea':
-						$input_html .= $this->textarea( $id, $label, $value, $attrs );
-						break;
-
-					default:
-						$input_html .= $this->input( $id, $label, $value, $type, $attrs );
-						break;
-				} // switch()
-			} // foreach()
-
-			return $input_html;
-		} // build_inputs()
 
 
 
@@ -145,7 +89,7 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 				'quicktags'     => false,
 			);
 			ob_start();
-			wp_editor( $value, "{$id}_editor", $wp_editor_settings );
+			wp_editor( html_entity_decode( $value ), "{$id}_editor", $wp_editor_settings );
 			$input_html .= ob_get_clean();
 
 			$input_html .= '</div>';
@@ -222,7 +166,7 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 		 */
 		public function input( $id, $label = '', $value = '', $type = 'text', $attrs = array() ) {
 			$default_attrs = array(
-			'class' => 'pull-left',
+				'class' => 'pull-left',
 			);
 			$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );
 
@@ -236,9 +180,9 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 
 			return $input_html;
 		} // input()
-	} // WPBA_Meta_Form_Fields()
+	} // WPBA_Form_Fields()
 
 	// Instantiate Class
-	global $wpba_meta_form_fields;
-	$wpba_meta_form_fields = new WPBA_Meta_Form_Fields();
+	global $wpba_form_fields;
+	$wpba_form_fields = new WPBA_Form_Fields();
 } // if()

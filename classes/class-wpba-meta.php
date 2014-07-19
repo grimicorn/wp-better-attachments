@@ -14,7 +14,7 @@
  * @copyright    2013 - Present         Dan Holloran
  */
 if ( ! class_exists( 'WPBA_Meta' ) ) {
-	class WPBA_Meta extends WPBA_Helpers {
+	class WPBA_Meta extends WPBA_Form_Fields {
 		/**
 		 * The title for the meta box.
 		 *
@@ -40,6 +40,62 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			$this->_add_wpba_meta_actions_filters();
 		} // __construct()
+
+
+
+		/**
+		 * Builds all of the inputs for the meta box.
+		 *
+		 * <code>
+		 * $attachment_fields = '';
+		 * $input_fields      = array();
+		 *
+		 * // Attachment title
+		 * $input_fields['post_title'] = array(
+		 * 	'id'    => 'post_title',
+		 *  'label' => 'Title',
+		 *  'value' => $attachment->post_title,
+		 *  'type'  => 'text',
+		 *  'attrs' => array(),
+		 * );
+		 * $attachment_fields .= $wpba_form_fields->build_inputs( $input_fields );
+		 *
+		 * @since   1.4.0
+		 *
+		 * @todo    Document input types.
+		 *
+		 * @param   array   $inputs  The input(s) information (id,label,value,type,attrs).
+		 *
+		 * @return  string           The input(s) HTML.
+		 */
+		public function build_inputs( $inputs = array() ) {
+			$input_html = '';
+
+			foreach ( $inputs as $input ) {
+				extract( $input );
+
+				$label = ( isset( $label ) ) ? $label : '';
+				$value = ( isset( $value ) ) ? $value : '';
+				$type  = ( isset( $type ) ) ? $type : 'text';
+				$attrs = ( isset( $attrs ) ) ? $attrs : array();
+
+				switch ( $type ) {
+					case 'editor':
+						$input_html .= $this->wp_editor( $id, $label, $value );
+						break;
+
+					case 'textarea':
+						$input_html .= $this->textarea( $id, $label, $value, $attrs );
+						break;
+
+					default:
+						$input_html .= $this->input( $id, $label, $value, $type, $attrs );
+						break;
+				} // switch()
+			} // foreach()
+
+			return $input_html;
+		} // build_inputs()
 
 
 		/**
@@ -425,14 +481,14 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 * @todo    Add setting to disable file types.
 		 * @todo    Add toggles to disable/enable file types visibility.
 		 *
-		 * @uses    WPBA_Meta_Form_Fields
+		 * @uses    WPBA_Form_Fields
 		 *
 		 * @param   object  $post  The post object.
 		 *
 		 * @return  void
 		 */
 		public function render_meta_box_content( $post ) {
-			global $wpba_meta_form_fields;
+			global $wpba_form_fields;
 
 			$attachments  = $this->get_attachments( $post, true );
 			$allowed_html = $this->get_form_kses_allowed_html();
@@ -503,7 +559,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 */
 		public function build_attachment_items( $attachments, $echo = true ) {
 			$meta = array();
-			foreach ($attachments as $attachment ) {
+			foreach ( $attachments as $attachment ) {
 				$meta[] = get_post_meta( $attachment->ID, $this->attachment_multi_meta_key, true );
 			} // foreach()
 
@@ -932,15 +988,13 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @uses    WPBA_Meta_Form_Fields
+		 * @uses    WPBA_Form_Fields
 		 *
 		 * @param   object  $attachment  The attachment post.
 		 *
 		 * @return  string               The attachment form fields.
 		 */
 		public function build_attachment_fields( $attachment ) {
-			global $wpba_meta_form_fields;
-
 			$attachment_id_base = "{$this->meta_box_id}_attachment_{$attachment->ID}";
 			$atttachment_fields = '';
 			$input_fields       = $this->_get_attachment_fields( $attachment );
@@ -952,7 +1006,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			$attachment_fields  = '';
 			$attachment_fields .= '<div class="wpba-attachment-fields-wrap pull-left">';
-			$attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );
+			$attachment_fields .= $this->build_inputs( $input_fields );
 			$attachment_fields .= '</div>';
 
 			return $attachment_fields;

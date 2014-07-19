@@ -32,7 +32,7 @@
 <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
                                     Reports <b class="caret"></b></a><ul class="dropdown-menu">
 <li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
-                <span class="label label-info">0</span></a></li>
+                <span class="label label-info">1</span></a></li>
 <li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
                 <ul></ul></a></li>
 <li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
@@ -69,18 +69,21 @@
 <li class="method public "><a href="#method_build_inputs" title="build_inputs() :: Builds all of the inputs for the meta box."><span class="description">Builds all of the inputs for the meta box.</span><pre>build_inputs()</pre></a></li>
 <li class="method public "><a href="#method_enqueue_admin_assets" title="enqueue_admin_assets() :: Enqueues scripts and styles for use in wp-admin."><span class="description">Enqueues scripts and styles for use in wp-admin.</span><pre>enqueue_admin_assets()</pre></a></li>
 <li class="method public "><a href="#method_enqueue_public_assets" title="enqueue_public_assets() :: Enqueues scripts and styles for use on the public front end."><span class="description">Enqueues scripts and styles for use on the public front end.</span><pre>enqueue_public_assets()</pre></a></li>
+<li class="method public "><a href="#method_get_post_types" title="get_post_types() :: Retrieves the enabled post types."><span class="description">Retrieves the enabled post types.</span><pre>get_post_types()</pre></a></li>
 <li class="method public "><a href="#method_input" title="input() :: Creates an &lt;input&gt; field."><span class="description">Creates an &lt;input&gt; field.</span><pre>input()</pre></a></li>
 <li class="method public "><a href="#method_label" title="label() :: Creates a label for a form input field."><span class="description">Creates a label for a form input field.</span><pre>label()</pre></a></li>
-<li class="method public "><a href="#method_merge_element_attributes" title="merge_element_attributes() :: Merges two sets of attributes together and combines them for a HTML element."><span class="description">Merges two sets of attributes together and combines them for a HTML element.</span><pre>merge_element_attributes()</pre></a></li>
 <li class="method public "><a href="#method_textarea" title="textarea() :: Creates a &lt;textarea&gt;."><span class="description">Creates a &lt;textarea&gt;.</span><pre>textarea()</pre></a></li>
+<li class="method public "><a href="#method_wp_editor" title="wp_editor() :: Creates a wp_editor instance."><span class="description">Creates a wp_editor instance.</span><pre>wp_editor()</pre></a></li>
 </ul>
 </li>
 <li class="nav-header">
 <i title="Properties" class="icon-custom icon-property"></i> Properties
-                    <ul></ul>
-</li>
-<li class="nav-header protected">» Protected
-                    <ul><li class="property protected "><a href="#property_meta_box_id" title="$meta_box_id() :: The ID for the meta box."><span class="description"></span><pre>$meta_box_id</pre></a></li></ul>
+                    <ul>
+<li class="property public "><a href="#property_attachment_multi_menu_order_meta_key" title="$attachment_multi_menu_order_meta_key() :: The meta key for attachments menu order when added to multiple posts."><span class="description"></span><pre>$attachment_multi_menu_order_meta_key</pre></a></li>
+<li class="property public "><a href="#property_attachment_multi_meta_key" title="$attachment_multi_meta_key() :: The meta key for allowing attachments to be added to multiple posts."><span class="description"></span><pre>$attachment_multi_meta_key</pre></a></li>
+<li class="property public "><a href="#property_meta_box_id" title="$meta_box_id() :: The ID for the meta box."><span class="description"></span><pre>$meta_box_id</pre></a></li>
+<li class="property public "><a href="#property_option_prefix" title="$option_prefix() :: The prefix for all options."><span class="description"></span><pre>$option_prefix</pre></a></li>
+</ul>
 </li>
 </ul>
 </div>
@@ -191,10 +194,16 @@ $input_fields['post_title'] = array(
  'attrs' => array(),
 );
 $attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );</div>
-<table class="table table-bordered"><tr>
+<table class="table table-bordered">
+<tr>
 <th>since</th>
 <td>1.4.0</td>
-</tr></table>
+</tr>
+<tr>
+<th>todo</th>
+<td>Document input types.</td>
+</tr>
+</table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$inputs</h4>
@@ -234,6 +243,27 @@ $attachment_fields .= $wpba_meta_form_fields->build_inputs( $input_fields );</di
 </table>
 </div></div>
 </div>
+<a id="method_get_post_types"></a><div class="element clickable method public method_get_post_types" data-toggle="collapse" data-target=".method_get_post_types .collapse" title="public">
+<h2>Retrieves the enabled post types.</h2>
+<pre>get_post_types() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>Add setting to restrict post types.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>The enabled post types.</div>
+</div></div>
+</div>
 <a id="method_input"></a><div class="element clickable method public method_input" data-toggle="collapse" data-target=".method_input .collapse" title="public">
 <h2>Creates an &lt;input&gt; field.</h2>
 <pre>input(integer $id, string $label<code> = ''</code>, string $value<code> = ''</code>, string $type<code> = 'text'</code>, array $attrs<code> = array()</code>) : string</pre>
@@ -248,16 +278,10 @@ $attrs = ( isset( $attrs ) ) ? $attrs : array();
 $input_html  = '';
 $input_html .= $this->input( $id, $label, $value, $type, $attrs );
 </code></div>
-<table class="table table-bordered">
-<tr>
+<table class="table table-bordered"><tr>
 <th>since</th>
 <td>1.4.0</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Allow for merging of the class attribute.</td>
-</tr>
-</table>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$id</h4>
@@ -301,24 +325,6 @@ $input_html .= $this->input( $id, $label, $value, $type, $attrs );
 <code>string</code>The label for the form input field.</div>
 </div></div>
 </div>
-<a id="method_merge_element_attributes"></a><div class="element clickable method public method_merge_element_attributes" data-toggle="collapse" data-target=".method_merge_element_attributes .collapse" title="public">
-<h2>Merges two sets of attributes together and combines them for a HTML element.</h2>
-<pre>merge_element_attributes(array $defaults, array $attrs) : string</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<div class="long_description"></div>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$defaults</h4>
-<code>array</code><p>The default attributes.</p></div>
-<div class="subelement argument">
-<h4>$attrs</h4>
-<code>array</code><p>The supplied attributes</p></div>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>string</code>The merged HTML element attributes.</div>
-</div></div>
-</div>
 <a id="method_textarea"></a><div class="element clickable method public method_textarea" data-toggle="collapse" data-target=".method_textarea .collapse" title="public">
 <h2>Creates a &lt;textarea&gt;.</h2>
 <pre>textarea(integer $id, string $label<code> = ''</code>, string $value<code> = ''</code>, array $attrs<code> = array()</code>) : string</pre>
@@ -333,16 +339,10 @@ $attrs = ( isset( $attrs ) ) ? $attrs : array();
 $input_html  = '';
 $input_html .= $this->textarea( $id, $label, $value, $attrs );
 </code></div>
-<table class="table table-bordered">
-<tr>
+<table class="table table-bordered"><tr>
 <th>since</th>
 <td>1.4.0</td>
-</tr>
-<tr>
-<th>todo</th>
-<td>Allow for merging of the class attribute.</td>
-</tr>
-</table>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$id</h4>
@@ -361,14 +361,112 @@ $input_html .= $this->textarea( $id, $label, $value, $attrs );
 <code>string</code>The input field.</div>
 </div></div>
 </div>
+<a id="method_wp_editor"></a><div class="element clickable method public method_wp_editor" data-toggle="collapse" data-target=".method_wp_editor .collapse" title="public">
+<h2>Creates a wp_editor instance.</h2>
+<pre>wp_editor(integer $id, string $label<code> = ''</code>, string $value<code> = ''</code>) : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"><code>
+$label = ( isset( $label ) ) ? $label : '';
+$value = ( isset( $value ) ) ? $value : '';
+$type  = ( isset( $type ) ) ? $type : 'text';
+
+$input_html  = '';
+$input_html .= $this->wp_editor( $id, $label, $value );
+</code></div>
+<table class="table table-bordered"><tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code>integer</code><p>The ID & name attribute to identify the form field.</p></div>
+<div class="subelement argument">
+<h4>$label</h4>
+<code>string</code><p>Optional, the text to be displayed in the label.</p></div>
+<div class="subelement argument">
+<h4>$value</h4>
+<code>string</code><p>Optional, the value & placeholder of the form field.</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>string</code>The input field.</div>
+</div></div>
+</div>
 <h3>
 <i title="Properties" class="icon-custom icon-property"></i> Properties</h3>
-<a id="property_meta_box_id"> </a><div class="element clickable property protected property_meta_box_id" data-toggle="collapse" data-target=".property_meta_box_id .collapse" title="protected">
+<a id="property_attachment_multi_menu_order_meta_key"> </a><div class="element clickable property public property_attachment_multi_menu_order_meta_key" data-toggle="collapse" data-target=".property_attachment_multi_menu_order_meta_key .collapse" title="public">
+<h2>The meta key for attachments menu order when added to multiple posts.</h2>
+<pre>$attachment_multi_menu_order_meta_key : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="property_attachment_multi_meta_key"> </a><div class="element clickable property public property_attachment_multi_meta_key" data-toggle="collapse" data-target=".property_attachment_multi_meta_key .collapse" title="public">
+<h2>The meta key for allowing attachments to be added to multiple posts.</h2>
+<pre>$attachment_multi_meta_key : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="property_meta_box_id"> </a><div class="element clickable property public property_meta_box_id" data-toggle="collapse" data-target=".property_meta_box_id .collapse" title="public">
 <h2>The ID for the meta box.</h2>
 <pre>$meta_box_id : string</pre>
 <div class="row collapse"><div class="detail-description">
 <h3>Default</h3>
 <div class="subelement argument"><code>'wpba_meta_box'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>todo</th>
+<td>allow for multiple meta boxes on a page.</td>
+</tr>
+<tr>
+<th>since</th>
+<td>1.4.0</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="property_option_prefix"> </a><div class="element clickable property public property_option_prefix" data-toggle="collapse" data-target=".property_option_prefix .collapse" title="public">
+<h2>The prefix for all options.</h2>
+<pre>$option_prefix : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'wpba_opt'</code></div>
 </div></div>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
@@ -393,7 +491,7 @@ $input_html .= $this->textarea( $id, $label, $value, $attrs );
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.4.0
 </a> and<br>
-            generated on 2014-04-12T16:27:56-05:00.<br></footer></div>
+            generated on 2014-07-18T21:18:54-05:00.<br></footer></div>
 </div>
 </body>
 </html>

@@ -93,10 +93,9 @@ require_once 'libs/wpba-debug.php';
 $classes = array(
 	'class-wp-better-attachments',
 	'class-wpba-helpers',
-	'class-wpba-meta-form-fields',
+	'class-wpba-form-fields',
 	'class-wpba-meta',
 	'class-wpba-ajax',
-	// 'class-wpba-notifications',
 );
 foreach ( $classes as $class ) {
 	$has_php = ( strpos( $class, '.php' ) !== false );
