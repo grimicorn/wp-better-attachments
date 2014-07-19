@@ -343,6 +343,19 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				'checked'     => array(),
 				'data-toggle' => array(),
 			);
+
+			$allowed_tags['checkbox'] = array(
+				'type'        => array(),
+				'name'        => array(),
+				'id'          => array(),
+				'value'       => array(),
+				'size'        => array(),
+				'class'       => array(),
+				'placeholder' => array(),
+				'checked'     => array(),
+				'data-toggle' => array(),
+			);
+
 			$allowed_tags['option'] = array(
 				'value'    => array(),
 				'selected' => array(),

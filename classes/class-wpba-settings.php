@@ -50,8 +50,8 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 			$settings_fields = array();
 			$options        = get_option( $this->option_group );
 
-			// Main settings
-			$settings_fields["{$this->page_slug}_main"] = $this->_get_main_settings_fields();
+			// General settings
+			$settings_fields["{$this->page_slug}_general"] = $this->_get_general_settings_fields();
 
 			return $settings_fields[$settings_group];
 		} // get_settings_fields()
@@ -59,33 +59,189 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 
 
 		/**
-		 * Settings fields for the main settings group.
+		 * Settings fields for the general settings group.
 		 *
-		 * <code>$settings_fields["{$this->page_slug}_main"] = $this->_get_main_settings_fields();</code>
+		 * <code>$settings_fields["{$this->page_slug}_general"] = $this->_get_general_settings_fields();</code>
 		 *
 		 * @since   1.4.0
 		 *
 		 *
-		 * @return  array  The setting fields for the main option group.
+		 * @return  array  The setting fields for the general option group.
 		 */
-		private function _get_main_settings_fields() {
+		private function _get_general_settings_fields() {
 			$settings_fields = array();
 			$options         = get_option( $this->option_group );
 
-			// Text String
+			// == Disable Post Types ======================================================
+			$post_types        = $this->get_post_types();
+			$post_type_options = array();
+			foreach ( $post_types as $type ) {
+				$type_object = get_post_type_object( $type );
+
+				if ( is_null( $type_object ) ) {
+					continue;
+				} // if()
+
+				$post_type_options[] = array(
+					'label' => $type_object->labels->singular_name,
+					'value' => ( isset( $options["disable_post_type_{$type}"] ) ) ? $options["disable_post_type_{$type}"] : '',
+					'name' => "$this->option_group[disable_post_type_{$type}]",
+				);
+			} // foreach()
+
 			$settings_fields[] = array(
-				'id'    => "{$this->page_slug}_text_string",
-				'label' => 'Text String',
-				'value' => $options['text_string'],
-				'type'  => 'text',
-				'attrs' => array(
-					'name' => "$this->option_group[text_string]",
-					'size' => '40',
+				'id'      => "{$this->page_slug}_disable_post_types",
+				'label'   => 'Disable Post Types',
+				'type'    => 'multi_checkbox',
+				'options' => $post_type_options,
+			);
+
+			// == Global Settings ======================================================
+			$settings_fields[] = array(
+				'id'      => "{$this->page_slug}_global_settings",
+				'label'   => 'Global Settings',
+				'type'    => 'multi_checkbox',
+				'options' => array(
+					array(
+						'label' => 'Do Not Include Thumbnail',
+						'value' => ( isset( $options['global_setting_do_not_include_thumbnail'] ) ) ? $options['global_setting_do_not_include_thumbnail'] : '',
+						'name' => "$this->option_group[global_setting_do_not_include_thumbnail]",
+					),
+					array(
+						'label' => 'Disable Shortcodes',
+						'value' => ( isset( $options['global_setting_disable_shortcodes'] ) ) ? $options['global_setting_disable_shortcodes'] : '',
+						'name' => "$this->option_group[global_setting_disable_shortcodes]",
+					),
+					array(
+						'label' => 'Disable WPBA Image Crop Editor',
+						'value' => ( isset( $options['global_setting_disable_wpba_image_crop_editor'] ) ) ? $options['global_setting_disable_wpba_image_crop_editor'] : '',
+						'name' => "$this->option_group[global_setting_disable_wpba_image_crop_editor]",
+					),
+					array(
+						'label' => 'Show All Image Sizes WPBA Image Crop Editor',
+						'value' => ( isset( $options['global_setting_show_all_image_sizes_wpba_image_crop_editor'] ) ) ? $options['global_setting_show_all_image_sizes_wpba_image_crop_editor'] : '',
+						'name' => "$this->option_group[global_setting_show_all_image_sizes_wpba_image_crop_editor]",
+					),
 				),
 			);
 
+			// == Crop Editor Settings ======================================================
+			$settings_fields[] = array(
+				'id'    => "{$this->page_slug}_crop_editor_message",
+				'label' => 'Crop Editor Message',
+				'type'  => 'textarea',
+				'attrs'  => array(
+					'cols' => '55',
+					'rows' => '5',
+				),
+			);
+
+			// == Media Table Settings ======================================================
+			$settings_fields[] = array(
+				'id'      => "{$this->page_slug}_media_table_settings",
+				'label'   => 'Media Table Settings',
+				'type'    => 'multi_checkbox',
+				'options' => array(
+					array(
+						'label' => 'Disable Re-attach Link (hover menu)',
+						'value' => ( isset( $options['media_table_setting_disable_re_attach_link_hover_menu'] ) ) ? $options['media_table_setting_disable_re_attach_link_hover_menu'] : '',
+						'name' => "$this->option_group[media_table_setting_disable_re_attach_link_hover_menu]",
+					),
+					array(
+						'label' => 'Edit (column)',
+						'value' => ( isset( $options['media_table_setting_edit_column'] ) ) ? $options['media_table_setting_edit_column'] : '',
+						'name' => "$this->option_group[media_table_setting_edit_column]",
+					),
+					array(
+						'label' => 'Disable Un-attach Link (column)',
+						'value' => ( isset( $options['media_table_setting_disable_un_attach_link_column'] ) ) ? $options['media_table_setting_disable_un_attach_link_column'] : '',
+						'name' => "$this->option_group[media_table_setting_disable_un_attach_link_column]",
+					),
+					array(
+						'label' => 'Disable Re-attach Link (column)',
+						'value' => ( isset( $options['media_table_setting_disable_re_attach_link_column'] ) ) ? $options['media_table_setting_disable_re_attach_link_column'] : '',
+						'name' => "$this->option_group[media_table_setting_disable_re_attach_link_column]",
+					),
+				),
+			);
+
+			// == Global Meta Box Settings ======================================================
+			$settings_fields[] = array(
+				'id'      => "{$this->page_slug}_meta_box_settings",
+				'label'   => 'Media Table Settings',
+				'type'    => 'multi_checkbox',
+				'options' => array(
+					array(
+						'label' => 'Disable Title Editor',
+						'value' => ( isset( $options['meta_box_setting_disable_title_editor'] ) ) ? $options['meta_box_setting_disable_title_editor'] : '',
+						'name' => "$this->option_group[meta_box_setting_disable_title_editor]",
+					),
+					array(
+						'label' => 'Disable Caption Editor',
+						'value' => ( isset( $options['meta_box_setting_disable_caption_editor'] ) ) ? $options['meta_box_setting_disable_caption_editor'] : '',
+						'name' => "$this->option_group[meta_box_setting_disable_caption_editor]",
+					),
+					array(
+						'label' => 'Disable Attachment ID',
+						'value' => ( isset( $options['meta_box_setting_disable_attachment_id'] ) ) ? $options['meta_box_setting_disable_attachment_id'] : '',
+						'name' => "$this->option_group[meta_box_setting_disable_attachment_id]",
+					),
+					array(
+						'label' => 'Disable Un-attach Link',
+						'value' => ( isset( $options['meta_box_setting_disable_un_attach_link'] ) ) ? $options['meta_box_setting_disable_un_attach_link'] : '',
+						'name' => "$this->option_group[meta_box_setting_disable_un_attach_link]",
+					),
+					array(
+						'label' => 'Disable Edit Link',
+						'value' => ( isset( $options['meta_box_setting_disable_edit_link'] ) ) ? $options['meta_box_setting_disable_edit_link'] : '',
+						'name' => "$this->option_group[meta_box_setting_disable_edit_link]",
+					),
+					array(
+						'label' => 'Disable Delete Link',
+						'value' => ( isset( $options['meta_box_setting_disable_delete_link'] ) ) ? $options['meta_box_setting_disable_delete_link'] : '',
+						'name' => "$this->option_group[meta_box_setting_disable_delete_link]",
+					),
+				),
+			);
+
+			// File Types
+			// 	Disable Image Files
+			// 	Disable Video Files
+			// 	Disable Audio Files
+			// 	Disable Documents
+
+			// Global Edit Modal Settings
+			// 	Disable Caption
+			// 	Disable Alternative Text
+			// 	Disable Description
+
+			// {POSTTYPE} Meta Box Title
+			// 	text
+
+			// {POSTTYPE} Settings
+			// 	Disable Title Editor (meta box)
+			// 	Disable Caption Editor (meta box)
+			// 	Disable Attachment ID (meta box)
+			// 	Disable Un-attach Link (meta box)
+			// 	Disable Edit Link (meta box)
+			// 	Disable Delete Link (meta box)
+			// 	Disable Caption (edit modal)
+			// 	Disable Alternative Text (edit modal)
+			// 	Disable Description (edit modal)
+			// 	Do Not Include Thumbnail
+
+			// {POSTTYPE} File Types
+			// 	Disable Image Files
+			// 	Disable Video Files
+			// 	Disable Audio Files
+			// 	Disable Documents
+
+			// Enable meta box only on these {POSTTYPE} pages
+			// 	text
+			// 		Comma separated list of page slugs ex: slug1,slug2,slug-3
+
 			return $settings_fields;
-		} // _get_main_settings_fields()
+		} // _get_general_settings_fields()
 
 
 
@@ -147,34 +303,35 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 * @return  void
 		 */
 		function admin_init() {
-			$main_settings_group = "{$this->page_slug}_main";
+			$general_settings_group = "{$this->page_slug}_general";
 
 			register_setting( $this->option_group, $this->option_group, array( &$this, 'validate_options' ) );
-			add_settings_section( $main_settings_group, 'Main Settings', array( &$this, 'main_section_text' ), $this->page_slug );
 
-			$this->add_settings_fields( $main_settings_group );
+			// General Settings Group
+			add_settings_section( $general_settings_group, 'General Settings', array( &$this, 'general_section_text' ), $this->page_slug );
+			$this->add_settings_fields( $general_settings_group );
 		} // admin_init()
 
 
 
 		/**
-		 * Main settings section text.
+		 * General settings section text.
 		 *
 		 * @since 1.4.0
 		 *
-		 * <code>add_settings_section( $main_settings_group, 'Main Settings', array( &$this, 'main_section_text' ), $this->page_slug );</code>
+		 * <code>add_settings_section( $general_settings_group, 'General Settings', array( &$this, 'general_section_text' ), $this->page_slug );</code>
 		 *
 		 * @return  void
 		 */
-		function main_section_text() {
-		} // main_section_text()
+		function general_section_text() {
+		} // general_section_text()
 
 
 
 		/**
 		 * Handles adding the settings fields for a specific group.
 		 *
-		 * <code>$this->add_settings_fields( $main_settings_group );</code>
+		 * <code>$this->add_settings_fields( $general_settings_group );</code>
 		 *
 		 * @since  1.4.0
 		 *
@@ -217,11 +374,31 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 			// We do not need a label
 			$field['label'] = '';
 
-			// We do not need to add the type to the ID like meta
-			$field['add_type_to_id'] = false;
-
 			$this->build_inputs( array( $field ), true );
 		} // output_setting_field()
+
+
+
+		/**
+		 * Handles merging the new input options with the current options.
+		 *
+		 * @param   array  $inputs  The new submitted options.
+		 *
+		 * @return  array           The merged options.
+		 */
+		public function merge_options( $inputs ) {
+			$options = get_option( $this->option_group );
+			$options = array_merge( $options, $inputs );
+
+			// Remove empty options
+			foreach ( $options as $key => $option ) {
+				if ( ! isset( $inputs[$key] ) ) {
+					unset( $options[$key] );
+				} // if()
+			} // foreach()
+
+			return $options;
+		} // merge_options()
 
 
 
@@ -237,9 +414,7 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 * @return  array          The validate settings fields.
 		 */
 		function validate_options( $input ) {
-			$options = get_option( $this->option_group );
-
-			$options['text_string'] = trim( $input['text_string'] );
+			$options = $this->merge_options( $input );
 
 			return $options;
 		} // validate_options()

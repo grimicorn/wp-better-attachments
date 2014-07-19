@@ -105,6 +105,71 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 
 
 		/**
+		 * Creates a multiple check box field field.
+		 *
+		 * <code>
+		 * $label = ( isset( $label ) ) ? $label : '';
+		 * $value = ( isset( $value ) ) ? $value : '';
+		 * $attrs = ( isset( $attrs ) ) ? $attrs : array();
+		 * $options = array(
+		 * 	array(
+		 * 		'label' => 'Option Name',
+		 * 		'value' => 'Option Value'
+		 * 	),
+		 * );
+		 *
+		 * $multi_checkbox_html  = '';
+		 * $multi_checkbox_html .= $this->multi_checkbox( $id, $options, $label, $value, $attrs );
+		 * </code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   integer  $id       The ID & name attribute to identify the form field.
+		 * @param   array    $options  The check boxes to be created.
+		 * @param   string   $label    Optional, the text to be displayed in the label.
+		 * @param   array    $attrs    Optional, attributes to add to the multi checkbox field.
+		 *
+		 * @return  string           The multi checkbox field.
+		 */
+		public function multi_checkbox( $id, $options = array(), $label = '', $value = '', $attrs = array() ) {
+			if ( empty( $options ) ) {
+				return '';
+			} // if()
+
+			$i                    = 1;
+			$multi_checkbox_html  = '';
+			$wrap_class           = str_replace( '_', '-', $id );
+			$multi_checkbox_html .= "<div class='{$wrap_class}-multi-checkbox-wrap wpba-multi-checkbox-wrap clearfix clear'>";
+			foreach ( $options as $option ) {
+				$value = ( isset( $option['value'] ) ) ? $option['value'] : '';
+				$label = ( isset( $option['label'] ) ) ? $option['label'] : '';
+				$name  = ( isset( $option['name'] ) ) ? $option['name'] : "{$id}_{$i}";
+
+				$defaults = array(
+					'class' => 'pull-left',
+				);
+
+				// Handle the checked attribute
+				if ( $value != '' ) {
+					$defaults['checked'] = 'checked';
+				} // if()
+
+				// Merge the attributes
+				$multi_checkbox_attrs = $this->merge_element_attributes( $defaults, $attrs );
+
+				// Build the multi_checkbox
+				$multi_checkbox_html .= "<input id='{$id}_checkbox_{$i}' name='{$name}' type='checkbox' value='on' {$multi_checkbox_attrs}/>";
+				$multi_checkbox_html .= $this->label( "{$id}_checkbox_{$i}", $label ) . '<br>';
+				$i = $i + 1;
+			} // foreach()
+			$multi_checkbox_html .= '</div>';
+
+			return $multi_checkbox_html;
+		} // multi_checkbox()
+
+
+
+		/**
 		 * Creates a <textarea>.
 		 *
 		 * <code>
@@ -225,11 +290,13 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			foreach ( $inputs as $input ) {
 				extract( $input );
 
-				$label = ( isset( $label ) ) ? $label : '';
-				$value = ( isset( $value ) ) ? $value : '';
-				$type  = ( isset( $type ) ) ? $type : 'text';
-				$attrs = ( isset( $attrs ) ) ? $attrs : array();
-				$name  = ( isset( $attrs['name'] ) ) ? $attrs['name'] : $id;
+				$id      = ( isset( $id ) ) ? $id : '';
+				$label   = ( isset( $label ) ) ? $label : '';
+				$value   = ( isset( $value ) ) ? $value : '';
+				$type    = ( isset( $type ) ) ? $type : 'text';
+				$attrs   = ( isset( $attrs ) ) ? $attrs : array();
+				$options = ( isset( $options ) ) ? $options : array();
+				$name    = ( isset( $attrs['name'] ) ) ? $attrs['name'] : $id;
 
 				switch ( $type ) {
 					case 'editor':
@@ -238,6 +305,10 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 
 					case 'textarea':
 						$input_html .= $this->textarea( $id, $label, $value, $attrs );
+						break;
+
+					case 'multi_checkbox':
+						$input_html .= $this->multi_checkbox( $id, $options, $label, $value, $attrs );
 						break;
 
 					default:
