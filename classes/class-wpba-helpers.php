@@ -571,17 +571,17 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 
 		/**
-		* Handles attaching attachments.
-		*
-		* <code>$attach = $this->attach_attachment( $attachment_id );</code>
-		*
-		* @since   1.4.0
-		*
-		* @param   integer  $attachment_id  The attachment post id to attach.
-		* @param   integer  $post_id        The post id to attach the attachment to.
-		*
-		* @return  boolean                  True on success false on failure.
-		*/
+		 * Handles attaching attachments.
+		 *
+		 * <code>$attach = $this->attach_attachment( $attachment_id );</code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   integer  $attachment_id  The attachment post id to attach.
+		 * @param   integer  $post_id        The post id to attach the attachment to.
+		 *
+		 * @return  boolean                  True on success false on failure.
+		 */
 		public function attach_attachment( $attachment_id, $post_id ) {
 			$attachment = get_post( $attachment_id );
 
@@ -652,16 +652,16 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 
 		/**
-		* Handles un-attaching an attachment.
-		*
-		* <code>$unattach = $this->unattach_attachment( $attachment_id );</code>
-		*
-		* @since   1.4.0
-		*
-		* @param   integer  $attachment_id  The attachment post id to unattach.
-		*
-		* @return  boolean                  True on success false on failure.
-		*/
+		 * Handles un-attaching an attachment.
+		 *
+		 * <code>$unattach = $this->unattach_attachment( $attachment_id );</code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   integer  $attachment_id  The attachment post id to unattach.
+		 *
+		 * @return  boolean                  True on success false on failure.
+		 */
 		public function unattach_attachment( $attachment_id, $post_id ) {
 			$attachment = get_post( $attachment_id );
 
@@ -804,6 +804,33 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 
 			return $value;
 		} // sanitize_input_fields()
+
+
+		/**
+		 * Retrieves a template part.
+		 *
+		 * @param   string  $slug  [description]
+		 *
+		 * @return  void
+		 */
+		public function get_template_part( $slug = '' ) {
+			if ( $slug == '' ) {
+				return;
+			} // if()
+
+			$slug          = trim( str_replace( '.php', '', $slug ), '/' );
+			$template_path = WPBA_PATH . "/templates/{$slug}.php";
+
+			// Does the template exist?
+			if ( ! file_exists( $template_path ) ) {
+				return;
+			} // if()
+
+			// Load the template
+			include_once $template_path;
+
+			return;
+		} // get_template_part()
 	} // WPBA_Helpers()
 
 	// Instantiate Class

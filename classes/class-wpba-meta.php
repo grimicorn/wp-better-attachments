@@ -44,61 +44,6 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 
 		/**
-		 * Builds all of the inputs for the meta box.
-		 *
-		 * <code>
-		 * $attachment_fields = '';
-		 * $input_fields      = array();
-		 *
-		 * // Attachment title
-		 * $input_fields['post_title'] = array(
-		 * 	'id'    => 'post_title',
-		 *  'label' => 'Title',
-		 *  'value' => $attachment->post_title,
-		 *  'type'  => 'text',
-		 *  'attrs' => array(),
-		 * );
-		 * $attachment_fields .= $wpba_form_fields->build_inputs( $input_fields );
-		 *
-		 * @since   1.4.0
-		 *
-		 * @todo    Document input types.
-		 *
-		 * @param   array   $inputs  The input(s) information (id,label,value,type,attrs).
-		 *
-		 * @return  string           The input(s) HTML.
-		 */
-		public function build_inputs( $inputs = array() ) {
-			$input_html = '';
-
-			foreach ( $inputs as $input ) {
-				extract( $input );
-
-				$label = ( isset( $label ) ) ? $label : '';
-				$value = ( isset( $value ) ) ? $value : '';
-				$type  = ( isset( $type ) ) ? $type : 'text';
-				$attrs = ( isset( $attrs ) ) ? $attrs : array();
-
-				switch ( $type ) {
-					case 'editor':
-						$input_html .= $this->wp_editor( $id, $label, $value );
-						break;
-
-					case 'textarea':
-						$input_html .= $this->textarea( $id, $label, $value, $attrs );
-						break;
-
-					default:
-						$input_html .= $this->input( $id, $label, $value, $type, $attrs );
-						break;
-				} // switch()
-			} // foreach()
-
-			return $input_html;
-		} // build_inputs()
-
-
-		/**
 		 * Handles adding all of the WPBA meta actions and filters.
 		 *
 		 * <code>$this->_add_wpba_meta_actions_filters();</code>

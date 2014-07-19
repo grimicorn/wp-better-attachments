@@ -63,7 +63,7 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 *
 		 * @var   string
 		 */
-		public $option_prefix = 'wpba_opt';
+		public $option_prefix = 'wpba_options';
 
 
 

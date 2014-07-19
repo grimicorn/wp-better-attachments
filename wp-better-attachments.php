@@ -79,7 +79,7 @@ if ( ! defined( 'WPBA_PATH' ) ) {
 	 *
 	 * @var  string
 	 */
-	define( 'WPBA_PATH', trim( plugin_dir_path( __FILE__ ), '/' ) );
+	define( 'WPBA_PATH', rtrim( plugin_dir_path( __FILE__ ), '/' ) );
 } // if()
 
 // Debugging
@@ -96,6 +96,7 @@ $classes = array(
 	'class-wpba-form-fields',
 	'class-wpba-meta',
 	'class-wpba-ajax',
+	'class-wpba-settings',
 );
 foreach ( $classes as $class ) {
 	$has_php = ( strpos( $class, '.php' ) !== false );

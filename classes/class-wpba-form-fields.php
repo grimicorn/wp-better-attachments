@@ -57,9 +57,10 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * $label = ( isset( $label ) ) ? $label : '';
 		 * $value = ( isset( $value ) ) ? $value : '';
 		 * $type  = ( isset( $type ) ) ? $type : 'text';
+		 * $name  = ( isset( $name ) ) ? $name : $id;
 		 *
 		 * $input_html  = '';
-		 * $input_html .= $this->wp_editor( $id, $label, $value );
+		 * $input_html .= $this->wp_editor( $id, $label, $value, $name );
 		 * </code>
 		 *
 		 * @since   1.4.0
@@ -67,23 +68,27 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @param   integer  $id     The ID & name attribute to identify the form field.
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
+		 * @param   string   $name   Optional, The name assigned to the generated textarea and passed parameter when the form is submitted. (may include [] to pass data as array).
 		 *
 		 * @return  string           The input field.
 		 */
-		public function wp_editor( $id, $label = '', $value = '' ) {
+		public function wp_editor( $id, $label = '', $value = '', $name = null  ) {
 			// Adds a AJAX loading class so the editor can be initialized
 			$is_add_attachments = ( isset( $_POST['action'] ) and $_POST['action'] = 'wpba_add_attachments' );
 			$ajax_class         = ( $is_add_attachments ) ? ' ajax' : '';
 
 			// Build the input
-			$wrap_class  = str_replace( '_', '-', $id );
-			$input_html  = '';
-			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-wyswig-input-wrap clearfix clear{$ajax_class}'>";
-			$input_html .= $this->label( $id, $label );
+			$wrap_class    = str_replace( '_', '-', $id );
+			$textarea_name = ( is_null( $name ) ) ? $id : $name;
+			$input_html    = '';
+			$input_html   .= "<div class='{$wrap_class}-input-wrap wpba-wyswig-input-wrap clearfix clear{$ajax_class}'>";
+			$input_html   .= $this->label( $id, $label );
 
 			$wp_editor_settings = array(
+				'editor_id'     => $id,
 				'media_buttons' => false,
 				'textarea_rows' => 2,
+				'textarea_name' => $textarea_name,
 				'teeny'         => true,
 				'editor_class'  => 'wpba-wyswig pull-left',
 				'quicktags'     => false,
@@ -122,10 +127,11 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @return  string           The input field.
 		 */
 		public function textarea( $id, $label = '', $value = '', $attrs = array() ) {
-			$default_attrs = array(
+			$defaults = array(
 				'class' => 'pull-left',
+				'name'  => $id,
 			);
-			$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );
+			$input_attrs = $this->merge_element_attributes( $defaults, $attrs );
 
 
 
@@ -134,7 +140,7 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			$input_html  = '';
 			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap clearfix clear'>";
 			$input_html .= $this->label( $id, $label );
-			$input_html .= "<textarea id='{$id}' name='{$id}_textarea' {$input_attrs}>{$value}</textarea>";
+			$input_html .= "<textarea id='{$id}_textarea' {$input_attrs}>{$value}</textarea>";
 			$input_html .= '</div>';
 
 			return $input_html;
@@ -165,21 +171,87 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @return  string           The input field.
 		 */
 		public function input( $id, $label = '', $value = '', $type = 'text', $attrs = array() ) {
-			$default_attrs = array(
+			$defaults = array(
 				'class' => 'pull-left',
+				'name'  => $id,
 			);
-			$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );
+
+			// Merge the attributes
+			$input_attrs = $this->merge_element_attributes( $defaults, $attrs );
 
 			// Build the input
 			$wrap_class  = str_replace( '_', '-', $id );
 			$input_html  = '';
 			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-{$type}-input-wrap clearfix clear'>";
 			$input_html .= $this->label( $id, $label );
-			$input_html .= "<input id='{$id}' type='{$type}' name='{$id}_{$type}' value='{$value}' placeholder='{$value}' {$input_attrs}>";
+			$input_html .= "<input id='{$id}_{$type}' type='{$type}' value='{$value}' placeholder='{$value}' {$input_attrs}>";
 			$input_html .= '</div>';
 
 			return $input_html;
 		} // input()
+
+
+
+		/**
+		 * Builds all of the inputs for the meta box.
+		 *
+		 * <code>
+		 * $attachment_fields = '';
+		 * $input_fields      = array();
+		 *
+		 * // Attachment title
+		 * $input_fields['post_title'] = array(
+		 * 	'id'    => 'post_title',
+		 *  'label' => 'Title',
+		 *  'value' => $attachment->post_title,
+		 *  'type'  => 'text',
+		 *  'attrs' => array(),
+		 * );
+		 * $attachment_fields .= $wpba_form_fields->build_inputs( $input_fields );
+		 *
+		 * @since   1.4.0
+		 *
+		 * @todo    Document input types.
+		 *
+		 * @param   array    $inputs  The input(s) information (id,label,value,type,attrs).
+		 * @param   boolean  $echo    Optional, if the inputs should be echoed out once built.
+		 *
+		 * @return  string           The input(s) HTML.
+		 */
+		public function build_inputs( $inputs = array(), $echo = false ) {
+			$input_html   = '';
+			$allowed_html = $this->get_form_kses_allowed_html();
+
+			foreach ( $inputs as $input ) {
+				extract( $input );
+
+				$label = ( isset( $label ) ) ? $label : '';
+				$value = ( isset( $value ) ) ? $value : '';
+				$type  = ( isset( $type ) ) ? $type : 'text';
+				$attrs = ( isset( $attrs ) ) ? $attrs : array();
+				$name  = ( isset( $attrs['name'] ) ) ? $attrs['name'] : $id;
+
+				switch ( $type ) {
+					case 'editor':
+						$input_html .= $this->wp_editor( $id, $label, $value, $name );
+						break;
+
+					case 'textarea':
+						$input_html .= $this->textarea( $id, $label, $value, $attrs );
+						break;
+
+					default:
+						$input_html .= $this->input( $id, $label, $value, $type, $attrs );
+						break;
+				} // switch()
+			} // foreach()
+
+			if ( $echo ) {
+				echo wp_kses( $input_html, $allowed_html );
+			} // if()
+
+			return $input_html;
+		} // build_inputs()
 	} // WPBA_Form_Fields()
 
 	// Instantiate Class
