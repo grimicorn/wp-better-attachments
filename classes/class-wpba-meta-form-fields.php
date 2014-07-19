@@ -236,36 +236,6 @@ if ( ! class_exists( 'WPBA_Meta_Form_Fields' ) ) {
 
 			return $input_html;
 		} // input()
-
-
-		/**
-		 * Merges two sets of attributes together and combines them for a HTML element.
-		 *
-		 * @param   array   $defaults  The default attributes.
-		 * @param   array   $attrs     The supplied attributes
-		 *
-		 * @return  string             The merged HTML element attributes.
-		 */
-		public function merge_element_attributes( $defaults, $attrs ) {
-			// Merge the attributes together
-			foreach ( $defaults as $key => $value ) {
-				if ( isset( $attrs[$key] ) ) {
-					$attrs[$key] = "{$attrs[$key]} {$value}";
-				} else {
-					$attrs[$key] = $value;
-				} // if/else()
-			} // foreach()
-
-			// Flatten the attributes
-			$input_attrs = array();
-			foreach ( $attrs as $attr => $attr_value ) {
-				$attr_value    = ( $attr == 'class' ) ? "{$attr_value} pull-left" : $attr_value;
-				$input_attrs[] = "{$attr}='{$attr_value}'";
-			} // foreach()
-			$input_attrs = trim( implode( ' ', $input_attrs ) );
-
-			return $input_attrs;
-		} // merge_element_attributes()
 	} // WPBA_Meta_Form_Fields()
 
 	// Instantiate Class
