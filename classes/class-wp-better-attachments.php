@@ -29,7 +29,7 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 
 
 		/**
-		 * The the meta key for allowing attachments to be added to multiple posts.
+		 * The meta key for allowing attachments to be added to multiple posts.
 		 *
 		 * @todo  allow for multiple meta boxes on a page.
 		 *
@@ -42,7 +42,7 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 
 
 		/**
-		 * The the meta key for attachments menu order when added to multiple posts.
+		 * The meta key for attachments menu order when added to multiple posts.
 		 *
 		 * @todo  allow for multiple meta boxes on a page.
 		 *
@@ -51,6 +51,19 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 * @var   string
 		 */
 		public $attachment_multi_menu_order_meta_key;
+
+
+
+		/**
+		 * The prefix for all options.
+		 *
+		 * @todo  allow for multiple meta boxes on a page.
+		 *
+		 * @since 1.4.0
+		 *
+		 * @var   string
+		 */
+		public $option_prefix = 'wpba_opt';
 
 
 
@@ -75,6 +88,50 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 			$this->attachment_multi_meta_key            = "{$this->meta_box_id}_multi_attach";
 			$this->attachment_multi_menu_order_meta_key = "{$this->meta_box_id}_multi_attach_menu_order";
 		} // __construct()
+
+
+
+
+
+		/**
+		 * Retrieves the enabled post types.
+		 *
+		 * @todo    Add setting to restrict post types.
+		 *
+		 * @since   1.4.0
+		 *
+		 * @return  array  The enabled post types.
+		 */
+		public function get_post_types() {
+			$post_types = get_post_types();
+
+			// Remove post types that can not have attachments
+			unset( $post_types['attachment'] );
+			unset( $post_types['revision'] );
+			unset( $post_types['nav_menu_item'] );
+			unset( $post_types['deprecated_log'] );
+
+			/**
+			 * Allows filtering of the allowed post types.
+			 *
+			 * <code>
+			 * function myprefix_wpba_post_types( $post_types ) {
+			 * 	unset( $post_types['page'] ); // Removes the "page" post type.
+			 * }
+			 * add_filter( 'wpba_meta_box_post_types', 'myprefix_wpba_post_types' );
+			 * </code>
+			 *
+			 * @since 1.4.0
+			 *
+			 * @todo  Create example documentation.
+			 * @todo  Allow for multiple meta boxes.
+			 *
+			 * @var   array
+			 */
+			$post_types = apply_filters( "{$this->meta_box_id}_post_types", $post_types );
+
+			return $post_types;
+		} // get_post_types()
 
 
 
@@ -164,13 +221,22 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 * @return  void
 		 */
 		public function enqueue_admin_assets() {
+			$wpba_enqueue_screens = array(
+				'settings_page_wpba-settings'
+			);
+			$wpba_enqueue_screens = array_merge( $wpba_enqueue_screens, $this->get_post_types() );
+			$current_screen = get_current_screen();
+			if ( ! in_array( $current_screen->id, $wpba_enqueue_screens ) ) {
+				return;
+			} // if()
+
 			// Make sure media scripts are added
 			if ( ! did_action( 'wp_enqueue_media' ) ){
 				wp_enqueue_media();
 			} // if()
 
-			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.8f34.min.css', array(), null, 'all' );
-			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.cdb1.min.js', array( 'jquery-ui-sortable' ), null, true );
+			wp_enqueue_style( 'wpba_admin_css', WPBA_URL . '/assets/css/dist/wpba-admin.8f34.min.css', array( 'wp-color-picker' ), null, 'all' );
+			wp_register_script( 'wpba_admin_js', WPBA_URL . '/assets/js/dist/wpba-admin.cdb1.min.js', array( 'jquery', 'jquery-ui-datepicker', 'wp-color-picker', 'jquery-ui-sortable' ), null, true );
 			wp_enqueue_script( 'wpba_admin_js' );
 		} // enqueue_admin_assets()
 	} // WP_Better_Attachments()
