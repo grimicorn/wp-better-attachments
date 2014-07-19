@@ -76,7 +76,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * @param   object|integer  $post_parent  Optional, the post parent object or ID, defaults to current post.
 		 *
-		 * @return  integer                     The attachments post parent ID.
+		 * @return  integer                      The attachments post parent ID.
 		 */
 		public function get_attachment_post_parent_id( $post_parent = null ) {
 			// Get post parent ID
@@ -103,7 +103,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * @param   object|integer  $attachment  Optional, the post parent object or ID, defaults to current post.
 		 *
-		 * @return  integer                    The attachments post parent ID.
+		 * @return  integer                      The attachments post parent ID.
 		 */
 		public function get_attachment_id( $attachment ) {
 			// Get post parent ID
@@ -125,9 +125,9 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param array     $query_args  The arguments for the query.
+		 * @param   array     $query_args  The arguments for the query.
 		 *
-		 * @return  string                The transient ID.
+		 * @return  string                 The transient ID.
 		 */
 		public function get_transient_id( $query_args ) {
 			$flattened_array = array();
@@ -323,7 +323,11 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		/**
 		 * All of the allowed tags when outputting form fields.
 		 *
-		 * @return array Allowed HTML tags.
+		 * <code>$allowed_html = $this->get_form_kses_allowed_html();</code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @return  array  Allowed HTML tags.
 		 */
 		public function get_form_kses_allowed_html() {
 			$allowed_tags          = wp_kses_allowed_html( 'post' );
@@ -337,6 +341,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				'class'       => array(),
 				'placeholder' => array(),
 				'checked'     => array(),
+				'data-toggle' => array(),
 			);
 			$allowed_tags['option'] = array(
 				'value'    => array(),
@@ -362,48 +367,6 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			);
 			return $allowed_tags;
 		} // get_form_kses_allowed_html()
-
-
-
-		/**
-		 * Retrieves the enabled post types.
-		 *
-		 * @todo    Add setting to restrict post types.
-		 *
-		 * @since   1.4.0
-		 *
-		 * @return  array  The enabled post types.
-		 */
-		public function get_post_types() {
-			$post_types = get_post_types();
-
-			// Remove post types that can not have attachments
-			unset( $post_types['attachment'] );
-			unset( $post_types['revision'] );
-			unset( $post_types['nav_menu_item'] );
-			unset( $post_types['deprecated_log'] );
-
-			/**
-			 * Allows filtering of the allowed post types.
-			 *
-			 * <code>
-			 * function myprefix_wpba_post_types( $post_types ) {
-			 * 	unset( $post_types['page'] ); // Removes the "page" post type.
-			 * }
-			 * add_filter( 'wpba_meta_box_post_types', 'myprefix_wpba_post_types' );
-			 * </code>
-			 *
-			 * @since 1.4.0
-			 *
-			 * @todo  Create example documentation.
-			 * @todo  Allow for multiple meta boxes.
-			 *
-			 * @var   array
-			 */
-			$post_types = apply_filters( "{$this->meta_box_id}_post_types", $post_types );
-
-			return $post_types;
-		} // get_post_types()
 
 
 
@@ -584,6 +547,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 * if ( $attachment->post_parent != 0 and $attachment->post_parent != $post_id ) {
 		 * 	$this->_attach_attachments_multiple_posts( $attachment_id, $post_id );
 		 * } // if()
+		 * </code>
 		 *
 		 * @internal
 		 *
@@ -656,6 +620,7 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 * if ( $attachment->post_parent != 0 and $attachment->post_parent != $post_id ) {
 		 * 	$this->_unattach_attachments_multiple_posts( $attachment_id, $post_id );
 		 * } // if()
+		 * </code>
 		 *
 		 * @internal
 		 *
@@ -666,9 +631,9 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 		 *                                   NOTE: If the meta_value passed to this function is the same as the value that is already in the database, this function returns false.
 		 */
 		private function _unattach_attachments_multiple_posts( $attachment_id, $post_id ) {
-			$prev_value   = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
-			$prev_value   = ( $prev_value == '' ) ? '' : $prev_value;
-			$parent_ids   = explode( ',', $prev_value );
+			$prev_value = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
+			$prev_value = ( $prev_value == '' ) ? '' : $prev_value;
+			$parent_ids = explode( ',', $prev_value );
 
 			// Remove the ID
 			foreach ( $parent_ids as $key => $id ) {
@@ -677,9 +642,9 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 				} // if()
 			} // foreach
 
-			$parent_ids   = array_unique( $parent_ids );
-			$parent_ids   = implode( ',', $parent_ids );
-			$meta_value   = trim( $parent_ids, ',' );
+			$parent_ids = array_unique( $parent_ids );
+			$parent_ids = implode( ',', $parent_ids );
+			$meta_value = trim( $parent_ids, ',' );
 
 			return update_post_meta( $attachment_id, $this->attachment_multi_meta_key, $meta_value );
 		} // _unattach_attachments_multiple_posts
@@ -753,6 +718,94 @@ if ( ! class_exists( 'WPBA_Helpers' ) ) {
 			return true;
 		} // delete_attachment()
 
+
+
+		/**
+		 * Merges two sets of attributes together and combines them for a HTML element.
+		 *
+		 * <code>$input_attrs = $this->merge_element_attributes( $default_attrs, $attrs );</code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   array   $defaults  The default attributes.
+		 * @param   array   $attrs     The supplied attributes
+		 *
+		 * @return  string             The merged HTML element attributes.
+		 */
+		public function merge_element_attributes( $defaults, $attrs ) {
+			if ( gettype( $defaults ) != 'array' or gettype( $attrs ) != 'array' ) {
+				return $attrs;
+			} // if()
+
+			// Merge the attributes together
+			foreach ( $defaults as $key => $value ) {
+				if ( isset( $attrs[$key] ) ) {
+					$attrs[$key] = "{$attrs[$key]} {$value}";
+				} else {
+					$attrs[$key] = $value;
+				} // if/else()
+			} // foreach()
+
+			// Flatten the attributes
+			$input_attrs = array();
+			foreach ( $attrs as $attr => $attr_value ) {
+				$attr_value    = ( $attr == 'class' ) ? "{$attr_value} pull-left" : $attr_value;
+				$input_attrs[] = esc_attr( "{$attr}={$attr_value}" );
+			} // foreach()
+			$input_attrs = trim( implode( ' ', $input_attrs ) );
+
+			return $input_attrs;
+		} // merge_element_attributes()
+
+
+
+		/**
+		 * Handles sanitizing input fields value dependent of the field type.
+		 *
+		 * @param   string  $field_type  The field id/type.
+		 * @param   mixed   $value       The meta value to be sanitized.
+		 *
+		 * @return  mixed               The sanitized meta data.
+		 */
+		public function sanitize_input_fields( $field_type, $value ) {
+			switch ( $field_type ) {
+				case 'text':
+					$value = sanitize_text_field( $value );
+					break;
+
+				case 'file':
+					$value = esc_url_raw( $value, $protocols );
+					break;
+
+				case 'url':
+					$value = esc_url_raw( $value, $protocols );
+					break;
+
+				case 'email':
+					$value = sanitize_email( $value );
+					break;
+
+				case 'textarea':
+					$value = wp_kses( $value, 'post' );
+					break;
+
+				case 'wysiwg_editor':
+					$value = wp_kses( $value, 'post' );
+					break;
+
+
+
+				case 'multi_input':
+					$value = wp_kses( $value, 'post' );
+					break;
+
+				default:
+					$value = esc_attr( $value );
+					break;
+			} // switch()
+
+			return $value;
+		} // sanitize_input_fields()
 	} // WPBA_Helpers()
 
 	// Instantiate Class
