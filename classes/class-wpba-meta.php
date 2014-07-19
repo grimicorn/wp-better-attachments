@@ -267,36 +267,7 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			foreach ( $fields as $key => $field ) {
 				extract( $field );
 
-				$sanitized_value = '';
-				switch ( $field_type ) {
-					case 'text':
-						$sanitized_value = sanitize_text_field( $value );
-						break;
-
-					case 'file':
-						$sanitized_value = esc_url_raw( $value, $protocols );
-						break;
-
-					case 'url':
-						$sanitized_value = esc_url_raw( $value, $protocols );
-						break;
-
-					case 'email':
-						$sanitized_value = sanitize_email( $value );
-						break;
-
-					case 'textarea':
-						$sanitized_value = wp_kses( $value, 'post' );
-						break;
-
-					case 'editor':
-						$sanitized_value = wp_kses( $value, 'post' );
-						break;
-
-					default:
-						$sanitized_value = esc_attr( $value );
-						break;
-				} // switch()
+				$sanitized_value = $this->sanitize_input_fields( $field_type, $value );
 
 				$fields[$key]['value'] = $sanitized_value;
 				unset( $fields[$key]['type'] );
