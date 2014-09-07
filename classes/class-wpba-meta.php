@@ -513,9 +513,9 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 
 			foreach ( $attachments as $attachment ) {
 				$attachment_items .= "<li id='wpba_attachment_{$attachment->ID}' class='clear ui-state-default wpba-sortable-item clearfix pull-left attachment-item'>";
-				$attachment_items .= '<i class="dashicons dashicons-menu wpba-sort-handle"></i>';
 				$attachment_items .= $this->build_attachment_thumbnail( $attachment );
 				$attachment_items .= $this->build_attachment_fields( $attachment );
+				$attachment_items .= '<i class="dashicons dashicons-menu wpba-sort-handle pull-left"></i>';
 				$attachment_items .= '</li>';
 			} // foreach()
 
@@ -904,15 +904,13 @@ if ( ! class_exists( 'WPBA_Meta' ) ) {
 			 */
 			$display_attachment_id = apply_filters( "{$this->meta_box_id}_{$post_type}_display_attachment_id", $display_attachment_id );
 
-
+			$attachment_menu       = $this->attachment_menu( $attachment );
 			$attachment_thumbnail  = '';
 			$attachment_thumbnail .= '<div class="wpba-attachment-image-wrap pull-left">';
 			if ( (boolean)$display_attachment_id ) {
 				$attachment_thumbnail .= "<strong class='wpba-attachment-id'>Attachment ID: {$attachment->ID}</strong>";
 			} // if()
-			$attachment_thumbnail .= '<div class="inner">';
-			$attachment_thumbnail .= $this->attachment_menu( $attachment );
-			$attachment_thumbnail .= '</div>';
+			$attachment_thumbnail .= ( $attachment_menu == '' ) ? '' : "<div class='inner'>{$attachment_menu}</div>";
 			$attachment_thumbnail .= wp_get_attachment_image( $attachment->ID, 'thumbnail', true, array( 'class' => 'wpba-attachment-image' ) );
 			$attachment_thumbnail .= '</div>';
 

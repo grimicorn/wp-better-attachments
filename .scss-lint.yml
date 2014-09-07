@@ -10,7 +10,7 @@ linters:
     enabled: true
 
   Comment:
-    enabled: true
+    enabled: false
 
   DebugStatement:
     enabled: true
@@ -59,13 +59,11 @@ linters:
   SortedProperties:
     enabled: false
 
-  PropertySortOrder:
-    enabled: false
-
   SpaceAfterComma:
     enabled: true
 
   SpaceAfterPropertyColon:
+    allow_extra_spaces: true
     enabled: true
 
   SpaceAfterPropertyName:
@@ -88,4 +86,16 @@ linters:
     enabled: true
 
   Compass::*:
+    enabled: false
+
+  PropertySortOrder:
+    enabled: false
+
+  FinalNewline:
+    enabled: false
+
+  PlaceholderInExtend:
+    enabled: false
+
+  EmptyLineBetweenBlocks:
     enabled: false

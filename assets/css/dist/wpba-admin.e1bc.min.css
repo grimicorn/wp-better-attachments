@@ -1871,8 +1871,20 @@ body .ui-tooltip {
   text-align: right;
 }
 
+.wpba-meta-box-wrap .img-responsive,
+.wpba-attachment-image-wrap img {
+  max-width: 100%;
+  height: auto;
+}
+
 .wpba-meta-box-wrap {
   padding-top: 20px;
+}
+
+.wpba-meta-box-wrap * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .wpba-meta-box-wrap .ui-state-highlight {
@@ -1880,18 +1892,7 @@ body .ui-tooltip {
   border: 1px dashed #c8c8c8;
 }
 
-.wpba-meta-box-wrap .wpba-sort-handle {
-  right: 0;
-  top: 0;
-  position: absolute;
-  padding: 0 10px 10px;
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
-  cursor: move;
-}
-
-.wpba-meta-box-wrap li.wpba-sortable-item {
+li.wpba-sortable-item {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -1905,11 +1906,60 @@ body .ui-tooltip {
   width: 100%;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner {
+.wpba-sort-handle {
+  padding: 0 10px;
+  font-size: 32px;
+  line-height: 32px;
+  height: 32px;
+  width: 32px;
+  cursor: move;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.wpba-attachment-fields-wrap {
+  width: 100%;
+}
+
+.wpba-textarea-input-wrap,
+.wpba-text-input-wrap {
+  margin-bottom: 10px;
+}
+
+.wpba-textarea-input-wrap label,
+.wpba-text-input-wrap label {
+  width: 100%;
+  height: 27px;
+  line-height: 27px;
+}
+
+.wpba-textarea-input-wrap textarea,
+.wpba-textarea-input-wrap input,
+.wpba-text-input-wrap textarea,
+.wpba-text-input-wrap input {
+  width: 100%;
+  margin: 0;
+}
+
+.wpba-textarea-input-wrap textarea,
+.wpba-text-input-wrap textarea {
+  resize: vertical;
+}
+
+.wpba-wyswig-input-wrap label {
+  width: 100%;
+}
+
+.wpba-attachment-image-wrap {
+  width: 100%;
+}
+
+.wpba-attachment-image-wrap .inner {
   position: relative;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu {
+.wpba-attachment-image-wrap .inner .wpba-attachment-menu {
   background: #fff;
   background: rgba(255,255,255,0.85);
   display: none;
@@ -1923,59 +1973,59 @@ body .ui-tooltip {
   padding: 30px 0;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu li {
+.wpba-attachment-image-wrap .inner .wpba-attachment-menu li {
   line-height: 30px;
   width: 100%;
   font-size: 16px;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a {
+.wpba-attachment-image-wrap .inner .wpba-attachment-menu a {
   color: #0074a2;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a:hover,
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a:active,
-.wpba-meta-box-wrap .wpba-attachment-image-wrap .inner .wpba-attachment-menu a:focus {
+.wpba-attachment-image-wrap .inner .wpba-attachment-menu a:hover,
+.wpba-attachment-image-wrap .inner .wpba-attachment-menu a:active,
+.wpba-attachment-image-wrap .inner .wpba-attachment-menu a:focus {
   color: #2ea2cc;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap img {
+.wpba-attachment-image-wrap img {
   border: 1px solid #eee;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-image-wrap:hover .wpba-attachment-menu {
+.wpba-attachment-image-wrap:hover .wpba-attachment-menu {
   display: block;
   cursor: pointer;
 }
 
-.wpba-meta-box-wrap .wpba-attachment-fields-wrap {
-  padding-left: 20px;
-  margin-left: 20px;
-}
-
-.wpba-meta-box-wrap .wpba-textarea-input-wrap,
-.wpba-meta-box-wrap .wpba-text-input-wrap {
-  margin-bottom: 10px;
-}
-
-.wpba-meta-box-wrap .wpba-textarea-input-wrap label,
-.wpba-meta-box-wrap .wpba-text-input-wrap label {
-  width: 100px;
-  margin-right: 10px;
-  height: 27px;
-  line-height: 27px;
-}
-
-.wpba-meta-box-wrap .wpba-textarea-input-wrap textarea,
-.wpba-meta-box-wrap .wpba-textarea-input-wrap input,
-.wpba-meta-box-wrap .wpba-text-input-wrap textarea,
-.wpba-meta-box-wrap .wpba-text-input-wrap input {
-  width: 300px;
-}
-
-.wpba-meta-box-wrap .wpba-textarea-input-wrap textarea,
-.wpba-meta-box-wrap .wpba-text-input-wrap textarea {
-  resize: vertical;
-}
-
 /*# sourceMappingURL=wpba-admin.min.css.map */
+
+@media (min-width: 960px) {
+  .wpba-sort-handle {
+    width: 8%;
+    position: static;
+  }
+
+  .wpba-attachment-fields-wrap {
+    width: 80%;
+    padding-left: 30px;
+  }
+
+  .wpba-textarea-input-wrap label,
+  .wpba-text-input-wrap label {
+    width: 20%;
+    padding-right: 10px;
+  }
+
+  .wpba-textarea-input-wrap textarea,
+  .wpba-textarea-input-wrap input,
+  .wpba-text-input-wrap textarea,
+  .wpba-text-input-wrap input {
+    width: 80%;
+    margin: 0;
+  }
+
+  .wpba-attachment-image-wrap {
+    width: 12%;
+  }
+}

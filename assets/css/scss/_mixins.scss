@@ -18,22 +18,124 @@
 	&:after {
 		clear: both;
 	}
-}
+} // @mixin clearfix()
 
-//Background opacity
-//
-// @param $color   The color to set opacity on.
-// @param $opacity The opacity value 0 to 1.
+
+
+/**
+ * Background opacity
+ *
+ * @param $color   The color to set opacity on.
+ * @param $opacity The opacity value 0 to 1.
+ */
 @mixin background-opacity($color, $opacity) {
 	background: $color;
 	background: rgba($color, $opacity);
-}
+} // @mixin background-opacity()
 
-// Box sizing
-//
-// @param  $boxmodel  The sizing property value.
+
+
+/**
+ * Box sizing
+ *
+ * @param  $boxmodel  The sizing property value.
+ */
 @mixin box-sizing($boxmodel) {
 	-webkit-box-sizing: $boxmodel;
 	-moz-box-sizing: $boxmodel;
 	box-sizing: $boxmodel;
+} // @mixin box-sizing()
+
+
+
+/**
+ * Psuedo element (:before/:after).
+ *
+ * @since  0.2.6
+ *
+ * @param  $el         The psuedo element either before or after
+ * @param  $el-width   The psuedo elements width.
+ * @param  $el-height  The psuedo elements height.
+ */
+@mixin p-el($el, $el-width, $el-height) {
+	@if $el == 'before' or $el == 'after' {
+		&:#{$el} {
+			@content;
+		}
+	}
+	@else {
+		@warn "`#{$el}` is not a valid pseudo-element.";
+	}
 }
+
+
+
+/**
+ * Media Query Min Width.
+ *
+ * @example  @include bp-min(767px) {
+ *  .my-class {
+ *  	width: 200px;
+ *  }
+ * }
+ *
+ * @since    0.2.1
+ *
+ * @param    $screen-size  Min device width.
+ * @param    $ie           Should this media query output to the IE StyleSheet
+ */
+@mixin bp-min($screen-size, $ie:false) {
+	@if $ie and $old-ie {
+		@content;
+	} @else {
+		@media (min-width: $screen-size) { @content; }
+	}
+} // @mixin bp-min()
+
+
+
+/**
+ * Media Query Max Width.
+ *
+ * @example  @include bp-max(767px) {
+ *  .my-class {
+ *  	width: 200px;
+ *  }
+ * }
+ *
+ * @since    0.2.1
+ *
+ * @param    $screen-size  Max device width.
+ * @param    $ie           Should this media query output to the IE StyleSheet
+ */
+@mixin bp-max($screen-size, $ie:false) {
+	@if $ie and $old-ie {
+		@content;
+	} @else {
+		@media (max-width: $screen-size) { @content; }
+	}
+} // @mixin bp-max()
+
+
+
+/**
+ * Media Query Min/Max Width.
+ *
+ * @example  @include bp-min-max(767px, 968px) {
+ *  .my-class {
+ *  	width: 200px;
+ *  }
+ * }
+ *
+ * @since    0.2.1
+ *
+ * @param  $min  Min device width.
+ * @param  $max  Max device width.
+ */
+@mixin bp-min-max($min, $max, $ie:false) {
+	@if $ie and $old-ie {
+		@content;
+	} @else {
+		@media (min-width: $min) and (max-width: $max) { @content; }
+	}
+} // @mixin bp-min-max()
