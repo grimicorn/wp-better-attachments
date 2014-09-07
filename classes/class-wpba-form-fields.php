@@ -51,6 +51,27 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 
 
 		/**
+		 * Creates a description for a form input field.
+		 *
+		 * <code>$this->description( $description, $id );</code>
+		 *
+		 * @since   1.4.0
+		 *
+		 * @param   string  $description  The text to be displayed in the description.
+		 *
+		 * @return  string          The description for the form input field.
+		 */
+		public function description( $description ) {
+			if ( $description == '' ) {
+				return '';
+			} // if()
+
+			return "<p class='description'>{$description}</p>";
+		} // description()
+
+
+
+		/**
 		 * Creates a wp_editor instance.
 		 *
 		 * <code>
@@ -69,10 +90,14 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
 		 * @param   string   $name   Optional, The name assigned to the generated textarea and passed parameter when the form is submitted. (may include [] to pass data as array).
+		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The input field.
 		 */
-		public function wp_editor( $id, $label = '', $value = '', $name = null  ) {
+		public function wp_editor( $id, $label = '', $value = '', $name = null, $args = array()  ) {
+			// Clean up $args
+			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
+
 			// Adds a AJAX loading class so the editor can be initialized
 			$is_add_attachments = ( isset( $_POST['action'] ) and $_POST['action'] = 'wpba_add_attachments' );
 			$ajax_class         = ( $is_add_attachments ) ? ' ajax' : '';
@@ -96,6 +121,8 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			ob_start();
 			wp_editor( html_entity_decode( $value ), "{$id}_editor", $wp_editor_settings );
 			$input_html .= ob_get_clean();
+
+			$input_html .= $this->description( $desc );
 
 			$input_html .= '</div>';
 
@@ -128,18 +155,22 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @param   array    $options  The check boxes to be created.
 		 * @param   string   $label    Optional, the text to be displayed in the label.
 		 * @param   array    $attrs    Optional, attributes to add to the multi checkbox field.
+		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The multi checkbox field.
 		 */
-		public function multi_checkbox( $id, $options = array(), $label = '', $value = '', $attrs = array() ) {
+		public function multi_checkbox( $id, $options = array(), $label = '', $value = '', $attrs = array(), $args = array() ) {
 			if ( empty( $options ) ) {
 				return '';
 			} // if()
 
-			$i                    = 1;
-			$multi_checkbox_html  = '';
-			$wrap_class           = str_replace( '_', '-', $id );
-			$multi_checkbox_html .= "<div class='{$wrap_class}-multi-checkbox-wrap wpba-multi-checkbox-wrap clearfix clear'>";
+			// Clean up $args
+			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
+
+			$i           = 1;
+			$input_html  = '';
+			$wrap_class  = str_replace( '_', '-', $id );
+			$input_html .= "<div class='{$wrap_class}-multi-checkbox-wrap wpba-multi-checkbox-wrap clearfix clear'>";
 			foreach ( $options as $option ) {
 				$value = ( isset( $option['value'] ) ) ? $option['value'] : '';
 				$label = ( isset( $option['label'] ) ) ? $option['label'] : '';
@@ -158,13 +189,16 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 				$multi_checkbox_attrs = $this->merge_element_attributes( $defaults, $attrs );
 
 				// Build the multi_checkbox
-				$multi_checkbox_html .= "<input id='{$id}_checkbox_{$i}' name='{$name}' type='checkbox' value='on' {$multi_checkbox_attrs}/>";
-				$multi_checkbox_html .= $this->label( "{$id}_checkbox_{$i}", $label ) . '<br>';
+				$input_html .= "<input id='{$id}_checkbox_{$i}' name='{$name}' type='checkbox' value='on' {$multi_checkbox_attrs}/>";
+				$input_html .= $this->label( "{$id}_checkbox_{$i}", $label ) . '<br>';
 				$i = $i + 1;
 			} // foreach()
-			$multi_checkbox_html .= '</div>';
 
-			return $multi_checkbox_html;
+			$input_html .= $this->description( $desc );
+
+			$input_html .= '</div>';
+
+			return $input_html;
 		} // multi_checkbox()
 
 
@@ -188,17 +222,19 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @param   string   $label  Optional, the text to be displayed in the label.
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
 		 * @param   array    $attrs  Optional, attributes to add to the input field.
+		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The input field.
 		 */
-		public function textarea( $id, $label = '', $value = '', $attrs = array() ) {
+		public function textarea( $id, $label = '', $value = '', $attrs = array(), $args = array() ) {
+			// Clean up $args
+			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
+
 			$defaults = array(
 				'class' => 'pull-left',
 				'name'  => $id,
 			);
 			$input_attrs = $this->merge_element_attributes( $defaults, $attrs );
-
-
 
 			// Build the input
 			$wrap_class  = str_replace( '_', '-', $id );
@@ -206,6 +242,7 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap clearfix clear'>";
 			$input_html .= $this->label( $id, $label );
 			$input_html .= "<textarea id='{$id}_textarea' {$input_attrs}>{$value}</textarea>";
+			$input_html .= $this->description( $desc );
 			$input_html .= '</div>';
 
 			return $input_html;
@@ -232,10 +269,14 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 * @param   string   $value  Optional, the value & placeholder of the form field.
 		 * @param   string   $type   Optional, the type of input to create, defaults to text.
 		 * @param   array    $attrs  Optional, attributes to add to the input field.
+		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The input field.
 		 */
-		public function input( $id, $label = '', $value = '', $type = 'text', $attrs = array() ) {
+		public function input( $id, $label = '', $value = '', $type = 'text', $attrs = array(), $args = array() ) {
+			// Clean up $args
+			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
+
 			$defaults = array(
 				'class' => 'pull-left',
 				'name'  => $id,
@@ -250,6 +291,7 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-{$type}-input-wrap clearfix clear'>";
 			$input_html .= $this->label( $id, $label );
 			$input_html .= "<input id='{$id}_{$type}' type='{$type}' value='{$value}' placeholder='{$value}' {$input_attrs}>";
+			$input_html .= $this->description( $desc );
 			$input_html .= '</div>';
 
 			return $input_html;
@@ -258,7 +300,32 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 
 
 		/**
-		 * Builds all of the inputs for the meta box.
+		 * Sets up multi input options.
+		 *
+		 * @param   array   $labels  The options to be created.
+		 * @param   string  $prefix  The setting prefix.
+		 *
+		 * @return  array                         The multi input options.
+		 */
+		public function setup_multi_input_options( $labels, $prefix ) {
+			$ret_options = array();
+			$options     = get_option( $this->option_group, array() );
+
+			foreach ( $labels as $label ) {
+				$option_key    = trim( "{$prefix}_" . str_replace( '-', '_', sanitize_title( $label ) ), '_' );
+				$ret_options[] = array(
+					'label' => $label,
+					'value' => ( isset( $options[$option_key] ) ) ? $options[$option_key] : '',
+					'name' => "{$this->option_group}[$option_key]",
+				);
+			} // foreach()
+
+			return $ret_options;
+		} // setup_multi_input_options()
+
+
+		/**
+		 * Builds all of the inputs.
 		 *
 		 * <code>
 		 * $attachment_fields = '';
@@ -297,22 +364,23 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 				$attrs   = ( isset( $attrs ) ) ? $attrs : array();
 				$options = ( isset( $options ) ) ? $options : array();
 				$name    = ( isset( $attrs['name'] ) ) ? $attrs['name'] : $id;
+				$args    = ( isset( $args ) ) ? $args : array();
 
 				switch ( $type ) {
 					case 'editor':
-						$input_html .= $this->wp_editor( $id, $label, $value, $name );
+						$input_html .= $this->wp_editor( $id, $label, $value, $name, $args );
 						break;
 
 					case 'textarea':
-						$input_html .= $this->textarea( $id, $label, $value, $attrs );
+						$input_html .= $this->textarea( $id, $label, $value, $attrs, $args );
 						break;
 
 					case 'multi_checkbox':
-						$input_html .= $this->multi_checkbox( $id, $options, $label, $value, $attrs );
+						$input_html .= $this->multi_checkbox( $id, $options, $label, $value, $attrs, $args );
 						break;
 
 					default:
-						$input_html .= $this->input( $id, $label, $value, $type, $attrs );
+						$input_html .= $this->input( $id, $label, $value, $type, $attrs, $args );
 						break;
 				} // switch()
 			} // foreach()

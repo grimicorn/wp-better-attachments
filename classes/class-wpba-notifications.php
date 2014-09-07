@@ -137,7 +137,7 @@ if ( ! class_exists( 'WPBA_Notifications' ) ) {
 			$user_id = $current_user->ID;
 			/* If user clicks to ignore the notice, add that to their user meta */
 			if ( isset($_GET['wpba_notice_ignore']) && '0' == $_GET['wpba_notice_ignore'] ) {
-				pp( 'save true' );
+				// pp( 'save true' );
 				return add_user_meta( $user_id, $this->ignore_meta_name, 'true' );
 			} // if()
 

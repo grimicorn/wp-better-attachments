@@ -23,12 +23,15 @@ $post_types  = $wpba_helpers->get_post_types();
 /**
  * Filters the setting for meta box title for a specific post type.
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_meta_box_title( $meta_box_title ) {
 	$post_type = get_post_type();
+	global $wpba_settings;
+	$setting        = $wpba_settings->get_setting( "wpba_{$post_type}_meta_box_title_setting" );
+	$meta_box_title = ( $setting == '' ) ? $meta_box_title : $setting;
 
 	return $meta_box_title;
 } // wpba_settings_post_type_meta_box_title()
@@ -38,9 +41,9 @@ function wpba_settings_post_type_meta_box_title( $meta_box_title ) {
 /**
  * Filters the setting for upload button content for a specific post type..
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_upload_button_content( $upload_button_content ) {
 	$post_type = get_post_type();
@@ -53,9 +56,11 @@ function wpba_settings_post_type_upload_button_content( $upload_button_content )
 /**
  * Filters the setting to display the form editor button for a specific post type..
  *
- * @todo  Figure out why passing $post_type from apply_filters() @since 1.4.0 is not working.
+ * @since   1.4.0
  *
- * @var   string
+ * @todo    Figure out why passing $post_type from apply_filters() @since 1.4.0 is not working.
+ *
+ * @return  string
  */
 function wpba_settings_post_type_display_editor_form_button( $display_editor_form_button ) {
 	$post_type = get_post_type();
@@ -68,9 +73,9 @@ function wpba_settings_post_type_display_editor_form_button( $display_editor_for
 /**
  * Filters the enabling/disabling setting for the unattach link for a specific post type.
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_display_unattach_link( $display_unattach_link ) {
 	$post_type = get_post_type();
@@ -83,9 +88,9 @@ function wpba_settings_post_type_display_unattach_link( $display_unattach_link )
 /**
  * Filters the enabling/disabling setting for the delete link for a specific post type.
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_display_delete_link( $display_delete_link ) {
 	$post_type = get_post_type();
@@ -98,9 +103,9 @@ function wpba_settings_post_type_display_delete_link( $display_delete_link ) {
 /**
  * Filters the enabling/disabling setting for the edit link for a specific post type.
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_display_edit_link( $display_edit_link ) {
 	$post_type = get_post_type();
@@ -113,9 +118,9 @@ function wpba_settings_post_type_display_edit_link( $display_edit_link ) {
 /**
  * Filters the enable/disable setting for displaying of the attachment ID for a specific post type.
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_display_attachment_id( $display_attachment_id ) {
 	$post_type = get_post_type();
@@ -128,9 +133,9 @@ function wpba_settings_post_type_display_attachment_id( $display_attachment_id )
 /**
  * Filters the disabling of the featured image for a specific post type.
  *
- * @since 1.4.0
+ * @since   1.4.0
  *
- * @var   string
+ * @return  string
  */
 function wpba_settings_post_type_disable_featured_image( $disable_featured_image ) {
 	$post_type = get_post_type();
