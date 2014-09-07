@@ -25,6 +25,9 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		public $page_slug = 'wpba';
 
 
+		public $option_group;
+
+
 
 		/**
 		 * The current options.
@@ -46,6 +49,8 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 */
 		public function __construct( $config = array() ) {
 			parent::__construct();
+
+			$this->option_group = $this->option_prefix;
 
 			$this->options = get_option( $this->option_group, array() );
 
