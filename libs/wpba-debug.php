@@ -66,11 +66,13 @@ if ( ! function_exists( 'pp' ) ) {
 		} // if()
 
 		echo '<pre>';
-		if ( $value ) {
+		if ( $value and $value !== true ) {
 			print_r( $value );
 		} else {
 			var_dump( $value );
 		} // if/else()
 		echo '</pre>';
 	} // pp()
+} // if()
+
 } // if()
