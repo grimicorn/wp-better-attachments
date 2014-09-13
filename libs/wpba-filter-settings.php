@@ -31,6 +31,8 @@ function wpba_settings_meta_box_title( $meta_box_title ) {
 	$setting        = $wpba_settings->get_setting( 'global_meta_box_title_setting' );
 	$meta_box_title = ( $setting == '' ) ? $meta_box_title : $setting;
 
+	wpba_debug_print_setting( $meta_box_title, 'meta_box_title:' );
+
 	return $meta_box_title;
 } // wpba_settings_meta_box_title()
 add_filter( "{$meta_box_id}_meta_box_title", 'wpba_settings_meta_box_title', 1 );
@@ -49,6 +51,8 @@ function wpba_settings_upload_button_content( $upload_button_content ) {
 	$setting               = $wpba_settings->get_setting( 'global_upload_button_content' );
 	$upload_button_content = ( $setting == '' ) ? $upload_button_content : $setting;
 
+	wpba_debug_print_setting( $upload_button_content, 'upload_button_content:' );
+
 	return $upload_button_content;
 } // wpba_settings_upload_button_content()
 add_filter( "{$meta_box_id}_upload_button_content", 'wpba_settings_upload_button_content', 1 );
@@ -65,6 +69,8 @@ add_filter( "{$meta_box_id}_upload_button_content", 'wpba_settings_upload_button
  * @return  string  The setting to display the form editor button for all post types.
  */
 function wpba_settings_display_editor_form_button( $display_editor_form_button ) {
+	wpba_debug_print_setting( $display_editor_form_button, 'display_editor_form_button:' );
+
 	return $display_editor_form_button;
 } // wpba_settings_display_editor_form_button()
 add_filter( "{$meta_box_id}_display_editor_form_button", 'wpba_settings_display_editor_form_button', 1 );
@@ -82,6 +88,8 @@ function wpba_settings_display_unattach_link( $display_unattach_link ) {
 	global $wpba_settings;
 	$setting               = $wpba_settings->get_setting( 'meta_box_setting_disable_un_attach_link' );
 	$display_unattach_link = ( $setting == '' ) ? $display_unattach_link : false;
+
+	wpba_debug_print_setting( $display_unattach_link, 'display_unattach_link:' );
 
 	return $display_unattach_link;
 } // wpba_settings_display_unattach_link
@@ -101,6 +109,8 @@ function wpba_settings_display_delete_link( $display_delete_link ) {
 	$setting               = $wpba_settings->get_setting( 'meta_box_setting_disable_delete_link' );
 	$display_delete_link = ( $setting == '' ) ? $display_delete_link : false;
 
+	wpba_debug_print_setting( $display_delete_link, 'display_delete_link:' );
+
 	return $display_delete_link;
 } // wpba_settings_display_delete_link
 add_filter( "{$meta_box_id}_display_delete_link", 'wpba_settings_display_delete_link', 1 );
@@ -119,6 +129,8 @@ function wpba_settings_display_edit_link( $display_edit_link ) {
 	$setting               = $wpba_settings->get_setting( 'meta_box_setting_disable_edit_link' );
 	$display_edit_link = ( $setting == '' ) ? $display_edit_link : false;
 
+	wpba_debug_print_setting( $display_edit_link, 'display_edit_link:' );
+
 	return $display_edit_link;
 } // wpba_settings_display_edit_link
 add_filter( "{$meta_box_id}_display_edit_link", 'wpba_settings_display_edit_link', 1 );
@@ -136,6 +148,8 @@ function wpba_settings_display_attachment_id( $display_attachment_id ) {
 	global $wpba_settings;
 	$setting               = $wpba_settings->get_setting( 'meta_box_setting_disable_attachment_id' );
 	$display_attachment_id = ( $setting == '' ) ? $display_attachment_id : false;
+
+	wpba_debug_print_setting( $display_attachment_id, 'display_attachment_id:' );
 
 	return $display_attachment_id;
 } // wpba_settings_display_attachment_id()
@@ -156,6 +170,8 @@ function wpba_settings_disable_featured_image( $disable_featured_image ) {
 	global $wpba_settings;
 	$setting                = $wpba_settings->get_setting( 'global_settings_do_not_include_thumbnail' );
 	$disable_featured_image = ( $setting == '' ) ? $disable_featured_image : true;
+
+	wpba_debug_print_setting( $disable_featured_image, 'disable_featured_image:' );
 
 	return $disable_featured_image;
 } // wpba_settings_disable_featured_image()
@@ -179,6 +195,8 @@ function wpba_settings_wpba_post_types( $post_types ) {
 			unset( $post_types[$key] );
 		} // if()
 	} // foreach()
+
+	wpba_debug_print_setting( $post_types, 'post_types:' );
 
 	return $post_types;
 } // wpba_settings_wpba_post_types
