@@ -75,4 +75,47 @@ if ( ! function_exists( 'pp' ) ) {
 	} // pp()
 } // if()
 
+if ( ! function_exists( 'wpba_debug_print_setting' ) ) {
+	/**
+	 * Pretty Print setting Debug Function
+	 *
+	 * <code>wpba_debug_print_setting( $setting );</code>
+	 *
+	 * @todo   This is really bad I know...some day I will setup unit tests...
+	 *
+	 * @uses   wpba_debug_is_localhost()
+	 *
+	 * @since  1.4.0
+	 *
+	 * @param  mixed    $setting       Any value to pretty print.
+	 * @param  string  $setting_name  Optional, the setting name to display, defaults to empty string.
+	 *
+	 * @return Void
+	 */
+	function wpba_debug_print_setting( $setting, $setting_name = '' ) {
+		if ( ! isset( $_GET['wpba_print_settings'] ) ) {
+			return;
+		} // if()
+
+		global $wpba_print_settings_value;
+		$wpba_print_settings_value = ( isset( $wpba_print_settings_value ) ) ? $wpba_print_settings_value : array();
+
+		// Add the settings value
+		// We do not want duplicates so this will resolve that...
+		if ( $setting_name == '' ) {
+			$wpba_print_settings_value[] = array(
+				'setting'      => $setting,
+				'setting_name' => $setting_name,
+			);
+		} else {
+			$wpba_print_settings_value[$setting_name] = array(
+				'setting'      => $setting,
+				'setting_name' => $setting_name,
+			);
+		} // if()
+	} // wpba_debug_print_setting()
+} // if()
+
+
+
 } // if()
