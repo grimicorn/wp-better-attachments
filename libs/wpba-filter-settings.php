@@ -153,6 +153,10 @@ add_filter( "{$meta_box_id}_display_attachment_id", 'wpba_settings_display_attac
  * @return  string  The disabling of the featured image for all post types.
  */
 function wpba_settings_disable_featured_image( $disable_featured_image ) {
+	global $wpba_settings;
+	$setting                = $wpba_settings->get_setting( 'global_settings_do_not_include_thumbnail' );
+	$disable_featured_image = ( $setting == '' ) ? $disable_featured_image : true;
+
 	return $disable_featured_image;
 } // wpba_settings_disable_featured_image()
 add_filter( "{$meta_box_id}_disable_featured_image", 'wpba_settings_disable_featured_image', 1 );
