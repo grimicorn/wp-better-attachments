@@ -120,7 +120,12 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		private function _get_general_settings_fields() {
 			$settings_fields = array();
 			$options         = get_option( $this->option_group );
-			$post_types      = $this->get_post_types();
+			$post_types      = get_post_types();
+
+			unset( $post_types['revision'] );
+			unset( $post_types['nav_menu_item'] );
+			unset( $post_types['attachment'] );
+			unset( $post_types['deprecated_log'] );
 
 			// == Disable Post Types ======================================================
 			$disable_post_type_setting_labels = array();
