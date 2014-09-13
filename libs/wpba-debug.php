@@ -118,4 +118,26 @@ if ( ! function_exists( 'wpba_debug_print_setting' ) ) {
 
 
 
+if ( ! function_exists( 'wpba_debug_output_print_setting' ) ) {
+	/**
+	 * Outputs the WPBA settings.
+	 *
+	 * @return  void
+	 */
+	function wpba_debug_output_print_setting() {
+		global $wpba_print_settings_value;
+		$wpba_print_settings_value = ( isset( $wpba_print_settings_value ) ) ? $wpba_print_settings_value : array();
+
+		foreach ( $wpba_print_settings_value as $value ) {
+			$setting      = ( isset( $value['setting'] ) ) ? $value['setting'] : '';
+			$setting_name = ( isset( $value['setting_name'] ) ) ? $value['setting_name'] : '';
+
+			pp( $setting_name );
+			pp( $setting );
+			pp( '==========================================================' );
+		} // foreach()
+		return;
+	} // wpba_debug_output_print_setting()
+
+	add_action( 'wpba_after_meta_box_list', 'wpba_debug_output_print_setting' );
 } // if()
