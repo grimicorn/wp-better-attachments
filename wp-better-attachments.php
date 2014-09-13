@@ -110,10 +110,10 @@ foreach ( $classes as $class ) {
  * Libs
  */
 $libs = array(
-	'wpba-functions',
-	'wpba-shortcodes',
 	'wpba-filter-settings',
 	'wpba-filter-post-type-settings',
+	'wpba-functions',
+	'wpba-shortcodes',
 );
 foreach ( $libs as $lib ) {
 	$has_php = ( strpos( $lib, '.php' ) !== false );

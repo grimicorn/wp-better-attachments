@@ -204,6 +204,13 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 * @return  void
 		 */
 		public function enqueue_public_assets() {
+			$disable_shortcodes = false;
+			$disable_shortcodes = apply_filters( 'wpba_disable_shortcodes', $disable_shortcodes );
+
+			if ( $disable_shortcodes ) {
+				return;
+			} // if()
+
 			wp_enqueue_style( 'wpba_public_css', WPBA_URL . '/assets/css/dist/wpba.da39.min.css', array(), null, 'all' );
 			wp_register_script( 'wpba_public_js', WPBA_URL . '/assets/js/dist/wpba.min.js', array(), null, true );
 			wp_enqueue_script( 'wpba_public_js' );

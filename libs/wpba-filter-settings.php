@@ -17,7 +17,45 @@
 global $wpba_helpers;
 $meta_box_id = $wpba_helpers->meta_box_id;
 $options     = $wpba_settings->options;
+pp( $options );
 
+
+// [crop_editor_message] => Crop editor message
+// [wpba_page_meta_box_title_setting] => All Test
+// [enable_only_on_page_pages_setting] =>
+// [global_edit_modal_setting_disable_un_attach_link_meta_box] => on
+// [global_edit_modal_setting_disable_edit_link_meta_box] => on
+// [global_edit_modal_setting_disable_delete_link_meta_box] => on
+// [global_edit_modal_setting_disable_caption_edit_modal] => on
+// [global_edit_modal_setting_disable_alternative_text_edit_modal] => on
+// [global_edit_modal_setting_disable_description_edit_modal] => on
+// [global_edit_modal_setting_do_not_include_thumbnail] => on
+// [global_edit_modal_setting_disable_image_files] => on
+// [global_edit_modal_setting_disable_video_files] => on
+// [global_edit_modal_setting_disable_audio_files] => on
+// [global_edit_modal_setting_disable_documents] => on
+// [wpba_post_meta_box_title_setting] => Post Meta Box Title
+// [enable_only_on_post_pages_setting] =>
+// [global_settings_disable_wpba_image_crop_editor] => on
+// [global_settings_show_all_image_sizes_wpba_image_crop_editor] => on
+// [media_table_setting_disable_re_attach_link_hover_menu] => on
+// [media_table_setting_edit_column] => on
+// [media_table_setting_disable_un_attach_link_column] => on
+// [media_table_setting_disable_re_attach_link_column] => on
+// [meta_box_setting_disable_title_editor] => on
+// [meta_box_setting_disable_caption_editor] => on
+
+
+function wpba_settings_disable_shortcodes( $disable_shortcodes ) {
+	global $wpba_settings;
+	$setting            = $wpba_settings->get_setting( 'global_settings_disable_shortcodes' );
+	$disable_shortcodes = ( $setting == '' ) ? $disable_shortcodes : true;
+
+	wpba_debug_print_setting( $disable_shortcodes, 'disable_shortcodes:' );
+
+	return $disable_shortcodes;
+} // wpba_settings_disable_shortcodes()
+add_filter( 'wpba_disable_shortcodes', 'wpba_settings_disable_shortcodes', 1 );
 
 /**
  * Filters the setting for meta box title for all post types.
