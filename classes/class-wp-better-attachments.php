@@ -586,7 +586,7 @@ class WP_Better_Attachments
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'application/msword',
 			'application/vnd.ms-powerpoint',
-			'application/vnd.ms-powerpoint',
+			'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'application/vnd.oasis.opendocument.text',
 			'application/vnd.ms-excel',
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
