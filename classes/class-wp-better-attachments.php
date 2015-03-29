@@ -585,6 +585,7 @@ class WP_Better_Attachments
 			'application/pdf',
 			'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 			'application/msword',
+			'application/epub+zip',
 			'application/vnd.ms-powerpoint',
 			'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 			'application/vnd.oasis.opendocument.text',
