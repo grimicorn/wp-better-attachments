@@ -9,7 +9,7 @@ Plugin URI: http://dholloran.github.io/wp-better-attachments
 Description: Better Wordpress Attachments
 Author: Dan Holloran
 Version: 1.3.8
-Author URI: http://danholloran.com/
+Author URI: http://danholloran.ghost.io/
 */
 
 define( 'WPBA_VERSION', '1.3.8' );
@@ -48,6 +48,7 @@ require_once "classes/class-wpba-ajax.php";
 require_once "classes/class-wpba-settings.php";
 require_once "classes/class-wpba-settings-fields.php";
 require_once "classes/class-wpba-frontend.php";
+require_once "libs/survey-notification.php";
 
 
 /**
