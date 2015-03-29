@@ -562,6 +562,10 @@ class WP_Better_Attachments
 			'image/gif',
 			'image/png'
 		);
+
+		// Filter the image mime types
+		$image_mime_types = apply_filters( 'wpba_is_image', $image_mime_types );
+
 		if ( in_array( $mime_type, $image_mime_types ) )
 			return true;
 
@@ -593,6 +597,10 @@ class WP_Better_Attachments
 			'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 			'application/zip'
 		);
+
+		// Filter the document mime types
+		$document_mime_types = apply_filters( 'wpba_is_document', $document_mime_types );
+
 		if ( in_array( $mime_type, $document_mime_types ) )
 			return true;
 
@@ -618,6 +626,10 @@ class WP_Better_Attachments
 			'audio/ogg',
 			'audio/wav'
 		);
+
+		// Filter the audio mime types
+		$audio_mime_types = apply_filters( 'wpba_is_audio', $audio_mime_types );
+
 		if ( in_array( $mime_type, $audio_mime_types ) )
 			return true;
 
@@ -645,6 +657,10 @@ class WP_Better_Attachments
 			'video/mpeg',
 			'video/ogg'
 		);
+
+		// Filter the video mime types
+		$video_mime_types = apply_filters( 'wpba_is_video', $video_mime_types );
+
 		if ( in_array( $mime_type, $video_mime_types ) )
 			return true;
 
