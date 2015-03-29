@@ -89,7 +89,7 @@ function wpba_is_survey_notification() {
 	$alert .= '<br>';
 	$alert .= sprintf( __( 'I would greatly appreciate it if you could take this short %sSurvey%s about WP Better Attachments, thanks.', 'wpba' ), '<a href="https://www.surveymonkey.com/s/K9LSWYX" target="_blank">', '</a>' );
 	$alert .= sprintf( __( ' You can read more about the future of WP Better Attachments %shere%s', 'wpba' ), '<a href="http://danholloran.ghost.io/wpba-thoughts-and-road-map/" target="_blank">', '</a>' );
-	echo wp_kses( wpba_alert_wrap( $alert, 'updated', 'wpba_survey_notifiction' ), 'post' );
+	echo wp_kses( wpba_alert_wrap( $alert, 'updated', 'wpba_survey_notification' ), 'post' );
 } // wpba_is_survey_notification()
 add_action( 'wpba_notifcations_init', 'wpba_is_survey_notification' );
 
