@@ -1,0 +1,23 @@
+{
+  "name": "Snifter Base",
+  "version": "0.0.0",
+  "homepage": "https://github.com/matchboxdesigngroup/snifter",
+  "authors": [
+    "Matchbox Design Group info@matchboxdesigngroup.com"
+  ],
+  "description": "Snifter",
+  "main": "index.php",
+  "license": "GPLv3+",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "flexslider": "*"
+  },
+  "devDependencies": {}
+}

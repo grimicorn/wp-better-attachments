@@ -244,22 +244,16 @@ class WPBA_Frontend extends WP_Better_Attachments
 
 
 	/**
-	* Registers FlexSlider JS
+	* Registers FlexSlider Assets.
 	*
 	* @since 1.3.6
 	*
 	* @return Void
 	*/
-	public function register_flexslider()
-	{
+	public function register_flexslider() {
 		// Enqueue FlexSlider
-		wp_register_script(
-			'wpba_front_end_styles',
-			plugins_url( 'assets/js/vendor/jquery.flexslider.min.js' , dirname( __FILE__ ) ),
-			array( 'jquery' ),
-			WPBA_VERSION,
-			true
-		);
+		wp_register_script( 'wpba_jquery_flexslider_min_js', plugins_url( 'assets/bower_components/flexslider/jquery.flexslider-min.js', dirname( __FILE__ ) ), array( 'jquery' ), WPBA_VERSION, true );
+		wp_register_style( 'wpba_jquery_flexslider_css', plugins_url( 'assets/bower_components/flexslider/flexslider.css', dirname( __FILE__ ) ), array( 'wpba_front_end_styles' ), WPBA_VERSION );
 	} // register_flexslider()
 
 
