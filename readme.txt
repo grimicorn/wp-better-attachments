@@ -4,7 +4,7 @@ Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -121,6 +121,13 @@ None so far... If you have any issues please submit an [issue](https://github.co
 == 1.3.7 ==
 
 == 1.3.8 ==
+
+== 1.3.9 ==
+* Adds survey notification key
+* Adds filters for types of files
+* Removes Flexslider from compiled CSS
+* Miscellaneous tweaks
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -165,3 +172,6 @@ Added granular settings; edit modal, un-attach link and re-attach link to Upload
 == 1.3.7 ===
 
 == 1.3.8 ==
+
+== 1.3.9 ==
+Adds filters for adding file types, removes Flexslider from CSS and miscellaneous tweaks.
