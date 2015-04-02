@@ -3,8 +3,8 @@ Contributors: dholloran
 Donate link: http://danholloran.com/
 Tags: attachment,file,image,post,page,custom post type,crop,image editor,attachment list
 Requires at least: 3.5
-Stable tag: 1.3.9
 Tested up to:  4.1.1
+Stable tag: 1.3.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -128,6 +128,9 @@ None so far... If you have any issues please submit an [issue](https://github.co
 * Removes Flexslider from compiled CSS
 * Miscellaneous tweaks
 
+== 1.3.10 ==
+* Fixes an issue with notifications not able to disable on sub folder installs.
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -175,3 +178,6 @@ Added granular settings; edit modal, un-attach link and re-attach link to Upload
 
 == 1.3.9 ==
 Adds filters for adding file types, removes Flexslider from CSS and miscellaneous tweaks.
+
+== 1.3.10 ==
+Fixes an issue with notifications not able to disable on sub folder installs.
