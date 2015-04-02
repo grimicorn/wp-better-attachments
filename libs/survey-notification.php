@@ -64,13 +64,17 @@ function wpba_alert_wrap( $alert_content, $class = 'error', $alert_key = '' ) {
 		return '';
 	} // if()
 
-	$disable_link = '';
-	$reuquest_uri = str_replace( '/wp-admin', '', $_SERVER['REQUEST_URI'] );
-	$current_page = admin_url( $reuquest_uri );
-	$disable_url  = ( strpos( $current_page, '?' ) === false ) ? "{$current_page}?{$alert_key}=0" : "{$current_page}&{$alert_key}=0";
-	$disable_link = " <a href='{$disable_url}' style='float:right;'>Dismiss</a>";
-	return "<div class='{$class}'><p>{$alert_content}{$disable_link}</p></div>";
-}
+	// Build get parameter string
+	$get_params = '';
+	foreach ( $_GET as $key => $value) {
+		$value = urlencode( $value );
+		$get_params = "{$get_params}{$key}={$value}&";
+	} // foreach
+
+	$disable_url  = "?{$get_params}{$alert_key}=0";
+	$disable_link = "<a href='{$disable_url}' style='float:right;'>Dismiss</a>";
+	return "<div class='{$class}'><p>{$alert_content} {$disable_link}</p></div>";
+} // wpba_alert_wrap()
 
 
 
