@@ -68,6 +68,9 @@ class WPBA_Migrate_Settings {
 
 		// Migrate Media Table Settings
 		$this->migrate_media_table_settings();
+
+		// Migrate Meta Box Settings
+		$this->migrate_meta_box_settings();
 	} // migrate_settings
 
 
@@ -188,6 +191,45 @@ class WPBA_Migrate_Settings {
 			'column' => $this->migrate_checkbox_keys( $col_keys, $options ),
 		);
 	} // migrate_media_table_settings()
+
+
+
+	/**
+	 * Handles migrating the meta box settings.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_meta_box_settings() {
+		// Set option key
+		$option_key = 'wpba-meta-box-settings';
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Current options
+		$options = $this->_options[$option_key];
+
+		// Migrate settings.
+		$meta_box_keys = array(
+			'gmb_title'              => 'title',
+			'gmb_caption'            => 'caption',
+			'gmb_show_attachment_id' => 'attachment_id',
+			'gmb_unattach_link'      => 'unattach',
+			'gmb_edit_link'          => 'edit',
+			'gmb_delete_link'        => 'delete',
+		);
+
+		// Set option
+		$this->_options['meta_box'] = $this->migrate_checkbox_keys( $meta_box_keys, $options );
+	} // migrate_meta_box_settings()
+
+
+
+	/**
 	 * Migrates the global settings.
 	 * Splits wpba-global-settings into 'general' and 'crop_editor'.
 	 * Also adds 'wpba-crop-editor-mesage' top 'crop_editor'.
