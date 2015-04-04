@@ -86,6 +86,27 @@ class WPBA_Migrate_Settings {
 
 
 	/**
+	 * Migrate old keys to new keys
+	 *
+	 * @param   array  $keys  The keys to migrate.
+	 *
+	 * @return array          The migrated keys.
+	 */
+	public function migrate_checkbox_keys( $keys, $options ) {
+		$migrated_options = array();
+		foreach ( $keys as $current_key => $new_key ) {
+			// Make sure the option is set
+			if ( ! isset( $options[$current_key] ) or $options[$current_key] != $current_key ) continue;
+
+			$migrated_options[$new_key] = 'on';
+		} // foreach()
+
+		return $migrated_options;
+	} // migrate_checkbox_keys()
+
+
+
+	/**
 	 * Handles migrating the disabled post type settings.
 	 * Now the settings will be "enabled" post types instead.
 	 *
