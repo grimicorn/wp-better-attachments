@@ -18,6 +18,11 @@ define( 'WPBA_PATH', '/' . trim( plugin_dir_path(__FILE__), '/' ) );
 
 $directories = array();
 
+// Includes
+$directories['includes']  = array(
+	'debug',
+);
+
 // Require all the things!!!
 foreach ( $directories as $directory => $files ) {
 	if ( empty( $files ) ) continue;
