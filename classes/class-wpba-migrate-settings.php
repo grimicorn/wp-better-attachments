@@ -16,6 +16,19 @@ class WPBA_Migrate_Settings {
 	 * @var  slug
 	 */
 	private $_option_key = 'wpba_settings';
+
+
+
+	/**
+	 * The options.
+	 *
+	 * @var  array
+	 */
+	private $_options = array();
+
+
+
+	/**
 	 * Class constructor
 	 *
 	 * @since   2.0.0
