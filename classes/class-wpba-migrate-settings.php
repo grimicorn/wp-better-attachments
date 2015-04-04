@@ -60,6 +60,8 @@ class WPBA_Migrate_Settings {
 	 * @return  void
 	 */
 	public function migrate_settings() {
+		// Disabled Post Types
+		$this->migrate_disable_post_types();
 
 		// Global & Crop Editor settings
 		$this->migrate_global_settings();
