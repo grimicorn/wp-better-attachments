@@ -77,6 +77,47 @@ class WPBA_Migrate_Settings {
 
 		return isset( $this->_options[$option_key] );
 	} // option_exists()
+
+
+
+	/**
+	 * Handles migrating the disabled post type settings.
+	 * Now the settings will be "enabled" post types instead.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_disable_post_types() {
+		// Set option key
+		$option_key = 'wpba-disable-post-types';
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		$post_types          = get_post_types();
+		$disabled_post_types = array(
+			'attachment'    => 'attachment',
+			'revision'      => 'revision',
+			'nav_menu_item' => 'nav_menu_item',
+		);
+
+		// Get disabled post types
+		$disabled_post_types = array_merge( $disabled_post_types, $this->_options[$option_key] );
+		unset( $this->_options[$option_key] );
+
+		// Remove disabled post types
+		foreach ( $post_types as $post_type_key => $post_type_slug ) {
+			if ( ! in_array( $post_type_key, $disabled_post_types ) ) continue;
+
+			unset( $post_types[$post_type_key] );
+		} // foreach()
+
+		// Set post types option
+		$this->_options['post_types'] = $post_types;
+	} // migrate_disable_post_types()
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
