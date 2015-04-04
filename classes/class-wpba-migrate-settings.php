@@ -29,6 +29,19 @@ class WPBA_Migrate_Settings {
 
 
 	/**
+	 * Default Disabled Post Types.
+	 *
+	 * @var  array
+	 */
+	private $default_disabled_post_types = array(
+		'attachment'    => 'attachment',
+		'revision'      => 'revision',
+		'nav_menu_item' => 'nav_menu_item',
+	);
+
+
+
+	/**
 	 * Class constructor
 	 *
 	 * @since   2.0.0
@@ -60,6 +73,26 @@ class WPBA_Migrate_Settings {
 	 * @return  void
 	 */
 	public function migrate_settings() {
+		if ( is_admin() ) return;
+		// Handle global setting migration.
+		$old_options = array(
+			'Post Types'               => 'wpba-disable-post-types',
+			'Global'                   => 'wpba-global-settings',
+			'Crop Editor Message'      => 'wpba-crop-editor-mesage',
+			'Media Table'              => 'wpba-media-table-settings',
+			'Meta Box'                 => 'wpba-meta-box-settings',
+			'Disable Attachment Types' => 'wpba-disable-attachment-types',
+			'Edit Modal Settings'      => 'wpba-edit-modal-settings',
+		);
+
+		// Test Old Options
+		foreach ( $old_options as $option_title => $option_key ) {
+			pp( $option_title );
+			pp( $this->_options[$option_key] );
+			pp( '===================================' );
+		} // foreach()
+
+
 		// Disabled Post Types
 		$this->migrate_disable_post_types();
 
@@ -77,6 +110,24 @@ class WPBA_Migrate_Settings {
 
 		// Edit modal settings
 		$this->migrate_edit_modal_settings();
+
+
+		// Test New Options
+		$new_options = array(
+			'Enabled Post Types'      => 'post_types',
+			'General'                 => 'general',
+			'Crop Editor'             => 'crop_editor',
+			'Media'                   => 'media',
+			'Meta Box'                => 'meta_box',
+			'Enable Attachment Types' => 'disable_attachment_types',
+			'Edit Modal'              => 'edit_modal',
+		);
+		foreach ( $new_options as $option_title => $option_key ) {
+			pp( $option_title );
+			pp( $this->_options[$option_key] );
+			pp( '===================================' );
+		} // foreach()
+		die();
 	} // migrate_settings
 
 
@@ -200,15 +251,11 @@ class WPBA_Migrate_Settings {
 			return;
 		} // if()
 
-		$post_types          = get_post_types();
-		$disabled_post_types = array(
-			'attachment'    => 'attachment',
-			'revision'      => 'revision',
-			'nav_menu_item' => 'nav_menu_item',
-		);
+		// Get all post types
+		$post_types = get_post_types();
 
 		// Get disabled post types
-		$disabled_post_types = array_merge( $disabled_post_types, $this->_options[$option_key] );
+		$disabled_post_types = array_merge( $this->default_disabled_post_types, $this->_options[$option_key] );
 		unset( $this->_options[$option_key] );
 
 		// Remove disabled post types
