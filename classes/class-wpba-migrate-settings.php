@@ -317,31 +317,25 @@ class WPBA_Migrate_Settings {
 		} // if()
 
 		// Get options
-		$options         = $this->_options[$option_key];
-		$global_settings = array();
-		$crop_settings   = array();
+		$options = $this->_options[$option_key];
 
-		// Handle thumbnail option
-		if ( isset( $options['thumbnail'] ) and $options['thumbnail'] == 'thumbnail' ) {
-			$global_settings['disable_thumbnail'] = 'on';
-		} // if()
+		// General options
+		$general_keys = array(
+			'thumbnail'     => 'disable_thumbnail',
+			'no_shortcodes' => 'disable_shortcodes',
+		);
 
-		// Handle the shortcodes option
-		if ( isset( $options['no_shortcodes'] ) and $options['no_shortcodes'] == 'no_shortcodes' ) {
-			$global_settings['disable_shortcodes'] = 'on';
-		} // if()
+		// Set general options
+		$this->_options['general'] = $this->migrate_checkbox_keys( $general_keys, $options );
 
-		// Handle the disable crop editor option
-		if ( isset( $options['no_crop_editor'] ) and $options['no_crop_editor'] == 'no_crop_editor' ) {
-			$crop_settings['disable'] = 'on';
-		} // if()
+		// Crop Editor
+		$crop_keys = array(
+			'no_crop_editor' => 'disable',
+			'all_crop_sizes' => 'all_sizes',
+		);
+		$crop_settings = $this->migrate_checkbox_keys( $crop_keys, $options );
 
-		// Handle the show all crop sizes editor option
-		if ( isset( $options['all_crop_sizes'] ) and $options['all_crop_sizes'] == 'all_crop_sizes' ) {
-			$crop_settings['all_sizes'] = 'on';
-		} // if()
-
-		// Handle crop editor message
+		// Add crop editor message
 		$crop_editor_message = ( isset( $this->_options['wpba-crop-editor-mesage'] ) ) ? $this->_options['wpba-crop-editor-mesage'] : false;
 		if ( $crop_editor_message ) {
 			$crop_settings['message'] = $crop_editor_message;
@@ -350,8 +344,7 @@ class WPBA_Migrate_Settings {
 			unset( $this->_options['wpba-crop-editor-mesage']  );
 		} // if()
 
-		// Set new options
-		$this->_options['global']      = $global_settings;
+		// Set crop editor options
 		$this->_options['crop_editor'] = $crop_settings;
 
 		// Remove old global options
