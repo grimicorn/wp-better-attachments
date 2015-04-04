@@ -23,6 +23,11 @@ $directories['includes']  = array(
 	'debug',
 );
 
+// Base classes
+$directories['classes']  = array(
+	'class-wpba-migrate-settings',
+);
+
 // Require all the things!!!
 foreach ( $directories as $directory => $files ) {
 	if ( empty( $files ) ) continue;
