@@ -65,6 +65,9 @@ class WPBA_Migrate_Settings {
 
 		// Global & Crop Editor settings
 		$this->migrate_general_settings();
+
+		// Migrate Media Table Settings
+		$this->migrate_media_table_settings();
 	} // migrate_settings
 
 
@@ -148,6 +151,43 @@ class WPBA_Migrate_Settings {
 
 
 	/**
+	 * Handles migrating the media table settings.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_media_table_settings() {
+		// Set option key
+		$option_key = 'wpba-media-table-settings';
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Current options
+		$options = $this->_options[$option_key];
+
+		// Column settings.
+		$col_keys = array(
+			'col_edit_link'     => 'edit',
+			'col_unattach_link' => 'unattach',
+			'col_reattach_link' => 'reattach',
+		);
+
+		// Hover settings
+		$hover_keys = array(
+			'unattach_link' => 'unattach',
+			'reattach_link' => 'reattach',
+		);
+
+		// Set options
+		$this->_options['media'] = array(
+			'hover'  => $this->migrate_checkbox_keys( $hover_keys, $options ),
+			'column' => $this->migrate_checkbox_keys( $col_keys, $options ),
+		);
+	} // migrate_media_table_settings()
 	 * Migrates the global settings.
 	 * Splits wpba-global-settings into 'general' and 'crop_editor'.
 	 * Also adds 'wpba-crop-editor-mesage' top 'crop_editor'.
