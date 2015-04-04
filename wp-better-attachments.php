@@ -11,3 +11,7 @@ Author: Dan Holloran
 Version: 1.3.10
 Author URI: http://danholloran.ghost.io/
 */
+
+define( 'WPBA_VERSION', '1.3.10' );
+define( 'WPBA_LANG', 'wpba' );
+define( 'WPBA_PATH', '/' . trim( plugin_dir_path(__FILE__), '/' ) );
