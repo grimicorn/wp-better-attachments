@@ -60,6 +60,9 @@ class WPBA_Migrate_Settings {
 	 * @return  void
 	 */
 	public function migrate_settings() {
+
+		// Global & Crop Editor settings
+		$this->migrate_global_settings();
 	} // migrate_settings
 
 
@@ -118,6 +121,66 @@ class WPBA_Migrate_Settings {
 		// Set post types option
 		$this->_options['post_types'] = $post_types;
 	} // migrate_disable_post_types()
+
+
+
+	/**
+	 * Migrates the global settings.
+	 * Splits wpba-global-settings into 'global' and 'crop_editor'.
+	 * Also adds 'wpba-crop-editor-mesage' top 'crop_editor'.
+	 *
+	 * @return  void
+	 */
+	public function migrate_global_settings() {
+		// Set option key
+		$option_key = 'wpba-global-settings';
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Get options
+		$options         = $this->_options[$option_key];
+		$global_settings = array();
+		$crop_settings   = array();
+
+		// Handle thumbnail option
+		if ( isset( $options['thumbnail'] ) and $options['thumbnail'] == 'thumbnail' ) {
+			$global_settings['disable_thumbnail'] = 'on';
+		} // if()
+
+		// Handle the shortcodes option
+		if ( isset( $options['no_shortcodes'] ) and $options['no_shortcodes'] == 'no_shortcodes' ) {
+			$global_settings['disable_shortcodes'] = 'on';
+		} // if()
+
+		// Handle the disable crop editor option
+		if ( isset( $options['no_crop_editor'] ) and $options['no_crop_editor'] == 'no_crop_editor' ) {
+			$crop_settings['disable'] = 'on';
+		} // if()
+
+		// Handle the show all crop sizes editor option
+		if ( isset( $options['all_crop_sizes'] ) and $options['all_crop_sizes'] == 'all_crop_sizes' ) {
+			$crop_settings['all_sizes'] = 'on';
+		} // if()
+
+		// Handle crop editor message
+		$crop_editor_message = ( isset( $this->_options['wpba-crop-editor-mesage'] ) ) ? $this->_options['wpba-crop-editor-mesage'] : false;
+		if ( $crop_editor_message ) {
+			$crop_settings['message'] = $crop_editor_message;
+
+			// Unset the old crop editor message
+			unset( $this->_options['wpba-crop-editor-mesage']  );
+		} // if()
+
+		// Set new options
+		$this->_options['global']      = $global_settings;
+		$this->_options['crop_editor'] = $crop_settings;
+
+		// Remove old global options
+		unset( $this->_options[$option_key] );
+	} // migrate_global_settings();
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
