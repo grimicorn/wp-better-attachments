@@ -35,6 +35,8 @@ class WPBA_Migrate_Settings {
 	 */
 	function __construct() {
 		$this->_options = $this->get_options();
+
+		$this->migrate_settings();
 	} // __construct()
 
 
@@ -49,6 +51,16 @@ class WPBA_Migrate_Settings {
 	public function get_options() {
 		return get_option( $this->_option_key, $this->_options );
 	} // get_options()
+
+
+
+	/**
+	 * Migrates the settings.
+	 *
+	 * @return  void
+	 */
+	public function migrate_settings() {
+	} // migrate_settings
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
