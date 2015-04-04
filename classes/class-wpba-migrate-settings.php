@@ -61,6 +61,22 @@ class WPBA_Migrate_Settings {
 	 */
 	public function migrate_settings() {
 	} // migrate_settings
+
+
+
+	/**
+	 * Checks if the option exists.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @param   string   $option_key  The key of the option tp check
+	 *
+	 * @return  boolean               True if the option exists and false if not.
+	 */
+	public function option_exists( $option_key ) {
+
+		return isset( $this->_options[$option_key] );
+	} // option_exists()
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
