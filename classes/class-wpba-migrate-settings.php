@@ -74,6 +74,9 @@ class WPBA_Migrate_Settings {
 
 		// Migrate Enable Attachment Types
 		$this->migrate_disable_attachment_types_settings();
+
+		// Edit modal settings
+		$this->migrate_edit_modal_settings();
 	} // migrate_settings
 
 
@@ -108,6 +111,42 @@ class WPBA_Migrate_Settings {
 		// Set options
 		$this->_options['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
 	} // migrate_disable_attachment_types_settings()
+
+
+
+	/**
+	 * Handles migrating the edit modal settings.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_edit_modal_settings() {
+		// Set option key
+		$option_key = 'wpba-edit-modal-settings';
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Current options
+		$options = $this->_options[$option_key];
+
+		// Edit modal settings.
+		$edit_keys = array(
+			'gem_caption'          => 'caption',
+			'gem_alternative_text' => 'alternative_text',
+			'gem_description'      => 'description',
+		);
+
+		// Set options
+		$this->_options['edit_modal'] = $this->migrate_checkbox_keys( $edit_keys, $options );
+	} // migrate_edit_modal_settings()
+
+
+
+	/**
 	 * Checks if the option exists.
 	 *
 	 * @since   2.0.0
