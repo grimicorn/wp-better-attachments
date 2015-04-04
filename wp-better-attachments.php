@@ -15,3 +15,19 @@ Author URI: http://danholloran.ghost.io/
 define( 'WPBA_VERSION', '1.3.10' );
 define( 'WPBA_LANG', 'wpba' );
 define( 'WPBA_PATH', '/' . trim( plugin_dir_path(__FILE__), '/' ) );
+
+$directories = array();
+
+// Require all the things!!!
+foreach ( $directories as $directory => $files ) {
+	if ( empty( $files ) ) continue;
+
+	foreach ( $files as $file ) {
+		$has_php  = ( strpos( $file, '.php' ) !== false );
+		$file     = ( $has_php ) ? $file : "{$file}.php";
+		$template = WPBA_PATH . "/{$directory}/{$file}";
+
+		if ( $template == '' ) continue;
+		require_once $template;
+	} // foreach()
+} // foreach()
