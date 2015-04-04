@@ -11,6 +11,11 @@
 */
 class WPBA_Migrate_Settings {
 	/**
+	 * The settings option key.
+	 *
+	 * @var  slug
+	 */
+	private $_option_key = 'wpba_settings';
 	 * Class constructor
 	 *
 	 * @since   2.0.0
