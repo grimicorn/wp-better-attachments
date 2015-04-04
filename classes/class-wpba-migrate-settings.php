@@ -34,7 +34,21 @@ class WPBA_Migrate_Settings {
 	 * @since   2.0.0
 	 */
 	function __construct() {
+		$this->_options = $this->get_options();
 	} // __construct()
+
+
+
+	/**
+	 * Retrieves the 1.x.x settings
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  array  The 1.x.x settings.
+	 */
+	public function get_options() {
+		return get_option( $this->_option_key, $this->_options );
+	} // get_options()
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
