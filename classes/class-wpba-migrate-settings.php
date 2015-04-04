@@ -71,11 +71,43 @@ class WPBA_Migrate_Settings {
 
 		// Migrate Meta Box Settings
 		$this->migrate_meta_box_settings();
+
+		// Migrate Enable Attachment Types
+		$this->migrate_disable_attachment_types_settings();
 	} // migrate_settings
 
 
 
 	/**
+	 * Handles migrating the enable attachment types settings.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_disable_attachment_types_settings() {
+		// Set option key
+		$option_key = 'wpba-disable-attachment-types';
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Get ptions
+		$options = $this->_options[$option_key];
+
+		// Enable attachment type options
+		$enable_keys = array(
+			'disable_image'    => 'image',
+			'disable_video'    => 'video',
+			'disable_audio'    => 'audio',
+			'disable_document' => 'document',
+		);
+
+		// Set options
+		$this->_options['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
+	} // migrate_disable_attachment_types_settings()
 	 * Checks if the option exists.
 	 *
 	 * @since   2.0.0
