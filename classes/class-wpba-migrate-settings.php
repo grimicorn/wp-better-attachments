@@ -64,7 +64,7 @@ class WPBA_Migrate_Settings {
 		$this->migrate_disable_post_types();
 
 		// Global & Crop Editor settings
-		$this->migrate_global_settings();
+		$this->migrate_general_settings();
 	} // migrate_settings
 
 
@@ -128,12 +128,12 @@ class WPBA_Migrate_Settings {
 
 	/**
 	 * Migrates the global settings.
-	 * Splits wpba-global-settings into 'global' and 'crop_editor'.
+	 * Splits wpba-global-settings into 'general' and 'crop_editor'.
 	 * Also adds 'wpba-crop-editor-mesage' top 'crop_editor'.
 	 *
 	 * @return  void
 	 */
-	public function migrate_global_settings() {
+	public function migrate_general_settings() {
 		// Set option key
 		$option_key = 'wpba-global-settings';
 
@@ -182,7 +182,7 @@ class WPBA_Migrate_Settings {
 
 		// Remove old global options
 		unset( $this->_options[$option_key] );
-	} // migrate_global_settings();
+	} // migrate_general_settings()
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
