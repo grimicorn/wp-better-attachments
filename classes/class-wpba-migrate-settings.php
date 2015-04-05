@@ -167,6 +167,9 @@ class WPBA_Migrate_Settings {
 		foreach ( $post_types as $post_type_key => $post_type ) {
 			// Set post type meta box title
 			$this->migrate_post_type_meta_box_title( $post_type );
+
+			// Set post type enabled pages
+			$this->migrate_post_type_enabled_pages( $post_type );
 		} // foreach()
 	} // migrate_post_type_settings()
 
@@ -194,6 +197,31 @@ class WPBA_Migrate_Settings {
 		// Remove old option
 		unset( $this->_options[$option_key] );
 	} // migrate_post_type_meta_box_title()
+
+
+
+	/**
+	 * Migrates the post type enabled pages setting.
+	 *
+	 * @param   string  $post_type  The post type to migrate.
+	 *
+	 * @return  void
+	 */
+	public function migrate_post_type_enabled_pages( $post_type ) {
+		// Set option key
+		$option_key = "wpba-{$post_type}-enabled-pages";
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Set new option
+		$this->_options[$post_type]['enabled_pages'] = $this->_options[$option_key];
+
+		// Remove old option
+		unset( $this->_options[$option_key] );
+	} // migrate_post_type_enabled_pages()
 	 * Handles migrating the disable attachment types settings.
 	 *
 	 * @since   2.0.0
