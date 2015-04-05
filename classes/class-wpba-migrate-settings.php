@@ -165,8 +165,35 @@ class WPBA_Migrate_Settings {
 		$post_types = $this->get_post_types();
 
 		foreach ( $post_types as $post_type_key => $post_type ) {
+			// Set post type meta box title
+			$this->migrate_post_type_meta_box_title( $post_type );
 		} // foreach()
 	} // migrate_post_type_settings()
+
+
+
+	/**
+	 * Migrates the post type meta box title setting.
+	 *
+	 * @param   string  $post_type  The post type to migrate.
+	 *
+	 * @return  void
+	 */
+	public function migrate_post_type_meta_box_title( $post_type ) {
+		// Set option key
+		$option_key = "wpba-{$post_type}-meta-box-title";
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Set new option
+		$this->_options[$post_type]['meta_box_title'] = $this->_options[$option_key];
+
+		// Remove old option
+		unset( $this->_options[$option_key] );
+	} // migrate_post_type_meta_box_title()
 	 * Handles migrating the disable attachment types settings.
 	 *
 	 * @since   2.0.0
