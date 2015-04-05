@@ -170,6 +170,9 @@ class WPBA_Migrate_Settings {
 
 			// Set post type enabled pages
 			$this->migrate_post_type_enabled_pages( $post_type );
+
+			// Set disabled attachment types
+			$this->migrate_post_type_disable_attachment_types( $post_type );
 		} // foreach()
 	} // migrate_post_type_settings()
 
@@ -222,6 +225,42 @@ class WPBA_Migrate_Settings {
 		// Remove old option
 		unset( $this->_options[$option_key] );
 	} // migrate_post_type_enabled_pages()
+
+
+
+	/**
+	 * Handles migrating the disable attachment types settings.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_post_type_disable_attachment_types( $post_type ) {
+		// Set option key
+		$option_key = "wpba-{$post_type}-disable-attachment-types";
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Get ptions
+		$options = $this->_options[$option_key];
+
+		// Disable attachment type options
+		$enable_keys = array(
+			'pt_disable_image'    => 'image',
+			'pt_disable_video'    => 'video',
+			'pt_disable_audio'    => 'audio',
+			'pt_disable_document' => 'document',
+		);
+
+		// Set options
+		$this->_options[$post_type]['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
+	} // migrate_post_type_disable_attachment_types()
+
+
+	/**
 	 * Handles migrating the disable attachment types settings.
 	 *
 	 * @since   2.0.0
