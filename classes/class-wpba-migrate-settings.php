@@ -97,20 +97,19 @@ class WPBA_Migrate_Settings {
 		$this->migrate_disable_post_types();
 
 		// Global & Crop Editor settings
-		$this->migrate_general_settings();
+		$this->migrate_general();
 
 		// Migrate Media Table Settings
-		$this->migrate_media_table_settings();
+		$this->migrate_media_table();
 
 		// Migrate Meta Box Settings
-		$this->migrate_meta_box_settings();
+		$this->migrate_meta_box();
 
-		// Migrate Enable Attachment Types
-		$this->migrate_disable_attachment_types_settings();
+		// Migrate Disable Attachment Types
+		$this->migrate_disable_attachment_types();
 
 		// Edit modal settings
-		$this->migrate_edit_modal_settings();
-
+		$this->migrate_edit_modal();
 
 		// Test New Options
 		$new_options = array(
@@ -139,7 +138,7 @@ class WPBA_Migrate_Settings {
 	 *
 	 * @return  void
 	 */
-	public function migrate_disable_attachment_types_settings() {
+	public function migrate_disable_attachment_types() {
 		// Set option key
 		$option_key = 'wpba-disable-attachment-types';
 
@@ -161,7 +160,7 @@ class WPBA_Migrate_Settings {
 
 		// Set options
 		$this->_options['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
-	} // migrate_disable_attachment_types_settings()
+	} // migrate_disable_attachment_types()
 
 
 
@@ -172,7 +171,7 @@ class WPBA_Migrate_Settings {
 	 *
 	 * @return  void
 	 */
-	public function migrate_edit_modal_settings() {
+	public function migrate_edit_modal() {
 		// Set option key
 		$option_key = 'wpba-edit-modal-settings';
 
@@ -193,7 +192,7 @@ class WPBA_Migrate_Settings {
 
 		// Set options
 		$this->_options['edit_modal'] = $this->migrate_checkbox_keys( $edit_keys, $options );
-	} // migrate_edit_modal_settings()
+	} // migrate_edit_modal()
 
 
 
@@ -278,7 +277,7 @@ class WPBA_Migrate_Settings {
 	 *
 	 * @return  void
 	 */
-	public function migrate_media_table_settings() {
+	public function migrate_media_table() {
 		// Set option key
 		$option_key = 'wpba-media-table-settings';
 
@@ -308,7 +307,7 @@ class WPBA_Migrate_Settings {
 			'hover'  => $this->migrate_checkbox_keys( $hover_keys, $options ),
 			'column' => $this->migrate_checkbox_keys( $col_keys, $options ),
 		);
-	} // migrate_media_table_settings()
+	} // migrate_media_table()
 
 
 
@@ -319,7 +318,7 @@ class WPBA_Migrate_Settings {
 	 *
 	 * @return  void
 	 */
-	public function migrate_meta_box_settings() {
+	public function migrate_meta_box() {
 		// Set option key
 		$option_key = 'wpba-meta-box-settings';
 
@@ -343,7 +342,7 @@ class WPBA_Migrate_Settings {
 
 		// Set option
 		$this->_options['meta_box'] = $this->migrate_checkbox_keys( $meta_box_keys, $options );
-	} // migrate_meta_box_settings()
+	} // migrate_meta_box()
 
 
 
@@ -354,7 +353,7 @@ class WPBA_Migrate_Settings {
 	 *
 	 * @return  void
 	 */
-	public function migrate_general_settings() {
+	public function migrate_general() {
 		// Set option key
 		$option_key = 'wpba-global-settings';
 
@@ -396,7 +395,7 @@ class WPBA_Migrate_Settings {
 
 		// Remove old global options
 		unset( $this->_options[$option_key] );
-	} // migrate_general_settings()
+	} // migrate_general()
 } // WPBA_Migrate_Settings
 
 new WPBA_Migrate_Settings();
