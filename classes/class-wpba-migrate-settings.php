@@ -139,7 +139,7 @@ class WPBA_Migrate_Settings {
 			'Crop Editor'             => 'crop_editor',
 			'Media'                   => 'media',
 			'Meta Box'                => 'meta_box',
-			'Enable Attachment Types' => 'disable_attachment_types',
+			'Disable Attachment Types' => 'disable_attachment_types',
 			'Edit Modal'              => 'edit_modal',
 		);
 		foreach ( $new_options as $option_title => $option_key ) {
@@ -153,7 +153,7 @@ class WPBA_Migrate_Settings {
 
 
 	/**
-	 * Handles migrating the enable attachment types settings.
+	 * Handles migrating the disable attachment types settings.
 	 *
 	 * @since   2.0.0
 	 *
@@ -171,7 +171,7 @@ class WPBA_Migrate_Settings {
 		// Get ptions
 		$options = $this->_options[$option_key];
 
-		// Enable attachment type options
+		// Disable attachment type options
 		$enable_keys = array(
 			'disable_image'    => 'image',
 			'disable_video'    => 'video',
