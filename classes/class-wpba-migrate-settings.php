@@ -147,12 +147,26 @@ class WPBA_Migrate_Settings {
 			pp( $this->_options[$option_key] );
 			pp( '===================================' );
 		} // foreach()
+
+		// Migrate post type specific settings
+		$this->migrate_post_type_settings();
+
 		die();
 	} // migrate_settings
 
 
 
 	/**
+	 * Migrates the post type specific settings.
+	 *
+	 * @return  void
+	 */
+	public function migrate_post_type_settings() {
+		$post_types = $this->get_post_types();
+
+		foreach ( $post_types as $post_type_key => $post_type ) {
+		} // foreach()
+	} // migrate_post_type_settings()
 	 * Handles migrating the disable attachment types settings.
 	 *
 	 * @since   2.0.0
