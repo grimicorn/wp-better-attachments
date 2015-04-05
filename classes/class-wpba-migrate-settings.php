@@ -68,6 +68,27 @@ class WPBA_Migrate_Settings {
 
 
 	/**
+	 * Retrieves the post types that can have attachments.
+	 *
+	 * @return  array  The post types that can have attachments.
+	 */
+	public function get_post_types() {
+		$post_types          = get_post_types();
+		$disabled_post_types = $this->default_disabled_post_types;
+
+		// Remove disabled post types
+		foreach ( $post_types as $post_type_key => $post_type_slug ) {
+			if ( ! in_array( $post_type_key, $disabled_post_types ) ) continue;
+
+			unset( $post_types[$post_type_key] );
+		} // foreach()
+
+		return $post_types;
+	} // get_post_types()
+
+
+
+	/**
 	 * Migrates the settings.
 	 *
 	 * @return  void
@@ -251,11 +272,11 @@ class WPBA_Migrate_Settings {
 		} // if()
 
 		// Get all post types
-		$post_types = get_post_types();
+		$post_types = $this->get_post_types();
 
 		// Get disabled post types
-		$disabled_post_types = array_merge( $this->default_disabled_post_types, $this->_options[$option_key] );
 		unset( $this->_options[$option_key] );
+		$disabled_post_types = $this->_options[$option_key];
 
 		// Remove disabled post types
 		foreach ( $post_types as $post_type_key => $post_type_slug ) {
