@@ -275,7 +275,6 @@ class WPBA_Migrate_Settings {
 		$post_types = $this->get_post_types();
 
 		// Get disabled post types
-		unset( $this->_options[$option_key] );
 		$disabled_post_types = $this->_options[$option_key];
 
 		// Remove disabled post types
@@ -287,6 +286,9 @@ class WPBA_Migrate_Settings {
 
 		// Set post types option
 		$this->_options['post_types'] = $post_types;
+
+		// Remove old options
+		unset( $this->_options[$option_key] );
 	} // migrate_disable_post_types()
 
 
