@@ -195,7 +195,7 @@ class WPBA_Migrate_Settings {
 		} // if()
 
 		// Set new option
-		$this->_options[$post_type]['meta_box_title'] = $this->_options[$option_key];
+		$this->_options[$post_type]['meta_box']['title'] = $this->_options[$option_key];
 
 		// Remove old option
 		unset( $this->_options[$option_key] );
