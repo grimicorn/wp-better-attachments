@@ -94,7 +94,6 @@ class WPBA_Migrate_Settings {
 	 * @return  void
 	 */
 	public function migrate_settings() {
-		if ( is_admin() ) return;
 		// Handle global setting migration.
 		$old_options = array(
 			'Post Types'               => 'wpba-disable-post-types',
@@ -105,14 +104,6 @@ class WPBA_Migrate_Settings {
 			'Disable Attachment Types' => 'wpba-disable-attachment-types',
 			'Edit Modal Settings'      => 'wpba-edit-modal-settings',
 		);
-
-		// Test Old Options
-		foreach ( $old_options as $option_title => $option_key ) {
-			pp( $option_title );
-			pp( $this->_options[$option_key] );
-			pp( '===================================' );
-		} // foreach()
-
 
 		// Disabled Post Types
 		$this->migrate_disable_post_types();
@@ -142,16 +133,9 @@ class WPBA_Migrate_Settings {
 			'Disable Attachment Types' => 'disable_attachment_types',
 			'Edit Modal'              => 'edit_modal',
 		);
-		foreach ( $new_options as $option_title => $option_key ) {
-			pp( $option_title );
-			pp( $this->_options[$option_key] );
-			pp( '===================================' );
-		} // foreach()
 
 		// Migrate post type specific settings
 		$this->migrate_post_type_settings();
-
-		die();
 	} // migrate_settings
 
 
