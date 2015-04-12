@@ -204,6 +204,40 @@ class WPBA_Migrate_Settings {
 
 
 	/**
+	 * Handles migrating the post type specific meta box settings.
+	 *
+	 * @since   2.0.0
+	 *
+	 * @return  void
+	 */
+	public function migrate_post_type_meta_box( $post_type ) {
+		// Set option key
+		$option_key = "wpba-{$post_type}-settings";
+
+		// Make sure options exist
+		if ( ! $this->option_exists( $option_key ) ) {
+			return;
+		} // if()
+
+		// Current options
+		$options = $this->_options[$option_key];
+
+		// Migrate settings.
+		$meta_box_keys = array(
+			'title'                 => 'title',
+			'caption'               => 'caption',
+			'mb_show_attachment_id' => 'attachment_id',
+			'mb_unattach_link'      => 'unattach',
+			'mb_edit_link'          => 'edit',
+			'mb_delete_link'        => 'delete',
+		);
+
+		// Set option
+		$this->_options['meta_box'] = $this->migrate_checkbox_keys( $meta_box_keys, $options );
+	} // migrate_post_type_meta_box()
+
+
+	/**
 	 * Migrates the post type enabled pages setting.
 	 *
 	 * @param   string  $post_type  The post type to migrate.
