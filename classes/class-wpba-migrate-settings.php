@@ -314,9 +314,9 @@ class WPBA_Migrate_Settings {
 
 		// Edit modal settings.
 		$edit_keys = array(
-			'gem_caption'          => 'caption',
-			'gem_alternative_text' => 'alternative_text',
-			'gem_description'      => 'description',
+			'gem_caption'          => 'disable_caption',
+			'gem_alternative_text' => 'disable_alternative_text',
+			'gem_description'      => 'disable_description',
 		);
 
 		// Set options
