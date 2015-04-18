@@ -1,11 +1,11 @@
 {
-  "name": "Snifter Base",
-  "version": "0.0.0",
-  "homepage": "https://github.com/matchboxdesigngroup/snifter",
+  "name": "WP Better Attachments",
+  "version": "2.0.0",
+  "homepage": "http://danholloran.ghost.io/",
   "authors": [
-    "Matchbox Design Group info@matchboxdesigngroup.com"
+    "Dan Holloran - dtholloran@gmail.com"
   ],
-  "description": "Snifter",
+  "description": "WPBA",
   "main": "index.php",
   "license": "GPLv3+",
   "private": true,
@@ -16,8 +16,6 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "flexslider": "*"
-  },
+  "dependencies": {},
   "devDependencies": {}
 }

@@ -1,4 +1,17 @@
 <?php
+/**
+ * WP Better Attachments - Debug
+ *
+ * @version      2.0.0
+ *
+ * @package      WordPress
+ * @subpackage   WP_Better_Attachments
+ *
+ * @author       Dan Holloran    <dtholloran@gmail.com>
+ *
+ * @copyright    2013 - Present  Dan Holloran
+ */
+
 if ( ! function_exists( 'pp' ) ) {
 	/**
 	 * Pretty Print Debug Function

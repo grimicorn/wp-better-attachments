@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <parser>
+    <target>docs/php</target>
+  </parser>
+  <transformer>
+    <target>docs/php</target>
+  </transformer>
+  <transformations>
+    <template name="responsive" />
+  </transformations>
+  <files>
+    <directory>./classes</directory>
+    <directory>./lib</directory>
+  </files>
+</phpdoc>
