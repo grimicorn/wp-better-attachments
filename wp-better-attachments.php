@@ -25,6 +25,7 @@ $directories['includes']  = array(
 
 // Base classes
 $directories['classes']  = array(
+	'class-wp-better-attachments',
 	'class-wpba-filter-settings',
 	'class-wpba-migrate-settings',
 );
