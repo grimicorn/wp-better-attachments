@@ -51,10 +51,15 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 * @return  array  The post types that can have attachments.
 		 */
 		public function get_post_types() {
-			$post_types          = get_post_types();
-			$disabled_post_types = $this->default_disabled_post_types;
+			/**
+			 * Filters the default disabled post types
+			 *
+			 * @var  array
+			 */
+			$disabled_post_types = apply_filters( 'wpba_disabled_post_types', $this->default_disabled_post_types );
 
 			// Remove disabled post types
+			$post_types = get_post_types();
 			foreach ( $post_types as $post_type_key => $post_type_slug ) {
 				if ( ! in_array( $post_type_key, $disabled_post_types ) ) continue;
 
