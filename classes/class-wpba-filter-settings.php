@@ -100,8 +100,9 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$options['post_types'] = $post_types;
 
 			// Sets general defaults
-			$options['general']['disable_thumbnail']  = '';
-			$options['general']['disable_shortcodes'] = '';
+			$options['general']['disable_thumbnail']   = '';
+			$options['general']['disable_shortcodes']  = '';
+			$options['general']['upload_button_label'] = 'Upload Button Label';
 
 			// Sets crop editor defaults
 			$options['crop_editor']['disable']   = '';
@@ -118,7 +119,7 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$options['media']['column']['reattach'] = '';
 
 			// Sets meta box defaults
-			$options['meta_box']['title']         = '';
+			$options['meta_box']['title']         = 'WP Better Attachments';
 			$options['meta_box']['caption']       = '';
 			$options['meta_box']['attachment_id'] = '';
 			$options['meta_box']['unattach']      = '';
@@ -138,8 +139,11 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 
 			// Set post type defaults
 			foreach ( $post_types as $post_type ) {
+				// Sets general post type options
+				$options[$post_type]['general']['upload_button_label'] = 'Upload Button Label';
+
 				// Sets post type meta box defaults
-				$options[$post_type]['meta_box']['title'] = '';
+				$options[$post_type]['meta_box']['title'] = 'WP Better Attachments';
 				$options[$post_type]['meta_box']['caption'] = '';
 				$options[$post_type]['meta_box']['attachment_id'] = '';
 				$options[$post_type]['meta_box']['unattach'] = '';
@@ -170,9 +174,10 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 		 */
 		private function _get_merged_options() {
 			$defaults = $this->_get_default_options();
-			$options  = get_option( $this->option_key, $this->_options );
+			$options  = get_option( $this->option_group, $this->_options );
+			$options  = array_replace_recursive( $defaults, $options );
 
-			return array_merge( $defaults, $options );
+			return $options;
 		} // _get_merged_options()
 
 
@@ -192,10 +197,11 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$options['post_types'] = apply_filters( 'wpba_post_types', $options['post_types'] );
 
 			// Filters general defaults
-			$general                       = $options['general'];
-			$general['disable_thumbnail']  = apply_filters( 'wpba_disable_thumbnail', $general['disable_thumbnail'] );
-			$general['disable_shortcodes'] = apply_filters( 'wpba_disable_shortcodes', $general['disable_shortcodes'] );
-			$options['general']            = $general;
+			$general                        = $options['general'];
+			$general['disable_thumbnail']   = apply_filters( 'wpba_disable_thumbnail', $general['disable_thumbnail'] );
+			$general['disable_shortcodes']  = apply_filters( 'wpba_disable_shortcodes', $general['disable_shortcodes'] );
+			$general['upload_button_label'] = apply_filters( 'wpba_upload_button_label', $general['upload_button_label'] );
+			$options['general']             = $general;
 
 			// Filters crop editor defaults
 			$ce                     = $options['crop_editor'];
@@ -246,8 +252,12 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			foreach ( $post_types as $post_type ) {
 				// Aliases
 				$pt     = $options[$post_type];
+				$pt_g   = $pt['general'];
 				$pt_mb  = $pt['meta_box'];
 				$pt_dat = $pt['disable_attachment_types'];
+
+				// Filter general settings
+				$pt_g['upload_button_label'] = apply_filters( "wpba_{$post_type}_upload_button_label", $pt_g['upload_button_label'] );
 
 				// Filters post type meta box defaults
 				$pt_mb['title'] = apply_filters( "wpba_{$post_type}_meta_box_title", $pt_mb['title'] );
@@ -266,7 +276,7 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 				$pt_dat['audio'] = apply_filters( "wpba_{$post_type}_disable_attachment_type_audio", $pt_dat['audio'] );
 				$pt_dat['document'] = apply_filters( "wpba_{$post_type}_disable_attachment_type_document", $pt_dat['document'] );
 
-
+				$pt['general']                  = $pt_g;
 				$pt['disable_attachment_types'] = $pt_dat;
 				$pt['meta_box']                 = $pt_mb;
 				$options[$post_type]            = $pt;
