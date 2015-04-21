@@ -61,7 +61,7 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * @return  array  The 1.x.x settings.
 		 */
 		public function get_options() {
-			return get_option( $this->option_key, $this->_migration_options );
+			return get_option( $this->option_group, $this->_migration_options );
 		} // get_options()
 
 
@@ -107,7 +107,7 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 			$this->_migration_options['v'] = $migration_version;
 
 			// Save the migrated options
-			update_option( $this->option_key, $this->_migration_options );
+			update_option( $this->option_group, $this->_migration_options );
 		} // migrate_settings
 
 
