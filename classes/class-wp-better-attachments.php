@@ -20,7 +20,7 @@ if ( ! class_exists( 'WP_Better_Attachments' ) ) {
 		 *
 		 * @var    slug
 		 */
-		public $option_key = 'wpba_settings';
+		public $option_group = 'wpba_settings';
 
 
 
