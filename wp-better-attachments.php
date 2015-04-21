@@ -62,8 +62,11 @@ $directories['includes']  = array(
 $directories['classes']  = array(
 	'class-wp-better-attachments',
 	'class-wpba-utilities',
-	'class-wpba-filter-settings',
 	'class-wpba-migrate-settings',
+	'class-wpba-filter-settings',
+	'class-wpba-form-fields',
+	'class-wpba-setting-fields',
+	'class-wpba-settings',
 );
 
 // Require all the things!!!
