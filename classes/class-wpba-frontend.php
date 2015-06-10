@@ -67,6 +67,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'file_extensions'       => 'array',
 			'icon_size'             => 'array',
 			'use_attachment_page'   => 'boolean',
+			'use_caption_for_title' => 'boolean',
 			'open_new_window'       => 'boolean',
 			'show_post_thumbnail'   => 'boolean'
 		);
@@ -86,6 +87,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 			'video_icon'            => "{$plugin_url}/assets/img/icons/video-icon.png",
 			'icon_size'             => array( 16, 20 ),
 			'use_attachment_page'   => false,
+			'use_caption_for_title' => false,
 			'open_new_window'       => false,
 			'show_post_thumbnail'   => true,
 			'no_attachments_msg'    => 'Sorry, no attachments exist.',
@@ -131,7 +133,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$list .= "<div id='{$list_id}' class='{$wrap_class}'>" . $nl;
 		$list .= "<ul class='{$list_class}'>";
 		foreach ( $attachments as $attachment ) {
-			$title = $attachment->post_title;
+			$title = ( $use_caption_for_title && strlen($attachment->post_excerpt) ) ? $attachment->post_excerpt : $attachment->post_title;
 			$link = ( $use_attachment_page ) ? get_attachment_link( $attachment->ID ) : wp_get_attachment_url( $attachment->ID );
 			$target = ( $open_new_window ) ? 'target="_blank"' : 'target="_self"';
 			$list .= "<li id='{$list_id}_{$attachment->ID}' class='{$list_item_class}'>";

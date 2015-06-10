@@ -56,6 +56,7 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - video_icon="path/to/directory/video-icon.png"
 - icon_size="16,20" **width, height**
 - use_attachment_page="true"
+- use_caption_for_title="false"
 - open_new_window="true"
 - show_post_thumbnail="true"
 - no_attachments_msg="Sorry, no attachments exist."
@@ -79,6 +80,7 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - video_icon           => "path/to/directory/video-icon.png"
 - icon_size            => array( 16,20 ); // string or number (width, height)
 - use_attachment_page  => true
+- use_caption_for_title => false
 - open_new_window      => true
 - show_post_thumbnail  => true
 - no_attachments_msg   => Sorry, no attachments exist.
