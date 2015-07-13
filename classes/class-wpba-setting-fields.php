@@ -310,6 +310,22 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		} // _edit_modal_settings_fields()
 
 
+		/**
+		 * Retrieves post type specific settings.
+		 *
+		 * @param   string  $post_type  The post type slug.
+		 *
+		 * @return  array               The setting fields for the specified post type.
+		 */
+		public function _get_post_type_settings_fields( $post_type ) {
+			$fields = array();
+
+			if ( ! in_array( $group, $this->get_post_types() ) ) return $fields;
+
+			return $fields;
+		} // _get_post_type_settings_fields()
+
+
 
 		/**
 		 * Retrieves the settings fields for a specific settings group.
@@ -333,6 +349,11 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 			$fields['meta_box']                 = $this->_meta_box_settings_fields();
 			$fields['disable_attachment_types'] = $this->_disable_attachment_types_settings_fields();
 			$fields['edit_modal']               = $this->_edit_modal_settings_fields();
+
+			// Handle post type settings
+			if ( in_array( $group, $this->get_post_types() ) ) {
+				$fields[$group] = $this->_get_post_type_settings_fields( $group );
+			} // if()
 
 			return ( isset( $fields[$group] ) ) ? $fields[$group] : array();
 		} // get_settings_fields()
