@@ -141,6 +141,9 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			<div class="clear"></div>
 			<?php echo $this->output_post_attachments(); ?>
 			<div class="clear"></div>
+			<?php if ( floatval( $wp_version ) >= 3.5 ) { ?>
+				<a class="button wpba-attachments-button hide" id="wpba_attachments_button2" href="#"><span class="wpba-media-buttons-icon"></span> Add Attachments</a>
+			<?php } ?>
 		</div>
 		<?php
 		echo $this->edit_modal();
