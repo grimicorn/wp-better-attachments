@@ -18,7 +18,7 @@ function wpba_warning_dismiss() {
 	// The possible warning $_GET var key.
 	// @todo possibly global or if moved into class make it a property.
 	$warning_get_var_keys = array(
-		'wpba_survey_notification',
+		'wpba_survey_details_notification',
 	);
 
 	// If user clicks to dismiss the notice, add that to their user meta
@@ -91,9 +91,10 @@ function wpba_is_survey_notification() {
 	$alert  = 'Thank you for updating WP Better Attachments! ';
 	$alert .= '<br>';
 	$alert .= '<br>';
-	$alert .= sprintf( __( 'I would greatly appreciate it if you could take this short %sSurvey%s about WP Better Attachments, thanks.', 'wpba' ), '<a href="https://www.surveymonkey.com/s/K9LSWYX" target="_blank">', '</a>' );
-	$alert .= sprintf( __( ' You can read more about the future of WP Better Attachments %shere%s', 'wpba' ), '<a href="http://danholloran.me/2015/03/30/wpba-thoughts-and-road-map/" target="_blank">', '</a>' );
-	echo wp_kses( wpba_alert_wrap( $alert, 'updated', 'wpba_survey_notification' ), 'post' );
+	$alert .= 'Thank you to every one who complete the WPBA survey, I really appreciate it!';
+	$alert .= '<br>';
+	$alert .= sprintf( __( 'You can read more about the future of WP Better Attachments and the survey responses %shere%s', 'wpba' ), '<a href="http://danholloran.me/2015/03/30/wpba-thoughts-and-road-map/" target="_blank">', '</a>' );
+	echo wp_kses( wpba_alert_wrap( $alert, 'updated', 'wpba_survey_details_notification' ), 'post' );
 } // wpba_is_survey_notification()
 add_action( 'wpba_notifcations_init', 'wpba_is_survey_notification' );
 
