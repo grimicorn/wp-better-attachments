@@ -1,4 +1,5 @@
-// @codekit-prepend wpba-attachment.js
+// @codekit-prepend "wpba-functions"
+// @codekit-prepend "wpba-attachment"
 jQuery(function($){
 	$(window).load(function(){
 		$('#wpba_attachments_button').on('click', function() {

@@ -1,4 +1,3 @@
-//@codekit-prepend wpba-functions.js
 jQuery(function($){
 	$(window).load(function(){
 		wpba.resetClickHandlers();
