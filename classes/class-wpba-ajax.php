@@ -66,6 +66,8 @@ class WPBA_Ajax extends WP_Better_Attachments
 	{
 		extract( $_POST );
 
+		$attids = ( isset( $attids ) ) ? $attids : array();
+
 		// Check for empty values
 		foreach ( $attids as $key => $value ) {
 			if ( is_array( $value ) ) {
