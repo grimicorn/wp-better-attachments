@@ -65,6 +65,10 @@ wpba.unattachAttachment = function(that) {
 		if (resp) {
 			$('#attachment_' + attachmentId).remove();
 			wpba.updateSortOrder( sortableImageElem );
+
+			if ( sortableImageElem.children( 'li' ).length === 0 ) {
+				$('#wpba_attachments_button2').addClass('hide');
+			} // if()
 		}
 	});
 };
@@ -139,6 +143,10 @@ wpba.deleteAttachment = function(that) {
 			if (resp) {
 				$('#attachment_' + attachmentId).remove();
 				wpba.updateSortOrder( sortableImageElem );
+
+				if ( sortableImageElem.children( 'li' ).length === 0 ) {
+					$('#wpba_attachments_button2').addClass('hide');
+				} // if()
 			}
 			saveElem.addClass('hide');
 		});
