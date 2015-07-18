@@ -131,6 +131,12 @@ None so far... If you have any issues please submit an [issue](https://github.co
 == 1.3.10 ==
 * Fixes an issue with notifications not able to disable on sub folder installs.
 
+== 1.3.11 ==
+* Added use_caption_for_title to build_attachment_list function/shortcode. Props Mike Warwick.
+* Added a second add attachments button to the bottom of meta box. Props Mike Warwick.
+* Fixed undefined variable PHP warning.
+* Updates the survey notification with thank you message.
+
 == Upgrade Notice ==
 
 = 1.0.0 =
@@ -181,3 +187,6 @@ Adds filters for adding file types, removes Flexslider from CSS and miscellaneou
 
 == 1.3.10 ==
 Fixes an issue with notifications not able to disable on sub folder installs.
+
+== 1.3.11 ==
+Adds use_caption_for_title option to build_attachment_list, adds "Add Attachments" button to bottom of meta box, and misc. fixes/updates.
