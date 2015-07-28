@@ -13,7 +13,12 @@
  *
  * @copyright    2013 - Present         Dan Holloran
  */
+
 if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
+
+	/**
+	 * WPBA Form Fields.
+	 */
 	class WPBA_Setting_Fields extends WPBA_Form_Fields {
 		/**
 		 * The settings page slug.
@@ -42,7 +47,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		 *
 		 * @since  2.0.0
 		 *
-		 * @param  array  $config  Class configuration.
+		 * @param  array $config  Class configuration.
 		 */
 		public function __construct( $config = array() ) {
 			parent::__construct();
@@ -67,7 +72,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 				$post_type_object = get_post_type_object( $post_type );
 
 				if ( ! is_null( $post_type_object ) ) {
-					$labels[$post_type] = $post_type_object->labels->singular_name;
+					$labels[ $post_type ] = $post_type_object->labels->singular_name;
 				} // if()
 			} // foreach()
 
@@ -169,8 +174,8 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 			$group         = "{$this->option_group}[crop_editor]";
 			$multi_options = $options;
 
-			// Remove message form multi options
-			if( isset( $multi_options['message'] ) ) unset( $multi_options['message'] );
+			// Remove message form multi options.
+			if ( isset( $multi_options['message'] ) ) { unset( $multi_options['message'] ); }
 
 			$labels = array(
 				'disable'   => 'Disable',
@@ -184,7 +189,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 				'options' => $this->setup_multi_input_options( $labels, $multi_options, "{$this->option_group}[crop_editor]" ),
 			);
 
-			// Message
+			// Message.
 			$fields[] = array(
 				'id'    => "{$this->page_slug}_crop_editor_message",
 				'label' => 'Message',
@@ -217,8 +222,8 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 			$group         = "{$this->option_group}[meta_box]";
 			$multi_options = $options;
 
-			// Remove title form multi options
-			if( isset( $multi_options['title'] ) ) unset( $multi_options['title'] );
+			// Remove title form multi options.
+			if ( isset( $multi_options['title'] ) ) { unset( $multi_options['title'] ); }
 
 			$labels = array(
 				'title_editor'   => 'Disable Title Editor',
@@ -236,7 +241,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 				'options' => $this->setup_multi_input_options( $labels, $multi_options, "{$this->option_group}[meta_box]" ),
 			);
 
-			// Title
+			// Title.
 			$fields[] = array(
 				'id'    => "{$this->page_slug}_meta_box_title",
 				'label' => 'Title',
@@ -313,14 +318,14 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		/**
 		 * Retrieves post type specific settings.
 		 *
-		 * @param   string  $post_type  The post type slug.
+		 * @param   string $post_type  The post type slug.
 		 *
 		 * @return  array               The setting fields for the specified post type.
 		 */
 		public function _get_post_type_settings_fields( $post_type ) {
 			$fields = array();
 
-			if ( ! in_array( $group, $this->get_post_types() ) ) return $fields;
+			if ( ! in_array( $post_type, $this->get_post_types() ) ) { return $fields; }
 
 			return $fields;
 		} // _get_post_type_settings_fields()
@@ -334,14 +339,14 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   array  $group  The settings group to retrieve fields for.
+		 * @param   array $group  The settings group to retrieve fields for.
 		 *
 		 * @return  array          The setting fields for the specified group.
 		 */
 		public function get_settings_fields( $group ) {
 			$fields = array();
 
-			// Settings
+			// Settings.
 			$fields['post_types']               = $this->_post_type_settings_fields();
 			$fields['general']                  = $this->_general_settings_fields();
 			$fields['media']                    = $this->_media_settings_fields();
@@ -350,12 +355,12 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 			$fields['disable_attachment_types'] = $this->_disable_attachment_types_settings_fields();
 			$fields['edit_modal']               = $this->_edit_modal_settings_fields();
 
-			// Handle post type settings
+			// Handle post type settings.
 			if ( in_array( $group, $this->get_post_types() ) ) {
-				$fields[$group] = $this->_get_post_type_settings_fields( $group );
+				$fields[ $group ] = $this->_get_post_type_settings_fields( $group );
 			} // if()
 
-			return ( isset( $fields[$group] ) ) ? $fields[$group] : array();
+			return ( isset( $fields[ $group ] ) ) ? $fields[ $group ] : array();
 		} // get_settings_fields()
 
 
@@ -367,9 +372,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		 *
 		 * @since  2.0.0
 		 *
-		 * @param   string  $settings_group  The settings group the fields should be associated with.
-		 *
-		 * @return  void
+		 * @param   string $settings_group  The settings group the fields should be associated with.
 		 */
 		public function add_settings_fields( $settings_group ) {
 			$settings_fields = $this->get_settings_fields( $settings_group );
@@ -381,11 +384,11 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 					'field' => $field,
 				);
 
-				// Add settings field
+				// Add settings field.
 				add_settings_field(
 					$id,
 					$title,
-					array( &$this, 'output_setting_field', ),
+					array( &$this, 'output_setting_field' ),
 					$this->page_slug,
 					$settings_group,
 					$args
@@ -402,7 +405,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @return  void
+		 * @param array $args The input arguments.
 		 */
 		function output_setting_field( $args ) {
 			$field = ( isset( $args['field'] ) ) ? $args['field'] : false;
@@ -411,7 +414,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 				return;
 			} // if()
 
-			// We do not need a label
+			// We do not need a label.
 			$field['label'] = '';
 
 			$this->build_inputs( array( $field ), true );
@@ -422,8 +425,9 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		/**
 		 * Sets up multi input options.
 		 *
-		 * @param   array   $labels        The options to be created.
-		 * @param   string  $option_group  Optional, overwrite the default option key, Default WP_Better_Attachments::option_group.
+		 * @param   array  $labels        The options to be created.
+		 * @param   array  $options       The input options.
+		 * @param   string $option_group  Optional, overwrite the default option key, Default WP_Better_Attachments::option_group.
 		 *
 		 * @return  array                  The multi input options.
 		 */
@@ -434,7 +438,7 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 			foreach ( $labels as $option_key => $option_label ) {
 				$ret_options[] = array(
 					'label' => $option_label,
-					'value' => ( isset( $options[$option_key] ) ) ? $options[$option_key] : '',
+					'value' => ( isset( $options[ $option_key ] ) ) ? $options[ $option_key ] : '',
 					'name'  => "{$option_group}[$option_key]",
 				);
 			} // foreach()

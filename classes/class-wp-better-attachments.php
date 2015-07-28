@@ -11,7 +11,12 @@
  *
  * @copyright    2013 - Present  Dan Holloran
  */
+
 if ( ! class_exists( 'WP_Better_Attachments' ) ) {
+
+	/**
+	 * WP Better attachments.
+	 */
 	class WP_Better_Attachments {
 		/**
 		 * The settings option key.

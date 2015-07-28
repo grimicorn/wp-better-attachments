@@ -13,14 +13,19 @@
  *
  * @copyright    2013 - Present         Dan Holloran
  */
+
 if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
+
+	/**
+	 * WPBA Filter settings.
+	 */
 	class WPBA_Form_Fields extends WPBA_Filter_Settings {
 		/**
 		 * WPBA_Form_Fields class constructor.
 		 *
 		 * @since  1.4.0
 		 *
-		 * @param  array  $config  Class configuration.
+		 * @param  array $config  Class configuration.
 		 */
 		public function __construct( $config = array() ) {
 			parent::__construct();
@@ -35,13 +40,13 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   string  $id     The input fields ID value.
-		 * @param   string  $label  The text to be displayed in the label.
+		 * @param   string $id     The input fields ID value.
+		 * @param   string $label  The text to be displayed in the label.
 		 *
 		 * @return  string          The label for the form input field.
 		 */
 		public function label( $id, $label ) {
-			if ( $label == '' ) {
+			if ( '' === $label ) {
 				return '';
 			} // if()
 
@@ -57,12 +62,12 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   string  $description  The text to be displayed in the description.
+		 * @param   string $description  The text to be displayed in the description.
 		 *
 		 * @return  string          The description for the form input field.
 		 */
 		public function description( $description ) {
-			if ( $description == '' ) {
+			if ( '' === $description ) {
 				return '';
 			} // if()
 
@@ -86,23 +91,19 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   integer  $id     The ID & name attribute to identify the form field.
-		 * @param   string   $label  Optional, the text to be displayed in the label.
-		 * @param   string   $value  Optional, the value & placeholder of the form field.
-		 * @param   string   $name   Optional, The name assigned to the generated textarea and passed parameter when the form is submitted. (may include [] to pass data as array).
-		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
+		 * @param   integer $id     The ID & name attribute to identify the form field.
+		 * @param   string  $label  Optional, the text to be displayed in the label.
+		 * @param   string  $value  Optional, the value & placeholder of the form field.
+		 * @param   string  $name   Optional, The name assigned to the generated textarea and passed parameter when the form is submitted. (may include [] to pass data as array).
+		 * @param   array   $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The input field.
 		 */
 		public function wp_editor( $id, $label = '', $value = '', $name = null, $args = array()  ) {
-			// Clean up $args
+			// Clean up $args.
 			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
 
-			// Adds a AJAX loading class so the editor can be initialized
-			$is_add_attachments = ( isset( $_POST['action'] ) and $_POST['action'] = 'wpba_add_attachments' );
-			$ajax_class         = ( $is_add_attachments ) ? ' ajax' : '';
-
-			// Build the input
+			// Build the input.
 			$wrap_class    = str_replace( '_', '-', $id );
 			$textarea_name = ( is_null( $name ) ) ? $id : $name;
 			$input_html    = '';
@@ -151,11 +152,12 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   integer  $id       The ID & name attribute to identify the form field.
-		 * @param   array    $options  The check boxes to be created.
-		 * @param   string   $label    Optional, the text to be displayed in the label.
-		 * @param   array    $attrs    Optional, attributes to add to the multi checkbox field.
-		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
+		 * @param   integer $id       The ID & name attribute to identify the form field.
+		 * @param   array   $options  The check boxes to be created.
+		 * @param   string  $label    Optional, the text to be displayed in the label.
+		 * @param   string  $value    Optional, meta vlaue. Default empty string.
+		 * @param   array   $attrs    Optional, attributes to add to the multi checkbox field.
+		 * @param   array   $args     Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The multi checkbox field.
 		 */
@@ -164,7 +166,7 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 				return '';
 			} // if()
 
-			// Clean up $args
+			// Clean up $args.
 			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
 
 			$i           = 1;
@@ -180,15 +182,15 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 					'class' => 'pull-left',
 				);
 
-				// Handle the checked attribute
-				if ( $value != '' ) {
+				// Handle the checked attribute.
+				if ( '' !== $value ) {
 					$defaults['checked'] = 'checked';
 				} // if()
 
-				// Merge the attributes
+				// Merge the attributes.
 				$multi_checkbox_attrs = $this->merge_element_attributes( $defaults, $attrs );
 
-				// Build the multi_checkbox
+				// Build the multi_checkbox.
 				$input_html .= "<input id='{$id}_checkbox_{$i}' name='{$name}' type='checkbox' value='on' {$multi_checkbox_attrs}/>";
 				$input_html .= $this->label( "{$id}_checkbox_{$i}", $label ) . '<br>';
 				$i = $i + 1;
@@ -218,16 +220,16 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   integer  $id     The ID & name attribute to identify the form field.
-		 * @param   string   $label  Optional, the text to be displayed in the label.
-		 * @param   string   $value  Optional, the value & placeholder of the form field.
-		 * @param   array    $attrs  Optional, attributes to add to the input field.
-		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
+		 * @param   integer $id     The ID & name attribute to identify the form field.
+		 * @param   string  $label  Optional, the text to be displayed in the label.
+		 * @param   string  $value  Optional, the value & placeholder of the form field.
+		 * @param   array   $attrs  Optional, attributes to add to the input field.
+		 * @param   array   $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The input field.
 		 */
 		public function textarea( $id, $label = '', $value = '', $attrs = array(), $args = array() ) {
-			// Clean up $args
+			// Clean up $args.
 			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
 
 			$defaults = array(
@@ -236,7 +238,7 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			);
 			$input_attrs = $this->merge_element_attributes( $defaults, $attrs );
 
-			// Build the input
+			// Build the input.
 			$wrap_class  = str_replace( '_', '-', $id );
 			$input_html  = '';
 			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-textarea-input-wrap clearfix clear'>";
@@ -264,17 +266,17 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @since   1.4.0
 		 *
-		 * @param   integer  $id     The ID & name attribute to identify the form field.
-		 * @param   string   $label  Optional, the text to be displayed in the label.
-		 * @param   string   $value  Optional, the value & placeholder of the form field.
-		 * @param   string   $type   Optional, the type of input to create, defaults to text.
-		 * @param   array    $attrs  Optional, attributes to add to the input field.
-		 * @param   array    $args   Optional, Any extra arguments to be passed, default none.
+		 * @param   integer $id     The ID & name attribute to identify the form field.
+		 * @param   string  $label  Optional, the text to be displayed in the label.
+		 * @param   string  $value  Optional, the value & placeholder of the form field.
+		 * @param   string  $type   Optional, the type of input to create, defaults to text.
+		 * @param   array   $attrs  Optional, attributes to add to the input field.
+		 * @param   array   $args   Optional, Any extra arguments to be passed, default none.
 		 *
 		 * @return  string           The input field.
 		 */
 		public function input( $id, $label = '', $value = '', $type = 'text', $attrs = array(), $args = array() ) {
-			// Clean up $args
+			// Clean up $args.
 			$desc = ( isset( $args['desc'] ) ) ? $args['desc'] : '';
 
 			$defaults = array(
@@ -282,10 +284,10 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 				'name'  => $id,
 			);
 
-			// Merge the attributes
+			// Merge the attributes.
 			$input_attrs = $this->merge_element_attributes( $defaults, $attrs );
 
-			// Build the input
+			// Build the input.
 			$wrap_class  = str_replace( '_', '-', $id );
 			$input_html  = '';
 			$input_html .= "<div class='{$wrap_class}-input-wrap wpba-{$type}-input-wrap clearfix clear'>";
@@ -320,8 +322,8 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		 *
 		 * @todo    Document input types.
 		 *
-		 * @param   array    $inputs  The input(s) information (id,label,value,type,attrs).
-		 * @param   boolean  $echo    Optional, if the inputs should be echoed out once built.
+		 * @param   array   $inputs  The input(s) information (id,label,value,type,attrs).
+		 * @param   boolean $echo    Optional, if the inputs should be echoed out once built.
 		 *
 		 * @return  string           The input(s) HTML.
 		 */
@@ -330,16 +332,14 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 			$allowed_html = $this->get_form_kses_allowed_html();
 
 			foreach ( $inputs as $input ) {
-				extract( $input );
-
-				$id      = ( isset( $id ) ) ? $id : '';
-				$label   = ( isset( $label ) ) ? $label : '';
-				$value   = ( isset( $value ) ) ? $value : '';
-				$type    = ( isset( $type ) ) ? $type : 'text';
-				$attrs   = ( isset( $attrs ) ) ? $attrs : array();
-				$options = ( isset( $options ) ) ? $options : array();
+				$id      = ( isset( $input['id'] ) ) ? $input['$id'] : '';
+				$label   = ( isset( $input['label'] ) ) ? $input['$label'] : '';
+				$value   = ( isset( $input['value'] ) ) ? $input['$value'] : '';
+				$type    = ( isset( $input['type'] ) ) ? $input['$type'] : 'text';
+				$attrs   = ( isset( $input['attrs'] ) ) ? $input['$attrs'] : array();
+				$options = ( isset( $input['options'] ) ) ? $input['$options'] : array();
 				$name    = ( isset( $attrs['name'] ) ) ? $attrs['name'] : $id;
-				$args    = ( isset( $args ) ) ? $args : array();
+				$args    = ( isset( $input['args'] ) ) ? $input['$args'] : array();
 
 				switch ( $type ) {
 					case 'editor':
@@ -368,7 +368,7 @@ if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
 		} // build_inputs()
 	} // WPBA_Form_Fields()
 
-	// Instantiate Class
+	// Instantiate Class.
 	global $wpba_form_fields;
 	$wpba_form_fields = new WPBA_Form_Fields();
 } // if()
