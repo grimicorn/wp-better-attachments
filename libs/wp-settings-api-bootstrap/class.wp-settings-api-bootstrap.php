@@ -139,7 +139,7 @@
 			// enqueue color picker js and css
 			wp_enqueue_script(
 				'artus-field-color-js',
-				WP_PLUGIN_URL . '/' . dirname( plugin_basename(__FILE__) ) . '/colorpicker.js',
+				plugins_url( 'colorpicker.js', __FILE__ ),
 				array('jquery', 'farbtastic'),
 				time(),
 				true
