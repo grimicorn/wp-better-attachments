@@ -13,12 +13,7 @@
  *
  * @copyright    2013 - Present         Dan Holloran
  */
-
 if ( ! class_exists( 'WPBA_Settings' ) ) {
-
-	/**
-	 * WPBA Settings Fields
-	 */
 	class WPBA_Settings extends WPBA_Setting_Fields {
 		/**
 		 * The current options.
@@ -30,30 +25,10 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		public $options = array();
 
 
-		/**
-		 * Settings page title.
-		 *
-		 * @var  string
-		 */
+
 		private $_page_title = 'WPBA Settings';
-
-
-		/**
-		 * Settings page menu title.
-		 *
-		 * @var  string
-		 */
 		private $_menu_title = 'WPBA Settings';
-
-
-
-		/**
-		 * Settings page menu slug.
-		 *
-		 * @var  string
-		 */
 		private $_menu_slug  = 'wpba-settings';
-
 
 
 		/**
@@ -61,15 +36,15 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 *
 		 * @since  2.0.0
 		 *
-		 * @param  array $config  Class configuration.
+		 * @param  array  $config  Class configuration.
 		 */
 		public function __construct( $config = array() ) {
 			parent::__construct();
 
-			// Set options.
+			// Set options
 			$this->options = $this->get_options();
-
-			// Add filters.
+// pp($this->options);
+			// Add filters
 			$this->_add_wpba_settings_actions_filters();
 		} // __construct()
 
@@ -87,10 +62,10 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 * @return  void
 		 */
 		private function _add_wpba_settings_actions_filters() {
-			// Add the settings page.
+			// Add the settings page
 			add_action( 'admin_menu', array( &$this, 'add_options_page' ) );
 
-			// Initialize the settings.
+			// Initialize the settings
 			add_action( 'admin_init', array( &$this, 'admin_init' ) );
 		} // _add_wpba_settings_actions_filters()
 
@@ -142,7 +117,7 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 * @return  void
 		 */
 		function admin_init() {
-			// General Settings.
+			// General Settings
 			$options_names = array(
 				'post_types'               => 'Enabled Post Types',
 				'disable_attachment_types' => 'Disabled Attachment Types',
@@ -153,27 +128,27 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 				'edit_modal'               => 'Edit Modal Settings',
 			);
 
-			// Post Type Specific Settings.
+			// Post Type Specific Settings
 			$post_types = $this->get_post_types();
 			foreach ( $post_types as $post_type ) {
-				// Get post type object.
+				// Get post type object
 				$obj = get_post_type_object( $post_type );
 
-				// Make sure we got something back.
-				if ( is_null( $obj ) ) { continue; }
+				// Make sure we got something back
+				if ( is_null( $obj ) ) continue;
 
-				$options_names[ $post_type ] = "{$obj->labels->singular_name} Settings";
+				$options_names[$post_type] = "{$obj->labels->singular_name} Settings";
 			} // foreach()
 
 			foreach ( $options_names as $option_name => $option_title ) {
-				// Register the setting.
+				// Register the setting
 				register_setting(
 					$this->option_group,
 					$option_name,
 					array( &$this, 'validate_options' )
 				);
 
-				// Settings Section.
+				// Settings Section
 				add_settings_section(
 					$option_name,
 					$option_title,
@@ -181,7 +156,7 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 					$this->page_slug
 				);
 
-				// Add setting fields.
+				// Add setting fields
 				$this->add_settings_fields( $option_name );
 			} // foreach()
 		} // admin_init()
@@ -205,19 +180,19 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		/**
 		 * Handles merging the new input options with the current options.
 		 *
-		 * @param   array $inputs  The new submitted options.
+		 * @param   array  $inputs  The new submitted options.
 		 *
 		 * @return  array           The merged options.
 		 */
 		public function merge_options( $inputs ) {
 			$options = $this->options;
-			$options = ( 'array' === gettype( $options ) ) ? $options : array();
+			$options = ( gettype( $options ) == 'array' ) ? $options : array();
 			$options = array_merge( $options, $inputs );
 
-			// Remove empty options.
+			// Remove empty options
 			foreach ( $options as $key => $option ) {
-				if ( ! isset( $inputs[ $key ] ) ) {
-					unset( $options[ $key ] );
+				if ( ! isset( $inputs[$key] ) ) {
+					unset( $options[$key] );
 				} // if()
 			} // foreach()
 
@@ -233,18 +208,19 @@ if ( ! class_exists( 'WPBA_Settings' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   array $input  Submitted settings fields.
+		 * @param   array  $input  Submitted settings fields.
 		 *
 		 * @return  array          The validate settings fields.
 		 */
 		function validate_options( $input ) {
 			$options = $this->merge_options( $input );
-
+			// pp( $options );
+			// die();
 			return $options;
 		} // validate_options()
 	} // WPBA_Settings()
 
-	// Instantiate Class.
+	// Instantiate Class
 	global $wpba_settings;
 	$wpba_settings = new WPBA_Settings();
 } // if()

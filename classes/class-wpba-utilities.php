@@ -14,12 +14,7 @@
  *
  * @copyright    2013 - Present         Dan Holloran
  */
-
 if ( ! class_exists( 'WPBA_Utilities' ) ) {
-
-	/**
-	 * WPBA Utilites
-	 */
 	class WPBA_Utilities extends WP_Better_Attachments {
 		/**
 		 * The length to cache a transient, default 24 hours.
@@ -38,7 +33,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since  2.0.0
 		 *
-		 * @param array $config Class configuration.
+		 * @param array   $config Class configuration.
 		 */
 		public function __construct( $config = array() ) {
 			parent::__construct();
@@ -63,12 +58,12 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 			 */
 			$disabled_post_types = apply_filters( 'wpba_disabled_post_types', $this->default_disabled_post_types );
 
-			// Remove disabled post types.
+			// Remove disabled post types
 			$post_types = get_post_types();
 			foreach ( $post_types as $post_type_key => $post_type_slug ) {
-				if ( ! in_array( $post_type_key, $disabled_post_types ) ) { continue; }
+				if ( ! in_array( $post_type_key, $disabled_post_types ) ) continue;
 
-				unset( $post_types[ $post_type_key ] );
+				unset( $post_types[$post_type_key] );
 			} // foreach()
 
 			return $post_types;
@@ -107,19 +102,19 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   object|integer $post_parent  Optional, the post parent object or ID, defaults to current post.
+		 * @param   object|integer  $post_parent  Optional, the post parent object or ID, defaults to current post.
 		 *
 		 * @return  integer                      The attachments post parent ID.
 		 */
 		public function get_attachment_post_parent_id( $post_parent = null ) {
-			// Get post parent ID.
+			// Get post parent ID
 			if ( is_null( $post_parent ) ) {
 				global $post;
 
 				return get_the_id();
 			} else if ( gettype( $post_parent ) === 'object' ) {
 				return $post_parent->ID;
-			} else if ( 'integer' === gettype( intval( $post_parent ) ) ) {
+			} else if ( gettype( intval( $post_parent ) ) == 'integer' ) {
 				return $post_parent;
 			} else {
 				return null;
@@ -135,15 +130,15 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   object|integer $attachment  Optional, the post parent object or ID, defaults to current post.
+		 * @param   object|integer  $attachment  Optional, the post parent object or ID, defaults to current post.
 		 *
 		 * @return  integer                      The attachments post parent ID.
 		 */
 		public function get_attachment_id( $attachment ) {
-			// Get post parent ID.
+			// Get post parent ID
 			if ( gettype( $attachment ) === 'object' ) {
 				return $attachment->ID;
-			} else if ( 'integer' === gettype( intval( $post->ID ) ) ) {
+			} else if ( gettype( intval( $post->ID ) ) == 'integer' ) {
 					return $attachment;
 			} else {
 				return false;
@@ -159,16 +154,14 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   array $query_args  The arguments for the query.
+		 * @param   array     $query_args  The arguments for the query.
 		 *
 		 * @return  string                 The transient ID.
 		 */
 		public function get_transient_id( $query_args ) {
 			$flattened_array = array();
 
-			$flatten_array = array_walk_recursive( $query_args, function( $key, $value ) use ( &$flattened_array ) {
-				$flattened_array[ $key ] = $value;
-			} );
+			$flatten_array = array_walk_recursive( $query_args, function( $key, $value ) use ( &$flattened_array ) { $flattened_array[$key] = $value; } );
 			$keys          = implode( '', array_keys( $flattened_array ) );
 			$values        = implode( '' , $flattened_array );
 			$transient_id  = md5( "{$keys}{$values}" );
@@ -195,6 +188,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 			$post_type      = get_post_type();
 			$cache_duration = ( is_null( $cache_duration ) ) ? $this->cache_duration : $cache_duration;
 
+
 			/**
 			 * Allows filtering of the cache duration for all post types.
 			 * Either the time duration in seconds or false to disable the cache, useful for development.
@@ -215,6 +209,8 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 			 * @var   string
 			 */
 			$cache_duration = apply_filters( "{$this->meta_box_id}_cache_duration", $cache_duration );
+
+
 
 			/**
 			 * Allows filtering of the cache duration for a specific post type.
@@ -237,8 +233,9 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 			 */
 			$cache_duration = apply_filters( "{$this->meta_box_id}_{$post_type}_cache_duration", $cache_duration );
 
-			// Allows for disabling of the cache.
-			$cache_duration = ( false === $cache_duration ) ? 0 : $cache_duration;
+
+			// Allows for disabling of the cache
+			$cache_duration = ( $cache_duration === false ) ? 0 : $cache_duration;
 
 			if ( is_multisite() ) {
 				return set_site_transient( $transient_id, $attachments, $cache_duration );
@@ -256,7 +253,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since 2.0.0
 		 *
-		 * @param string $transient_id  The transient ID to retrieve.
+		 * @param string            $transient_id  The transient ID to retrieve.
 		 *
 		 * @return  boolean|array                  Either false on failure/does not exist or the cached attachments.
 		 */
@@ -279,7 +276,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   string $transient_id  The transient ID to delete.
+		 * @param   string  $transient_id  The transient ID to delete.
 		 *
 		 * @return  boolean                True if successful, false otherwise.
 		 */
@@ -304,7 +301,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @uses    $wpdb
 		 *
-		 * @param   string $prefix  Optional, the transient id prefix to search for default _wpba.
+		 * @param   string  $prefix  Optional, the transient id prefix to search for default _wpba.
 		 *
 		 * @return  array            All of the current transient IDs.
 		 */
@@ -338,7 +335,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   string $prefix  Optional, the transient id prefix to search for default _wpba.
+		 * @param   string  $prefix  Optional, the transient id prefix to search for default _wpba.
 		 *
 		 * @return  void
 		 */
@@ -397,7 +394,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 				'id'       => array(),
 				'class'    => array(),
 				'style'    => array(),
-				'multiple' => array(),
+				'multiple' => array()
 			);
 			$allowed_tags['span'] = array(
 				'class' => array(),
@@ -421,8 +418,8 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * <code>$attachments = $this->sort_attachments_menu_order( $attachments );</code>
 		 *
-		 * @param   array   $attachments     The attachment posts to sort.
-		 * @param   integer $post_parent_id  Optional, the post id of the parent.
+		 * @param   array    $attachments     The attachment posts to sort.
+		 * @param   integer  $post_parent_id  Optional, the post id of the parent.
 		 *
 		 * @return  array                     The sorted attachment posts.
 		 */
@@ -436,23 +433,24 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 				$post_parent_id = $post->ID;
 			} // if()
 
-						$to_sort = array();
+			//
+			$to_sort = array();
 			foreach ( $attachments as $key => $attachment ) {
-				if ( $attachment->post_parent === $post_parent_id ) {
+				if ( $attachment->post_parent == $post_parent_id ) {
 					$menu_order_key = "{$attachment->menu_order}{$attachment->ID}";
-					$to_sort[ $menu_order_key ] = $attachment;
+					$to_sort[$menu_order_key] = $attachment;
 				} else {
-					$menu_order_meta            = get_post_meta( $attachment->ID, $this->attachment_multi_menu_order_meta_key, true );
-					$menu_order                 = ( '' = = = $menu_order_meta ) ? array()                                      : $menu_order_meta;
-					$order                      = ( isset( $menu_order[ $post_parent_id ] ) ) ? $menu_order[ $post_parent_id ] : 0;
-					$menu_order_key             = "{$order}{$attachment->ID}";
-					$to_sort[ $menu_order_key ] = $attachment;
+					$menu_order_meta          = get_post_meta( $attachment->ID, $this->attachment_multi_menu_order_meta_key, true );
+					$menu_order               = ( $menu_order_meta == '' ) ? array() : $menu_order_meta;
+					$order                    = ( isset( $menu_order[$post_parent_id] ) ) ? $menu_order[$post_parent_id] : 0;
+					$menu_order_key           = "{$order}{$attachment->ID}";
+					$to_sort[$menu_order_key] = $attachment;
 				} // if/else()
 
-				unset( $attachments[ $key ] );
+				unset( $attachments[$key] );
 			} // foreach()
 
-			// Sort the attachments.
+			// Sort the attachments
 			ksort( $to_sort, SORT_NUMERIC );
 
 			// Return keys to 0,1,2,....
@@ -478,20 +476,20 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @todo    Add the ability to add attachment to multiple posts.
 		 *
-		 * @param   object|integer $post_parent             Optional, the post parent object or ID, defaults to current post.
-		 * @param   boolean        $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
-		 * @param   array          $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
+		 * @param   object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
+		 * @param   boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
+		 * @param   array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
 		 *
 		 * @return  array                                    The attachments.
 		 */
 		public function get_attachments( $post_parent = null, $disable_featured_image = false, $query_args = array() ) {
-			// Debugging purposes only.
+			// Debugging purposes only
 			$this->clean_attachments_cache();
 
 			$post_parent_id = $this->get_attachment_post_parent_id( $post_parent );
 			$post_type      = get_post_type( $post_parent_id );
 
-			// Post parent ID does not exist.
+			// Post parent ID does not exist
 			if ( ! $post_parent_id ) {
 				return array();
 			} // if()
@@ -504,6 +502,8 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 				'order'       => 'ASC',
 				'orderby'     => 'menu_order',
 			);
+
+
 
 			/**
 			 * Allows filtering of disabling the featured image for all post types.
@@ -546,21 +546,21 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 				$default_query_args['post__not_in'] = array( get_post_thumbnail_id( $post_parent_id ) );
 			} // if()
 
-			// Merge default and supplied query arguments.
+			// Merge default and supplied query arguments
 			$attachments_query_args = array_merge( $default_query_args, $query_args );
 
-			// Attachments transient.
+			// Attachments transient
 			$transient_id       = $this->get_transient_id( $attachments_query_args );
 			$cached_attachments = $this->get_attachments_cache( $transient_id );
-			if ( false !== $cached_attachments ) {
+			if ( $cached_attachments !== false ) {
 				return $cached_attachments;
 			} // if()
 
-			// Get the attachments.
+			// Get the attachments
 			$attachments_query = new WP_Query( $attachments_query_args );
 			$attachments       = $attachments_query->get_posts();
 
-			// Handle attachments added to multiple posts.
+			// Handle attachments added to multiple posts
 			unset( $attachments_query_args['post_parent'] );
 			$attachments_query_args['meta_query'] = array(
 				array(
@@ -572,10 +572,10 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 			$attachments_query = new WP_Query( $attachments_query_args );
 			$attachments       = array_merge( $attachments, $attachments_query->get_posts() );
 
-			// Sort the attachments by menu order.
+			// Sort the attachments by menu order
 			$attachments = $this->sort_attachments_menu_order( $attachments, $post_parent_id );
 
-			// Cache the attachments for the default time.
+			// Cache the attachments for the default time
 			$this->cache_attachments( $transient_id, $attachments );
 
 			return $attachments;
@@ -593,15 +593,15 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @internal
 		 *
-		 * @param   integer $attachment_id  The post ID of the attachment to attach.
-		 * @param   integer $post_id        The post ID of the post to attach the attachment.
+		 * @param   integer  $attachment_id  The post ID of the attachment to attach.
+		 * @param   integer  $post_id        The post ID of the post to attach the attachment.
 		 *
 		 * @return  mixed                    Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
 		 *                                   NOTE: If the meta_value passed to this function is the same as the value that is already in the database, this function returns false.
 		 */
 		private function _attach_attachments_multiple_posts( $attachment_id, $post_id ) {
 			$prev_value   = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
-			$prev_value   = ( '' === $prev_value ) ? '' : $prev_value;
+			$prev_value   = ( $prev_value == '' ) ? '' : $prev_value;
 			$parent_ids   = explode( ',', $prev_value );
 			$parent_ids[] = $post_id;
 			$parent_ids   = array_unique( $parent_ids );
@@ -619,18 +619,18 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   integer $attachment_id  The attachment post id to attach.
-		 * @param   integer $post_id        The post id to attach the attachment to.
+		 * @param   integer  $attachment_id  The attachment post id to attach.
+		 * @param   integer  $post_id        The post id to attach the attachment to.
 		 *
 		 * @return  boolean                  True on success false on failure.
 		 */
 		public function attach_attachment( $attachment_id, $post_id ) {
 			$attachment = get_post( $attachment_id );
 
-			// Allows attaching attachments to multiple posts.
-			if ( 0 !== $attachment->post_parent and $attachment->post_parent !== $post_id ) {
+			// Allows attaching attachments to multiple posts
+			if ( $attachment->post_parent != 0 and $attachment->post_parent != $post_id ) {
 				$attach = $this->_attach_attachments_multiple_posts( $attachment_id, $post_id );
-				return ( false !== $attach );
+				return ( $attach !== false );
 			} // if()
 
 			$post_args = array(
@@ -666,21 +666,21 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @internal
 		 *
-		 * @param   integer $attachment_id  The post ID of the attachment to unattach.
-		 * @param   integer $post_id        The post ID of the post to unattach the attachment.
+		 * @param   integer  $attachment_id  The post ID of the attachment to unattach.
+		 * @param   integer  $post_id        The post ID of the post to unattach the attachment.
 		 *
 		 * @return  mixed                    Returns meta_id if the meta doesn't exist, otherwise returns true on success and false on failure.
 		 *                                   NOTE: If the meta_value passed to this function is the same as the value that is already in the database, this function returns false.
 		 */
 		private function _unattach_attachments_multiple_posts( $attachment_id, $post_id ) {
 			$prev_value = get_post_meta( $post_id, $this->attachment_multi_meta_key, true );
-			$prev_value = ( '' === $prev_value ) ? '' : $prev_value;
+			$prev_value = ( $prev_value == '' ) ? '' : $prev_value;
 			$parent_ids = explode( ',', $prev_value );
 
-			// Remove the ID.
+			// Remove the ID
 			foreach ( $parent_ids as $key => $id ) {
-				if ( $post_id === $id ) {
-					unset( $parent_ids[ $key ] );
+				if ( $post_id == $id ) {
+					unset( $parent_ids[$key] );
 				} // if()
 			} // foreach
 
@@ -700,18 +700,17 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param integer $attachment_id  The attachment post id to unattach.
-		 * @param integer $post_id The post id to unattach the attachment.
+		 * @param   integer  $attachment_id  The attachment post id to unattach.
 		 *
 		 * @return  boolean                  True on success false on failure.
 		 */
 		public function unattach_attachment( $attachment_id, $post_id ) {
 			$attachment = get_post( $attachment_id );
 
-			// Allows unattaching attachments to multiple posts.
-			if ( 0 === $attachment->post_parent or $attachment->post_parent !== $post_id ) {
+			// Allows unattaching attachments to multiple posts
+			if ( $attachment->post_parent == 0 or $attachment->post_parent != $post_id ) {
 				$attach = $this->_unattach_attachments_multiple_posts( $attachment_id, $post_id );
-				return ( false !== $attach );
+				return ( $attach !== false );
 			} // if()
 
 			$post_args = array(
@@ -741,7 +740,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * <code>$delete = $this->delete_attachment( $attachment_id );</code>
 		 *
-		 * @param   integer $attachment_id  The attachment post id to delete.
+		 * @param   integer  $attachment_id  The attachment post id to delete.
 		 *
 		 * @return  boolean                  True on success and false on failure.
 		 */
@@ -770,29 +769,29 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   array $defaults  The default attributes.
-		 * @param   array $attrs     The supplied attributes.
+		 * @param   array   $defaults  The default attributes.
+		 * @param   array   $attrs     The supplied attributes
 		 *
 		 * @return  string             The merged HTML element attributes.
 		 */
 		public function merge_element_attributes( $defaults, $attrs ) {
-			if ( 'array' !== gettype( $defaults ) or 'array' !== gettype( $attrs ) ) {
+			if ( gettype( $defaults ) != 'array' or gettype( $attrs ) != 'array' ) {
 				return $attrs;
 			} // if()
 
-			// Merge the attributes together.
+			// Merge the attributes together
 			foreach ( $defaults as $key => $value ) {
-				if ( isset( $attrs[ $key ] ) ) {
-					$attrs[ $key ] = "{$attrs[ $key ]} {$value}";
+				if ( isset( $attrs[$key] ) ) {
+					$attrs[$key] = "{$attrs[$key]} {$value}";
 				} else {
-					$attrs[ $key ] = $value;
+					$attrs[$key] = $value;
 				} // if/else()
 			} // foreach()
 
-			// Flatten the attributes.
+			// Flatten the attributes
 			$input_attrs = array();
 			foreach ( $attrs as $attr => $attr_value ) {
-				$attr_value    = ( 'class' === $attr ) ? "{$attr_value} pull-left" : $attr_value;
+				$attr_value    = ( $attr == 'class' ) ? "{$attr_value} pull-left" : $attr_value;
 				$input_attrs[] = esc_attr( "{$attr}={$attr_value}" );
 			} // foreach()
 			$input_attrs = trim( implode( ' ', $input_attrs ) );
@@ -805,8 +804,8 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		/**
 		 * Handles sanitizing input fields value dependent of the field type.
 		 *
-		 * @param   string $field_type  The field id/type.
-		 * @param   mixed  $value       The meta value to be sanitized.
+		 * @param   string  $field_type  The field id/type.
+		 * @param   mixed   $value       The meta value to be sanitized.
 		 *
 		 * @return  mixed               The sanitized meta data.
 		 */
@@ -852,12 +851,12 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 		/**
 		 * Retrieves a template part.
 		 *
-		 * @param   string $slug The slug of the template.
+		 * @param   string  $slug  [description]
 		 *
 		 * @return  void
 		 */
 		public function get_template_part( $slug = '' ) {
-			if ( '' === $slug ) {
+			if ( $slug == '' ) {
 				return;
 			} // if()
 
@@ -869,7 +868,7 @@ if ( ! class_exists( 'WPBA_Utilities' ) ) {
 				return;
 			} // if()
 
-			// Load the template.
+			// Load the template
 			include_once $template_path;
 
 			return;

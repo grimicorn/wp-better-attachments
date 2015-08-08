@@ -12,12 +12,7 @@
  *
  * @copyright    2013 - Present  Dan Holloran
  */
-
 if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
-
-	/**
-	 * WPBA Utilities.
-	 */
 	class WPBA_Filter_Settings extends WPBA_Utilities {
 		/**
 		 * The filtered options.
@@ -36,10 +31,10 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 		 * @since   2.0.0
 		 */
 		function __construct() {
-			// Call parents constructor.
+			// Call parents constructor
 			parent::__construct();
 
-			// Call actions and filters.
+			// Call actions and filters
 			$this->_filter_settings_filters_actions();
 		} // __construct()
 
@@ -49,7 +44,9 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 		 * Handles class actions and filters
 		 *
 		 * @since   2.0.0
-		 */
+		 *
+		 * @return  void
+		*/
 		private function _filter_settings_filters_actions() {
 		} // _filter_settings_filters_actions()
 
@@ -58,12 +55,14 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 		/**
 		 * Sets the options.
 		 *
-		 * @since 2.0.0
+		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function get_options() {
-			if ( ! empty( $this->_options ) ) { return $this->_options; }
+			if ( ! empty( $this->_options ) ) return $this->_options;
 
-			// Set the options if not already set.
+			// Set the options if not already set
 			$this->_set_options();
 
 			return $this->_options;
@@ -75,9 +74,11 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 		 * Sets the options.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function _set_options() {
-			if ( ! empty( $this->_options ) ) { return; }
+			if ( ! empty( $this->_options ) ) return;
 
 			$this->_options = $this->_get_filtered_options();
 		} // _set_options()
@@ -95,29 +96,29 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$options    = array();
 			$post_types = $this->get_post_types();
 
-			// Sets enabled post type defaults.
+			// Sets enabled post type defaults
 			$options['post_types'] = $post_types;
 
-			// Sets general defaults.
+			// Sets general defaults
 			$options['general']['disable_thumbnail']   = '';
 			$options['general']['disable_shortcodes']  = '';
 			$options['general']['upload_button_label'] = 'Upload Button Label';
 
-			// Sets crop editor defaults.
+			// Sets crop editor defaults
 			$options['crop_editor']['disable']   = '';
 			$options['crop_editor']['all_sizes'] = '';
 			$options['crop_editor']['message']   = 'Below are all the available attachment sizes that will be cropped from the original image the other sizes will be scaled to fit.  Drag the dashed box to select the portion of the image that you would like to be used for the cropped image.';
 
-			// Sets media hover defaults.
+			// Sets media hover defaults
 			$options['media']['hover']['unattach'] = '';
 			$options['media']['hover']['reattach'] = '';
 
-			// Sets media column defaults.
+			// Sets media column defaults
 			$options['media']['column']['edit'] = '';
 			$options['media']['column']['unattach'] = '';
 			$options['media']['column']['reattach'] = '';
 
-			// Sets meta box defaults.
+			// Sets meta box defaults
 			$options['meta_box']['title']         = 'WP Better Attachments';
 			$options['meta_box']['caption']       = '';
 			$options['meta_box']['attachment_id'] = '';
@@ -125,38 +126,38 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$options['meta_box']['edit']          = '';
 			$options['meta_box']['delete']        = '';
 
-			// Sets disable attachment type defaults.
+			// Sets disable attachment type defaults
 			$options['disable_attachment_types']['image']    = '';
 			$options['disable_attachment_types']['video']    = '';
 			$options['disable_attachment_types']['audio']    = '';
 			$options['disable_attachment_types']['document'] = '';
 
-			// Sets edit modal defaults.
+			// Sets edit modal defaults
 			$options['edit_modal']['disable_caption'] = '';
 			$options['edit_modal']['disable_alternative_text'] = '';
 			$options['edit_modal']['disable_description'] = '';
 
-			// Set post type defaults.
+			// Set post type defaults
 			foreach ( $post_types as $post_type ) {
-				// Sets general post type options.
-				$options[ $post_type ]['general']['upload_button_label'] = 'Upload Button Label';
+				// Sets general post type options
+				$options[$post_type]['general']['upload_button_label'] = 'Upload Button Label';
 
-				// Sets post type meta box defaults.
-				$options[ $post_type ]['meta_box']['title']         = 'WP Better Attachments';
-				$options[ $post_type ]['meta_box']['caption']       = '';
-				$options[ $post_type ]['meta_box']['attachment_id'] = '';
-				$options[ $post_type ]['meta_box']['unattach']      = '';
-				$options[ $post_type ]['meta_box']['edit']          = '';
-				$options[ $post_type ]['meta_box']['delete']        = '';
+				// Sets post type meta box defaults
+				$options[$post_type]['meta_box']['title'] = 'WP Better Attachments';
+				$options[$post_type]['meta_box']['caption'] = '';
+				$options[$post_type]['meta_box']['attachment_id'] = '';
+				$options[$post_type]['meta_box']['unattach'] = '';
+				$options[$post_type]['meta_box']['edit'] = '';
+				$options[$post_type]['meta_box']['delete'] = '';
 
-				// Sets post type enabled page defaults.
-				$options[ $post_type ]['enabled_pages'] = '';
+				// Sets post type enabled page defaults
+				$options[$post_type]['enabled_pages'] = '';
 
-				// Sets post type disable attachment type defaults.
-				$options[ $post_type ]['disable_attachment_types']['image']    = '';
-				$options[ $post_type ]['disable_attachment_types']['video']    = '';
-				$options[ $post_type ]['disable_attachment_types']['audio']    = '';
-				$options[ $post_type ]['disable_attachment_types']['document'] = '';
+				// Sets post type disable attachment type defaults
+				$options[$post_type]['disable_attachment_types']['image'] = '';
+				$options[$post_type]['disable_attachment_types']['video'] = '';
+				$options[$post_type]['disable_attachment_types']['audio'] = '';
+				$options[$post_type]['disable_attachment_types']['document'] = '';
 			} // foreach()
 
 			return $options;
@@ -192,37 +193,37 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$options    = $this->_get_merged_options();
 			$post_types = $this->get_post_types();
 
-			// Filters enabled post type defaults.
+			// Filters enabled post type defaults
 			$options['post_types'] = apply_filters( 'wpba_post_types', $options['post_types'] );
 
-			// Filters general defaults.
+			// Filters general defaults
 			$general                        = $options['general'];
 			$general['disable_thumbnail']   = apply_filters( 'wpba_disable_thumbnail', $general['disable_thumbnail'] );
 			$general['disable_shortcodes']  = apply_filters( 'wpba_disable_shortcodes', $general['disable_shortcodes'] );
 			$general['upload_button_label'] = apply_filters( 'wpba_upload_button_label', $general['upload_button_label'] );
 			$options['general']             = $general;
 
-			// Filters crop editor defaults.
+			// Filters crop editor defaults
 			$ce                     = $options['crop_editor'];
 			$ce['disable']          = apply_filters( 'wpba_crop_editor_disable', $ce['disable'] );
 			$ce['all_sizes']        = apply_filters( 'wpba_crop_editor_all_sizes', $ce['all_sizes'] );
 			$ce['message']          = apply_filters( 'wpba_crop_editor_message', $ce['message'] );
 			$options['crop_editor'] = $ce;
 
-			// Filters media hover defaults.
+			// Filters media hover defaults
 			$mh                        = $options['media']['hover'];
 			$mh['unattach']            = apply_filters( 'wpba_media_hover_unattach', $mh['unattach'] );
 			$mh['reattach']            = apply_filters( 'wpba_media_hover_reattach', $mh['reattach'] );
 			$options['media']['hover'] = $mh;
 
-			// Filters media column defaults.
+			// Filters media column defaults
 			$mc                        = $options['media']['column'];
 			$mc['edit']                = apply_filters( 'wpba_media_column_edit', $mc['edit'] );
 			$mc['unattach']            = apply_filters( 'wpba_media_column_unattach', $mc['unattach'] );
 			$mc['reattach']            = apply_filters( 'wpba_media_column_reattach', $mc['reattach'] );
 			$options['media']['hover'] = $mc;
 
-			// Filters meta box defaults.
+			// Filters meta box defaults
 			$mb                  = $options['meta_box'];
 			$mb['title']         = apply_filters( 'wpba_meta_box_title', $mb['title'] );
 			$mb['caption']       = apply_filters( 'wpba_meta_box_caption', $mb['caption'] );
@@ -232,7 +233,7 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$mb['delete']        = apply_filters( 'wpba_meta_box_delete', $mb['delete'] );
 			$options['meta_box'] = $mb;
 
-			// Filters disable attachment type defaults.
+			// Filters disable attachment type defaults
 			$dat                                 = $options['disable_attachment_types'];
 			$dat['image']                        = apply_filters( 'wpba_disable_attachment_type_image', $dat['image'] );
 			$dat['video']                        = apply_filters( 'wpba_disable_attachment_type_video', $dat['video'] );
@@ -240,25 +241,25 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 			$dat['document']                     = apply_filters( 'wpba_disable_attachment_type_document', $dat['document'] );
 			$options['disable_attachment_types'] = $dat;
 
-			// Filters edit modal defaults.
+			// Filters edit modal defaults
 			$em                             = $options['edit_modal'];
 			$em['disable_caption']          = apply_filters( 'wpba_edit_modal_disable_caption', $em['disable_caption'] );
 			$em['disable_alternative_text'] = apply_filters( 'wpba_edit_modal_disable_alternative_text', $em['disable_alternative_text'] );
 			$em['disable_description']      = apply_filters( 'wpba_edit_modal_disable_description', $em['disable_description'] );
 			$options['edit_modal']          = $em;
 
-			// Set post type defaults.
+			// Set post type defaults
 			foreach ( $post_types as $post_type ) {
-				// Aliases.
-				$pt     = $options[ $post_type ];
+				// Aliases
+				$pt     = $options[$post_type];
 				$pt_g   = $pt['general'];
 				$pt_mb  = $pt['meta_box'];
 				$pt_dat = $pt['disable_attachment_types'];
 
-				// Filter general settings.
+				// Filter general settings
 				$pt_g['upload_button_label'] = apply_filters( "wpba_{$post_type}_upload_button_label", $pt_g['upload_button_label'] );
 
-				// Filters post type meta box defaults.
+				// Filters post type meta box defaults
 				$pt_mb['title'] = apply_filters( "wpba_{$post_type}_meta_box_title", $pt_mb['title'] );
 				$pt_mb['caption'] = apply_filters( "wpba_{$post_type}_meta_box_caption", $pt_mb['caption'] );
 				$pt_mb['attachment_id'] = apply_filters( "wpba_{$post_type}_meta_box_attachment_id", $pt_mb['attachment_id'] );
@@ -266,10 +267,10 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 				$pt_mb['edit'] = apply_filters( "wpba_{$post_type}_meta_box_edit", $pt_mb['edit'] );
 				$pt_mb['delete'] = apply_filters( "wpba_{$post_type}_meta_box_delete", $pt_mb['delete'] );
 
-				// Filters post type enabled page defaults.
+				// Filters post type enabled page defaults
 				$pt['enabled_pages'] = apply_filters( "wpba_{$post_type}_enabled_pages", $pt['enabled_pages'] );
 
-				// Filters post type disable attachment type defaults.
+				// Filters post type disable attachment type defaults
 				$pt_dat['image'] = apply_filters( "wpba_{$post_type}_disable_attachment_type_image", $pt_dat['image'] );
 				$pt_dat['video'] = apply_filters( "wpba_{$post_type}_disable_attachment_type_video", $pt_dat['video'] );
 				$pt_dat['audio'] = apply_filters( "wpba_{$post_type}_disable_attachment_type_audio", $pt_dat['audio'] );
@@ -278,7 +279,7 @@ if ( ! class_exists( 'WPBA_Filter_Settings' ) ) {
 				$pt['general']                  = $pt_g;
 				$pt['disable_attachment_types'] = $pt_dat;
 				$pt['meta_box']                 = $pt_mb;
-				$options[ $post_type ]          = $pt;
+				$options[$post_type]            = $pt;
 			} // foreach()
 
 			return $options;

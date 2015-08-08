@@ -12,12 +12,7 @@
  *
  * @copyright    2013 - Present  Dan Holloran
  */
-
 if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
-
-	/**
-	 * WPBA Utilites
-	 */
 	class WPBA_Migrate_Settings extends WPBA_Utilities {
 		/**
 		 * The options.
@@ -36,10 +31,10 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * @since   2.0.0
 		 */
 		function __construct() {
-			// Call parents constructor.
+			// Call parents constructor
 			parent::__construct();
 
-			// Call actions and filters.
+			// Call actions and filters
 			$this->_migrate_settings_filters_actions();
 		} // __construct()
 
@@ -49,6 +44,8 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Handles class actions and filters
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		private function _migrate_settings_filters_actions() {
 			add_action( 'init', array( &$this, 'migrate_settings' ) );
@@ -73,43 +70,43 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Migrates the settings.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_settings() {
-			// Get current options.
+			// Get current options
 			$this->_migration_options = $this->get_options();
 
 			$migration_version = '2.x.x';
 
-			// Check if the migration has bee ran.
-			if ( $this->_migration_options['v'] === $migration_version ) {
-				return;
-			} // if()
+			// Check if the migration has bee ran
+			if ( $this->_migration_options['v'] == $migration_version ) return;
 
-			// Disabled Post Types.
+			// Disabled Post Types
 			$this->migrate_disable_post_types();
 
-			// Global & Crop Editor settings.
+			// Global & Crop Editor settings
 			$this->migrate_general();
 
-			// Migrate Media Table Settings.
+			// Migrate Media Table Settings
 			$this->migrate_media_table();
 
-			// Migrate Meta Box Settings.
+			// Migrate Meta Box Settings
 			$this->migrate_meta_box();
 
-			// Migrate Disable Attachment Types.
+			// Migrate Disable Attachment Types
 			$this->migrate_disable_attachment_types();
 
-			// Edit modal settings.
+			// Edit modal settings
 			$this->migrate_edit_modal();
 
-			// Migrate post type specific settings.
+			// Migrate post type specific settings
 			$this->migrate_post_type_settings();
 
-			// Add migration version.
+			// Add migration version
 			$this->_migration_options['v'] = $migration_version;
 
-			// Save the migrated options.
+			// Save the migrated options
 			update_option( $this->option_group, $this->_migration_options );
 		} // migrate_settings
 
@@ -119,21 +116,23 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Migrates the post type specific settings.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_post_type_settings() {
 			$post_types = $this->get_post_types();
 
 			foreach ( $post_types as $post_type_key => $post_type ) {
-				// Set meta box settings.
+				// Set meta box settings
 				$this->migrate_post_type_meta_box( $post_type );
 
-				// Set post type meta box title.
+				// Set post type meta box title
 				$this->migrate_post_type_meta_box_title( $post_type );
 
-				// Set post type enabled pages.
+				// Set post type enabled pages
 				$this->migrate_post_type_enabled_pages( $post_type );
 
-				// Set disabled attachment types.
+				// Set disabled attachment types
 				$this->migrate_post_type_disable_attachment_types( $post_type );
 			} // foreach()
 		} // migrate_post_type_settings()
@@ -145,22 +144,24 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   string $post_type  The post type to migrate.
+		 * @param   string  $post_type  The post type to migrate.
+		 *
+		 * @return  void
 		 */
 		public function migrate_post_type_meta_box_title( $post_type ) {
-			// Set option key.
+			// Set option key
 			$option_key = "wpba-{$post_type}-meta-box-title";
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Set new option.
-			$this->_migration_options[ $post_type ]['meta_box']['title'] = $this->_migration_options[ $option_key ];
+			// Set new option
+			$this->_migration_options[$post_type]['meta_box']['title'] = $this->_migration_options[$option_key];
 
-			// Remove old option.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove old option
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_post_type_meta_box_title()
 
 
@@ -170,19 +171,19 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param string $post_type The post type for the meta box.
+		 * @return  void
 		 */
 		public function migrate_post_type_meta_box( $post_type ) {
-			// Set option key.
+			// Set option key
 			$option_key = "wpba-{$post_type}-settings";
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Current options.
-			$options = $this->_migration_options[ $option_key ];
+			// Current options
+			$options = $this->_migration_options[$option_key];
 
 			// Migrate settings.
 			$meta_box_keys = array(
@@ -194,11 +195,11 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 				'mb_delete_link'        => 'delete',
 			);
 
-			// Set option.
-			$this->_migration_options[ $post_type ]['meta_box'] = $this->migrate_checkbox_keys( $meta_box_keys, $options );
+			// Set option
+			$this->_migration_options[$post_type]['meta_box'] = $this->migrate_checkbox_keys( $meta_box_keys, $options );
 
-			// Remove Old Options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove Old Options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_post_type_meta_box()
 
 
@@ -207,22 +208,24 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   string $post_type  The post type to migrate.
+		 * @param   string  $post_type  The post type to migrate.
+		 *
+		 * @return  void
 		 */
 		public function migrate_post_type_enabled_pages( $post_type ) {
-			// Set option key.
+			// Set option key
 			$option_key = "wpba-{$post_type}-enabled-pages";
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Set new option.
-			$this->_migration_options[ $post_type ]['enabled_pages'] = $this->_migration_options[ $option_key ];
+			// Set new option
+			$this->_migration_options[$post_type]['enabled_pages'] = $this->_migration_options[$option_key];
 
-			// Remove old option.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove old option
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_post_type_enabled_pages()
 
 
@@ -232,21 +235,21 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param string $post_type The post type for disable attachment types.
+		 * @return  void
 		 */
 		public function migrate_post_type_disable_attachment_types( $post_type ) {
-			// Set option key.
+			// Set option key
 			$option_key = "wpba-{$post_type}-disable-attachment-types";
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Get ptions.
-			$options = $this->_migration_options[ $option_key ];
+			// Get ptions
+			$options = $this->_migration_options[$option_key];
 
-			// Disable attachment type options.
+			// Disable attachment type options
 			$enable_keys = array(
 				'pt_disable_image'    => 'image',
 				'pt_disable_video'    => 'video',
@@ -254,11 +257,11 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 				'pt_disable_document' => 'document',
 			);
 
-			// Set options.
-			$this->_migration_options[ $post_type ]['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
+			// Set options
+			$this->_migration_options[$post_type]['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
 
-			// Remove Old Options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove Old Options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_post_type_disable_attachment_types()
 
 
@@ -267,20 +270,22 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Handles migrating the disable attachment types settings.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_disable_attachment_types() {
-			// Set option key.
+			// Set option key
 			$option_key = 'wpba-disable-attachment-types';
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Get ptions.
-			$options = $this->_migration_options[ $option_key ];
+			// Get ptions
+			$options = $this->_migration_options[$option_key];
 
-			// Disable attachment type options.
+			// Disable attachment type options
 			$enable_keys = array(
 				'disable_image'    => 'image',
 				'disable_video'    => 'video',
@@ -288,11 +293,11 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 				'disable_document' => 'document',
 			);
 
-			// Set options.
+			// Set options
 			$this->_migration_options['disable_attachment_types'] = $this->migrate_checkbox_keys( $enable_keys, $options );
 
-			// Remove Old Options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove Old Options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_disable_attachment_types()
 
 
@@ -301,18 +306,20 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Handles migrating the edit modal settings.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_edit_modal() {
-			// Set option key.
+			// Set option key
 			$option_key = 'wpba-edit-modal-settings';
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Current options.
-			$options = $this->_migration_options[ $option_key ];
+			// Current options
+			$options = $this->_migration_options[$option_key];
 
 			// Edit modal settings.
 			$edit_keys = array(
@@ -321,11 +328,11 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 				'gem_description'      => 'disable_description',
 			);
 
-			// Set options.
+			// Set options
 			$this->_migration_options['edit_modal'] = $this->migrate_checkbox_keys( $edit_keys, $options );
 
-			// Remove Options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove Options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_edit_modal()
 
 
@@ -335,13 +342,13 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 *
 		 * @since   2.0.0
 		 *
-		 * @param   string $option_key  The key of the option tp check.
+		 * @param   string   $option_key  The key of the option tp check
 		 *
-		 * @return  boolean True if the option exists and false if not.
+		 * @return  boolean               True if the option exists and false if not.
 		 */
 		public function option_exists( $option_key ) {
 
-			return isset( $this->_migration_options[ $option_key ] );
+			return isset( $this->_migration_options[$option_key] );
 		} // option_exists()
 
 
@@ -349,20 +356,17 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		/**
 		 * Migrate old keys to new keys
 		 *
-		 * @param array $keys  The keys to migrate.
-		 * @param array $options The options to migrate.
+		 * @param   array  $keys  The keys to migrate.
 		 *
-		 * @return array The migrated keys.
+		 * @return array          The migrated keys.
 		 */
 		public function migrate_checkbox_keys( $keys, $options ) {
 			$migrated_options = array();
 			foreach ( $keys as $current_key => $new_key ) {
-				// Make sure the option is set.
-				if ( ! isset( $options[ $current_key ] ) or $options[ $current_key ] !== $current_key ) {
-					continue;
-				} // if()
+				// Make sure the option is set
+				if ( ! isset( $options[$current_key] ) or $options[$current_key] != $current_key ) continue;
 
-				$migrated_options[ $new_key ] = 'on';
+				$migrated_options[$new_key] = 'on';
 			} // foreach()
 
 			return $migrated_options;
@@ -375,24 +379,26 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Now the settings will be "enabled" post types instead.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_disable_post_types() {
-			// Set option key.
+			// Set option key
 			$option_key = 'wpba-disable-post-types';
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Get all post types.
+			// Get all post types
 			$post_types = $this->get_post_types();
 
-			// Set post types option.
+			// Set post types option
 			$this->_migration_options['post_types'] = $post_types;
 
-			// Remove old options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove old options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_disable_post_types()
 
 
@@ -401,18 +407,20 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Handles migrating the media table settings.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_media_table() {
-			// Set option key.
+			// Set option key
 			$option_key = 'wpba-media-table-settings';
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Current options.
-			$options = $this->_migration_options[ $option_key ];
+			// Current options
+			$options = $this->_migration_options[$option_key];
 
 			// Column settings.
 			$col_keys = array(
@@ -421,20 +429,20 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 				'col_reattach_link' => 'reattach',
 			);
 
-			// Hover settings.
+			// Hover settings
 			$hover_keys = array(
 				'unattach_link' => 'unattach',
 				'reattach_link' => 'reattach',
 			);
 
-			// Set options.
+			// Set options
 			$this->_migration_options['media'] = array(
 				'hover'  => $this->migrate_checkbox_keys( $hover_keys, $options ),
 				'column' => $this->migrate_checkbox_keys( $col_keys, $options ),
 			);
 
-			// Remove Old Options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove Old Options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_media_table()
 
 
@@ -443,18 +451,20 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Handles migrating the meta box settings.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_meta_box() {
-			// Set option key.
+			// Set option key
 			$option_key = 'wpba-meta-box-settings';
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Current options.
-			$options = $this->_migration_options[ $option_key ];
+			// Current options
+			$options = $this->_migration_options[$option_key];
 
 			// Migrate settings.
 			$meta_box_keys = array(
@@ -466,11 +476,11 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 				'gmb_delete_link'        => 'delete',
 			);
 
-			// Set option.
+			// Set option
 			$this->_migration_options['meta_box'] = $this->migrate_checkbox_keys( $meta_box_keys, $options );
 
-			// Remove Old Options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove Old Options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_meta_box()
 
 
@@ -481,49 +491,51 @@ if ( ! class_exists( 'WPBA_Migrate_Settings' ) ) {
 		 * Also adds 'wpba-crop-editor-mesage' top 'crop_editor'.
 		 *
 		 * @since   2.0.0
+		 *
+		 * @return  void
 		 */
 		public function migrate_general() {
-			// Set option key.
+			// Set option key
 			$option_key = 'wpba-global-settings';
 
-			// Make sure options exist.
+			// Make sure options exist
 			if ( ! $this->option_exists( $option_key ) ) {
 				return;
 			} // if()
 
-			// Get options.
-			$options = $this->_migration_options[ $option_key ];
+			// Get options
+			$options = $this->_migration_options[$option_key];
 
-			// General options.
+			// General options
 			$general_keys = array(
 				'thumbnail'     => 'disable_thumbnail',
 				'no_shortcodes' => 'disable_shortcodes',
 			);
 
-			// Set general options.
+			// Set general options
 			$this->_migration_options['general'] = $this->migrate_checkbox_keys( $general_keys, $options );
 
-			// Crop Editor.
+			// Crop Editor
 			$crop_keys = array(
 				'no_crop_editor' => 'disable',
 				'all_crop_sizes' => 'all_sizes',
 			);
 			$crop_settings = $this->migrate_checkbox_keys( $crop_keys, $options );
 
-			// Add crop editor message.
+			// Add crop editor message
 			$crop_editor_message = ( isset( $this->_migration_options['wpba-crop-editor-mesage'] ) ) ? $this->_migration_options['wpba-crop-editor-mesage'] : false;
 			if ( $crop_editor_message ) {
 				$crop_settings['message'] = $crop_editor_message;
 
-				// Unset the old crop editor message.
+				// Unset the old crop editor message
 				unset( $this->_migration_options['wpba-crop-editor-mesage']  );
 			} // if()
 
-			// Set crop editor options.
+			// Set crop editor options
 			$this->_migration_options['crop_editor'] = $crop_settings;
 
-			// Remove old global options.
-			unset( $this->_migration_options[ $option_key ] );
+			// Remove old global options
+			unset( $this->_migration_options[$option_key] );
 		} // migrate_general()
 	} // WPBA_Migrate_Settings
 

@@ -16,6 +16,7 @@ if ( ! function_exists( 'pp' ) ) {
 	/**
 	 * Pretty Print Debug Function
 	 *
+	 *
 	 * <code>
 	 * pp( $something_to_pretty_print );
 	 * </code>
@@ -24,7 +25,7 @@ if ( ! function_exists( 'pp' ) ) {
 	 *
 	 * @since   2.0.0
 	 *
-	 * @param   mixed $value Any value.
+	 * @param   mixed   $value Any value.
 	 *
 	 * @return  void
 	 */

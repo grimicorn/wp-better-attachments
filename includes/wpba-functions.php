@@ -14,6 +14,8 @@
  * @copyright    2013 - Present         Dan Holloran
  */
 
+
+
 /**
  * Checks if the post has any attachments.
  *
@@ -21,14 +23,14 @@
  *
  * @deprecated $args Deprecated 1.4.0 in favor of passing each parameter individually and exposing the query_args to alter the query.
  *
- * @param   object|integer $post_parent             Optional, the post parent object or ID, defaults to current post.
- * @param   boolean        $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
- * @param   array          $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
+ * @param   object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
+ * @param   boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
+ * @param   array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
  *
  * @return  boolean                                  If the post has any attachments.
  */
 function wpba_attachments_exist( $post_parent, $disable_featured_image = true, $query_args = array() ) {
-	// Backwards compatibility with wpba < 1.4.0.
+	// Backwards compatibility with wpba < 1.4.0
 	if ( gettype( $post_parent ) === 'array' ) {
 		extract( $post_parent );
 		$post_parent            = $post_id;
@@ -53,14 +55,14 @@ function wpba_attachments_exist( $post_parent, $disable_featured_image = true, $
  *
  * @deprecated $args Deprecated 1.4.0 in favor of passing each parameter individually and exposing the query_args to alter the query.
  *
- * @param   object|integer $post_parent             Optional, the post parent object or ID, defaults to current post.
- * @param   boolean        $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
- * @param   array          $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
+ * @param   object|integer  $post_parent             Optional, the post parent object or ID, defaults to current post.
+ * @param   boolean         $disable_featured_image  Optional, if the featured image should NOT be included as an attachment, default false.
+ * @param   array           $query_args              Optional, arguments to alter the query, accepts anything WP_Query does.
  *
  * @return  array                                    The post attachments.
  */
 function wpba_get_attachments( $post_parent, $disable_featured_image = true, $query_args = array() ) {
-	// Backwards compatibility with wpba < 1.4.0.
+	// Backwards compatibility with wpba < 1.4.0
 	if ( gettype( $post_parent ) === 'array' ) {
 		extract( $post_parent );
 		$post_parent            = $post_id;
