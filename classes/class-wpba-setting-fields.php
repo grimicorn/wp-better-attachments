@@ -320,7 +320,9 @@ if ( ! class_exists( 'WPBA_Setting_Fields' ) ) {
 		public function _get_post_type_settings_fields( $post_type ) {
 			$fields = array();
 
-			if ( ! in_array( $group, $this->get_post_types() ) ) return $fields;
+			if ( ! in_array( $post_type, $this->get_post_types() ) ) {
+				return $fields;
+			} // if()
 
 			return $fields;
 		} // _get_post_type_settings_fields()
