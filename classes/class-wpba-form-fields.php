@@ -14,7 +14,7 @@
  * @copyright    2013 - Present         Dan Holloran
  */
 if ( ! class_exists( 'WPBA_Form_Fields' ) ) {
-	class WPBA_Form_Fields extends WPBA_Filter_Settings {
+	class WPBA_Form_Fields extends WPBA_Utilities {
 		/**
 		 * WPBA_Form_Fields class constructor.
 		 *

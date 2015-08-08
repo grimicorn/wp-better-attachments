@@ -67,10 +67,10 @@ $directories['classes']  = array(
 
 // Setting classes
 $directories['classes']  = array(
-	'class-wpba-migrate-settings',
-	'class-wpba-filter-settings',
-	'class-wpba-setting-fields',
-	'class-wpba-settings',
+	// 'class-wpba-migrate-settings',
+	// 'class-wpba-filter-settings',
+	// 'class-wpba-setting-fields',
+	// 'class-wpba-settings',
 );
 
 // Require all the things!!!
