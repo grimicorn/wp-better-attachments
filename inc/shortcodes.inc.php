@@ -7,8 +7,9 @@
  * @since 1.2.0
  *
  * @param  string[]  $args {
- * 	@type integer $post                Optional Post object used to retrieve attachments
- * 	@type boolean $show_post_thumbnail Optional To include thumbnail as attachment. Default false
+ * 	@type integer $post                Optional Post object used to retrieve attachments.
+ * 	@type boolean $show_post_thumbnail Optional To include thumbnail as attachment. Default false.
+ * 	@type array   $query_args          Optional, query arguments to pass through to WP_Query. Default none.
  * }
  *
  * @return array       Retrieved attachment post objects

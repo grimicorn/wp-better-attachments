@@ -424,8 +424,9 @@ class WP_Better_Attachments
 	* @since 1.0.0
 	*
 	* @param  string[]  $args {
-	* 	@type integer $post                Optional Post object used to retrieve attachments
-	* 	@type boolean $show_post_thumbnail Optional To include thumbnail as attachment. Default false
+	* 	@type integer $post                Optional Post object used to retrieve attachments.
+	* 	@type boolean $show_post_thumbnail Optional To include thumbnail as attachment. Default false.
+	* 	@type array   $query_args          Optional, query arguments to pass through to WP_Query. Default none.
 	* }
 	*
 	* @return array Retrieved attachments
@@ -434,28 +435,26 @@ class WP_Better_Attachments
 	{
 		extract( $args );
 
-		if ( isset( $post_id ) )
-			$post = get_post( $post_id );
+		// Get the post.
+		$post_id = ( isset( $post_id ) ) ? $post_id : get_the_id();
+		$post_type = get_post_type( $post_id );
+		// $post    = get_post( $post_id );
 
-		// Make sure we have a post to work with
-		if ( ! isset( $post ) )
-			global $post;
-
-		// Make sure that post is not null
-		if ( is_null( $post ) )
+		// Make sure that post is not null.
+		if ( is_null( $post_id ) ) {
 			return array();
+		} // if()
 
-		// Specific Post settings
+		// Specific Post settings.
 		global $wpba_wp_settings_api;
-		$post_settings = $wpba_wp_settings_api->get_option( "wpba-{$post->post_type}-settings", 'wpba_settings', array() );
-
+		$post_settings = $wpba_wp_settings_api->get_option( "wpba-{$post_type}-settings", 'wpba_settings', array() );
 
 		$get_posts_args = array(
 			'post_type'      => 'attachment',
 			'posts_per_page' => -1,
-			'post_parent'    => $post->ID,
+			'post_parent'    => $post_id,
 			'order'          => 'ASC',
-			'orderby'        => 'menu_order'
+			'orderby'        => 'menu_order',
 		);
 
 		// Should we exclude the thumb?
@@ -463,25 +462,29 @@ class WP_Better_Attachments
 		$global_settings_thumb = isset( $this->global_settings['thumbnail'] );
 		$no_thumbs = false;
 		if ( isset( $show_post_thumbnail ) ) {
-			if ( !$show_post_thumbnail ) {
+			if ( ! $show_post_thumbnail ) {
 				$no_thumbs = true;
 			} // if()
-		} elseif( $post_settings_thumb OR $global_settings_thumb ) {
+		} else if ( $post_settings_thumb or $global_settings_thumb ) {
 			$no_thumbs = true;
 		} // if/else
 
-
 		if ( $no_thumbs ) {
-			// Need to more han likely check againts show_post_thumbnnail isset
-			$get_posts_args['exclude'] = get_post_thumbnail_id( $post->ID );
-			$get_posts_args['meta_query'] = array(array(
-				'key' => '_thumbnail_id',
-				'compare' => 'NOT EXISTS'
-			));
+			// Need to more han likely check againts show_post_thumbnnail isset.
+			$get_posts_args['exclude'] = get_post_thumbnail_id( $post_id );
+			$get_posts_args['meta_query'] = array(
+				array(
+					'key'     => '_thumbnail_id',
+					'compare' => 'NOT EXISTS',
+				),
+			);
 		} // if()
 
-		// Get the attachments
-		$attachments = $this->validate_attachment_mime_type( get_posts( $get_posts_args ), $post->ID );
+		// Get the attachments.
+		$query_args     = ( isset( $args['query_args'] ) ) ? $args['query_args'] : array();
+		$query_args     = ( 'array' === gettype( $query_args ) ) ? $query_args : array();
+		$get_posts_args = array_merge( $get_posts_args, $query_args );
+		$attachments = $this->validate_attachment_mime_type( get_posts( $get_posts_args ), $post_id );
 
 		return $attachments;
 	} // get_post_attachments()
