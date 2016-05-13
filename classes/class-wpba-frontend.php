@@ -133,7 +133,7 @@ class WPBA_Frontend extends WP_Better_Attachments
 		$list .= "<div id='{$list_id}' class='{$wrap_class}'>" . $nl;
 		$list .= "<ul class='{$list_class}'>";
 		foreach ( $attachments as $attachment ) {
-			$title = ( $use_caption_for_title && strlen($attachment->post_excerpt) ) ? $attachment->post_excerpt : $attachment->post_title;
+			$title = esc_attr( ( $use_caption_for_title && strlen($attachment->post_excerpt) ) ? $attachment->post_excerpt : $attachment->post_title );
 			$link = ( $use_attachment_page ) ? get_attachment_link( $attachment->ID ) : wp_get_attachment_url( $attachment->ID );
 			$target = ( $open_new_window ) ? 'target="_blank"' : 'target="_self"';
 			$list .= "<li id='{$list_id}_{$attachment->ID}' class='{$list_item_class}'>";
