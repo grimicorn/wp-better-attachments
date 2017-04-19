@@ -69,7 +69,7 @@ class WP_Better_Attachments
 		$this->current_post_type_obj = new stdClass();
 		$this->current_post_type_settings = array();
 		$this->current_post_type_disabled_file_types = array();
-		if ( !is_null( $post ) ) {
+		if ( !empty( $post ) ) {
 			$this->current_post_obj = $post;
 			$this->current_post_type = $post->post_type;
 			$this->current_post_type_obj = get_post_type_object( $post->post_type );
