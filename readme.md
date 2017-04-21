@@ -1,11 +1,11 @@
-#WP Better Attachments
+# WP Better Attachments
 
 **Description:** WordPress plugin that allows you to add/edit/attach/un-attach/sort the files attached to your WordPress posts all from the post editor.  Integrates seamlessly with WordPress using the default WordPress attachments type and no configuration needed to add WP Better Attachments to custom post types. You can now also have full control over cropping of the different attachment image sizes through the media editor.
 
 **Plugin Home Page:** [http://wordpress.org/extend/plugins/wp-better-attachments/](http://wordpress.org/extend/plugins/wp-better-attachments/)
 
 
-####Thanks to these projects:
+#### Thanks to these projects:
 
 - [WP Settings API Bootstrap](https://github.com/DerekMarcinyshyn/wp-settings-api-bootstrap)
 - [FlexSlider 2](http://www.woothemes.com/flexslider/2/)
@@ -20,21 +20,21 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 <a href='http://www.pledgie.com/campaigns/20476'><img alt='Click here to lend your support to: WP Better Attachments and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/20476.png?skin_name=chrome' border='0' /></a>
 
 ---
-###WPBA Attachments Exist
+### WPBA Attachments Exist
 `wpba_attachments_exist( array )`  
 
-####Default Parameters
+#### Default Parameters
 - post_id => current post id **Will retrieve attachments from the passed ID if available**
 - show_post_thumbnail => true
 
 `returns boolean`
 
 ---
-###WPBA Get Attachments
+### WPBA Get Attachments
 
 `wpba_get_attachments( array )`
 
-####Default Parameters
+#### Default Parameters
 - post_id => current post id **Will retrieve attachments from the passed ID if available**
 - show_post_thumbnail => true
 
@@ -42,10 +42,10 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 
 ---
 
-###WPBA Attachment List Shortcode
+### WPBA Attachment List Shortcode
 `[wpba-attachment-list]`
 
-####Default Parameters
+#### Default Parameters
 - post_id="current_post_id"
 - show_icon="false"
 - file_type_categories="image,file,audio,video"
@@ -67,9 +67,9 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - link_class="wpba-link pull-left"
 - icon_class="wpba-icon pull-left"
 
-###WPBA Attachment List Shortcode/Function
+### WPBA Attachment List Shortcode/Function
 `wpba_attachment_list( array() );`
-####Default Parameter
+#### Default Parameter
 - post_id				     => current_post_id
 - show_icon            => false
 - file_type_categories => array( image,file,audio,video )
@@ -91,30 +91,30 @@ If you have any issues please submit an [issue](https://github.com/DHolloran/wp-
 - link_class           => wpba-link pull-left
 - icon_class           => wpba-icon pull-left
 
-##Screenshots
-###WPBA Post Editor Button
+## Screenshots
+### WPBA Post Editor Button
 ![WPBA Post Editor Button](screenshot-1.png)
-###WPBA Meta Box
+### WPBA Meta Box
 ![WPBA Meta Box](screenshot-2.png)
-###WPBA Unattach Media Library Link
+### WPBA Unattach Media Library Link
 ![WPBA Unattach Media Library Link](screenshot-3.png)
-###WPBA Attachment Editor
+### WPBA Attachment Editor
 ![WPBA Attachment Editor](screenshot-4.png)
-###WPBA Crop Editor
+### WPBA Crop Editor
 ![WPBA Crop Editor](screenshot-5.png)
-###WPBA Attachment List
+### WPBA Attachment List
 ![WPBA Crop Editor](screenshot-6.png)
 
-##Getting Started
+## Getting Started
 To get started with WP Better Attachments you can download it directly [here](https://github.com/DHolloran/wp-better-attachments/archive/master.zip), search for WP Github Recent Commit in your administrator section's Plugins > Add New, or you can download it from the [Wordpress plugins directory](http://wordpress.org/extend/plugins/wp-github-recent-commit/)
 
 
-###Wordpress Plugin Directory Instructions
+### Wordpress Plugin Directory Instructions
 1. Search for WP Better Attachments in Plugins > Add New
 2. Install &amp; Activate WP Better Attachments
 3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post.
 
-###Manual Install Instructions
+### Manual Install Instructions
 1. Unzip your download and place in wp-content/plugins/
 2. Activate WP Better Attachments in the Wordpress Admin area
 3. Go to any page/post/custom post type and start editing your attachments with ease. Use the add attachments button to add new attachments. You can Drag and drop your attachments to arrange their menu order.  Click the Un-attach link to un-attach the file from your post.
