@@ -286,6 +286,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			$html .= '<li class="wpba-attachment-item ui-state-default" id="attachment_'.$attachment_id.'" data-id="'.$attachment_id.'">' . $nl;
 				$html .= '<div class="inner">' . $nl;
 				$html .= '<div class="wpba-drag-handle"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>' . $nl;
+				$html .= apply_filters('wpba_image_attachment_li_content_before', '', $attachment, $mime_type) . $nl;
 				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= $this->output_menu_id_title( $attachment, $mime_type );
 					$html .= $this->output_placeholder_image( $attachment, $mime_type );
@@ -295,6 +296,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 					$html .= '<div>' . $this->output_caption_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="clear"></div>' . $nl;
+				$html .= apply_filters('wpba_image_attachment_li_content_after', '', $attachment, $mime_type) . $nl;
 				$html .= '</div>' . $nl;
 			$html .= '</li>'  . $nl;
 		} // foreach();
