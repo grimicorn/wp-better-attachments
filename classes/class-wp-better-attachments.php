@@ -110,6 +110,7 @@ class WP_Better_Attachments
 	*/
 	public function init_hooks()
 	{
+		add_action( 'admin_init', array( &$this, 'register_admin_scripts' ) );
 		add_action( 'admin_enqueue_scripts', array( &$this, 'enqueue_admin_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts' ) );
 		add_action('media_buttons_context', array( &$this, 'add_form_button' ) );
@@ -317,6 +318,42 @@ class WP_Better_Attachments
 		return false;
 	} // current_post_type_disabled()
 
+	/**
+	 * resgisters Administrator Scripts and Styles
+	 *
+	 * @since 1.3.11
+	 *
+	 * @return void
+	 */
+	public function register_admin_scripts()
+	{
+		// WPBA Main Style File
+		wp_enqueue_style(
+			'wpba-admin-css',
+			plugins_url( 'assets/css/wpba-admin.css' , dirname( __FILE__ ) ),
+			null,
+			WPBA_VERSION,
+			'all'
+		);
+
+		// JS Dependencies
+		$deps = array(
+			'jquery',
+			'jquery-ui-core',
+			'jquery-ui-widget',
+			'jquery-ui-mouse',
+			'jquery-ui-sortable'
+		);
+
+		// WPBA Main Script File
+		wp_register_script(
+			'wpba-media-handler',
+			plugins_url( 'assets/js/wpba-media-handler-new.min.js' , dirname( __FILE__ ) ),
+			$deps,
+			WPBA_VERSION,
+			true
+		);
+	}
 
 
 	/**
@@ -338,35 +375,15 @@ class WP_Better_Attachments
 		$base = $current_screen->base;
 		if ( $base == 'edit' or $base == 'upload' or $base == 'post' OR $base == 'settings_page_wpba-settings' ) {
 			// WPBA Main Style File
-			wp_enqueue_style(
-				'wpba-admin-css',
-				plugins_url( 'assets/css/wpba-admin.css' , dirname( __FILE__ ) ),
-				null,
-				WPBA_VERSION,
-				'all'
-			);
+			wp_enqueue_style('wpba-admin-css');
 
-			// JS Dependencies
-			$deps = array(
-				'jquery',
-				'jquery-ui-core',
-				'jquery-ui-widget',
-				'jquery-ui-mouse',
-				'jquery-ui-sortable'
-			);
+
 
 			// Media Scripts
 			if ( !did_action( 'wp_enqueue_media' ) )
 				wp_enqueue_media();
 
-			// WPBA Main Script File
-			wp_register_script(
-				'wpba-media-handler',
-				plugins_url( 'assets/js/wpba-media-handler-new.min.js' , dirname( __FILE__ ) ),
-				$deps,
-				WPBA_VERSION,
-				true
-			);
+
 
 			wp_enqueue_script( 'wpba-media-handler' );
 		} // if()

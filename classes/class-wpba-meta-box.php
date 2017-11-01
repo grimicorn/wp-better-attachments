@@ -275,9 +275,12 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		$html = '';
 		$nl = "\n";
 
+		// ensure a post object exists in ajax and non-ajax situations
+		$post = $this->current_post_obj;
+		if(!$post && 1 == count($attachments)) $post = $this->get_attachment_post_parent($attachments[0]);
 
 		foreach ( $attachments as $attachment ) {
-			$attachment_id = ( isset( $a_array ) and $a_array ) ? $attachment['id'] : $attachment->ID;
+			$attachment_id = $this->get_attachment_id($attachment);
 			$attachment = get_post( $attachment_id );
 			$mime_type = get_post_mime_type( $attachment_id );
 
@@ -286,7 +289,7 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 			$html .= '<li class="wpba-attachment-item ui-state-default" id="attachment_'.$attachment_id.'" data-id="'.$attachment_id.'">' . $nl;
 				$html .= '<div class="inner">' . $nl;
 				$html .= '<div class="wpba-drag-handle"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>' . $nl;
-				$html .= apply_filters('wpba_image_attachment_li_content_before', '', $attachment, $mime_type) . $nl;
+				$html .= apply_filters('wpba_image_attachment_li_content_before', '', $attachment, $post, $mime_type) . $nl;
 				$html .= '<div class="wpba-preview pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= $this->output_menu_id_title( $attachment, $mime_type );
 					$html .= $this->output_placeholder_image( $attachment, $mime_type );
@@ -294,9 +297,10 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 				$html .= '<div class="wpba-form-wrap pull-left" data-id="'.$attachment_id.'">' . $nl;
 					$html .= '<div>' . $this->output_title_input( array( 'attachment' => $attachment) )  . '</div>' . $nl;
 					$html .= '<div>' . $this->output_caption_input( array( 'attachment' => $attachment) ) . '</div>'  . $nl;
+					$html .= apply_filters('wpba_image_attachment_li_form_after', '', $attachment, $post, $mime_type) . $nl;
 				$html .= '</div>' . $nl;
 				$html .= '<div class="clear"></div>' . $nl;
-				$html .= apply_filters('wpba_image_attachment_li_content_after', '', $attachment, $mime_type) . $nl;
+				$html .= apply_filters('wpba_image_attachment_li_content_after', '', $attachment, $post, $mime_type) . $nl;
 				$html .= '</div>' . $nl;
 			$html .= '</li>'  . $nl;
 		} // foreach();
@@ -304,7 +308,33 @@ class WPBA_Meta_Box extends WP_Better_Attachments
 		return $html;
 	} // build_image_attachment_li()
 
+	/**
+	 * gets the id of the given attachment
+	 * @since 1.3.11
+	 *
+	 * @param  array|WP_Post $attachment
+	 *
+	 * @return int|string|bool        id of attachment false if unsuccessful
+	 */
+	private function get_attachment_id($attachment) {
+		if(is_object($attachment)) return $attachment->ID;
+		if(is_array($attachment)) return $attachment['id'];
+		return false;
+	}
 
+	/**
+	 * gets the post the given attachment is attached to
+	 * @since 1.3.11
+	 *
+	 * @param  array|WP_Post $attachment attachment object
+	 *
+	 * @return WP_Post|bool           the parent post or false if unsuccessful
+	 */
+	private function get_attachment_post_parent($attachment) {
+		$attachment = $attachment instanceof WP_Post ? $attachment : get_post($this->get_attachment_id($attachment));
+		if($attachment->post_parent != 0) return get_post($attachment->post_parent);
+		return false;
+	}
 
 	/**
 	* Output Edit Modal
