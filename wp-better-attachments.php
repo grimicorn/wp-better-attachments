@@ -21,7 +21,7 @@ define( 'WPBA_PATH', plugin_dir_path(__FILE__) );
 *
 * Only on localhost
 */
-if ( !function_exists( 'pp' ) AND $_SERVER['HTTP_HOST'] == 'localhost' ) {
+if ( !function_exists( 'pp' ) AND isset( $_SERVER['HTTP_HOST'] ) AND $_SERVER['HTTP_HOST'] == 'localhost' ) {
 	function pp( $value )
 	{
 		if( $_SERVER['HTTP_HOST'] != 'localhost' ) return;
